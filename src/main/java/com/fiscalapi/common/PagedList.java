@@ -19,4 +19,15 @@ public class PagedList<T> {
 
     public long getTotalCount() { return totalCount; }
     public void setTotalCount(long totalCount) { this.totalCount = totalCount; }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("PagedList{");
+        sb.append("items=").append(items);
+        sb.append(", pageNumber=").append(pageNumber);
+        sb.append(", pageSize=").append(pageSize);
+        sb.append(", totalCount=").append(totalCount);
+        sb.append('}');
+        return sb.toString();
+    }
 }

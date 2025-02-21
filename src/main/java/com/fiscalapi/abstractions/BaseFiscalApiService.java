@@ -1,6 +1,7 @@
 package com.fiscalapi.abstractions;
 
 import com.fiscalapi.common.ApiResponse;
+import com.fiscalapi.common.FiscalApiSettings;
 import com.fiscalapi.common.PagedList;
 
 import java.io.UnsupportedEncodingException;
@@ -13,44 +14,46 @@ import java.util.concurrent.CompletableFuture;
 public abstract class BaseFiscalApiService<T> implements IFiscalApiService<T> {
 
     protected final IFiscalApiHttpClient httpClient;
+    protected final FiscalApiSettings settings;
     protected final String resourcePath;
     protected final String apiVersion;
 
-    protected BaseFiscalApiService(IFiscalApiHttpClient httpClient,
-                                   String resourcePath,
-                                   String apiVersion) {
+    protected BaseFiscalApiService(
+            IFiscalApiHttpClient httpClient,
+            FiscalApiSettings settings,
+            String resourcePath,
+            String apiVersion
+    ) {
         this.httpClient = httpClient;
+        this.settings = settings;
         this.resourcePath = resourcePath;
         this.apiVersion = apiVersion;
     }
 
     protected String buildEndpoint(String path, Map<String, String> queryParams) {
-        StringBuilder baseEndpoint = new StringBuilder("api/")
+
+        String baseUrl = settings.getApiUrl();
+        if (baseUrl.endsWith("/")) {
+            baseUrl = baseUrl.substring(0, baseUrl.length() - 1);
+        }
+
+        StringBuilder fullUrl = new StringBuilder(baseUrl)
+                .append("/api/")
                 .append(apiVersion)
                 .append("/")
                 .append(resourcePath);
 
         if (path != null && !path.isEmpty()) {
-            baseEndpoint.append("/").append(path);
+            fullUrl.append("/").append(path);
         }
 
+        // Manejo de query params
         if (queryParams != null && !queryParams.isEmpty()) {
-            baseEndpoint.append("?");
-            queryParams.forEach((k, v) -> {
-                try {
-                    baseEndpoint.append(k)
-                            .append("=")
-                            .append(encode(v))
-                            .append("&");
-                } catch (UnsupportedEncodingException e) {
-                    throw new RuntimeException(e);
-                }
-            });
-            // Quitar el último &
-            baseEndpoint.setLength(baseEndpoint.length() - 1);
+            fullUrl.append("?");
+            // ...
         }
 
-        return baseEndpoint.toString();
+        return fullUrl.toString();
     }
 
     private String encode(String value) throws UnsupportedEncodingException {

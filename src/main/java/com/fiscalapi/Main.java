@@ -1,17 +1,40 @@
 package com.fiscalapi;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+
+import com.fiscalapi.common.FiscalApiSettings;
+import com.fiscalapi.services.FiscalApiClient;
+
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
+        System.out.printf("Hello Fiscalapi!");
+
+        // TENANT: e839651d-1765-4cd0-ba7f-547a4c20580f
+        // KARLA ID: 3f3478b4-60fd-459e-8bfc-f8239fc96257   :KEY: sk_development_71a2d1ff_25c6_4063_aee8_a5da7d0b9967
+        // ESCUELA ID: 96b46762-d246-4a67-a562-510a25dbafa9 :KEY sk_development_833a58f9_8212_43ce_b544_f2fa93b1e895
+
+        FiscalApiSettings settings = new FiscalApiSettings();
+        settings.setApiUrl("https://localhost:7173");
+        settings.setApiKey("sk_development_71a2d1ff_25c6_4063_aee8_a5da7d0b9967");
+        settings.setTenant("e839651d-1765-4cd0-ba7f-547a4c20580f");
+
+        FiscalApiClient client = FiscalApiClient.create(settings);
+
+
+        client.getProductService().getByIdAsync("114a4be5-fb65-40b2-a762-ff0c55c6ebfa", false).thenAccept(response -> {
+
+            if (response.isSucceeded()) {
+                System.out.println("Producto obtenido: " + response.getData().toString());
+            } else {
+                System.out.println("Error en la respuesta: " + response.getMessage());
+            }
+        }).exceptionally(ex -> {
+            // Si ocurre un error o excepción al obtener la respuesta, se ejecuta este bloque.
+            System.err.println("Ocurrió una excepción: " + ex.getMessage());
+            return null; // Debemos retornar algo que cumpla con la firma del lambda
+        });
+
+
+
     }
 }

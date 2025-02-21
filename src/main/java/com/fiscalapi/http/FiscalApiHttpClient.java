@@ -1,6 +1,7 @@
 package com.fiscalapi.http;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fiscalapi.abstractions.IFiscalApiHttpClient;
 import com.fiscalapi.common.ApiResponse;
 import okhttp3.*;
@@ -16,6 +17,9 @@ public class FiscalApiHttpClient implements IFiscalApiHttpClient {
     public FiscalApiHttpClient(OkHttpClient okHttpClient) {
         this.okHttpClient = okHttpClient;
         this.objectMapper = new ObjectMapper();
+
+        // Añadir soporte para fechas/hora de Java 8
+        objectMapper.registerModule(new JavaTimeModule());
     }
 
     @Override

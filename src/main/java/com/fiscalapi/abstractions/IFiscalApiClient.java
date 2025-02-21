@@ -1,8 +1,8 @@
 package com.fiscalapi.abstractions;
 
 public interface IFiscalApiClient {
-    IInvoiceService getInvoices();
-    IProductService getProducts();
-    IPersonService getPersons();
+    IInvoiceService getInvoiceService();
+    IProductService getProductService();
+    IPersonService getPersonService();
     // ... etc
 }

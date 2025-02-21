@@ -22,4 +22,17 @@ public class ApiResponse<T> {
 
     public int getHttpStatusCode() { return httpStatusCode; }
     public void setHttpStatusCode(int httpStatusCode) { this.httpStatusCode = httpStatusCode; }
+
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("ApiResponse{");
+        sb.append("data=").append(data);
+        sb.append(", succeeded=").append(succeeded);
+        sb.append(", message='").append(message).append('\'');
+        sb.append(", details='").append(details).append('\'');
+        sb.append(", httpStatusCode=").append(httpStatusCode);
+        sb.append('}');
+        return sb.toString();
+    }
 }

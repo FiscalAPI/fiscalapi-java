@@ -5,6 +5,7 @@ import com.fiscalapi.abstractions.BaseFiscalApiService;
 import com.fiscalapi.abstractions.IFiscalApiHttpClient;
 import com.fiscalapi.abstractions.IPersonService;
 import com.fiscalapi.common.ApiResponse;
+import com.fiscalapi.common.FiscalApiSettings;
 import com.fiscalapi.models.Person;
 
 import java.util.Collections;
@@ -17,10 +18,10 @@ import java.util.concurrent.CompletableFuture;
 public class PersonService extends BaseFiscalApiService<Person> implements IPersonService {
 
     /**
-     * Crea un PersonService con el path "persons" y la versión de API dada.
+     * Crea un PersonService con el path "people" y la versión de API dada.
      */
-    public PersonService(IFiscalApiHttpClient httpClient, String apiVersion) {
-        super(httpClient, "persons", apiVersion);
+    public PersonService(IFiscalApiHttpClient httpClient, FiscalApiSettings settings) {
+        super(httpClient, settings, "people", settings.getApiVersion());
     }
 
     @Override
