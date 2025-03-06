@@ -1,5 +1,9 @@
 package com.fiscalapi.common;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
 public class ApiResponse<T> {
     private T data;
     private boolean succeeded;
@@ -24,15 +28,20 @@ public class ApiResponse<T> {
     public void setHttpStatusCode(int httpStatusCode) { this.httpStatusCode = httpStatusCode; }
 
 
+    // toString to JSON
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("ApiResponse{");
-        sb.append("data=").append(data);
-        sb.append(", succeeded=").append(succeeded);
-        sb.append(", message='").append(message).append('\'');
-        sb.append(", details='").append(details).append('\'');
-        sb.append(", httpStatusCode=").append(httpStatusCode);
-        sb.append('}');
-        return sb.toString();
+        try {
+
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.registerModule(new JavaTimeModule());
+            mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS); // disable "createdAt": 1640995200000 and enable "createdAt": "2022-01-01T10:00:00"
+            mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false); // allow null values
+            mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
+            //mapper.setSerializationInclusion(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL); //exclude null fields
+            return mapper.writeValueAsString(this);
+        } catch (Exception e) {
+            return "{\"error\":\"Error generando JSON\"}";
+        }
     }
 }

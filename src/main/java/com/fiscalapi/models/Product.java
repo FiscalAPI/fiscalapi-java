@@ -246,18 +246,4 @@ public class Product extends BaseDto {
         this.productTaxes = productTaxes;
     }
 
-    @Override
-    public String toString() {
-        return "Product{" +
-                "description='" + description + '\'' +
-                ", unitPrice=" + unitPrice +
-                ", satUnitMeasurementId='" + satUnitMeasurementId + '\'' +
-                ", satUnitMeasurement=" + satUnitMeasurement +
-                ", satTaxObjectId='" + satTaxObjectId + '\'' +
-                ", satTaxObject=" + satTaxObject +
-                ", satProductCodeId='" + satProductCodeId + '\'' +
-                ", satProductCode=" + satProductCode +
-                ", productTaxes=" + productTaxes +
-                "} " + super.toString();
-    }
 }

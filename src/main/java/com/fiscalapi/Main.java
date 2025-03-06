@@ -7,7 +7,7 @@ import com.fiscalapi.services.FiscalApiClient;
 public class Main {
     public static void main(String[] args) {
 
-        System.out.printf("Hello Fiscalapi!");
+        System.out.printf("Product: %s\n","Hello Fiscalapi!");
 
         // TENANT: e839651d-1765-4cd0-ba7f-547a4c20580f
         // KARLA ID: 3f3478b4-60fd-459e-8bfc-f8239fc96257   :KEY: sk_development_71a2d1ff_25c6_4063_aee8_a5da7d0b9967
@@ -21,20 +21,11 @@ public class Main {
         FiscalApiClient client = FiscalApiClient.create(settings);
 
 
-        client.getProductService().getByIdAsync("114a4be5-fb65-40b2-a762-ff0c55c6ebfa", false).thenAccept(response -> {
-
-            if (response.isSucceeded()) {
-                System.out.println("Producto obtenido: " + response.getData().toString());
-            } else {
-                System.out.println("Error en la respuesta: " + response.getMessage());
-            }
-        }).exceptionally(ex -> {
-            // Si ocurre un error o excepción al obtener la respuesta, se ejecuta este bloque.
-            System.err.println("Ocurrió una excepción: " + ex.getMessage());
-            return null; // Debemos retornar algo que cumpla con la firma del lambda
+        client.getProductService().getByIdAsync("114a4be5-fb65-40b2-a762-ff0c55c6ebfa", false)
+                .thenAccept(response -> {
+                System.out.printf("apiResponse: %s\n", response.toString());
         });
 
-
-
+        System.out.printf("Product: %s\n","End Fiscalapi!");
     }
 }

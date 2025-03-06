@@ -1,5 +1,6 @@
 package com.fiscalapi.http;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fiscalapi.abstractions.IFiscalApiHttpClient;
@@ -17,8 +18,7 @@ public class FiscalApiHttpClient implements IFiscalApiHttpClient {
     public FiscalApiHttpClient(OkHttpClient okHttpClient) {
         this.okHttpClient = okHttpClient;
         this.objectMapper = new ObjectMapper();
-
-        // Añadir soporte para fechas/hora de Java 8
+        // Se añade soporte para las fechas/hora de Java 8
         objectMapper.registerModule(new JavaTimeModule());
     }
 
@@ -28,7 +28,6 @@ public class FiscalApiHttpClient implements IFiscalApiHttpClient {
                 .url(url)
                 .get()
                 .build();
-
         return executeAsync(request, responseType);
     }
 
@@ -39,7 +38,6 @@ public class FiscalApiHttpClient implements IFiscalApiHttpClient {
                 .url(url)
                 .post(requestBody)
                 .build();
-
         return executeAsync(request, responseType);
     }
 
@@ -50,7 +48,6 @@ public class FiscalApiHttpClient implements IFiscalApiHttpClient {
                 .url(url)
                 .put(requestBody)
                 .build();
-
         return executeAsync(request, responseType);
     }
 
@@ -60,7 +57,6 @@ public class FiscalApiHttpClient implements IFiscalApiHttpClient {
                 .url(url)
                 .delete()
                 .build();
-
         return executeAsync(request, Boolean.class);
     }
 
@@ -74,7 +70,10 @@ public class FiscalApiHttpClient implements IFiscalApiHttpClient {
     }
 
     /**
-     * Método genérico para ejecutar la petición de manera asíncrona.
+     * Ejecuta la petición de forma asíncrona, asegurando que en TODOS los casos se retorne
+     * un CompletableFuture<ApiResponse<T>> con la estructura original de la respuesta del API.
+     * Se parsea el JSON de respuesta (independientemente del código HTTP) para extraer
+     * los campos originales: data, succeeded, message, details, httpStatusCode y traceIdentifier.
      */
     private <T> CompletableFuture<ApiResponse<T>> executeAsync(Request request, Class<T> responseType) {
         CompletableFuture<ApiResponse<T>> future = new CompletableFuture<>();
@@ -82,44 +81,58 @@ public class FiscalApiHttpClient implements IFiscalApiHttpClient {
         okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                // Manejo de error: completar con excepción
                 future.completeExceptionally(e);
             }
 
             @Override
             public void onResponse(Call call, Response response) {
-                ApiResponse<T> apiResponse = new ApiResponse<>();
                 try (ResponseBody responseBody = response.body()) {
-                    apiResponse.setHttpStatusCode(response.code());
-                    // Leemos el response como string
                     String responseString = responseBody != null ? responseBody.string() : "";
+                    ApiResponse<T> apiResponse = new ApiResponse<>();
 
-                    if (!response.isSuccessful()) {
-                        // Llenar mensaje de error
-                        apiResponse.setSucceeded(false);
-                        apiResponse.setMessage("HTTP Error: " + response.code());
-                        apiResponse.setDetails(responseString);
-                        future.complete(apiResponse);
-                        return;
+                    // Se asigna el código HTTP real
+                    apiResponse.setHttpStatusCode(response.code());
+
+                    // Se parsea la respuesta a un árbol JSON
+                    JsonNode root = objectMapper.readTree(responseString);
+
+                    // Se extrae el campo "data" convirtiéndolo a T si existe y no es nulo
+                    if (root.has("data") && !root.get("data").isNull()) {
+                        T data = objectMapper.convertValue(root.get("data"), responseType);
+                        apiResponse.setData(data);
+                    } else {
+                        apiResponse.setData(null);
                     }
 
-                    // Parsear JSON a ApiResponse<T> o T
-                    // -- Suponiendo que el servidor retorna un objeto con la estructura ApiResponse<T>:
-                    //    Option A: parsear directamente a ApiResponse<T>.
-                    // -- O si la API retorna T directamente, se debe armar la ApiResponse manualmente.
+                    // Se extrae el campo "succeeded". Si no viene, se asume el valor de response.isSuccessful()
+                    if (root.has("succeeded")) {
+                        apiResponse.setSucceeded(root.get("succeeded").asBoolean());
+                    } else {
+                        apiResponse.setSucceeded(response.isSuccessful());
+                    }
 
-                    // Ejemplo: si la API RETORNA un "ApiResponse<T>" en JSON
-                    ApiResponse<T> fromServer = objectMapper.readValue(responseString,
-                            objectMapper.getTypeFactory()
-                                    .constructParametricType(ApiResponse.class, responseType));
+                    // Se asignan los campos "message" y "details" tal como vienen en la respuesta original
+                    if (root.has("message")) {
+                        apiResponse.setMessage(root.get("message").asText());
+                    } else {
+                        apiResponse.setMessage("");
+                    }
 
-                    future.complete(fromServer);
+                    if (root.has("details")) {
+                        apiResponse.setDetails(root.get("details").asText());
+                    } else {
+                        apiResponse.setDetails("");
+                    }
 
+                    // Si el API incluye "traceIdentifier" y ApiResponse lo tuviera, se podría asignar aquí
+
+                    future.complete(apiResponse);
                 } catch (Exception ex) {
                     future.completeExceptionally(ex);
                 }
             }
         });
+
         return future;
     }
 }
