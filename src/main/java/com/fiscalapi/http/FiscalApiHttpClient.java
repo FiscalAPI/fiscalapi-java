@@ -6,11 +6,11 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fiscalapi.abstractions.IFiscalApiHttpClient;
 import com.fiscalapi.common.ApiResponse;
 import com.fiscalapi.common.FiscalApiSettings;
+import com.fiscalapi.common.ValidationFailure;
 import okhttp3.*;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
-import java.util.concurrent.CompletableFuture;
+import java.util.Collection;
 
 public class FiscalApiHttpClient implements IFiscalApiHttpClient {
 
@@ -22,46 +22,46 @@ public class FiscalApiHttpClient implements IFiscalApiHttpClient {
         this.okHttpClient = okHttpClient;
         this.objectMapper = new ObjectMapper();
         this.settings = settings;
-        // Se añade soporte para las fechas/hora de Java 8
         objectMapper.registerModule(new JavaTimeModule());
+        objectMapper.setSerializationInclusion(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL);
     }
 
     @Override
-    public <T> CompletableFuture<ApiResponse<T>> getAsync(String url, Class<T> responseType) {
+    public <T> ApiResponse<T> get(String url, Class<T> responseType) {
         Request request = new Request.Builder()
                 .url(url)
                 .get()
                 .build();
-        return executeAsync(request, responseType);
+        return execute(request, responseType);
     }
 
     @Override
-    public <T> CompletableFuture<ApiResponse<T>> postAsync(String url, Object body, Class<T> responseType) {
+    public <T> ApiResponse<T> post(String url, Object body, Class<T> responseType) {
         RequestBody requestBody = createRequestBody(body);
         Request request = new Request.Builder()
                 .url(url)
                 .post(requestBody)
                 .build();
-        return executeAsync(request, responseType);
+        return execute(request, responseType);
     }
 
     @Override
-    public <T> CompletableFuture<ApiResponse<T>> putAsync(String url, Object body, Class<T> responseType) {
+    public <T> ApiResponse<T> put(String url, Object body, Class<T> responseType) {
         RequestBody requestBody = createRequestBody(body);
         Request request = new Request.Builder()
                 .url(url)
                 .put(requestBody)
                 .build();
-        return executeAsync(request, responseType);
+        return execute(request, responseType);
     }
 
     @Override
-    public CompletableFuture<ApiResponse<Boolean>> deleteAsync(String url) {
+    public ApiResponse<Boolean> delete(String url) {
         Request request = new Request.Builder()
                 .url(url)
                 .delete()
                 .build();
-        return executeAsync(request, Boolean.class);
+        return execute(request, Boolean.class);
     }
 
     private RequestBody createRequestBody(Object body) {
@@ -73,10 +73,7 @@ public class FiscalApiHttpClient implements IFiscalApiHttpClient {
         }
     }
 
-    private <T> CompletableFuture<ApiResponse<T>> executeAsync(Request request, Class<T> responseType) {
-        CompletableFuture<ApiResponse<T>> future = new CompletableFuture<>();
-
-        // Imprime el raw request (incluyendo el body) en formato JSON indentado si el modo debug está activado
+    private <T> ApiResponse<T> execute(Request request, Class<T> responseType) {
         if (settings.getDebugMode()) {
             System.out.println("Raw Request:");
             System.out.println("Method: " + request.method());
@@ -86,13 +83,11 @@ public class FiscalApiHttpClient implements IFiscalApiHttpClient {
                     okio.Buffer buffer = new okio.Buffer();
                     request.body().writeTo(buffer);
                     String bodyString = buffer.readUtf8();
-                    // Se intenta parsear el body como JSON para formatearlo de forma indentada
                     try {
                         Object json = objectMapper.readValue(bodyString, Object.class);
                         String prettyBody = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(json);
                         System.out.println("Body: " + prettyBody);
                     } catch (Exception ex) {
-                        // Si falla el parseo, se imprime el body original
                         System.out.println("Body: " + bodyString);
                     }
                 } catch (IOException e) {
@@ -101,18 +96,13 @@ public class FiscalApiHttpClient implements IFiscalApiHttpClient {
             }
         }
 
-        okHttpClient.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                future.completeExceptionally(e);
-            }
+        try {
+            // Ejecutar la llamada de forma síncrona
+            try (Response response = okHttpClient.newCall(request).execute()) {
 
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) {
                 try (ResponseBody responseBody = response.body()) {
                     String responseString = responseBody != null ? responseBody.string() : "";
 
-                    // Imprime el raw response en formato JSON indentado si el modo debug está activado
                     if (settings.getDebugMode()) {
                         System.out.println("Raw Response:");
                         try {
@@ -120,7 +110,6 @@ public class FiscalApiHttpClient implements IFiscalApiHttpClient {
                             String prettyResponse = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(json);
                             System.out.println(prettyResponse);
                         } catch (Exception ex) {
-                            // Si no se puede parsear a JSON, se imprime el response original
                             System.out.println(responseString);
                         }
                     }
@@ -130,13 +119,7 @@ public class FiscalApiHttpClient implements IFiscalApiHttpClient {
 
                     JsonNode root = objectMapper.readTree(responseString);
 
-                    if (root.has("data") && !root.get("data").isNull()) {
-                        T data = objectMapper.convertValue(root.get("data"), responseType);
-                        apiResponse.setData(data);
-                    } else {
-                        apiResponse.setData(null);
-                    }
-
+                    // Establecer valores básicos de la respuesta
                     if (root.has("succeeded")) {
                         apiResponse.setSucceeded(root.get("succeeded").asBoolean());
                     } else {
@@ -149,21 +132,90 @@ public class FiscalApiHttpClient implements IFiscalApiHttpClient {
                         apiResponse.setMessage("");
                     }
 
-                    if (root.has("details")) {
-                        apiResponse.setDetails(root.get("details").asText());
+                    // Manejo especial para HTTP 400: errores de validación
+                    if (response.code() == 400) {
+                        JsonNode dataNode = root.get("data");
+                        if (dataNode != null && dataNode.isArray() && !dataNode.isEmpty()) {
+                            // Comprobar si los datos son errores de validación
+                            if (dataNode.get(0).has("propertyName")) {
+                                try {
+                                    // Convertir solo el primer error de validación
+                                    ValidationFailure firstFailure = objectMapper.convertValue(
+                                            dataNode.get(0), ValidationFailure.class);
+
+                                    // Construir mensaje de error solo con el primer error
+                                    String errorDetail = firstFailure.getPropertyName() + ": " +
+                                            firstFailure.getErrorMessage();
+
+                                    // Establecer los detalles del error
+                                    apiResponse.setDetails(errorDetail);
+
+                                    // No intentar deserializar errores de validación como tipo de respuesta
+                                    apiResponse.setData(null);
+                                    return apiResponse;
+                                } catch (IllegalArgumentException e) {
+                                    if (root.has("details")) {
+                                        apiResponse.setDetails(root.get("details").asText());
+                                    }
+                                }
+                            }
+                        } else if (root.has("details")) {
+                            apiResponse.setDetails(root.get("details").asText());
+                        }
                     } else {
-                        apiResponse.setDetails("");
+                        // Procesar los demás códigos de respuesta
+                        if (root.has("details")) {
+                            apiResponse.setDetails(root.get("details").asText());
+                        } else {
+                            apiResponse.setDetails("");
+                        }
                     }
 
-                    future.complete(apiResponse);
-                } catch (Exception ex) {
-                    future.completeExceptionally(ex);
+                    // Procesar la propiedad data para todos los casos excepto errores de validación
+                    if (root.has("data") && !root.get("data").isNull()) {
+                        JsonNode dataNode = root.get("data");
+
+                        // Verificar si los datos parecen ser errores de validación
+                        boolean isValidationError = dataNode.isArray() && dataNode.size() > 0 &&
+                                dataNode.get(0).has("propertyName") &&
+                                dataNode.get(0).has("errorMessage");
+
+                        if (isValidationError) {
+                            // Para errores de validación, ya hemos manejado esto arriba
+                            apiResponse.setData(null);
+                        } else {
+                            try {
+                                // Handle the case where data is an array but we expect a single object
+                                if (dataNode.isArray() && !Collection.class.isAssignableFrom(responseType)) {
+                                    // If it's an array with at least one element and we expect a single object,
+                                    // take the first element
+                                    if (dataNode.size() > 0) {
+                                        T data = objectMapper.convertValue(dataNode.get(0), responseType);
+                                        apiResponse.setData(data);
+                                    } else {
+                                        apiResponse.setData(null);
+                                    }
+                                } else {
+                                    // Normal case - direct conversion
+                                    T data = objectMapper.convertValue(dataNode, responseType);
+                                    apiResponse.setData(data);
+                                }
+                            } catch (IllegalArgumentException e) {
+                                throw new RuntimeException("Error converting response data. Expected type: " +
+                                        responseType.getName() + ", actual JSON: " + dataNode.toString(), e);
+                            }
+                        }
+                    } else {
+                        apiResponse.setData(null);
+                    }
+
+                    return apiResponse;
                 }
             }
-        });
-
-        return future;
+        } catch (IOException e) {
+            throw new RuntimeException("Error durante la ejecución de la petición HTTP", e);
+        } catch (Exception ex) {
+            throw new RuntimeException("Error durante el procesamiento de la respuesta", ex);
+        }
     }
-
-
 }

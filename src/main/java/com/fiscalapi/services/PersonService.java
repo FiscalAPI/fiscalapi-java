@@ -1,16 +1,11 @@
 package com.fiscalapi.services;
 
-
 import com.fiscalapi.abstractions.BaseFiscalApiService;
 import com.fiscalapi.abstractions.IFiscalApiHttpClient;
 import com.fiscalapi.abstractions.IPersonService;
 import com.fiscalapi.common.ApiResponse;
 import com.fiscalapi.common.FiscalApiSettings;
 import com.fiscalapi.models.Person;
-
-import java.util.Collections;
-import java.util.Map;
-import java.util.concurrent.CompletableFuture;
 
 /**
  * Implementa el servicio de "Person", usando la lógica base de BaseFiscalApiService.
@@ -30,10 +25,10 @@ public class PersonService extends BaseFiscalApiService<Person> implements IPers
     }
 
     @Override
-    public CompletableFuture<ApiResponse<Boolean>> activatePerson(String personId) {
+    public ApiResponse<Boolean> activatePerson(String personId) {
         // Ejemplo de endpoint -> "api/v4/persons/{personId}/activate"
         String endpoint = buildEndpoint(personId + "/activate", null);
         // Suponiendo que el body es nulo o requiere un body vacío
-        return httpClient.postAsync(endpoint, null, Boolean.class);
+        return httpClient.post(endpoint, null, Boolean.class);
     }
 }

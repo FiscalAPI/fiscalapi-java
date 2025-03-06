@@ -1,6 +1,6 @@
 package com.fiscalapi;
 
-
+import com.fiscalapi.common.ApiResponse;
 import com.fiscalapi.common.FiscalApiSettings;
 import com.fiscalapi.models.Product;
 import com.fiscalapi.services.FiscalApiClient;
@@ -23,16 +23,14 @@ public class Main {
         product.setDescription("Libro de Java");
         product.setUnitPrice(100.75986);
 
-        //enviar petición
-        client.getProductService().createAsync(product).thenAccept(apiResponse -> {
-            System.out.printf("apiResponse: %s\n", apiResponse);
-        });
+
+        ApiResponse<Product> createResponse = client.getProductService().create(product);
+        System.out.printf("apiResponse: %s\n", createResponse);
 
 
-        // obtener un producto por Id.
-//        client.getProductService().getByIdAsync("114a4be5-fb65-40b2-a762-ff0c55c6ebfa", false).thenAccept(response -> {
-//                    System.out.printf("apiResponse: %s\n", response.toString());
-//        });
+        // obtener un producto por Id (versión síncrona)
+//        ApiResponse<Product> getResponse = client.getProductService().getById("114a4be5-fb65-40b2-a762-ff0c55c6ebfa", false);
+//        System.out.printf("apiResponse: %s\n", getResponse.toString());
 
 
         System.out.printf("Product: %s\n", "End Fiscalapi!");

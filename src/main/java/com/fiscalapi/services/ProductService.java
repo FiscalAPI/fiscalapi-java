@@ -1,14 +1,11 @@
 package com.fiscalapi.services;
 
-
 import com.fiscalapi.abstractions.BaseFiscalApiService;
 import com.fiscalapi.abstractions.IFiscalApiHttpClient;
 import com.fiscalapi.abstractions.IProductService;
 import com.fiscalapi.common.ApiResponse;
 import com.fiscalapi.common.FiscalApiSettings;
 import com.fiscalapi.models.Product;
-
-import java.util.concurrent.CompletableFuture;
 
 public class ProductService extends BaseFiscalApiService<Product> implements IProductService {
 
@@ -22,9 +19,9 @@ public class ProductService extends BaseFiscalApiService<Product> implements IPr
     }
 
     @Override
-    public CompletableFuture<ApiResponse<Integer>> getProductStock(String productId) {
+    public ApiResponse<Integer> getProductStock(String productId) {
         // Ejemplo: GET -> "api/v4/products/{productId}/stock"
         String endpoint = buildEndpoint(productId + "/stock", null);
-        return httpClient.getAsync(endpoint, Integer.class);
+        return httpClient.get(endpoint, Integer.class);
     }
 }

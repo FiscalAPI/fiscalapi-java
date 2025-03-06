@@ -1,5 +1,5 @@
 package com.fiscalapi.common;
-
+import java.util.Map;
 
 public class ValidationFailure {
     private String propertyName;
@@ -8,36 +8,63 @@ public class ValidationFailure {
     private Object customState;
     private int severity;
     private String errorCode;
+    private Map<String, Object> formattedMessagePlaceholderValues;
 
-    // Getters and Setters
-    public String getPropertyName() { return propertyName; }
-    public void setPropertyName(String propertyName) { this.propertyName = propertyName; }
+    // Getters y Setters
 
-    public String getErrorMessage() { return errorMessage; }
-    public void setErrorMessage(String errorMessage) { this.errorMessage = errorMessage; }
+    public String getPropertyName() {
+        return propertyName;
+    }
 
-    public Object getAttemptedValue() { return attemptedValue; }
-    public void setAttemptedValue(Object attemptedValue) { this.attemptedValue = attemptedValue; }
+    public void setPropertyName(String propertyName) {
+        this.propertyName = propertyName;
+    }
 
-    public Object getCustomState() { return customState; }
-    public void setCustomState(Object customState) { this.customState = customState; }
+    public String getErrorMessage() {
+        return errorMessage;
+    }
 
-    public int getSeverity() { return severity; }
-    public void setSeverity(int severity) { this.severity = severity; }
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
 
-    public String getErrorCode() { return errorCode; }
-    public void setErrorCode(String errorCode) { this.errorCode = errorCode; }
+    public Object getAttemptedValue() {
+        return attemptedValue;
+    }
 
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("ValidationFailure{");
-        sb.append("propertyName='").append(propertyName).append('\'');
-        sb.append(", errorMessage='").append(errorMessage).append('\'');
-        sb.append(", attemptedValue=").append(attemptedValue);
-        sb.append(", customState=").append(customState);
-        sb.append(", severity=").append(severity);
-        sb.append(", errorCode='").append(errorCode).append('\'');
-        sb.append('}');
-        return sb.toString();
+    public void setAttemptedValue(Object attemptedValue) {
+        this.attemptedValue = attemptedValue;
+    }
+
+    public Object getCustomState() {
+        return customState;
+    }
+
+    public void setCustomState(Object customState) {
+        this.customState = customState;
+    }
+
+    public int getSeverity() {
+        return severity;
+    }
+
+    public void setSeverity(int severity) {
+        this.severity = severity;
+    }
+
+    public String getErrorCode() {
+        return errorCode;
+    }
+
+    public void setErrorCode(String errorCode) {
+        this.errorCode = errorCode;
+    }
+
+    public Map<String, Object> getFormattedMessagePlaceholderValues() {
+        return formattedMessagePlaceholderValues;
+    }
+
+    public void setFormattedMessagePlaceholderValues(Map<String, Object> formattedMessagePlaceholderValues) {
+        this.formattedMessagePlaceholderValues = formattedMessagePlaceholderValues;
     }
 }

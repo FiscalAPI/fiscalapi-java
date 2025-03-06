@@ -9,7 +9,6 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
 
 public abstract class BaseFiscalApiService<T> implements IFiscalApiService<T> {
 
@@ -61,41 +60,41 @@ public abstract class BaseFiscalApiService<T> implements IFiscalApiService<T> {
     }
 
     @Override
-    public CompletableFuture<ApiResponse<PagedList<T>>> getListAsync(int pageNumber, int pageSize) {
+    public ApiResponse<PagedList<T>> getList(int pageNumber, int pageSize) {
         Map<String, String> queryParams = new HashMap<>();
         queryParams.put("PageNumber", String.valueOf(pageNumber));
         queryParams.put("PageSize", String.valueOf(pageSize));
 
         String endpoint = buildEndpoint("", queryParams);
-        return httpClient.getAsync(endpoint,
+        return httpClient.get(endpoint,
                 (Class<PagedList<T>>)(Class)PagedList.class // cast paramétrico
         );
     }
 
     @Override
-    public CompletableFuture<ApiResponse<T>> getByIdAsync(String id, boolean details) {
+    public ApiResponse<T> getById(String id, boolean details) {
         Map<String, String> queryParams = new HashMap<>();
         queryParams.put("details", String.valueOf(details));
         String endpoint = buildEndpoint(id, queryParams);
-        return httpClient.getAsync(endpoint, getTypeParameterClass());
+        return httpClient.get(endpoint, getTypeParameterClass());
     }
 
     @Override
-    public CompletableFuture<ApiResponse<T>> createAsync(T model) {
+    public ApiResponse<T> create(T model) {
         String endpoint = buildEndpoint("", null);
-        return httpClient.postAsync(endpoint, model, getTypeParameterClass());
+        return httpClient.post(endpoint, model, getTypeParameterClass());
     }
 
     @Override
-    public CompletableFuture<ApiResponse<T>> updateAsync(String id, T model) {
+    public ApiResponse<T> update(String id, T model) {
         String endpoint = buildEndpoint(id, null);
-        return httpClient.putAsync(endpoint, model, getTypeParameterClass());
+        return httpClient.put(endpoint, model, getTypeParameterClass());
     }
 
     @Override
-    public CompletableFuture<ApiResponse<Boolean>> deleteAsync(String id) {
+    public ApiResponse<Boolean> delete(String id) {
         String endpoint = buildEndpoint(id, null);
-        return httpClient.deleteAsync(endpoint);
+        return httpClient.delete(endpoint);
     }
 
     /**
