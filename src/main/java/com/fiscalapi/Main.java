@@ -12,7 +12,7 @@ public class Main {
         System.out.printf("Product: %s\n", "Hello Fiscalapi!");
 
         FiscalApiSettings settings = new FiscalApiSettings();
-        settings.setDebugMode(true);
+        settings.setDebugMode(false);
         settings.setApiUrl("https://localhost:7173");
         settings.setApiKey("sk_development_71a2d1ff_25c6_4063_aee8_a5da7d0b9967");
         settings.setTenant("e839651d-1765-4cd0-ba7f-547a4c20580f");

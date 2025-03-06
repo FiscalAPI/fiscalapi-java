@@ -185,20 +185,43 @@ public class FiscalApiHttpClient implements IFiscalApiHttpClient {
                             apiResponse.setData(null);
                         } else {
                             try {
-                                // Handle the case where data is an array but we expect a single object
-                                if (dataNode.isArray() && !Collection.class.isAssignableFrom(responseType)) {
-                                    // If it's an array with at least one element and we expect a single object,
-                                    // take the first element
-                                    if (dataNode.size() > 0) {
-                                        T data = objectMapper.convertValue(dataNode.get(0), responseType);
-                                        apiResponse.setData(data);
-                                    } else {
-                                        apiResponse.setData(null);
-                                    }
+                                // Manejo especial para PagedList (comprobar primero)
+                                boolean isPagedList = false;
+                                if (responseType.getSimpleName().equals("PagedList")) {
+                                    isPagedList = true;
                                 } else {
-                                    // Normal case - direct conversion
-                                    T data = objectMapper.convertValue(dataNode, responseType);
+                                    // También verificar si es una clase parametrizada (como ApiResponse<PagedList<T>>)
+                                    if (responseType.getName().contains("PagedList")) {
+                                        isPagedList = true;
+                                    }
+                                }
+
+                                // Si estamos esperando un PagedList, usamos una técnica alternativa para evitar
+                                // el error de propiedades desconocidas
+                                if (isPagedList) {
+                                    // Configurar el ObjectMapper para ignorar propiedades desconocidas al deserializar
+                                    ObjectMapper tempMapper = objectMapper.copy();
+                                    tempMapper.configure(com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+                                    // Usar el mapper temporal para la conversión
+                                    T data = tempMapper.convertValue(dataNode, responseType);
                                     apiResponse.setData(data);
+                                } else {
+                                    // Handle the case where data is an array but we expect a single object
+                                    if (dataNode.isArray() && !Collection.class.isAssignableFrom(responseType)) {
+                                        // If it's an array with at least one element and we expect a single object,
+                                        // take the first element
+                                        if (dataNode.size() > 0) {
+                                            T data = objectMapper.convertValue(dataNode.get(0), responseType);
+                                            apiResponse.setData(data);
+                                        } else {
+                                            apiResponse.setData(null);
+                                        }
+                                    } else {
+                                        // Normal case - direct conversion
+                                        T data = objectMapper.convertValue(dataNode, responseType);
+                                        apiResponse.setData(data);
+                                    }
                                 }
                             } catch (IllegalArgumentException e) {
                                 throw new RuntimeException("Error converting response data. Expected type: " +
