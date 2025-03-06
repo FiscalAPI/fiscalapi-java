@@ -1,7 +1,7 @@
 package com.fiscalapi.common;
 import java.util.Map;
 
-public class ValidationFailure {
+public class ValidationFailure  extends SerializableDto {
     private String propertyName;
     private String errorMessage;
     private Object attemptedValue;

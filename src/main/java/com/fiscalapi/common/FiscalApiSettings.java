@@ -1,6 +1,6 @@
 package com.fiscalapi.common;
 
-public class FiscalApiSettings {
+public class FiscalApiSettings extends SerializableDto{
     private String apiUrl;
     private String apiKey;
     private String apiVersion = "v4";
