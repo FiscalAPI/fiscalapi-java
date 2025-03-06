@@ -178,7 +178,6 @@ Invoice invoice = new Invoice.Builder()
 ApiResponse<Invoice> response = fiscalApi.invoices().create(invoice);
 ```
 
-[Continúa con el resto de ejemplos adaptados a Java...]
 
 ## 📄 Licencia
 
