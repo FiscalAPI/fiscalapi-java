@@ -5,7 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fiscalapi.abstractions.IFiscalApiHttpClient;
 import com.fiscalapi.common.ApiResponse;
+import com.fiscalapi.common.FiscalApiSettings;
 import okhttp3.*;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
@@ -14,10 +16,12 @@ public class FiscalApiHttpClient implements IFiscalApiHttpClient {
 
     private final OkHttpClient okHttpClient;
     private final ObjectMapper objectMapper;
+    private final FiscalApiSettings settings;
 
-    public FiscalApiHttpClient(OkHttpClient okHttpClient) {
+    public FiscalApiHttpClient(OkHttpClient okHttpClient, FiscalApiSettings settings) {
         this.okHttpClient = okHttpClient;
         this.objectMapper = new ObjectMapper();
+        this.settings = settings;
         // Se añade soporte para las fechas/hora de Java 8
         objectMapper.registerModule(new JavaTimeModule());
     }
@@ -75,28 +79,124 @@ public class FiscalApiHttpClient implements IFiscalApiHttpClient {
      * Se parsea el JSON de respuesta (independientemente del código HTTP) para extraer
      * los campos originales: data, succeeded, message, details, httpStatusCode y traceIdentifier.
      */
+//    private <T> CompletableFuture<ApiResponse<T>> executeAsync(Request request, Class<T> responseType) {
+//        CompletableFuture<ApiResponse<T>> future = new CompletableFuture<>();
+//
+//        okHttpClient.newCall(request).enqueue(new Callback() {
+//            @Override
+//            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+//                future.completeExceptionally(e);
+//            }
+//
+//            @Override
+//            public void onResponse(@NotNull Call call, @NotNull Response response) {
+//                try (ResponseBody responseBody = response.body()) {
+//                    String responseString = responseBody != null ? responseBody.string() : "";
+//                    ApiResponse<T> apiResponse = new ApiResponse<>();
+//
+//                    // Se asigna el código HTTP real
+//                    apiResponse.setHttpStatusCode(response.code());
+//
+//                    // Se parsea la respuesta a un árbol JSON
+//                    JsonNode root = objectMapper.readTree(responseString);
+//
+//                    // Se extrae el campo "data" convirtiéndolo a T si existe y no es nulo
+//                    if (root.has("data") && !root.get("data").isNull()) {
+//                        T data = objectMapper.convertValue(root.get("data"), responseType);
+//                        apiResponse.setData(data);
+//                    } else {
+//                        apiResponse.setData(null);
+//                    }
+//
+//                    // Se extrae el campo "succeeded". Si no viene, se asume el valor de response.isSuccessful()
+//                    if (root.has("succeeded")) {
+//                        apiResponse.setSucceeded(root.get("succeeded").asBoolean());
+//                    } else {
+//                        apiResponse.setSucceeded(response.isSuccessful());
+//                    }
+//
+//                    // Se asignan los campos "message" y "details" tal como vienen en la respuesta original
+//                    if (root.has("message")) {
+//                        apiResponse.setMessage(root.get("message").asText());
+//                    } else {
+//                        apiResponse.setMessage("");
+//                    }
+//
+//                    if (root.has("details")) {
+//                        apiResponse.setDetails(root.get("details").asText());
+//                    } else {
+//                        apiResponse.setDetails("");
+//                    }
+//
+//                    // Si el API incluye "traceIdentifier" y ApiResponse lo tuviera, se podría asignar aquí
+//
+//                    future.complete(apiResponse);
+//                } catch (Exception ex) {
+//                    future.completeExceptionally(ex);
+//                }
+//            }
+//        });
+//
+//        return future;
+//    }
+
     private <T> CompletableFuture<ApiResponse<T>> executeAsync(Request request, Class<T> responseType) {
         CompletableFuture<ApiResponse<T>> future = new CompletableFuture<>();
 
+        // Imprime el raw request (incluyendo el body) en formato JSON indentado si el modo debug está activado
+        if (settings.getDebugMode()) {
+            System.out.println("Raw Request:");
+            System.out.println("Method: " + request.method());
+            System.out.println("URL: " + request.url());
+            if (request.body() != null) {
+                try {
+                    okio.Buffer buffer = new okio.Buffer();
+                    request.body().writeTo(buffer);
+                    String bodyString = buffer.readUtf8();
+                    // Se intenta parsear el body como JSON para formatearlo de forma indentada
+                    try {
+                        Object json = objectMapper.readValue(bodyString, Object.class);
+                        String prettyBody = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(json);
+                        System.out.println("Body: " + prettyBody);
+                    } catch (Exception ex) {
+                        // Si falla el parseo, se imprime el body original
+                        System.out.println("Body: " + bodyString);
+                    }
+                } catch (IOException e) {
+                    System.out.println("Error al leer el request body: " + e.getMessage());
+                }
+            }
+        }
+
         okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(e);
             }
 
             @Override
-            public void onResponse(Call call, Response response) {
+            public void onResponse(@NotNull Call call, @NotNull Response response) {
                 try (ResponseBody responseBody = response.body()) {
                     String responseString = responseBody != null ? responseBody.string() : "";
-                    ApiResponse<T> apiResponse = new ApiResponse<>();
 
-                    // Se asigna el código HTTP real
+                    // Imprime el raw response en formato JSON indentado si el modo debug está activado
+                    if (settings.getDebugMode()) {
+                        System.out.println("Raw Response:");
+                        try {
+                            Object json = objectMapper.readValue(responseString, Object.class);
+                            String prettyResponse = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(json);
+                            System.out.println(prettyResponse);
+                        } catch (Exception ex) {
+                            // Si no se puede parsear a JSON, se imprime el response original
+                            System.out.println(responseString);
+                        }
+                    }
+
+                    ApiResponse<T> apiResponse = new ApiResponse<>();
                     apiResponse.setHttpStatusCode(response.code());
 
-                    // Se parsea la respuesta a un árbol JSON
                     JsonNode root = objectMapper.readTree(responseString);
 
-                    // Se extrae el campo "data" convirtiéndolo a T si existe y no es nulo
                     if (root.has("data") && !root.get("data").isNull()) {
                         T data = objectMapper.convertValue(root.get("data"), responseType);
                         apiResponse.setData(data);
@@ -104,14 +204,12 @@ public class FiscalApiHttpClient implements IFiscalApiHttpClient {
                         apiResponse.setData(null);
                     }
 
-                    // Se extrae el campo "succeeded". Si no viene, se asume el valor de response.isSuccessful()
                     if (root.has("succeeded")) {
                         apiResponse.setSucceeded(root.get("succeeded").asBoolean());
                     } else {
                         apiResponse.setSucceeded(response.isSuccessful());
                     }
 
-                    // Se asignan los campos "message" y "details" tal como vienen en la respuesta original
                     if (root.has("message")) {
                         apiResponse.setMessage(root.get("message").asText());
                     } else {
@@ -124,8 +222,6 @@ public class FiscalApiHttpClient implements IFiscalApiHttpClient {
                         apiResponse.setDetails("");
                     }
 
-                    // Si el API incluye "traceIdentifier" y ApiResponse lo tuviera, se podría asignar aquí
-
                     future.complete(apiResponse);
                 } catch (Exception ex) {
                     future.completeExceptionally(ex);
@@ -135,4 +231,6 @@ public class FiscalApiHttpClient implements IFiscalApiHttpClient {
 
         return future;
     }
+
+
 }

@@ -18,7 +18,7 @@ public class FiscalApiClient implements IFiscalApiClient {
 
         // Native and Fiscalapi clients
         OkHttpClient okHttpClient = OkHttpClientFactory.createClient(settings);
-        FiscalApiHttpClient httpClient = new FiscalApiHttpClient(okHttpClient);
+        FiscalApiHttpClient httpClient = new FiscalApiHttpClient(okHttpClient, settings);
 
         // Instanciar servicios concretos
         this.invoiceService = new InvoiceService(httpClient, settings);
