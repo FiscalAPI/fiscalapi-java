@@ -34,10 +34,10 @@ public class Main {
 
 
 
-        // obtener una lista paginada
-
-        ApiResponse<PagedList<Product>> apiResponse = client.getProductService().getList(1,2);
-        System.out.printf("apiResponse: %s\n", apiResponse);
+//        // obtener una lista paginada
+//
+//        ApiResponse<PagedList<Product>> apiResponse = client.getProductService().getList(1,2);
+//        System.out.printf("apiResponse: %s\n", apiResponse);
 
 
 
