@@ -11,19 +11,22 @@ public class FiscalApiClient implements IFiscalApiClient {
     private final IInvoiceService invoiceService;
     private final IProductService productService;
     private final IPersonService personService;
+    private final IApiKeyService apiKeyService;
     // etc.
 
     private FiscalApiClient(FiscalApiSettings settings) {
         validateSettings(settings);
 
-        // Native and Fiscalapi clients
+        // http clients
         OkHttpClient okHttpClient = OkHttpClientFactory.createClient(settings);
         FiscalApiHttpClient httpClient = new FiscalApiHttpClient(okHttpClient, settings);
 
-        // Instanciar servicios concretos
+        // Inicializar servicios
         this.invoiceService = new InvoiceService(httpClient, settings);
         this.productService = new ProductService(httpClient, settings);
         this.personService = new PersonService(httpClient, settings);
+        this.apiKeyService = new ApiKeyService(httpClient, settings);
+
         // ...
     }
 
@@ -44,6 +47,11 @@ public class FiscalApiClient implements IFiscalApiClient {
     @Override
     public IPersonService getPersonService() {
         return personService;
+    }
+
+    @Override
+    public IApiKeyService getApiKeyService() {
+        return apiKeyService;
     }
 
     // etc...

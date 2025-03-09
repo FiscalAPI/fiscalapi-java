@@ -4,5 +4,6 @@ public interface IFiscalApiClient {
     IInvoiceService getInvoiceService();
     IProductService getProductService();
     IPersonService getPersonService();
+    IApiKeyService getApiKeyService();
     // ... etc
 }
