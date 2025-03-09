@@ -1,4 +1,6 @@
 package com.fiscalapi.models;
 
-public class Invoice {
+import com.fiscalapi.common.BaseDto;
+
+public class Invoice extends BaseDto {
 }

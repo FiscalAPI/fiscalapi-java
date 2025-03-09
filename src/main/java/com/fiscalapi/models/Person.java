@@ -1,4 +1,6 @@
 package com.fiscalapi.models;
 
-public class Person {
+import com.fiscalapi.common.BaseDto;
+
+public class Person extends BaseDto {
 }

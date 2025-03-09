@@ -3,7 +3,6 @@ package com.fiscalapi.models;
 import com.fiscalapi.common.AuditableDto;
 import com.fiscalapi.common.BaseDto;
 import com.fiscalapi.common.CatalogDto;
-import java.math.BigDecimal;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
 

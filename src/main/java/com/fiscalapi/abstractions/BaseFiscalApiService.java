@@ -1,6 +1,7 @@
 package com.fiscalapi.abstractions;
 
 import com.fiscalapi.common.ApiResponse;
+import com.fiscalapi.common.BaseDto;
 import com.fiscalapi.common.FiscalApiSettings;
 import com.fiscalapi.common.PagedList;
 
@@ -10,7 +11,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class BaseFiscalApiService<T> implements IFiscalApiService<T> {
+public abstract class BaseFiscalApiService<T extends BaseDto> implements IFiscalApiService<T> {
 
     protected final IFiscalApiHttpClient httpClient;
     protected final FiscalApiSettings settings;
@@ -86,8 +87,11 @@ public abstract class BaseFiscalApiService<T> implements IFiscalApiService<T> {
     }
 
     @Override
-    public ApiResponse<T> update(String id, T model) {
-        String endpoint = buildEndpoint(id, null);
+    public ApiResponse<T> update(T model) {
+        if (model.getId() == null || model.getId().trim().isEmpty())
+            throw new IllegalArgumentException("El id del modelo no puede ser nulo o vacío.");
+
+        String endpoint = buildEndpoint(model.getId(), null);
         return httpClient.put(endpoint, model, getTypeParameterClass());
     }
 
