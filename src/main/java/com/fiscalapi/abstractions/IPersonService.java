@@ -9,9 +9,6 @@ import com.fiscalapi.models.Person;
  */
 public interface IPersonService extends IFiscalApiService<Person> {
 
-    /**
-     * Ejemplo de método adicional específico de "Person".
-     * Por ejemplo, para activar a una persona.
-     */
-    ApiResponse<Boolean> activatePerson(String personId);
+
+    // other specific methods
 }

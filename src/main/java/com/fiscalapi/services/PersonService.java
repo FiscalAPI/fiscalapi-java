@@ -24,11 +24,4 @@ public class PersonService extends BaseFiscalApiService<Person> implements IPers
         return Person.class;
     }
 
-    @Override
-    public ApiResponse<Boolean> activatePerson(String personId) {
-        // Ejemplo de endpoint -> "api/v4/persons/{personId}/activate"
-        String endpoint = buildEndpoint(personId + "/activate", null);
-        // Suponiendo que el body es nulo o requiere un body vacío
-        return httpClient.post(endpoint, null, Boolean.class);
-    }
 }

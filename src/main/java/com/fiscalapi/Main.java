@@ -4,6 +4,7 @@ import com.fiscalapi.common.ApiResponse;
 import com.fiscalapi.common.FiscalApiSettings;
 import com.fiscalapi.common.PagedList;
 import com.fiscalapi.models.ApiKey;
+import com.fiscalapi.models.Person;
 import com.fiscalapi.models.Product;
 import com.fiscalapi.models.ProductTax;
 import com.fiscalapi.services.FiscalApiClient;
@@ -24,6 +25,46 @@ public class Main {
         FiscalApiClient client = FiscalApiClient.create(settings);
 
         //region Personas (emisores/clientes/empresas, receptores/clientes/empresas, usuarios)
+
+//        // ***Listar personas: pageNumber=1, pageSize=2 ***//
+//        ApiResponse<PagedList<Person>> apiResponse = client.getPersonService().getList(1,2);
+//        System.out.println(apiResponse);
+
+//        // ***Obtener persona por id ***//
+//        ApiResponse<Person> apiResponse = client.getPersonService().getById("3a12e4b6-642b-4a6b-ba73-c814e4c2c873",false);
+//        System.out.printf("apiResponse: %s\n", apiResponse);
+
+
+//        // ***Crear persona ***//
+//
+//        Person person = new Person();
+//        person.setLegalName("MI EMPRESA");
+//        person.setCapitalRegime("S.A De C.V");
+//        person.setEmail("john.doe@fiscalapi.com");
+//        person.setPassword("Password123!");
+//        ApiResponse<Person> apiResponse = client.getPersonService().create(person);
+//        System.out.printf("apiResponse: %s\n", apiResponse);
+
+
+//        // ***Actualizar persona ***//
+//        Person person = new Person();
+//        person.setId("ca3df64a-2ecc-47b0-899d-38c29141979e");
+//        person.setLegalName("KARLA FUENTE NOLASCO"); // Razón social sin regimen de capital.
+//        person.setSatCfdiUseId("G03"); // Gastos en general
+//        person.setSatTaxRegimeId("601"); // General de Ley Personas Morales
+//        person.setZipCode("01160"); // Código postal de la constancia de situación fiscal.
+//        ApiResponse<Person> apiResponse = client.getPersonService().update(person);
+//        System.out.printf("apiResponse: %s\n", apiResponse);
+
+
+        // ***Eliminar persona ***//
+
+        ApiResponse<Boolean> apiResponse = client.getPersonService().delete("ca3df64a-2ecc-47b0-899d-38c29141979e");
+        System.out.println(apiResponse);
+
+
+
+
 
         //endregion
 
