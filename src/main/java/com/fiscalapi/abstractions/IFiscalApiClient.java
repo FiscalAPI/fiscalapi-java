@@ -6,5 +6,6 @@ public interface IFiscalApiClient {
     IPersonService getPersonService();
     IApiKeyService getApiKeyService();
     ITaxFileService getTaxFileService();
+    ICatalogService getCatalogService();
     // ... etc
 }

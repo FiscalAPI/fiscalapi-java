@@ -1,12 +1,11 @@
 package com.fiscalapi;
-
 import com.fiscalapi.common.ApiResponse;
+import com.fiscalapi.common.CatalogDto;
 import com.fiscalapi.common.FiscalApiSettings;
 import com.fiscalapi.common.PagedList;
 import com.fiscalapi.models.*;
 import com.fiscalapi.services.FiscalApiClient;
 import org.jetbrains.annotations.NotNull;
-
 import java.util.*;
 
 public class Main {
@@ -210,6 +209,26 @@ public class Main {
 //        // ***Eliminar producto por Id***//
 //        ApiResponse<Boolean> apiResponse = client.getProductService().delete("c29b091c-8b26-4bf5-8d34-436d0acefe4e");
 //        System.out.printf("apiResponse: %s\n", apiResponse);
+
+        //endregion
+
+        //region Catálogos del SAT
+
+//        // ***Obtener catálogos disponibles: https://docs.fiscalapi.com/catalogs#equivalencia-entre-catalogos-del-sat-y-fiscalapi ***//
+//        ApiResponse<List<String>> apiResponse = client.getCatalogService().getList();
+//        System.out.printf("apiResponse: %s\n", apiResponse);
+
+//        // ***Obtener un registro por Id de un catálogo específico ***//
+//        ApiResponse<CatalogDto> apiResponse = client.getCatalogService().getRecordById("SatProductCodes","84111500");
+//        System.out.printf("apiResponse: %s\n", apiResponse);
+
+
+//        // ***Buscar un catálogo específico por criterio de búsqueda ***//
+
+//        //Busca todos los registros que contengan 'Serv' en el catálogo 'SatProductCodes', inicia en la página 1 y con tamaño de página de 10 registros.
+//        ApiResponse<PagedList<CatalogDto>> apiResponse = client.getCatalogService().searchCatalog("SatProductCodes", "Serv", 1, 10);
+//        System.out.printf("apiResponse: %s\n", apiResponse);
+
 
         //endregion
 
