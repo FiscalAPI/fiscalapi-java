@@ -57,7 +57,9 @@ public class Main {
 //        // ***Eliminar persona ***//
 //        ApiResponse<Boolean> apiResponse = client.getPersonService().delete("ca3df64a-2ecc-47b0-899d-38c29141979e");
 //        System.out.println(apiResponse);
+        //endregion
 
+        //region Certificados (sellos SAT)
 
 //        // ***Listar certificados (sellos SAT): pageNumber=1, pageSize=2 ***//
 //        ApiResponse<PagedList<TaxFile>> apiResponse = client.getTaxFileService().getList(1,2);
@@ -113,11 +115,7 @@ public class Main {
 //        ApiResponse<Boolean> apiResponseKey = client.getTaxFileService().delete("d3e5e24e-f198-4c95-aebe-4d93aac22b27");
 //        System.out.println(apiResponseKey);
 
-
         //endregion
-
-
-
 
         //region Api-Keys
 
@@ -214,6 +212,7 @@ public class Main {
 //        System.out.printf("apiResponse: %s\n", apiResponse);
 
         //endregion
+
 
         System.out.printf("Product: %s\n", "End Fiscalapi!");
     }
