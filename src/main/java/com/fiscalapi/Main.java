@@ -3,10 +3,7 @@ package com.fiscalapi;
 import com.fiscalapi.common.ApiResponse;
 import com.fiscalapi.common.FiscalApiSettings;
 import com.fiscalapi.common.PagedList;
-import com.fiscalapi.models.ApiKey;
-import com.fiscalapi.models.Person;
-import com.fiscalapi.models.Product;
-import com.fiscalapi.models.ProductTax;
+import com.fiscalapi.models.*;
 import com.fiscalapi.services.FiscalApiClient;
 import org.jetbrains.annotations.NotNull;
 
@@ -57,13 +54,64 @@ public class Main {
 //        System.out.printf("apiResponse: %s\n", apiResponse);
 
 
-        // ***Eliminar persona ***//
-
-        ApiResponse<Boolean> apiResponse = client.getPersonService().delete("ca3df64a-2ecc-47b0-899d-38c29141979e");
-        System.out.println(apiResponse);
-
+//        // ***Eliminar persona ***//
+//        ApiResponse<Boolean> apiResponse = client.getPersonService().delete("ca3df64a-2ecc-47b0-899d-38c29141979e");
+//        System.out.println(apiResponse);
 
 
+//        // ***Listar certificados (sellos SAT): pageNumber=1, pageSize=2 ***//
+//        ApiResponse<PagedList<TaxFile>> apiResponse = client.getTaxFileService().getList(1,2);
+//        System.out.println(apiResponse);
+
+
+//        // ***Obtener certificado por Id (sellos SAT) ***//
+//        ApiResponse<TaxFile> apiResponse = client.getTaxFileService().getById("02713656-e27e-4be7-8b4b-c5e8a32794ed",false);
+//        System.out.printf("apiResponse: %s\n", apiResponse);
+
+
+
+//        // ***Obtener certificados por defecto (sellos SAT) de una persona (default values) ***//
+//         ApiResponse<List<TaxFile>> apiResponse = client.getTaxFileService().getDefaultValues("3a12e4b6-642b-4a6b-ba73-c814e4c2c873");
+//         System.out.printf("apiResponse: %s\n", apiResponse);
+
+//        // ***Obtener ids de los certificados por defecto (sellos SAT) de una persona (default references) ***//
+//         ApiResponse<List<TaxFile>> apiResponse = client.getTaxFileService().getDefaultReferences("3a12e4b6-642b-4a6b-ba73-c814e4c2c873");
+//         System.out.printf("apiResponse: %s\n", apiResponse);
+
+
+//        // ***Subir certificados (sellos SAT) de una persona (KARLA FUENTE NOLASCO) se deben enviar dos peticiones, una para cada archivo***//
+//
+//        //Subir archivo .cer (certificado)
+//        TaxFile archivoCer = new TaxFile();
+//        archivoCer.setPersonId("3f3478b4-60fd-459e-8bfc-f8239fc96257");
+//        archivoCer.setTin("FUNK671228PH6");
+//        archivoCer.setBase64File("MIIFgDCCA2igAwIBAgIUMzAwMDEwMDAwMDA1MDAwMDM0NDYwDQYJKoZIhvcNAQELBQAwggErMQ8wDQYDVQQDDAZBQyBVQVQxLjAsBgNVBAoMJVNFUlZJQ0lPIERFIEFETUlOSVNUUkFDSU9OIFRSSUJVVEFSSUExGjAYBgNVBAsMEVNBVC1JRVMgQXV0aG9yaXR5MSgwJgYJKoZIhvcNAQkBFhlvc2Nhci5tYXJ0aW5lekBzYXQuZ29iLm14MR0wGwYDVQQJDBQzcmEgY2VycmFkYSBkZSBjYWxpejEOMAwGA1UEEQwFMDYzNzAxCzAJBgNVBAYTAk1YMRkwFwYDVQQIDBBDSVVEQUQgREUgTUVYSUNPMREwDwYDVQQHDAhDT1lPQUNBTjERMA8GA1UELRMIMi41LjQuNDUxJTAjBgkqhkiG9w0BCQITFnJlc3BvbnNhYmxlOiBBQ0RNQS1TQVQwHhcNMjMwNTE4MTQzNTM3WhcNMjcwNTE4MTQzNTM3WjCBpzEdMBsGA1UEAxMUS0FSTEEgRlVFTlRFIE5PTEFTQ08xHTAbBgNVBCkTFEtBUkxBIEZVRU5URSBOT0xBU0NPMR0wGwYDVQQKExRLQVJMQSBGVUVOVEUgTk9MQVNDTzEWMBQGA1UELRMNRlVOSzY3MTIyOFBINjEbMBkGA1UEBRMSRlVOSzY3MTIyOE1DTE5MUjA1MRMwEQYDVQQLEwpTdWN1cnNhbCAxMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhNXbTSqGX6+/3Urpemyy5vVG2IdP2v7v001+c4BoMxEDFDQ32cOFdDiRxy0Fq9aR+Ojrofq8VeftvN586iyA1A6a0QnA68i7JnQKI4uJy+u0qiixuHu6u3b3BhSpoaVHcUtqFWLLlzr0yBxfVLOqVna/1/tHbQJg9hx57mp97P0JmXO1WeIqi+Zqob/mVZh2lsPGdJ8iqgjYFaFn9QVOQ1Pq74o1PTqwfzqgJSfV0zOOlESDPWggaDAYE4VNyTBisOUjlNd0x7ppcTxSi3yenrJHqkq/pqJsRLKf6VJ/s9p6bsd2bj07hSDpjlDC2lB25eEfkEkeMkXoE7ErXQ5QCwIDAQABox0wGzAMBgNVHRMBAf8EAjAAMAsGA1UdDwQEAwIGwDANBgkqhkiG9w0BAQsFAAOCAgEAHwYpgbClHULXYhK4GNTgonvXh81oqfXwCSWAyDPiTYFDWVfWM9C4ApxMLyc0XvJte75Rla+bPC08oYN3OlhbbvP3twBL/w9SsfxvkbpFn2ZfGSTXZhyiq4vjmQHW1pnFvGelwgU4v3eeRE/MjoCnE7M/Q5thpuog6WGf7CbKERnWZn8QsUaJsZSEkg6Bv2jm69ye57ab5rrOUaeMlstTfdlaHAEkUgLX/NXq7RbGwv82hkHY5b2vYcXeh34tUMBL6os3OdRlooN9ZQGkVIISvxVZpSHkYC20DFNh1Bb0ovjfujlTcka81GnbUhFGZtRuoVQ1RVpMO8xtx3YKBLp4do3hPmnRCV5hCm43OIjYx9Ov2dqICV3AaNXSLV1dW39Bak/RBiIDGHzOIW2+VMPjvvypBjmPv/tmbqNHWPSAWOxTyMx6E1gFCZvi+5F+BgkdC3Lm7U0BU0NfvsXajZd8sXnIllvEMrikCLoI/yurvexNDcF1RW/FhMsoua0eerwczcNm66pGjHm05p9DR6lFeJZrtqeqZuojdxBWy4vH6ghyJaupergoX+nmdG3JYeRttCFF/ITI68TeCES5V3Y0C3psYAg1XxcGRLGd4chPo/4xwiLkijWtgt0/to5ljGBwfK7r62PHZfL1Dp+i7V3w7hmOlhbXzP+zhMZn1GCk7KY=");
+//        archivoCer.setFileType(0); // 0 para certificado
+//        archivoCer.setPassword("12345678a");
+//
+//        ApiResponse<TaxFile> apiResponseCer = client.getTaxFileService().create(archivoCer);
+//        System.out.printf("apiResponse: %s\n", apiResponseCer);
+//
+//
+//        //Subir archivo .key (clave privada)
+//        TaxFile archivoKey = new TaxFile();
+//        archivoKey.setPersonId("3f3478b4-60fd-459e-8bfc-f8239fc96257");
+//        archivoKey.setTin("FUNK671228PH6");
+//        archivoKey.setBase64File("MIIFDjBABgkqhkiG9w0BBQ0wMzAbBgkqhkiG9w0BBQwwDgQIAgEAAoIBAQACAggAMBQGCCqGSIb3DQMHBAgwggS9AgEAMASCBMh4EHl7aNSCaMDA1VlRoXCZ5UUmqErAbucRBAKNQXH8t8gVCl/ItHMI2hMJ76QOECOqEi1Y89cDpegDvh/INXyMsXbzi87tfFzgq1O+9ID6aPWGg+bNGADXyXxDVdy7Nq/SCdoXvo66MTYwq8jyJeUHDHEGMVBcmZpD44VJCvLBxDcvByuevP4Wo2NKqJCwK+ecAdZc/8Rvd947SjbMHuS8BppfQWARVUqA5BLOkTAHNv6tEk/hncC7O2YOGSShart8fM8dokgGSyewHVFe08POuQ+WDHeVpvApH/SP29rwktSoiHRoL6dK+F2YeEB5SuFW9LQgYCutjapmUP/9TC3Byro9Li6UrvQHxNmgMFGQJSYjFdqlGjLibfuguLp7pueutbROoZaSxU8HqlfYxLkpJUxUwNI1ja/1t3wcivtWknVXBd13R06iVfU1HGe8Kb4u5il4a4yP4p7VT4RE3b1SBLJeG+BxHiE8gFaaKcX/Cl6JV14RPTvk/6VnAtEQ66qHJex21KKuiJo2JoOmDXVHmvGQlWXNjYgoPx28Xd5WsofL+n7HDR2Ku8XgwJw6IXBJGuoday9qWN9v/k7DGlNGB6Sm4gdVUmycMP6EGhB1vFTiDfOGQO42ywmcpKoMETPVQ5InYKE0xAOckgcminDgxWjtUHjBDPEKifEjYudPwKmR6Cf4ZdGvUWwY/zq9pPAC9bu423KeBCnSL8AQ4r5SVsW6XG0njamwfNjpegwh/YG7sS7sDtZ8gi7r6tZYjsOqZlCYU0j7QTBpuQn81Yof2nQRCFxhRJCeydmIA8+z0nXrcElk7NDPk4kYQS0VitJ2qeQYNENzGBglROkCl2y6GlxAG80IBtReCUp/xOSdlwDR0eim+SNkdStvmQM5IcWBuDKwGZc1A4v/UoLl7niV9fpl4X6bUX8lZzY4gidJOafoJ30VoY/lYGkrkEuz3GpbbT5v8fF3iXVRlEqhlpe8JSGu7Rd2cPcJSkQ1Cuj/QRhHPhFMF2KhTEf95c9ZBKI8H7SvBi7eLXfSW2Y0ve6vXBZKyjK9whgCU9iVOsJjqRXpAccaWOKi420CjmS0+uwj/Xr2wLZhPEjBA/G6Od30+eG9mICmbp/5wAGhK/ZxCT17ZETyFmOMo49jl9pxdKocJNuzMrLpSz7/g5Jwp8+y8Ck5YP7AX0R/dVA0t37DO7nAbQT5XVSYpMVh/yvpYJ9WR+tb8Yg1h2lERLR2fbuhQRcwmisZR2W3Sr2b7hX9MCMkMQw8y2fDJrzLrqKqkHcjvnI/TdzZW2MzeQDoBBb3fmgvjYg07l4kThS73wGX992w2Y+a1A2iirSmrYEm9dSh16JmXa8boGQAONQzQkHh7vpw0IBs9cnvqO1QLB1GtbBztUBXonA4TxMKLYZkVrrd2RhrYWMsDp7MpC4M0p/DA3E/qscYwq1OpwriewNdx6XXqMZbdUNqMP2viBY2VSGmNdHtVfbN/rnaeJetFGX7XgTVYD7wDq8TW9yseCK944jcT+y/o0YiT9j3OLQ2Ts0LDTQskpJSxRmXEQGy3NBDOYFTvRkcGJEQJItuol8NivJN1H9LoLIUAlAHBZxfHpUYx66YnP4PdTdMIWH+nxyekKPFfAT7olQ=");
+//        archivoKey.setFileType(1); // 1 para llave privada
+//        archivoKey.setPassword("12345678a");
+//
+//        ApiResponse<TaxFile> apiResponseKey = client.getTaxFileService().create(archivoKey);
+//        System.out.printf("apiResponse: %s\n", apiResponseKey);
+
+
+//        // ***Eliminar certificado o clave privada (Sellos) se deben enviar dos peticiones, una para cada archivo***//
+//        ApiResponse<Boolean> apiResponseCer = client.getTaxFileService().delete("1cf1c0e3-af58-47fb-8e51-78afdecf53f2");
+//        System.out.println(apiResponseCer);
+//
+//
+//        ApiResponse<Boolean> apiResponseKey = client.getTaxFileService().delete("d3e5e24e-f198-4c95-aebe-4d93aac22b27");
+//        System.out.println(apiResponseKey);
 
 
         //endregion

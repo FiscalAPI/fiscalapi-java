@@ -12,6 +12,7 @@ public class FiscalApiClient implements IFiscalApiClient {
     private final IProductService productService;
     private final IPersonService personService;
     private final IApiKeyService apiKeyService;
+    private final ITaxFileService taxFileService;
     // etc.
 
     private FiscalApiClient(FiscalApiSettings settings) {
@@ -26,6 +27,7 @@ public class FiscalApiClient implements IFiscalApiClient {
         this.productService = new ProductService(httpClient, settings);
         this.personService = new PersonService(httpClient, settings);
         this.apiKeyService = new ApiKeyService(httpClient, settings);
+        this.taxFileService = new TaxFileService(httpClient, settings);
 
         // ...
     }
@@ -53,6 +55,12 @@ public class FiscalApiClient implements IFiscalApiClient {
     public IApiKeyService getApiKeyService() {
         return apiKeyService;
     }
+
+    @Override
+    public ITaxFileService getTaxFileService() {
+        return taxFileService;
+    }
+
 
     // etc...
 

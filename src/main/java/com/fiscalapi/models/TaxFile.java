@@ -1,8 +1,10 @@
 package com.fiscalapi.models;
 
+import com.fiscalapi.common.BaseDto;
+
 import java.util.Date;
 
-public class TaxFile {
+public class TaxFile extends BaseDto {
     private String personId;
     private String tin;
     private String base64File;
