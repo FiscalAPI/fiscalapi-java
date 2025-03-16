@@ -16,13 +16,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  *   <li><code>satTaxObjectId</code>: "02"</li>
  *   <li><code>satProductCodeId</code>: "01010101"</li>
  * </ul>
- * </p>
  *
  * <p>Esta clase extiende de {@link BaseDto} que a su vez extiende de {@link AuditableDto}.</p>
- *
- * @see BaseDto
- * @see AuditableDto
- * @see CatalogDto
  */
 public class Product extends BaseDto {
 

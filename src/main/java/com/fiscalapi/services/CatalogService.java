@@ -15,6 +15,8 @@ public class CatalogService extends BaseFiscalApiService<CatalogDto> implements 
 
     /**
      * Crea un CatalogService con el path "catalogs" y la versión de API dada.
+     * @param httpClient Cliente HTTP utilizado para realizar las peticiones a la API
+     * @param settings Configuración con los parámetros de conexión a la API
      */
     public CatalogService(IFiscalApiHttpClient httpClient, FiscalApiSettings settings) {
         super(httpClient, settings, "catalogs", settings.getApiVersion());
@@ -53,6 +55,7 @@ public class CatalogService extends BaseFiscalApiService<CatalogDto> implements 
 
     /**
      * Debido al type erasure, se utiliza este método para retornar la clase base de List.
+     * @return La clase de List&lt;String&gt; para manejar la deserialización
      */
     @SuppressWarnings("unchecked")
     protected Class<List<String>> getStringListTypeParameterClass() {
@@ -82,7 +85,7 @@ public class CatalogService extends BaseFiscalApiService<CatalogDto> implements 
 
     /**
      * Busca en un catálogo.
-     * GET /api/{apiVersion}/catalogs/{catalogName}/{searchText}?pageNumber=x&pageSize=y
+     * GET /api/{apiVersion}/catalogs/{catalogName}/{searchText}?pageNumber=x&amp;pageSize=y
      */
     @Override
     public ApiResponse<PagedList<CatalogDto>> searchCatalog(String catalogName, String searchText, int pageNumber, int pageSize) {

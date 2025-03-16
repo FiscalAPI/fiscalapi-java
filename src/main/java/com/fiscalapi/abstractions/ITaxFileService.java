@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * Define el contrato específico para operaciones con "tax-file".
- * Hereda las operaciones básicas (CRUD) de IFiscalApiService<TaxFile>.
+ * Hereda las operaciones básicas (CRUD) de IFiscalApiService&lt;TaxFile&gt;.
  */
 public interface ITaxFileService extends IFiscalApiService<TaxFile> {
 

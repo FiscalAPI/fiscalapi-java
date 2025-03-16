@@ -14,6 +14,8 @@ public class TaxFileService extends BaseFiscalApiService<TaxFile> implements ITa
 
     /**
      * Crea un TaxFileService con el path "tax-files" y la versión de API dada.
+     * @param httpClient Cliente HTTP utilizado para realizar las peticiones a la API
+     * @param settings Configuración con los parámetros de conexión a la API
      */
     public TaxFileService(IFiscalApiHttpClient httpClient, FiscalApiSettings settings) {
         super(httpClient, settings, "tax-files", settings.getApiVersion());

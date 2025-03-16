@@ -120,7 +120,9 @@ protected String buildEndpoint(String path, Map<String, String> queryParams) {
      * Truco para obtener la clase en tiempo de ejecución.
      *
      * Se puede usar reflection o sobrescribir este método en subclases
-     * para devolver el Class<T> correspondiente.
+     * para devolver el Class&lt;T&gt; correspondiente.
+     *
+     * @return La clase del tipo paramétrico T usado en este servicio
      */
     protected abstract Class<T> getTypeParameterClass();
 }

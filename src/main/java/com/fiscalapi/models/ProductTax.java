@@ -17,7 +17,6 @@ import java.math.BigDecimal;
  *   <li><strong>taxFlagId</strong>: "T", "R"</li>
  *   <li><strong>taxTypeId</strong>: "Tasa", "Cuota", "Exento"</li>
  * </ul>
- * </p>
  *
  * @see CatalogDto
  */
@@ -215,17 +214,5 @@ public class ProductTax extends BaseDto {
         this.taxType = taxType;
     }
 
-    @Override
-    public String toString() {
-        return "ProductTax{" +
-                "productId='" + productId + '\'' +
-                ", rate=" + rate +
-                ", taxId='" + taxId + '\'' +
-                ", tax=" + tax +
-                ", taxFlagId='" + taxFlagId + '\'' +
-                ", taxFlag=" + taxFlag +
-                ", taxTypeId='" + taxTypeId + '\'' +
-                ", taxType=" + taxType +
-                "} " + super.toString();
-    }
+
 }

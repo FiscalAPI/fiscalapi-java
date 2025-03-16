@@ -4,18 +4,62 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <!-- Información básica del proyecto -->
     <groupId>com.fiscalapi</groupId>
     <artifactId>fiscalapi</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>4.0.124</version>
+    <packaging>jar</packaging>
 
+    <!-- Metadatos del proyecto -->
+    <name>Fiscalapi</name>
+    <description>Genera facturas CFDI válidas ante el SAT consumiendo el API de https://www.fiscalapi.com</description>
+    <url>https://www.fiscalapi.com</url>
+    <inceptionYear>2019</inceptionYear>
+
+    <!-- Información de la organización -->
+    <organization>
+        <name>FISCAL API S DE R.L DE C.V</name>
+        <url>https://www.fiscalapi.com</url>
+    </organization>
+
+    <!-- Licencia -->
+    <licenses>
+        <license>
+            <name>Mozilla Public License 2.0</name>
+            <url>https://www.mozilla.org/en-US/MPL/2.0/</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <!-- Información del desarrollador -->
+    <developers>
+        <developer>
+            <id>fiscalapi</id>
+            <name>Fiscalapi Team</name>
+            <email>info@fiscalapi.com</email>
+            <organization>FISCAL API S DE R.L DE C.V</organization>
+            <organizationUrl>https://www.fiscalapi.com</organizationUrl>
+        </developer>
+    </developers>
+
+    <!-- Sistema de control de versiones -->
+    <scm>
+        <connection>scm:git:https://github.com/FiscalAPI/fiscalapi-java.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com:FiscalAPI/fiscalapi-java.git</developerConnection>
+        <url>https://github.com/FiscalAPI/fiscalapi-java</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <!-- Propiedades del proyecto -->
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <gpg.executable>gpg</gpg.executable>
+        <gpg.passphrase>${env.GPG_PASSPHRASE}</gpg.passphrase>
     </properties>
 
     <dependencies>
-
         <!-- OkHttp -->
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
@@ -36,5 +80,71 @@
             <version>2.14.2</version>
         </dependency>
     </dependencies>
+
+    <!-- Configuración de construcción -->
+    <build>
+        <plugins>
+            <!-- Plugin para generar el JAR del código fuente -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Plugin para generar la documentación Javadoc -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.3.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Plugin para firmar los artefactos con GPG -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>3.0.1</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Plugin para publicar en Central Publisher Portal -->
+            <plugin>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>0.7.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <publishingServerId>central</publishingServerId>
+                    <autoPublish>true</autoPublish>
+                    <waitUntil>published</waitUntil>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+
 
 </project>

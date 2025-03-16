@@ -10,7 +10,7 @@ public interface ICatalogService extends IFiscalApiService<CatalogDto> {
     /**
      * GET /api/{apiVersion}/catalogs
      * Recupera todos los nombres de los catálogos disponibles para búsquedas.
-     * @return ApiResponse con una lista de nombres de catálogos (List<String>).
+     * @return ApiResponse con una lista de nombres de catálogos (List&lt;String&gt;).
      */
     ApiResponse<List<String>> getList();
 
@@ -24,7 +24,7 @@ public interface ICatalogService extends IFiscalApiService<CatalogDto> {
     ApiResponse<CatalogDto> getRecordById(String catalogName, String id);
 
     /**
-     * GET /api/{apiVersion}/catalogs/{catalogName}/{searchText}?pageNumber=x&pageSize=y
+     * GET /api/{apiVersion}/catalogs/{catalogName}/{searchText}?pageNumber=x&amp;pageSize=y
      * Busca en un catálogo.
      * @param catalogName Nombre del catálogo.
      * @param searchText Criterio de búsqueda (mínimo 4 caracteres).
