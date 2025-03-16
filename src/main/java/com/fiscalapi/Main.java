@@ -4,6 +4,7 @@ import com.fiscalapi.common.CatalogDto;
 import com.fiscalapi.common.FiscalApiSettings;
 import com.fiscalapi.common.PagedList;
 import com.fiscalapi.models.*;
+import com.fiscalapi.models.invoicing.Invoice;
 import com.fiscalapi.services.FiscalApiClient;
 import org.jetbrains.annotations.NotNull;
 import java.util.*;
@@ -232,6 +233,13 @@ public class Main {
 
         //endregion
 
+        //region Facturas
+
+        ApiResponse<Invoice> apiResponse = client.getInvoiceService().getById("bda0b31d-e1e0-4644-91ea-c6f0e90fb57c",true);
+        System.out.printf("apiResponse: %s\n", apiResponse);
+
+
+        //endregion
 
         System.out.printf("Product: %s\n", "End Fiscalapi!");
     }

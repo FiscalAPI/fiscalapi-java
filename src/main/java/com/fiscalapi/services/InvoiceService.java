@@ -5,7 +5,7 @@ import com.fiscalapi.abstractions.IFiscalApiHttpClient;
 import com.fiscalapi.abstractions.IInvoiceService;
 import com.fiscalapi.common.ApiResponse;
 import com.fiscalapi.common.FiscalApiSettings;
-import com.fiscalapi.models.Invoice;
+import com.fiscalapi.models.invoicing.Invoice;
 
 public class InvoiceService extends BaseFiscalApiService<Invoice> implements IInvoiceService {
 

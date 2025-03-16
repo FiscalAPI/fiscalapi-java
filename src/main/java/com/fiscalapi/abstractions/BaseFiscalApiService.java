@@ -30,31 +30,70 @@ public abstract class BaseFiscalApiService<T extends BaseDto> implements IFiscal
         this.apiVersion = apiVersion;
     }
 
-    protected String buildEndpoint(String path, Map<String, String> queryParams) {
-
-        String baseUrl = settings.getApiUrl();
-        if (baseUrl.endsWith("/")) {
-            baseUrl = baseUrl.substring(0, baseUrl.length() - 1);
-        }
-
-        StringBuilder fullUrl = new StringBuilder(baseUrl)
-                .append("/api/")
-                .append(apiVersion)
-                .append("/")
-                .append(resourcePath);
-
-        if (path != null && !path.isEmpty()) {
-            fullUrl.append("/").append(path);
-        }
-
-        // Manejo de query params
-        if (queryParams != null && !queryParams.isEmpty()) {
-            fullUrl.append("?");
-            // ...
-        }
-
-        return fullUrl.toString();
+//    protected String buildEndpoint(String path, Map<String, String> queryParams) {
+//
+//        String baseUrl = settings.getApiUrl();
+//        if (baseUrl.endsWith("/")) {
+//            baseUrl = baseUrl.substring(0, baseUrl.length() - 1);
+//        }
+//
+//        StringBuilder fullUrl = new StringBuilder(baseUrl)
+//                .append("/api/")
+//                .append(apiVersion)
+//                .append("/")
+//                .append(resourcePath);
+//
+//        if (path != null && !path.isEmpty()) {
+//            fullUrl.append("/").append(path);
+//        }
+//
+//        // Manejo de query params
+//        if (queryParams != null && !queryParams.isEmpty()) {
+//            fullUrl.append("?");
+//            // ...
+//        }
+//
+//        return fullUrl.toString();
+//    }
+protected String buildEndpoint(String path, Map<String, String> queryParams) {
+    String baseUrl = settings.getApiUrl();
+    if (baseUrl.endsWith("/")) {
+        baseUrl = baseUrl.substring(0, baseUrl.length() - 1);
     }
+
+    StringBuilder fullUrl = new StringBuilder(baseUrl)
+            .append("/api/")
+            .append(apiVersion)
+            .append("/")
+            .append(resourcePath);
+
+    if (path != null && !path.isEmpty()) {
+        fullUrl.append("/").append(path);
+    }
+
+    // Manejo de query params
+    if (queryParams != null && !queryParams.isEmpty()) {
+        fullUrl.append("?");
+        boolean first = true;
+        for (Map.Entry<String, String> entry : queryParams.entrySet()) {
+            try {
+                if (!first) {
+                    fullUrl.append("&");
+                }
+                fullUrl.append(encode(entry.getKey()))
+                        .append("=")
+                        .append(encode(entry.getValue()));
+                first = false;
+            } catch (UnsupportedEncodingException e) {
+                throw new RuntimeException("Error al codificar parámetros URL", e);
+            }
+        }
+    }
+
+    return fullUrl.toString();
+}
+
+
 
     private String encode(String value) throws UnsupportedEncodingException {
         return URLEncoder.encode(value, StandardCharsets.UTF_8.name());
