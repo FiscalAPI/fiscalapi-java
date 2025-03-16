@@ -1,7 +1,7 @@
 package com.fiscalapi.models.invoicing;
 
 /**
- * Modelo de respuesta para generación de PDF o recuperación de XML
+ * Modelo de respuesta de archivos en la api.
  */
 public class FileResponse {
     private String base64File;

@@ -60,6 +60,8 @@ public class FiscalApiHttpClient implements IFiscalApiHttpClient {
         return execute(request, responseType);
     }
 
+
+
     @Override
     public ApiResponse<Boolean> delete(String url) {
         Request request = new Request.Builder()
@@ -68,6 +70,17 @@ public class FiscalApiHttpClient implements IFiscalApiHttpClient {
                 .build();
         return execute(request, Boolean.class);
     }
+
+    @Override
+    public <T> ApiResponse<T> delete(String url, Object body, Class<T> responseType) {
+        RequestBody requestBody = createRequestBody(body);
+        Request request = new Request.Builder()
+                .url(url)
+                .delete(requestBody)
+                .build();
+        return execute(request, responseType);
+    }
+
 
     // Método auxiliar para serializar el body de la solicitud
     private RequestBody createRequestBody(Object body) {

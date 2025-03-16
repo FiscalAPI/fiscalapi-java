@@ -3,7 +3,7 @@ package com.fiscalapi.models.invoicing;
 /**
  * Modelo para la generación de PDF
  */
-public class PdfGenerationRequest {
+public class PdfRequest {
     private String invoiceId;
     private String bandColor;
     private String fontColor;

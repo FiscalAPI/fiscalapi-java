@@ -5,7 +5,7 @@ import com.fiscalapi.abstractions.IFiscalApiHttpClient;
 import com.fiscalapi.abstractions.IInvoiceService;
 import com.fiscalapi.common.ApiResponse;
 import com.fiscalapi.common.FiscalApiSettings;
-import com.fiscalapi.models.invoicing.Invoice;
+import com.fiscalapi.models.invoicing.*;
 
 public class InvoiceService extends BaseFiscalApiService<Invoice> implements IInvoiceService {
 
@@ -19,10 +19,32 @@ public class InvoiceService extends BaseFiscalApiService<Invoice> implements IIn
     }
 
     @Override
-    public ApiResponse<Invoice> cancelInvoice(String invoiceId) {
-        String endpoint = buildEndpoint(invoiceId + "/cancel", null);
-        // Supongamos que el body es vacío:
-        return httpClient.post(endpoint, null, Invoice.class);
+    public ApiResponse<InvoiceCancellationResponse> cancel(InvoiceCancellationRequest requestModel) {
+
+        String endpoint = buildEndpoint("", null);
+        return httpClient.delete(endpoint, requestModel, InvoiceCancellationResponse.class);
+    }
+
+    @Override
+    public ApiResponse<InvoiceStatusResponse> status(InvoiceStatusRequest request) {
+
+        String endpoint = buildEndpoint("status", null);
+
+        return httpClient.post(endpoint, request, InvoiceStatusResponse.class);
+    }
+
+    @Override
+    public ApiResponse<PdfResponse> getPdf(PdfRequest request) {
+
+        String endpoint = buildEndpoint("pdf", null);
+
+        return httpClient.post(endpoint, request, PdfResponse.class);
+    }
+
+    @Override
+    public ApiResponse<Boolean> send(InvoiceEmailRequest request) {
+        String endpoint = buildEndpoint("send", null);
+        return httpClient.post(endpoint, request, Boolean.class);
     }
 
 
