@@ -30,31 +30,7 @@ public abstract class BaseFiscalApiService<T extends BaseDto> implements IFiscal
         this.apiVersion = apiVersion;
     }
 
-//    protected String buildEndpoint(String path, Map<String, String> queryParams) {
-//
-//        String baseUrl = settings.getApiUrl();
-//        if (baseUrl.endsWith("/")) {
-//            baseUrl = baseUrl.substring(0, baseUrl.length() - 1);
-//        }
-//
-//        StringBuilder fullUrl = new StringBuilder(baseUrl)
-//                .append("/api/")
-//                .append(apiVersion)
-//                .append("/")
-//                .append(resourcePath);
-//
-//        if (path != null && !path.isEmpty()) {
-//            fullUrl.append("/").append(path);
-//        }
-//
-//        // Manejo de query params
-//        if (queryParams != null && !queryParams.isEmpty()) {
-//            fullUrl.append("?");
-//            // ...
-//        }
-//
-//        return fullUrl.toString();
-//    }
+
 protected String buildEndpoint(String path, Map<String, String> queryParams) {
     String baseUrl = settings.getApiUrl();
     if (baseUrl.endsWith("/")) {
