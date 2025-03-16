@@ -381,7 +381,7 @@ public class Main {
         ItemTax iva = new ItemTax();
         iva.setTaxCode("002"); // iva
         iva.setTaxTypeCode("Tasa"); // Tasa
-        iva.setTaxRate(new BigDecimal("0.160000")); // 16%
+        iva.setTaxRate("0.160000"); // 16%
         iva.setTaxFlagCode("T"); // T = Traslado | R = Retención
 
         //Agrega iva a los impuestos

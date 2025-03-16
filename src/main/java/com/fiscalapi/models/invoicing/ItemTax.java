@@ -24,8 +24,10 @@ public class ItemTax {
     public BigDecimal getTaxRate() {
         return taxRate;
     }
-    public void setTaxRate(BigDecimal taxRate) {
-        this.taxRate = taxRate;
+
+    //string para facilitar la asignación de valores, Big decimal para evitar la perdida de escala y presición del dooble.
+    public void setTaxRate(String taxRate) {
+        this.taxRate = new BigDecimal(taxRate);
     }
     public String getTaxFlagCode() {
         return taxFlagCode;
