@@ -21,6 +21,9 @@ public interface IInvoiceService extends IFiscalApiService<Invoice> {
 
     ApiResponse<Boolean> send (InvoiceEmailRequest request);
 
+    // Obtener XML de factura por Id.
+
+    ApiResponse<XmlResponse> getXml(String id);
 
     // etc.
 }

@@ -47,6 +47,15 @@ public class InvoiceService extends BaseFiscalApiService<Invoice> implements IIn
         return httpClient.post(endpoint, request, Boolean.class);
     }
 
+    @Override
+    public ApiResponse<XmlResponse> getXml(String id) {
+
+        //path = id/xml
+        String path = id + "/xml";
+        String endpoint = buildEndpoint(path, null);
+        return  httpClient.get(endpoint, XmlResponse.class);
+    }
+
 
     @Override
     public ApiResponse<Invoice> create(Invoice model) {

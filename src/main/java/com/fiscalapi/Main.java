@@ -18,7 +18,7 @@ public class Main {
         System.out.printf("%s\n", "Hello Fiscalapi!");
 
         FiscalApiSettings settings = new FiscalApiSettings();
-        settings.setDebugMode(false);
+        settings.setDebugMode(true);
         settings.setApiUrl("https://localhost:7173");
         settings.setApiKey("sk_development_e0e47dfa_5146_40c2_b3a3_3055909a6b88");
         settings.setTenant("e839651d-1765-4cd0-ba7f-547a4c20580f");
@@ -1272,14 +1272,20 @@ public class Main {
 //        System.out.println(apiResponse);
 
 
-        // Enviar factura al correo por referencias
-        InvoiceEmailRequest request = new InvoiceEmailRequest("96d93ff4-95c6-4381-858a-6551259d17ad", "soporte@fiscalapi.com");
+//        // Enviar factura al correo por referencias
+//        InvoiceEmailRequest request = new InvoiceEmailRequest("96d93ff4-95c6-4381-858a-6551259d17ad", "soporte@fiscalapi.com");
+//
+//        ApiResponse<Boolean> apiResponse = client.getInvoiceService().send(request);
+//        System.out.println(apiResponse);
 
-        ApiResponse<Boolean> apiResponse = client.getInvoiceService().send(request);
-        System.out.println(apiResponse);
+
+//        // Recuperar XML de una factura por id.
+//        ApiResponse<XmlResponse> response = client.getInvoiceService().getXml("b984ce17-05c0-431c-98de-7e28a378d909");
+//        System.out.println(response);
 
 
         //endregion
+
 
 
 
