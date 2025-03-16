@@ -11,6 +11,9 @@ import java.time.temporal.ChronoField;
 import java.util.List;
 import java.time.format.DateTimeFormatter;
 
+import static com.fiscalapi.models.invoicing.InvoiceConstants.SAT_DATE_FORMAT_IN;
+import static com.fiscalapi.models.invoicing.InvoiceConstants.SAT_DATE_FORMAT_OUT;
+
 
 /**
  * Modelo anémico que representa una factura electrónica.
@@ -18,21 +21,6 @@ import java.time.format.DateTimeFormatter;
  * productos/servicios, importes, método de pago, tipo de factura, entre otros.
  */
 public class Invoice extends BaseDto{
-    // Formato para serialización (siempre debe ser exactamente yyyy-MM-ddTHH:mm:ss)
-    private static final DateTimeFormatter SAT_DATE_FORMAT_OUT = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
-
-    // Formato flexible para deserialización (soporta varios formatos de entrada)
-    private static final DateTimeFormatter SAT_DATE_FORMAT_IN = new DateTimeFormatterBuilder()
-            .appendPattern("yyyy-MM-dd'T'HH:mm:ss")
-            .optionalStart()
-            .appendFraction(ChronoField.NANO_OF_SECOND, 0, 7, true)
-            .optionalEnd()
-            .optionalStart()
-            .appendOffset("+HH:MM", "Z")
-            .optionalEnd()
-            .toFormatter();
-
-
 
     private String versionCode;
     private String series;

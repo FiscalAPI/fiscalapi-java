@@ -3,6 +3,7 @@ package com.fiscalapi.common;
 import java.time.LocalDateTime;
 
 public class AuditableDto extends  SerializableDto {
+
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 

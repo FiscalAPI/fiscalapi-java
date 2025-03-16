@@ -6,7 +6,7 @@ import java.util.List;
 public class PaidInvoice {
     private String uuid;
     private String series;
-    private Double amount;
+    private Double paymentAmount;
     private String number;
     private String currencyCode;
     private Integer partialityNumber;
@@ -29,11 +29,11 @@ public class PaidInvoice {
     public void setSeries(String series) {
         this.series = series;
     }
-    public Double getAmount() {
-        return amount;
+    public Double getPaymentAmount() {
+        return paymentAmount;
     }
-    public void setAmount(Double amount) {
-        this.amount = amount;
+    public void setPaymentAmount(Double amount) {
+        this.paymentAmount = amount;
     }
     public String getNumber() {
         return number;

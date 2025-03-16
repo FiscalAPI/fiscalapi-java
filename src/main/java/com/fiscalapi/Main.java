@@ -18,7 +18,7 @@ public class Main {
         System.out.printf("%s\n", "Hello Fiscalapi!");
 
         FiscalApiSettings settings = new FiscalApiSettings();
-        settings.setDebugMode(true);
+        settings.setDebugMode(false);
         settings.setApiUrl("https://localhost:7173");
         settings.setApiKey("sk_development_e0e47dfa_5146_40c2_b3a3_3055909a6b88");
         settings.setTenant("e839651d-1765-4cd0-ba7f-547a4c20580f");
@@ -246,159 +246,940 @@ public class Main {
 //        ApiResponse<PagedList<Invoice>> apiResponse = client.getInvoiceService().getList(1,3);
 //        System.out.printf("apiResponse: %s\n", apiResponse);
 
-        // ***Crear factura por valores. Vea: https://docs.fiscalapi.com/modes-of-operation ***//
-
-        /*
-        * {
-                  "versionCode": "4.0",
-                  "series": "F",
-                  "date": "2025-02-25T20:28:40",
-                  "paymentFormCode": "01",
-                  "paymentMethodCode": "PUE",
-                  "currencyCode": "MXN",
-                  "typeCode": "I",
-                  "expeditionZipCode": "42501",
-                  "exchangeRate": 1,
-                  "exportCode": "01",
-                  "issuer": {
-                    "tin": "FUNK671228PH6",
-                    "legalName": "KARLA FUENTE NOLASCO",
-                    "taxRegimeCode": "621",
-                    "taxCredentials": [
-                      {
-                        "base64File": "MIIFgDCCA2igAwIBAgIUMzAwMDEwMDAwMDA1MDAwMDM0NDYwDQYJKoZIhvcNAQELBQAwggErMQ8wDQYDVQQDDAZBQyBVQVQxLjAsBgNVBAoMJVNFUlZJQ0lPIERFIEFETUlOSVNUUkFDSU9OIFRSSUJVVEFSSUExGjAYBgNVBAsMEVNBVC1JRVMgQXV0aG9yaXR5MSgwJgYJKoZIhvcNAQkBFhlvc2Nhci5tYXJ0aW5lekBzYXQuZ29iLm14MR0wGwYDVQQJDBQzcmEgY2VycmFkYSBkZSBjYWxpejEOMAwGA1UEEQwFMDYzNzAxCzAJBgNVBAYTAk1YMRkwFwYDVQQIDBBDSVVEQUQgREUgTUVYSUNPMREwDwYDVQQHDAhDT1lPQUNBTjERMA8GA1UELRMIMi41LjQuNDUxJTAjBgkqhkiG9w0BCQITFnJlc3BvbnNhYmxlOiBBQ0RNQS1TQVQwHhcNMjMwNTE4MTQzNTM3WhcNMjcwNTE4MTQzNTM3WjCBpzEdMBsGA1UEAxMUS0FSTEEgRlVFTlRFIE5PTEFTQ08xHTAbBgNVBCkTFEtBUkxBIEZVRU5URSBOT0xBU0NPMR0wGwYDVQQKExRLQVJMQSBGVUVOVEUgTk9MQVNDTzEWMBQGA1UELRMNRlVOSzY3MTIyOFBINjEbMBkGA1UEBRMSRlVOSzY3MTIyOE1DTE5MUjA1MRMwEQYDVQQLEwpTdWN1cnNhbCAxMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhNXbTSqGX6+/3Urpemyy5vVG2IdP2v7v001+c4BoMxEDFDQ32cOFdDiRxy0Fq9aR+Ojrofq8VeftvN586iyA1A6a0QnA68i7JnQKI4uJy+u0qiixuHu6u3b3BhSpoaVHcUtqFWLLlzr0yBxfVLOqVna/1/tHbQJg9hx57mp97P0JmXO1WeIqi+Zqob/mVZh2lsPGdJ8iqgjYFaFn9QVOQ1Pq74o1PTqwfzqgJSfV0zOOlESDPWggaDAYE4VNyTBisOUjlNd0x7ppcTxSi3yenrJHqkq/pqJsRLKf6VJ/s9p6bsd2bj07hSDpjlDC2lB25eEfkEkeMkXoE7ErXQ5QCwIDAQABox0wGzAMBgNVHRMBAf8EAjAAMAsGA1UdDwQEAwIGwDANBgkqhkiG9w0BAQsFAAOCAgEAHwYpgbClHULXYhK4GNTgonvXh81oqfXwCSWAyDPiTYFDWVfWM9C4ApxMLyc0XvJte75Rla+bPC08oYN3OlhbbvP3twBL/w9SsfxvkbpFn2ZfGSTXZhyiq4vjmQHW1pnFvGelwgU4v3eeRE/MjoCnE7M/Q5thpuog6WGf7CbKERnWZn8QsUaJsZSEkg6Bv2jm69ye57ab5rrOUaeMlstTfdlaHAEkUgLX/NXq7RbGwv82hkHY5b2vYcXeh34tUMBL6os3OdRlooN9ZQGkVIISvxVZpSHkYC20DFNh1Bb0ovjfujlTcka81GnbUhFGZtRuoVQ1RVpMO8xtx3YKBLp4do3hPmnRCV5hCm43OIjYx9Ov2dqICV3AaNXSLV1dW39Bak/RBiIDGHzOIW2+VMPjvvypBjmPv/tmbqNHWPSAWOxTyMx6E1gFCZvi+5F+BgkdC3Lm7U0BU0NfvsXajZd8sXnIllvEMrikCLoI/yurvexNDcF1RW/FhMsoua0eerwczcNm66pGjHm05p9DR6lFeJZrtqeqZuojdxBWy4vH6ghyJaupergoX+nmdG3JYeRttCFF/ITI68TeCES5V3Y0C3psYAg1XxcGRLGd4chPo/4xwiLkijWtgt0/to5ljGBwfK7r62PHZfL1Dp+i7V3w7hmOlhbXzP+zhMZn1GCk7KY=",
-                        "fileType": 0,
-                        "password": "12345678a"
-                      },
-                      {
-                        "base64File": "MIIFDjBABgkqhkiG9w0BBQ0wMzAbBgkqhkiG9w0BBQwwDgQIAgEAAoIBAQACAggAMBQGCCqGSIb3DQMHBAgwggS9AgEAMASCBMh4EHl7aNSCaMDA1VlRoXCZ5UUmqErAbucRBAKNQXH8t8gVCl/ItHMI2hMJ76QOECOqEi1Y89cDpegDvh/INXyMsXbzi87tfFzgq1O+9ID6aPWGg+bNGADXyXxDVdy7Nq/SCdoXvo66MTYwq8jyJeUHDHEGMVBcmZpD44VJCvLBxDcvByuevP4Wo2NKqJCwK+ecAdZc/8Rvd947SjbMHuS8BppfQWARVUqA5BLOkTAHNv6tEk/hncC7O2YOGSShart8fM8dokgGSyewHVFe08POuQ+WDHeVpvApH/SP29rwktSoiHRoL6dK+F2YeEB5SuFW9LQgYCutjapmUP/9TC3Byro9Li6UrvQHxNmgMFGQJSYjFdqlGjLibfuguLp7pueutbROoZaSxU8HqlfYxLkpJUxUwNI1ja/1t3wcivtWknVXBd13R06iVfU1HGe8Kb4u5il4a4yP4p7VT4RE3b1SBLJeG+BxHiE8gFaaKcX/Cl6JV14RPTvk/6VnAtEQ66qHJex21KKuiJo2JoOmDXVHmvGQlWXNjYgoPx28Xd5WsofL+n7HDR2Ku8XgwJw6IXBJGuoday9qWN9v/k7DGlNGB6Sm4gdVUmycMP6EGhB1vFTiDfOGQO42ywmcpKoMETPVQ5InYKE0xAOckgcminDgxWjtUHjBDPEKifEjYudPwKmR6Cf4ZdGvUWwY/zq9pPAC9bu423KeBCnSL8AQ4r5SVsW6XG0njamwfNjpegwh/YG7sS7sDtZ8gi7r6tZYjsOqZlCYU0j7QTBpuQn81Yof2nQRCFxhRJCeydmIA8+z0nXrcElk7NDPk4kYQS0VitJ2qeQYNENzGBglROkCl2y6GlxAG80IBtReCUp/xOSdlwDR0eim+SNkdStvmQM5IcWBuDKwGZc1A4v/UoLl7niV9fpl4X6bUX8lZzY4gidJOafoJ30VoY/lYGkrkEuz3GpbbT5v8fF3iXVRlEqhlpe8JSGu7Rd2cPcJSkQ1Cuj/QRhHPhFMF2KhTEf95c9ZBKI8H7SvBi7eLXfSW2Y0ve6vXBZKyjK9whgCU9iVOsJjqRXpAccaWOKi420CjmS0+uwj/Xr2wLZhPEjBA/G6Od30+eG9mICmbp/5wAGhK/ZxCT17ZETyFmOMo49jl9pxdKocJNuzMrLpSz7/g5Jwp8+y8Ck5YP7AX0R/dVA0t37DO7nAbQT5XVSYpMVh/yvpYJ9WR+tb8Yg1h2lERLR2fbuhQRcwmisZR2W3Sr2b7hX9MCMkMQw8y2fDJrzLrqKqkHcjvnI/TdzZW2MzeQDoBBb3fmgvjYg07l4kThS73wGX992w2Y+a1A2iirSmrYEm9dSh16JmXa8boGQAONQzQkHh7vpw0IBs9cnvqO1QLB1GtbBztUBXonA4TxMKLYZkVrrd2RhrYWMsDp7MpC4M0p/DA3E/qscYwq1OpwriewNdx6XXqMZbdUNqMP2viBY2VSGmNdHtVfbN/rnaeJetFGX7XgTVYD7wDq8TW9yseCK944jcT+y/o0YiT9j3OLQ2Ts0LDTQskpJSxRmXEQGy3NBDOYFTvRkcGJEQJItuol8NivJN1H9LoLIUAlAHBZxfHpUYx66YnP4PdTdMIWH+nxyekKPFfAT7olQ=",
-                        "fileType": 1,
-                        "password": "12345678a"
-                      }
-                    ]
-                  },
-                  "recipient": {
-                    "tin": "EKU9003173C9",
-                    "legalName": "ESCUELA KEMPER URGATE",
-                    "zipCode": "42501",
-                    "taxRegimeCode": "601",
-                    "cfdiUseCode": "G01",
-                    "email": "someone@somewhere.com"
-                  },
-                  "items": [
-                    {
-                      "itemCode": "01010101",
-                      "quantity": 9.5,
-                      "unitOfMeasurementCode": "E48",
-                      "unitOfMeasurement": "Unidad de servicio",
-                      "description": "Invoicing software as a service",
-                      "unitPrice": 3587.75,
-                      "taxObjectCode": "02",
-                      "itemSku": "7506022301697",
-                      "discount": 255.85,
-                      "itemTaxes": [
-                        {
-                          "taxCode": "002",
-                          "taxTypeCode": "Tasa",
-                          "taxRate": 0.160000,
-                          "TaxFlagCode": "T"
-                        }
-                      ]
-                    }
-                  ]
-                }
-        * */
 
 
-        Invoice invoice = new Invoice();
-        invoice.setVersionCode("4.0");
-        invoice.setTypeCode("I");
-        invoice.setSeries("F");
-        invoice.setDate(LocalDateTime.now());
-        invoice.setPaymentFormCode("01");
-        invoice.setPaymentMethodCode("PUE");
-        invoice.setExpeditionZipCode("42501");
+        // Sellos de KARLA FUENTE NOLASCO. Ver https://docs.fiscalapi.com/tax-files-info#codificacion-de-fiel-o-csd-en-base64
+        final String base64Cer = "MIIFgDCCA2igAwIBAgIUMzAwMDEwMDAwMDA1MDAwMDM0NDYwDQYJKoZIhvcNAQELBQAwggErMQ8wDQYDVQQDDAZBQyBVQVQxLjAsBgNVBAoMJVNFUlZJQ0lPIERFIEFETUlOSVNUUkFDSU9OIFRSSUJVVEFSSUExGjAYBgNVBAsMEVNBVC1JRVMgQXV0aG9yaXR5MSgwJgYJKoZIhvcNAQkBFhlvc2Nhci5tYXJ0aW5lekBzYXQuZ29iLm14MR0wGwYDVQQJDBQzcmEgY2VycmFkYSBkZSBjYWxpejEOMAwGA1UEEQwFMDYzNzAxCzAJBgNVBAYTAk1YMRkwFwYDVQQIDBBDSVVEQUQgREUgTUVYSUNPMREwDwYDVQQHDAhDT1lPQUNBTjERMA8GA1UELRMIMi41LjQuNDUxJTAjBgkqhkiG9w0BCQITFnJlc3BvbnNhYmxlOiBBQ0RNQS1TQVQwHhcNMjMwNTE4MTQzNTM3WhcNMjcwNTE4MTQzNTM3WjCBpzEdMBsGA1UEAxMUS0FSTEEgRlVFTlRFIE5PTEFTQ08xHTAbBgNVBCkTFEtBUkxBIEZVRU5URSBOT0xBU0NPMR0wGwYDVQQKExRLQVJMQSBGVUVOVEUgTk9MQVNDTzEWMBQGA1UELRMNRlVOSzY3MTIyOFBINjEbMBkGA1UEBRMSRlVOSzY3MTIyOE1DTE5MUjA1MRMwEQYDVQQLEwpTdWN1cnNhbCAxMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhNXbTSqGX6+/3Urpemyy5vVG2IdP2v7v001+c4BoMxEDFDQ32cOFdDiRxy0Fq9aR+Ojrofq8VeftvN586iyA1A6a0QnA68i7JnQKI4uJy+u0qiixuHu6u3b3BhSpoaVHcUtqFWLLlzr0yBxfVLOqVna/1/tHbQJg9hx57mp97P0JmXO1WeIqi+Zqob/mVZh2lsPGdJ8iqgjYFaFn9QVOQ1Pq74o1PTqwfzqgJSfV0zOOlESDPWggaDAYE4VNyTBisOUjlNd0x7ppcTxSi3yenrJHqkq/pqJsRLKf6VJ/s9p6bsd2bj07hSDpjlDC2lB25eEfkEkeMkXoE7ErXQ5QCwIDAQABox0wGzAMBgNVHRMBAf8EAjAAMAsGA1UdDwQEAwIGwDANBgkqhkiG9w0BAQsFAAOCAgEAHwYpgbClHULXYhK4GNTgonvXh81oqfXwCSWAyDPiTYFDWVfWM9C4ApxMLyc0XvJte75Rla+bPC08oYN3OlhbbvP3twBL/w9SsfxvkbpFn2ZfGSTXZhyiq4vjmQHW1pnFvGelwgU4v3eeRE/MjoCnE7M/Q5thpuog6WGf7CbKERnWZn8QsUaJsZSEkg6Bv2jm69ye57ab5rrOUaeMlstTfdlaHAEkUgLX/NXq7RbGwv82hkHY5b2vYcXeh34tUMBL6os3OdRlooN9ZQGkVIISvxVZpSHkYC20DFNh1Bb0ovjfujlTcka81GnbUhFGZtRuoVQ1RVpMO8xtx3YKBLp4do3hPmnRCV5hCm43OIjYx9Ov2dqICV3AaNXSLV1dW39Bak/RBiIDGHzOIW2+VMPjvvypBjmPv/tmbqNHWPSAWOxTyMx6E1gFCZvi+5F+BgkdC3Lm7U0BU0NfvsXajZd8sXnIllvEMrikCLoI/yurvexNDcF1RW/FhMsoua0eerwczcNm66pGjHm05p9DR6lFeJZrtqeqZuojdxBWy4vH6ghyJaupergoX+nmdG3JYeRttCFF/ITI68TeCES5V3Y0C3psYAg1XxcGRLGd4chPo/4xwiLkijWtgt0/to5ljGBwfK7r62PHZfL1Dp+i7V3w7hmOlhbXzP+zhMZn1GCk7KY=";
+        final String base64Key = "MIIFDjBABgkqhkiG9w0BBQ0wMzAbBgkqhkiG9w0BBQwwDgQIAgEAAoIBAQACAggAMBQGCCqGSIb3DQMHBAgwggS9AgEAMASCBMh4EHl7aNSCaMDA1VlRoXCZ5UUmqErAbucRBAKNQXH8t8gVCl/ItHMI2hMJ76QOECOqEi1Y89cDpegDvh/INXyMsXbzi87tfFzgq1O+9ID6aPWGg+bNGADXyXxDVdy7Nq/SCdoXvo66MTYwq8jyJeUHDHEGMVBcmZpD44VJCvLBxDcvByuevP4Wo2NKqJCwK+ecAdZc/8Rvd947SjbMHuS8BppfQWARVUqA5BLOkTAHNv6tEk/hncC7O2YOGSShart8fM8dokgGSyewHVFe08POuQ+WDHeVpvApH/SP29rwktSoiHRoL6dK+F2YeEB5SuFW9LQgYCutjapmUP/9TC3Byro9Li6UrvQHxNmgMFGQJSYjFdqlGjLibfuguLp7pueutbROoZaSxU8HqlfYxLkpJUxUwNI1ja/1t3wcivtWknVXBd13R06iVfU1HGe8Kb4u5il4a4yP4p7VT4RE3b1SBLJeG+BxHiE8gFaaKcX/Cl6JV14RPTvk/6VnAtEQ66qHJex21KKuiJo2JoOmDXVHmvGQlWXNjYgoPx28Xd5WsofL+n7HDR2Ku8XgwJw6IXBJGuoday9qWN9v/k7DGlNGB6Sm4gdVUmycMP6EGhB1vFTiDfOGQO42ywmcpKoMETPVQ5InYKE0xAOckgcminDgxWjtUHjBDPEKifEjYudPwKmR6Cf4ZdGvUWwY/zq9pPAC9bu423KeBCnSL8AQ4r5SVsW6XG0njamwfNjpegwh/YG7sS7sDtZ8gi7r6tZYjsOqZlCYU0j7QTBpuQn81Yof2nQRCFxhRJCeydmIA8+z0nXrcElk7NDPk4kYQS0VitJ2qeQYNENzGBglROkCl2y6GlxAG80IBtReCUp/xOSdlwDR0eim+SNkdStvmQM5IcWBuDKwGZc1A4v/UoLl7niV9fpl4X6bUX8lZzY4gidJOafoJ30VoY/lYGkrkEuz3GpbbT5v8fF3iXVRlEqhlpe8JSGu7Rd2cPcJSkQ1Cuj/QRhHPhFMF2KhTEf95c9ZBKI8H7SvBi7eLXfSW2Y0ve6vXBZKyjK9whgCU9iVOsJjqRXpAccaWOKi420CjmS0+uwj/Xr2wLZhPEjBA/G6Od30+eG9mICmbp/5wAGhK/ZxCT17ZETyFmOMo49jl9pxdKocJNuzMrLpSz7/g5Jwp8+y8Ck5YP7AX0R/dVA0t37DO7nAbQT5XVSYpMVh/yvpYJ9WR+tb8Yg1h2lERLR2fbuhQRcwmisZR2W3Sr2b7hX9MCMkMQw8y2fDJrzLrqKqkHcjvnI/TdzZW2MzeQDoBBb3fmgvjYg07l4kThS73wGX992w2Y+a1A2iirSmrYEm9dSh16JmXa8boGQAONQzQkHh7vpw0IBs9cnvqO1QLB1GtbBztUBXonA4TxMKLYZkVrrd2RhrYWMsDp7MpC4M0p/DA3E/qscYwq1OpwriewNdx6XXqMZbdUNqMP2viBY2VSGmNdHtVfbN/rnaeJetFGX7XgTVYD7wDq8TW9yseCK944jcT+y/o0YiT9j3OLQ2Ts0LDTQskpJSxRmXEQGy3NBDOYFTvRkcGJEQJItuol8NivJN1H9LoLIUAlAHBZxfHpUYx66YnP4PdTdMIWH+nxyekKPFfAT7olQ=";
+        final String password = "12345678a";
 
-        // Emisor
-        InvoiceIssuer emisor = new InvoiceIssuer();
-        emisor.setLegalName("KARLA FUENTE NOLASCO");
-        emisor.setTin("FUNK671228PH6");
-        emisor.setTaxRegimeCode("621");
+//        /***Crear factura por valores. Vea: https://docs.fiscalapi.com/modes-of-operation ** */
+//
+//        Invoice invoice = new Invoice();
+//        invoice.setVersionCode("4.0");
+//        invoice.setTypeCode("I");
+//        invoice.setSeries("F");
+//        invoice.setDate(LocalDateTime.now());
+//        invoice.setPaymentFormCode("01");
+//        invoice.setPaymentMethodCode("PUE");
+//        invoice.setExpeditionZipCode("42501");
+//
+//        // Emisor
+//        InvoiceIssuer emisor = new InvoiceIssuer();
+//        emisor.setLegalName("KARLA FUENTE NOLASCO");
+//        emisor.setTin("FUNK671228PH6");
+//        emisor.setTaxRegimeCode("621");
+//
+//        // Certificados emisor (sellos)
+//        List<TaxCredential> sellos = new ArrayList<>();
+//
+//        TaxCredential cer = new TaxCredential();
+//        cer.setBase64File(base64Cer);
+//        cer.setFileType(0); // 0=Certificado (.cer) | 1 Clave privada (.key)
+//        cer.setPassword(password);
+//
+//        TaxCredential key = new TaxCredential();
+//        key.setBase64File(base64Key);
+//        key.setFileType(1); // 0=Certificado (.cer) | 1 Clave privada (.key)
+//        key.setPassword(password);
+//
+//
+//        //asignar certificado y clave privada a la lista sellos
+//        sellos.add(cer);
+//        sellos.add(key);
+//
+//        // Asignar sellos del emisor al emisor.
+//        emisor.setTaxCredentials(sellos);
+//
+//        //Asignar el emisor a la factura
+//        invoice.setIssuer(emisor);
+//
+//
+//        // Receptor
+//        InvoiceRecipient receptor = new InvoiceRecipient();
+//        receptor.setLegalName("ESCUELA KEMPER URGATE"); // Razón social
+//        receptor.setTin("EKU9003173C9"); // RFC
+//        receptor.setZipCode("42501");
+//        receptor.setTaxRegimeCode("601");
+//        receptor.setCfdiUseCode("G01");
+//        receptor.setEmail("someone@somewhere.com");
+//
+//        invoice.setRecipient(receptor);
+//
+//        // Productos / Servicios de la factura.
+//
+//        List<InvoiceItem> items = new ArrayList<>();
+//        InvoiceItem item = new InvoiceItem();
+//
+//        item.setItemCode("01010101");
+//        item.setQuantity(9.5);
+//        item.setUnitOfMeasurementCode("E48");
+//        item.setDescription("Invoicing software as a service.");
+//        item.setUnitPrice(3587.75);
+//        item.setTaxObjectCode("02");
+//        item.setItemSku("7506022301697");
+//        item.setDiscount(255.85);
+//
+//        // impuestos del producto
+//
+//        List<ItemTax> taxes = new ArrayList<>();
+//        ItemTax iva = new ItemTax();
+//        iva.setTaxCode("002"); // iva
+//        iva.setTaxTypeCode("Tasa"); // Tasa
+//        iva.setTaxRate("0.160000"); // 16%
+//        iva.setTaxFlagCode("T"); // T = Traslado | R = Retención
+//
+//        //Agrega iva a los impuestos
+//        taxes.add(iva);
+//
+//        //Agrega la lista de impuestos al producto.
+//        item.setItemTaxes(taxes);
+//
+//        // Agrega el producto a la lista de productos.
+//        items.add(item);
+//
+//        // Agrega la lista de productos a la factura.
+//        invoice.setItems(items);
+//
+//
+//        ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+//        System.out.println(apiResponse);
 
-        // Certificados emisor (sellos)
-        List<TaxCredential> sellos = new ArrayList<>();
-
-        TaxCredential cer = new TaxCredential();
-        cer.setBase64File("MIIFgDCCA2igAwIBAgIUMzAwMDEwMDAwMDA1MDAwMDM0NDYwDQYJKoZIhvcNAQELBQAwggErMQ8wDQYDVQQDDAZBQyBVQVQxLjAsBgNVBAoMJVNFUlZJQ0lPIERFIEFETUlOSVNUUkFDSU9OIFRSSUJVVEFSSUExGjAYBgNVBAsMEVNBVC1JRVMgQXV0aG9yaXR5MSgwJgYJKoZIhvcNAQkBFhlvc2Nhci5tYXJ0aW5lekBzYXQuZ29iLm14MR0wGwYDVQQJDBQzcmEgY2VycmFkYSBkZSBjYWxpejEOMAwGA1UEEQwFMDYzNzAxCzAJBgNVBAYTAk1YMRkwFwYDVQQIDBBDSVVEQUQgREUgTUVYSUNPMREwDwYDVQQHDAhDT1lPQUNBTjERMA8GA1UELRMIMi41LjQuNDUxJTAjBgkqhkiG9w0BCQITFnJlc3BvbnNhYmxlOiBBQ0RNQS1TQVQwHhcNMjMwNTE4MTQzNTM3WhcNMjcwNTE4MTQzNTM3WjCBpzEdMBsGA1UEAxMUS0FSTEEgRlVFTlRFIE5PTEFTQ08xHTAbBgNVBCkTFEtBUkxBIEZVRU5URSBOT0xBU0NPMR0wGwYDVQQKExRLQVJMQSBGVUVOVEUgTk9MQVNDTzEWMBQGA1UELRMNRlVOSzY3MTIyOFBINjEbMBkGA1UEBRMSRlVOSzY3MTIyOE1DTE5MUjA1MRMwEQYDVQQLEwpTdWN1cnNhbCAxMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhNXbTSqGX6+/3Urpemyy5vVG2IdP2v7v001+c4BoMxEDFDQ32cOFdDiRxy0Fq9aR+Ojrofq8VeftvN586iyA1A6a0QnA68i7JnQKI4uJy+u0qiixuHu6u3b3BhSpoaVHcUtqFWLLlzr0yBxfVLOqVna/1/tHbQJg9hx57mp97P0JmXO1WeIqi+Zqob/mVZh2lsPGdJ8iqgjYFaFn9QVOQ1Pq74o1PTqwfzqgJSfV0zOOlESDPWggaDAYE4VNyTBisOUjlNd0x7ppcTxSi3yenrJHqkq/pqJsRLKf6VJ/s9p6bsd2bj07hSDpjlDC2lB25eEfkEkeMkXoE7ErXQ5QCwIDAQABox0wGzAMBgNVHRMBAf8EAjAAMAsGA1UdDwQEAwIGwDANBgkqhkiG9w0BAQsFAAOCAgEAHwYpgbClHULXYhK4GNTgonvXh81oqfXwCSWAyDPiTYFDWVfWM9C4ApxMLyc0XvJte75Rla+bPC08oYN3OlhbbvP3twBL/w9SsfxvkbpFn2ZfGSTXZhyiq4vjmQHW1pnFvGelwgU4v3eeRE/MjoCnE7M/Q5thpuog6WGf7CbKERnWZn8QsUaJsZSEkg6Bv2jm69ye57ab5rrOUaeMlstTfdlaHAEkUgLX/NXq7RbGwv82hkHY5b2vYcXeh34tUMBL6os3OdRlooN9ZQGkVIISvxVZpSHkYC20DFNh1Bb0ovjfujlTcka81GnbUhFGZtRuoVQ1RVpMO8xtx3YKBLp4do3hPmnRCV5hCm43OIjYx9Ov2dqICV3AaNXSLV1dW39Bak/RBiIDGHzOIW2+VMPjvvypBjmPv/tmbqNHWPSAWOxTyMx6E1gFCZvi+5F+BgkdC3Lm7U0BU0NfvsXajZd8sXnIllvEMrikCLoI/yurvexNDcF1RW/FhMsoua0eerwczcNm66pGjHm05p9DR6lFeJZrtqeqZuojdxBWy4vH6ghyJaupergoX+nmdG3JYeRttCFF/ITI68TeCES5V3Y0C3psYAg1XxcGRLGd4chPo/4xwiLkijWtgt0/to5ljGBwfK7r62PHZfL1Dp+i7V3w7hmOlhbXzP+zhMZn1GCk7KY=");
-        cer.setFileType(0); // 0=Certificado (.cer) | 1 Clave privada (.key)
-        cer.setPassword("12345678a");
-
-        TaxCredential key = new TaxCredential();
-        key.setBase64File("MIIFDjBABgkqhkiG9w0BBQ0wMzAbBgkqhkiG9w0BBQwwDgQIAgEAAoIBAQACAggAMBQGCCqGSIb3DQMHBAgwggS9AgEAMASCBMh4EHl7aNSCaMDA1VlRoXCZ5UUmqErAbucRBAKNQXH8t8gVCl/ItHMI2hMJ76QOECOqEi1Y89cDpegDvh/INXyMsXbzi87tfFzgq1O+9ID6aPWGg+bNGADXyXxDVdy7Nq/SCdoXvo66MTYwq8jyJeUHDHEGMVBcmZpD44VJCvLBxDcvByuevP4Wo2NKqJCwK+ecAdZc/8Rvd947SjbMHuS8BppfQWARVUqA5BLOkTAHNv6tEk/hncC7O2YOGSShart8fM8dokgGSyewHVFe08POuQ+WDHeVpvApH/SP29rwktSoiHRoL6dK+F2YeEB5SuFW9LQgYCutjapmUP/9TC3Byro9Li6UrvQHxNmgMFGQJSYjFdqlGjLibfuguLp7pueutbROoZaSxU8HqlfYxLkpJUxUwNI1ja/1t3wcivtWknVXBd13R06iVfU1HGe8Kb4u5il4a4yP4p7VT4RE3b1SBLJeG+BxHiE8gFaaKcX/Cl6JV14RPTvk/6VnAtEQ66qHJex21KKuiJo2JoOmDXVHmvGQlWXNjYgoPx28Xd5WsofL+n7HDR2Ku8XgwJw6IXBJGuoday9qWN9v/k7DGlNGB6Sm4gdVUmycMP6EGhB1vFTiDfOGQO42ywmcpKoMETPVQ5InYKE0xAOckgcminDgxWjtUHjBDPEKifEjYudPwKmR6Cf4ZdGvUWwY/zq9pPAC9bu423KeBCnSL8AQ4r5SVsW6XG0njamwfNjpegwh/YG7sS7sDtZ8gi7r6tZYjsOqZlCYU0j7QTBpuQn81Yof2nQRCFxhRJCeydmIA8+z0nXrcElk7NDPk4kYQS0VitJ2qeQYNENzGBglROkCl2y6GlxAG80IBtReCUp/xOSdlwDR0eim+SNkdStvmQM5IcWBuDKwGZc1A4v/UoLl7niV9fpl4X6bUX8lZzY4gidJOafoJ30VoY/lYGkrkEuz3GpbbT5v8fF3iXVRlEqhlpe8JSGu7Rd2cPcJSkQ1Cuj/QRhHPhFMF2KhTEf95c9ZBKI8H7SvBi7eLXfSW2Y0ve6vXBZKyjK9whgCU9iVOsJjqRXpAccaWOKi420CjmS0+uwj/Xr2wLZhPEjBA/G6Od30+eG9mICmbp/5wAGhK/ZxCT17ZETyFmOMo49jl9pxdKocJNuzMrLpSz7/g5Jwp8+y8Ck5YP7AX0R/dVA0t37DO7nAbQT5XVSYpMVh/yvpYJ9WR+tb8Yg1h2lERLR2fbuhQRcwmisZR2W3Sr2b7hX9MCMkMQw8y2fDJrzLrqKqkHcjvnI/TdzZW2MzeQDoBBb3fmgvjYg07l4kThS73wGX992w2Y+a1A2iirSmrYEm9dSh16JmXa8boGQAONQzQkHh7vpw0IBs9cnvqO1QLB1GtbBztUBXonA4TxMKLYZkVrrd2RhrYWMsDp7MpC4M0p/DA3E/qscYwq1OpwriewNdx6XXqMZbdUNqMP2viBY2VSGmNdHtVfbN/rnaeJetFGX7XgTVYD7wDq8TW9yseCK944jcT+y/o0YiT9j3OLQ2Ts0LDTQskpJSxRmXEQGy3NBDOYFTvRkcGJEQJItuol8NivJN1H9LoLIUAlAHBZxfHpUYx66YnP4PdTdMIWH+nxyekKPFfAT7olQ=");
-        key.setFileType(1); // 0=Certificado (.cer) | 1 Clave privada (.key)
-        key.setPassword("12345678a");
 
 
-        //asignar certificado y clave privada a la lista sellos
-        sellos.add(cer);
-        sellos.add(key);
+//        //*** Generar factura con IVA excento por valores.***//
+//        Invoice invoice = new Invoice();
+//        invoice.setVersionCode("4.0");
+//        invoice.setTypeCode("I");
+//        invoice.setSeries("F");
+//        invoice.setDate(LocalDateTime.now());
+//        invoice.setPaymentFormCode("01");
+//        invoice.setPaymentMethodCode("PUE");
+//        invoice.setExpeditionZipCode("42501");
+//
+//        // Emisor
+//        InvoiceIssuer issuer = new InvoiceIssuer();
+//        issuer.setTin("FUNK671228PH6");
+//        issuer.setLegalName("KARLA FUENTE NOLASCO");
+//        issuer.setTaxRegimeCode("621");
+//
+//        // Certificados del emisor
+//        List<TaxCredential> credentials = new ArrayList<>();
+//
+//        TaxCredential cer = new TaxCredential();
+//        cer.setBase64File(base64Cer);
+//        cer.setFileType(0); // 0 = Certificado (.cer)
+//        cer.setPassword(password);
+//
+//        TaxCredential key = new TaxCredential();
+//        key.setBase64File(base64Key);
+//        key.setFileType(1); // 1 = Clave privada (.key)
+//        key.setPassword(password);
+//
+//        credentials.add(cer);
+//        credentials.add(key);
+//
+//        issuer.setTaxCredentials(credentials);
+//        invoice.setIssuer(issuer);
+//
+//        // Receptor
+//        InvoiceRecipient recipient = new InvoiceRecipient();
+//        recipient.setTin("EKU9003173C9");
+//        recipient.setLegalName("ESCUELA KEMPER URGATE");
+//        recipient.setZipCode("42501");
+//        recipient.setTaxRegimeCode("601");
+//        recipient.setCfdiUseCode("G01");
+//        recipient.setEmail("someone@somewhere.com");
+//        invoice.setRecipient(recipient);
+//
+//        // Productos / Servicios
+//        List<InvoiceItem> items = new ArrayList<>();
+//        InvoiceItem item = new InvoiceItem();
+//        item.setItemCode("01010101");
+//        item.setQuantity(9.5);
+//        item.setUnitOfMeasurementCode("E48");
+//        item.setDescription("Invoicing software as a service");
+//        item.setUnitPrice(3587.75);
+//        item.setTaxObjectCode("02");
+//        item.setItemSku("7506022301697");
+//        item.setDiscount(255.85);
+//
+//        // Impuestos del producto (IVA exento)
+//        List<ItemTax> taxes = new ArrayList<>();
+//        ItemTax tax = new ItemTax();
+//        tax.setTaxCode("002");
+//        tax.setTaxTypeCode("Exento");
+//        tax.setTaxFlagCode("T"); // T = Traslado | R = Retención
+//        taxes.add(tax);
+//        item.setItemTaxes(taxes);
+//
+//        items.add(item);
+//        invoice.setItems(items);
+//
+//        ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+//        System.out.println(apiResponse);
 
-        // Asignar sellos del emisor al emisor.
-        emisor.setTaxCredentials(sellos);
 
-        //Asignar el emisor a la factura
-        invoice.setIssuer(emisor);
+//        // Generar factura IVA tasa cero
+//        Invoice invoice = new Invoice();
+//        invoice.setVersionCode("4.0");
+//        invoice.setTypeCode("I");
+//        invoice.setSeries("F");
+//        invoice.setDate(LocalDateTime.now());
+//        invoice.setPaymentFormCode("01");
+//        invoice.setPaymentMethodCode("PUE");
+//        invoice.setExpeditionZipCode("42501");
+//
+//        // Emisor
+//        InvoiceIssuer issuer = new InvoiceIssuer();
+//        issuer.setTin("FUNK671228PH6");
+//        issuer.setLegalName("KARLA FUENTE NOLASCO");
+//        issuer.setTaxRegimeCode("621");
+//
+//        // Certificados del emisor
+//        List<TaxCredential> credentials = new ArrayList<>();
+//
+//        TaxCredential cer = new TaxCredential();
+//        cer.setBase64File(base64Cer);
+//        cer.setFileType(0); // 0 = Certificado (.cer)
+//        cer.setPassword(password);
+//
+//        TaxCredential key = new TaxCredential();
+//        key.setBase64File(base64Key);
+//        key.setFileType(1); // 1 = Clave privada (.key)
+//        key.setPassword(password);
+//
+//        credentials.add(cer);
+//        credentials.add(key);
+//
+//        issuer.setTaxCredentials(credentials);
+//        invoice.setIssuer(issuer);
+//
+//        // Receptor
+//        InvoiceRecipient recipient = new InvoiceRecipient();
+//        recipient.setTin("EKU9003173C9");
+//        recipient.setLegalName("ESCUELA KEMPER URGATE");
+//        recipient.setZipCode("42501");
+//        recipient.setTaxRegimeCode("601");
+//        recipient.setCfdiUseCode("G01");
+//        recipient.setEmail("someone@somewhere.com");
+//        invoice.setRecipient(recipient);
+//
+//        // Productos / Servicios
+//        List<InvoiceItem> items = new ArrayList<>();
+//        InvoiceItem item = new InvoiceItem();
+//        item.setItemCode("01010101");
+//        item.setQuantity(9.5);
+//        item.setUnitOfMeasurementCode("E48");
+//        item.setDescription("Invoicing software as a service");
+//        item.setUnitPrice(3587.75);
+//        item.setTaxObjectCode("02");
+//        item.setItemSku("7506022301697");
+//        item.setDiscount(255.85);
+//
+//        // Impuestos del producto (IVA tasa cero)
+//        List<ItemTax> taxes = new ArrayList<>();
+//        ItemTax tax = new ItemTax();
+//        tax.setTaxCode("002");
+//        tax.setTaxTypeCode("Tasa");
+//        tax.setTaxRate("0.000000");
+//        tax.setTaxFlagCode("T"); // T = Traslado | R = Retención
+//        taxes.add(tax);
+//        item.setItemTaxes(taxes);
+//
+//        items.add(item);
+//        invoice.setItems(items);
+//
+//        ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+//        System.out.println(apiResponse);
 
 
-        // Receptor
-        InvoiceRecipient receptor = new InvoiceRecipient();
-        receptor.setLegalName("ESCUELA KEMPER URGATE"); // Razón social
-        receptor.setTin("EKU9003173C9"); // RFC
-        receptor.setZipCode("42501");
-        receptor.setTaxRegimeCode("601");
-        receptor.setCfdiUseCode("G01");
-        receptor.setEmail("someone@somewhere.com");
 
-        invoice.setRecipient(receptor);
-
-        // Productos / Servicios de la factura.
-
-        List<InvoiceItem> items = new ArrayList<>();
-        InvoiceItem item = new InvoiceItem();
-
-        item.setItemCode("01010101");
-        item.setQuantity(9.5);
-        item.setUnitOfMeasurementCode("E48");
-        item.setDescription("Invoicing software as a service.");
-        item.setUnitPrice(3587.75);
-        item.setTaxObjectCode("02");
-        item.setItemSku("7506022301697");
-        item.setDiscount(255.85);
-
-        // impuestos del producto
-
-        List<ItemTax> taxes = new ArrayList<>();
-        ItemTax iva = new ItemTax();
-        iva.setTaxCode("002"); // iva
-        iva.setTaxTypeCode("Tasa"); // Tasa
-        iva.setTaxRate("0.160000"); // 16%
-        iva.setTaxFlagCode("T"); // T = Traslado | R = Retención
-
-        //Agrega iva a los impuestos
-        taxes.add(iva);
-
-        //Agrega la lista de impuestos al producto.
-        item.setItemTaxes(taxes);
-
-        // Agrega el producto a la lista de productos.
-        items.add(item);
-
-        // Agrega la lista de productos a la factura.
-        invoice.setItems(items);
+//        // Generar factura por referencias
+//        Invoice invoice = new Invoice();
+//        invoice.setVersionCode("4.0");
+//        invoice.setSeries("F");
+//        invoice.setDate(LocalDateTime.now());
+//        invoice.setPaymentFormCode("01");
+//        invoice.setCurrencyCode("MXN");
+//        invoice.setTypeCode("I");
+//        invoice.setExpeditionZipCode("42501");
+//        invoice.setPaymentMethodCode("PUE");
+//
+//        // Emisor por referencia
+//        InvoiceIssuer issuer = new InvoiceIssuer();
+//        issuer.setId("3f3478b4-60fd-459e-8bfc-f8239fc96257");
+//        invoice.setIssuer(issuer);
+//
+//        // Receptor por referencia
+//        InvoiceRecipient recipient = new InvoiceRecipient();
+//        recipient.setId("96b46762-d246-4a67-a562-510a25dbafa9");
+//        invoice.setRecipient(recipient);
+//
+//        // Producto / Servicio por referencia
+//        List<InvoiceItem> items = new ArrayList<>();
+//        InvoiceItem item = new InvoiceItem();
+//        item.setId("114a4be5-fb65-40b2-a762-ff0c55c6ebfa");
+//        item.setQuantity(2.0);
+//        item.setDiscount(255.85);
+//        items.add(item);
+//        invoice.setItems(items);
+//
+//        ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+//        System.out.println(apiResponse);
 
 
-        ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
-        System.out.println(apiResponse);
+
+//        // Generar nota de crédito por valores
+//        Invoice invoice = new Invoice();
+//        invoice.setVersionCode("4.0");
+//        invoice.setSeries("CN");
+//        invoice.setDate(LocalDateTime.now());
+//        invoice.setPaymentFormCode("03");
+//        invoice.setCurrencyCode("MXN");
+//        invoice.setTypeCode("E");
+//        invoice.setExpeditionZipCode("01160");
+//        invoice.setPaymentMethodCode("PUE");
+//
+//
+//        // Emisor
+//        InvoiceIssuer issuer = new InvoiceIssuer();
+//        issuer.setTin("FUNK671228PH6");
+//        issuer.setLegalName("KARLA FUENTE NOLASCO");
+//        issuer.setTaxRegimeCode("621");
+//
+//        // Certificados del emisor
+//        List<TaxCredential> credentials = new ArrayList<>();
+//
+//        TaxCredential cer = new TaxCredential();
+//        cer.setBase64File(base64Cer);
+//        cer.setFileType(0); // 0 = Certificado (.cer)
+//        cer.setPassword(password);
+//
+//        TaxCredential key = new TaxCredential();
+//        key.setBase64File(base64Key);
+//        key.setFileType(1); // 1 = Clave privada (.key)
+//        key.setPassword(password);
+//
+//        credentials.add(cer);
+//        credentials.add(key);
+//
+//        issuer.setTaxCredentials(credentials);
+//        invoice.setIssuer(issuer);
+//
+//        // Receptor
+//        InvoiceRecipient recipient = new InvoiceRecipient();
+//        recipient.setTin("EKU9003173C9");
+//        recipient.setLegalName("ESCUELA KEMPER URGATE");
+//        recipient.setZipCode("42501");
+//        recipient.setTaxRegimeCode("601");
+//        recipient.setCfdiUseCode("G01");
+//        recipient.setEmail("someone@somewhere.com");
+//        invoice.setRecipient(recipient);
+//
+//        // Facturas relacionadas
+//        List<RelatedInvoice> relatedInvoices = new ArrayList<>();
+//        RelatedInvoice related = new RelatedInvoice();
+//        related.setUuid("5FB2822E-396D-4725-8521-CDC4BDD20CCF");
+//        related.setRelationshipTypeCode("01");
+//        relatedInvoices.add(related);
+//        invoice.setRelatedInvoices(relatedInvoices);
+//
+//        // Productos / Servicios
+//        List<InvoiceItem> items = new ArrayList<>();
+//        InvoiceItem item = new InvoiceItem();
+//        item.setItemCode("01010101");
+//        item.setQuantity(0.5);
+//        item.setUnitOfMeasurementCode("E48");
+//        item.setDescription("Invoicing software as a service");
+//        item.setUnitPrice(3587.75);
+//        item.setTaxObjectCode("02");
+//        item.setItemSku("7506022301697");
+//
+//        // Impuestos del producto
+//        List<ItemTax> taxes = new ArrayList<>();
+//        ItemTax tax = new ItemTax();
+//        tax.setTaxCode("002");
+//        tax.setTaxTypeCode("Tasa");
+//        tax.setTaxRate("0.160000");
+//        tax.setTaxFlagCode("T"); // T = Traslado | R = Retención
+//        taxes.add(tax);
+//        item.setItemTaxes(taxes);
+//
+//        items.add(item);
+//        invoice.setItems(items);
+//
+//        ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+//        System.out.println(apiResponse);
+
+
+//        // Generar nota de credito por referencias
+//        Invoice invoice = new Invoice();
+//        invoice.setVersionCode("4.0");
+//        invoice.setSeries("CN");
+//        invoice.setDate(LocalDateTime.now());
+//        invoice.setPaymentFormCode("03");
+//        invoice.setCurrencyCode("MXN");
+//        invoice.setTypeCode("E");
+//        invoice.setExpeditionZipCode("01160");
+//        invoice.setPaymentMethodCode("PUE");
+//
+//        // Emisor por referencia
+//        InvoiceIssuer issuer = new InvoiceIssuer();
+//        issuer.setId("3f3478b4-60fd-459e-8bfc-f8239fc96257");
+//        invoice.setIssuer(issuer);
+//
+//        // Receptor por referencia
+//        InvoiceRecipient recipient = new InvoiceRecipient();
+//        recipient.setId("96b46762-d246-4a67-a562-510a25dbafa9");
+//        invoice.setRecipient(recipient);
+//
+//        // Facturas relacionadas
+//        List<RelatedInvoice> relatedInvoices = new ArrayList<>();
+//        RelatedInvoice related = new RelatedInvoice();
+//        related.setUuid("5FB2822E-396D-4725-8521-CDC4BDD20CCF");
+//        related.setRelationshipTypeCode("01");
+//        relatedInvoices.add(related);
+//        invoice.setRelatedInvoices(relatedInvoices);
+//
+//        // Productos / Servicios por referencia
+//        List<InvoiceItem> items = new ArrayList<>();
+//        InvoiceItem item = new InvoiceItem();
+//        item.setId("114a4be5-fb65-40b2-a762-ff0c55c6ebfa");
+//        item.setQuantity(0.5);
+//        items.add(item);
+//        invoice.setItems(items);
+//
+//        ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+//        System.out.println(apiResponse);
+
+
+
+//        // Genera complemento de pago por valores
+//        Invoice invoice = new Invoice();
+//        invoice.setVersionCode("4.0");
+//        invoice.setSeries("CP");
+//        invoice.setDate(LocalDateTime.now());
+//        invoice.setCurrencyCode("XXX");
+//        invoice.setTypeCode("P");
+//        invoice.setExpeditionZipCode("01160");
+//
+//        // Emisor
+//        InvoiceIssuer issuer = new InvoiceIssuer();
+//        issuer.setTin("FUNK671228PH6");
+//        issuer.setLegalName("KARLA FUENTE NOLASCO");
+//        issuer.setTaxRegimeCode("621");
+//
+//        // Certificados del emisor
+//        List<TaxCredential> credentials = new ArrayList<>();
+//
+//        TaxCredential cer = new TaxCredential();
+//        cer.setBase64File(base64Cer);
+//        cer.setFileType(0); // 0 = Certificado (.cer)
+//        cer.setPassword(password);
+//
+//        TaxCredential key = new TaxCredential();
+//        key.setBase64File(base64Key);
+//        key.setFileType(1); // 1 = Clave privada (.key)
+//        key.setPassword(password);
+//
+//        credentials.add(cer);
+//        credentials.add(key);
+//
+//        issuer.setTaxCredentials(credentials);
+//        invoice.setIssuer(issuer);
+//
+//        // Receptor
+//        InvoiceRecipient recipient = new InvoiceRecipient();
+//        recipient.setTin("EKU9003173C9");
+//        recipient.setLegalName("ESCUELA KEMPER URGATE");
+//        recipient.setZipCode("42501");
+//        recipient.setTaxRegimeCode("601");
+//        recipient.setCfdiUseCode("CP01");
+//        recipient.setEmail("someone@somewhere.com");
+//        invoice.setRecipient(recipient);
+//
+//        // Ítem (Complemento de pago, se utiliza un ítem para reflejar el pago)
+//        List<InvoiceItem> items = new ArrayList<>();
+//        InvoiceItem item = new InvoiceItem();
+//        item.setItemCode("84111506");
+//        item.setQuantity(1.0);
+//        item.setUnitOfMeasurementCode("ACT");
+//        item.setDescription("Pago");
+//        item.setUnitPrice(0.0);
+//        item.setTaxObjectCode("01");
+//        items.add(item);
+//        invoice.setItems(items);
+//
+//        // Pagos
+//        List<InvoicePayment> payments = new ArrayList<>();
+//        InvoicePayment payment = new InvoicePayment();
+//        payment.setPaymentDate(LocalDateTime.now());
+//        payment.setPaymentFormCode("28");
+//        payment.setCurrencyCode("MXN");
+//        payment.setAmount(11600.00);
+//        payment.setSourceBankTin("BSM970519DU8");
+//        payment.setSourceBankAccount("1234567891012131");
+//        payment.setTargetBankTin("BBA830831LJ2");
+//        payment.setTargetBankAccount("1234567890");
+//
+//        // Facturas pagadas en este pago
+//        List<PaidInvoice> paidInvoices = new ArrayList<>();
+//        PaidInvoice paidInvoice = new PaidInvoice();
+//        paidInvoice.setUuid("5C7B0622-01B4-4EB8-96D0-E0DEBD89FF0F");
+//        paidInvoice.setSeries("F");
+//        paidInvoice.setNumber("1501");
+//        paidInvoice.setCurrencyCode("MXN");
+//        paidInvoice.setPartialityNumber(1);
+//        paidInvoice.setSubTotal(10000.0);
+//        paidInvoice.setPreviousBalance(11600.00);
+//        paidInvoice.setPaymentAmount(11600.00);
+//        paidInvoice.setRemainingBalance(0.0);
+//        paidInvoice.setTaxObjectCode("02");
+//
+//        // Impuestos de la factura pagada
+//        List<PaidInvoiceTax> paidInvoiceTaxes = new ArrayList<>();
+//        PaidInvoiceTax paidTax = new PaidInvoiceTax();
+//        paidTax.setTaxCode("002");
+//        paidTax.setTaxTypeCode("Tasa");
+//        paidTax.setTaxRate("0.160000");
+//        paidTax.setTaxFlagCode("T"); // T = Traslado | R = Retención
+//        paidInvoiceTaxes.add(paidTax);
+//
+//        paidInvoice.setPaidInvoiceTaxes(paidInvoiceTaxes);
+//        paidInvoices.add(paidInvoice);
+//        payment.setPaidInvoices(paidInvoices);
+//
+//        payments.add(payment);
+//        invoice.setPayments(payments);
+//
+//        ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+//        System.out.println(apiResponse);
+
+
+//        // Generar complemento de pago por referencias
+//        Invoice invoice = new Invoice();
+//        invoice.setVersionCode("4.0");
+//        invoice.setSeries("CP");
+//        invoice.setDate(LocalDateTime.now());
+//        invoice.setCurrencyCode("XXX");
+//        invoice.setTypeCode("P");
+//        invoice.setExpeditionZipCode("01160");
+//
+//
+//        // Emisor por referencia
+//        InvoiceIssuer issuer = new InvoiceIssuer();
+//        issuer.setId("3f3478b4-60fd-459e-8bfc-f8239fc96257");
+//        invoice.setIssuer(issuer);
+//
+//        // Receptor por referencia
+//        InvoiceRecipient recipient = new InvoiceRecipient();
+//        recipient.setId("96b46762-d246-4a67-a562-510a25dbafa9");
+//        invoice.setRecipient(recipient);
+//
+//        // Pagos
+//        List<InvoicePayment> payments = new ArrayList<>();
+//        InvoicePayment payment = new InvoicePayment();
+//        payment.setPaymentDate(LocalDateTime.parse("2024-06-03T14:44:56"));
+//        payment.setPaymentFormCode("28");
+//        payment.setCurrencyCode("MXN");
+//        payment.setAmount(11600.00);
+//        payment.setSourceBankTin("BSM970519DU8");
+//        payment.setSourceBankAccount("1234567891012131");
+//        payment.setTargetBankTin("BBA830831LJ2");
+//        payment.setTargetBankAccount("1234567890");
+//
+//        // Facturas pagadas en este pago
+//        List<PaidInvoice> paidInvoices = new ArrayList<>();
+//        PaidInvoice paidInvoice = new PaidInvoice();
+//        paidInvoice.setUuid("5C7B0622-01B4-4EB8-96D0-E0DEBD89FF0F");
+//        paidInvoice.setSeries("F");
+//        paidInvoice.setNumber("1501");
+//        paidInvoice.setCurrencyCode("MXN");
+//        paidInvoice.setPartialityNumber(1);
+//        paidInvoice.setSubTotal(10000.0);
+//        paidInvoice.setPreviousBalance(11600.00);
+//        paidInvoice.setPaymentAmount(11600.00);
+//        paidInvoice.setRemainingBalance(0.0);
+//        paidInvoice.setTaxObjectCode("02");
+//
+//        // Impuestos de la factura pagada
+//        List<PaidInvoiceTax> paidInvoiceTaxes = new ArrayList<>();
+//        PaidInvoiceTax paidTax = new PaidInvoiceTax();
+//        paidTax.setTaxCode("002");
+//        paidTax.setTaxTypeCode("Tasa");
+//        paidTax.setTaxRate("0.160000");
+//        paidTax.setTaxFlagCode("T");
+//        paidInvoiceTaxes.add(paidTax);
+//
+//        paidInvoice.setPaidInvoiceTaxes(paidInvoiceTaxes);
+//        paidInvoices.add(paidInvoice);
+//        payment.setPaidInvoices(paidInvoices);
+//
+//        payments.add(payment);
+//        invoice.setPayments(payments);
+//
+//        ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+//        System.out.println(apiResponse);
+
+
+//        // Genera complemento de pago, factura en MXN y el pago en USD
+//        Invoice invoice = new Invoice();
+//        invoice.setVersionCode("4.0");
+//        invoice.setSeries("usd-mxn");
+//        invoice.setDate(LocalDateTime.now());
+//        invoice.setCurrencyCode("XXX");
+//        invoice.setTypeCode("P");
+//        invoice.setExpeditionZipCode("01160");
+//
+//        // Emisor
+//        InvoiceIssuer issuer = new InvoiceIssuer();
+//        issuer.setTin("FUNK671228PH6");
+//        issuer.setLegalName("KARLA FUENTE NOLASCO");
+//        issuer.setTaxRegimeCode("621");
+//
+//        // Certificados del emisor
+//        List<TaxCredential> credentials = new ArrayList<>();
+//
+//        TaxCredential cer = new TaxCredential();
+//        cer.setBase64File(base64Cer);
+//        cer.setFileType(0); // 0 = Certificado (.cer)
+//        cer.setPassword(password);
+//
+//        TaxCredential key = new TaxCredential();
+//        key.setBase64File(base64Key);
+//        key.setFileType(1); // 1 = Clave privada (.key)
+//        key.setPassword(password);
+//
+//        credentials.add(cer);
+//        credentials.add(key);
+//
+//        issuer.setTaxCredentials(credentials);
+//        invoice.setIssuer(issuer);
+//
+//        // Receptor
+//        InvoiceRecipient recipient = new InvoiceRecipient();
+//        recipient.setTin("EKU9003173C9");
+//        recipient.setLegalName("ESCUELA KEMPER URGATE");
+//        recipient.setZipCode("42501");
+//        recipient.setTaxRegimeCode("601");
+//        recipient.setCfdiUseCode("CP01");
+//        recipient.setEmail("someone@somewhere.com");
+//        invoice.setRecipient(recipient);
+//
+//        // Ítem (Complemento de pago)
+//        List<InvoiceItem> items = new ArrayList<>();
+//        InvoiceItem item = new InvoiceItem();
+//        item.setItemCode("84111506");
+//        item.setQuantity(1.0);
+//        item.setUnitOfMeasurementCode("ACT");
+//        item.setDescription("Pago");
+//        item.setUnitPrice(0.0);
+//        item.setTaxObjectCode("01");
+//        items.add(item);
+//        invoice.setItems(items);
+//
+//        // Pagos
+//        List<InvoicePayment> payments = new ArrayList<>();
+//        InvoicePayment payment = new InvoicePayment();
+//        payment.setPaymentDate(LocalDateTime.parse("2024-06-03T14:44:56"));
+//        payment.setPaymentFormCode("28");
+//        payment.setCurrencyCode("USD");
+//        payment.setExchangeRate(20.64);
+//        payment.setAmount(5.62);
+//        payment.setSourceBankTin("BSM970519DU8");
+//        payment.setSourceBankAccount("1234567891012131");
+//        payment.setTargetBankTin("BBA830831LJ2");
+//        payment.setTargetBankAccount("1234567890");
+//
+//        // Facturas pagadas en este pago
+//        List<PaidInvoice> paidInvoices = new ArrayList<>();
+//        PaidInvoice paidInvoice = new PaidInvoice();
+//        paidInvoice.setUuid("4a5d025b-813a-4acf-9f32-8fb61f4918ac");
+//        paidInvoice.setSeries("F");
+//        paidInvoice.setNumber("2");
+//        paidInvoice.setCurrencyCode("MXN");
+//        paidInvoice.setEquivalence(20.64);
+//        paidInvoice.setPartialityNumber(1);
+//        paidInvoice.setSubTotal(100.00);
+//        paidInvoice.setPreviousBalance(116.00);
+//        paidInvoice.setPaymentAmount(116.00);
+//        paidInvoice.setRemainingBalance(0.0);
+//        paidInvoice.setTaxObjectCode("02");
+//
+//        // Impuestos de la factura pagada
+//        List<PaidInvoiceTax> paidInvoiceTaxes = new ArrayList<>();
+//
+//        PaidInvoiceTax tax1 = new PaidInvoiceTax();
+//        tax1.setTaxCode("002");
+//        tax1.setTaxTypeCode("Tasa");
+//        tax1.setTaxRate("0.160000");
+//        tax1.setTaxFlagCode("T");
+//        paidInvoiceTaxes.add(tax1);
+//
+//        PaidInvoiceTax tax2 = new PaidInvoiceTax();
+//        tax2.setTaxCode("002");
+//        tax2.setTaxTypeCode("Tasa");
+//        tax2.setTaxRate("0.106667");
+//        tax2.setTaxFlagCode("R");
+//        paidInvoiceTaxes.add(tax2);
+//
+//        PaidInvoiceTax tax3 = new PaidInvoiceTax();
+//        tax3.setTaxCode("001");
+//        tax3.setTaxTypeCode("Tasa");
+//        tax3.setTaxRate("0.100000");
+//        tax3.setTaxFlagCode("R");
+//        paidInvoiceTaxes.add(tax3);
+//
+//        paidInvoice.setPaidInvoiceTaxes(paidInvoiceTaxes);
+//        paidInvoices.add(paidInvoice);
+//        payment.setPaidInvoices(paidInvoices);
+//
+//        payments.add(payment);
+//        invoice.setPayments(payments);
+//
+//        ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+//        System.out.println(apiResponse);
+
+
+
+//        // Genera complemento de pago, factura en USD y el pago en MXN
+//        Invoice invoice = new Invoice();
+//        invoice.setVersionCode("4.0");
+//        invoice.setSeries("MXN-USD");
+//        invoice.setDate(LocalDateTime.now());
+//        invoice.setCurrencyCode("XXX");
+//        invoice.setTypeCode("P");
+//        invoice.setExpeditionZipCode("01160");
+//
+//        // Emisor
+//        InvoiceIssuer issuer = new InvoiceIssuer();
+//        issuer.setTin("FUNK671228PH6");
+//        issuer.setLegalName("KARLA FUENTE NOLASCO");
+//        issuer.setTaxRegimeCode("621");
+//
+//        // Certificados del emisor
+//        List<TaxCredential> credentials = new ArrayList<>();
+//
+//        TaxCredential cer = new TaxCredential();
+//        cer.setBase64File(base64Cer);
+//        cer.setFileType(0); // 0 = Certificado (.cer)
+//        cer.setPassword(password);
+//
+//        TaxCredential key = new TaxCredential();
+//        key.setBase64File(base64Key);
+//        key.setFileType(1); // 1 = Clave privada (.key)
+//        key.setPassword(password);
+//
+//        credentials.add(cer);
+//        credentials.add(key);
+//
+//        issuer.setTaxCredentials(credentials);
+//        invoice.setIssuer(issuer);
+//
+//        // Receptor
+//        InvoiceRecipient recipient = new InvoiceRecipient();
+//        recipient.setTin("EKU9003173C9");
+//        recipient.setLegalName("ESCUELA KEMPER URGATE");
+//        recipient.setZipCode("42501");
+//        recipient.setTaxRegimeCode("601");
+//        recipient.setCfdiUseCode("CP01");
+//        recipient.setEmail("someone@somewhere.com");
+//        invoice.setRecipient(recipient);
+//
+//        // Ítem (Complemento de pago)
+//        List<InvoiceItem> items = new ArrayList<>();
+//        InvoiceItem item = new InvoiceItem();
+//        item.setItemCode("84111506");
+//        item.setQuantity(1.0);
+//        item.setUnitOfMeasurementCode("ACT");
+//        item.setDescription("Pago");
+//        item.setUnitPrice(0.0);
+//        item.setTaxObjectCode("01");
+//        items.add(item);
+//        invoice.setItems(items);
+//
+//        // Pagos
+//        List<InvoicePayment> payments = new ArrayList<>();
+//        InvoicePayment payment = new InvoicePayment();
+//        payment.setPaymentDate(LocalDateTime.parse("2024-06-03T14:44:56"));
+//        payment.setPaymentFormCode("28");
+//        payment.setCurrencyCode("MXN");
+//        payment.setAmount(921.23);
+//        payment.setSourceBankTin("BSM970519DU8");
+//        payment.setSourceBankAccount("1234567891012131");
+//        payment.setTargetBankTin("BBA830831LJ2");
+//        payment.setTargetBankAccount("1234567890");
+//
+//        // Facturas pagadas en este pago
+//        List<PaidInvoice> paidInvoices = new ArrayList<>();
+//        PaidInvoice paidInvoice = new PaidInvoice();
+//        paidInvoice.setUuid("4a5d025b-813a-4acf-9f32-8fb61f4918ac");
+//        paidInvoice.setSeries("F");
+//        paidInvoice.setNumber("2");
+//        paidInvoice.setCurrencyCode("USD");
+//        paidInvoice.setEquivalence(0.045331);
+//        paidInvoice.setPartialityNumber(1);
+//        paidInvoice.setSubTotal(36.000);
+//        paidInvoice.setPreviousBalance(41.76);
+//        paidInvoice.setPaymentAmount(41.76);
+//        paidInvoice.setRemainingBalance(0.0);
+//        paidInvoice.setTaxObjectCode("02");
+//
+//        // Impuestos de la factura pagada
+//        List<PaidInvoiceTax> paidInvoiceTaxes = new ArrayList<>();
+//
+//        PaidInvoiceTax tax1 = new PaidInvoiceTax();
+//        tax1.setTaxCode("002");
+//        tax1.setTaxTypeCode("Tasa");
+//        tax1.setTaxRate("0.160000");
+//        tax1.setTaxFlagCode("T");
+//        paidInvoiceTaxes.add(tax1);
+//
+//        PaidInvoiceTax tax2 = new PaidInvoiceTax();
+//        tax2.setTaxCode("002");
+//        tax2.setTaxTypeCode("Tasa");
+//        tax2.setTaxRate("0.106667");
+//        tax2.setTaxFlagCode("R");
+//        paidInvoiceTaxes.add(tax2);
+//
+//        PaidInvoiceTax tax3 = new PaidInvoiceTax();
+//        tax3.setTaxCode("001");
+//        tax3.setTaxTypeCode("Tasa");
+//        tax3.setTaxRate("0.100000");
+//        tax3.setTaxFlagCode("R");
+//        paidInvoiceTaxes.add(tax3);
+//
+//        paidInvoice.setPaidInvoiceTaxes(paidInvoiceTaxes);
+//        paidInvoices.add(paidInvoice);
+//        payment.setPaidInvoices(paidInvoices);
+//
+//        payments.add(payment);
+//        invoice.setPayments(payments);
+//
+//        ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+//        System.out.println(apiResponse);
+
+
+
+        // Genera complemento de pago, factura en USD y el pago en EUR
+//        Invoice invoice = new Invoice();
+//        invoice.setVersionCode("4.0");
+//        invoice.setSeries("MXN-USD");
+//        invoice.setDate(LocalDateTime.now());
+//        invoice.setCurrencyCode("XXX");
+//        invoice.setTypeCode("P");
+//        invoice.setExpeditionZipCode("01160");
+//
+//
+//        // Emisor
+//        InvoiceIssuer issuer = new InvoiceIssuer();
+//        issuer.setTin("FUNK671228PH6");
+//        issuer.setLegalName("KARLA FUENTE NOLASCO");
+//        issuer.setTaxRegimeCode("621");
+//
+//        // Certificados del emisor
+//        List<TaxCredential> credentials = new ArrayList<>();
+//
+//        TaxCredential cer = new TaxCredential();
+//        cer.setBase64File(base64Cer);
+//        cer.setFileType(0); // 0 = Certificado (.cer)
+//        cer.setPassword(password);
+//
+//        TaxCredential key = new TaxCredential();
+//        key.setBase64File(base64Key);
+//        key.setFileType(1); // 1 = Clave privada (.key)
+//        key.setPassword(password);
+//
+//        credentials.add(cer);
+//        credentials.add(key);
+//
+//        issuer.setTaxCredentials(credentials);
+//        invoice.setIssuer(issuer);
+//
+//        // Receptor
+//        InvoiceRecipient recipient = new InvoiceRecipient();
+//        recipient.setTin("EKU9003173C9");
+//        recipient.setLegalName("ESCUELA KEMPER URGATE");
+//        recipient.setZipCode("42501");
+//        recipient.setTaxRegimeCode("601");
+//        recipient.setCfdiUseCode("CP01");
+//        recipient.setEmail("someone@somewhere.com");
+//        invoice.setRecipient(recipient);
+//
+//        // Ítem (Complemento de pago)
+//        List<InvoiceItem> items = new ArrayList<>();
+//        InvoiceItem item = new InvoiceItem();
+//        item.setItemCode("84111506");
+//        item.setQuantity(1.0);
+//        item.setUnitOfMeasurementCode("ACT");
+//        item.setDescription("Pago");
+//        item.setUnitPrice(0.0);
+//        item.setTaxObjectCode("01");
+//        items.add(item);
+//        invoice.setItems(items);
+//
+//        // Pagos
+//        List<InvoicePayment> payments = new ArrayList<>();
+//        InvoicePayment payment = new InvoicePayment();
+//        payment.setPaymentDate(LocalDateTime.parse("2024-06-03T14:44:56"));
+//        payment.setPaymentFormCode("28");
+//        payment.setCurrencyCode("EUR");
+//        payment.setExchangeRate(25.00);
+//        payment.setAmount(100.00);
+//        payment.setSourceBankTin("BSM970519DU8");
+//        payment.setSourceBankAccount("1234567891012131");
+//        payment.setTargetBankTin("BBA830831LJ2");
+//        payment.setTargetBankAccount("1234567890");
+//
+//        // Facturas pagadas en este pago
+//        List<PaidInvoice> paidInvoices = new ArrayList<>();
+//        PaidInvoice paidInvoice = new PaidInvoice();
+//        paidInvoice.setUuid("4a5d025b-813a-4acf-9f32-8fb61f4918ac");
+//        paidInvoice.setSeries("F");
+//        paidInvoice.setNumber("2");
+//        paidInvoice.setCurrencyCode("USD");
+//        paidInvoice.setEquivalence(1.160);
+//        paidInvoice.setPartialityNumber(1);
+//        paidInvoice.setSubTotal(100.0);
+//        paidInvoice.setPreviousBalance(116.00);
+//        paidInvoice.setPaymentAmount(116.00);
+//        paidInvoice.setRemainingBalance(0.0);
+//        paidInvoice.setTaxObjectCode("02");
+//
+//        // Impuestos de la factura pagada
+//        List<PaidInvoiceTax> paidInvoiceTaxes = new ArrayList<>();
+//
+//        PaidInvoiceTax tax1 = new PaidInvoiceTax();
+//        tax1.setTaxCode("002");
+//        tax1.setTaxTypeCode("Tasa");
+//        tax1.setTaxRate("0.160000");
+//        tax1.setTaxFlagCode("T");
+//        paidInvoiceTaxes.add(tax1);
+//
+//        PaidInvoiceTax tax2 = new PaidInvoiceTax();
+//        tax2.setTaxCode("002");
+//        tax2.setTaxTypeCode("Tasa");
+//        tax2.setTaxRate("0.106667");
+//        tax2.setTaxFlagCode("R");
+//        paidInvoiceTaxes.add(tax2);
+//
+//        PaidInvoiceTax tax3 = new PaidInvoiceTax();
+//        tax3.setTaxCode("001");
+//        tax3.setTaxTypeCode("Tasa");
+//        tax3.setTaxRate("0.100000");
+//        tax3.setTaxFlagCode("R");
+//        paidInvoiceTaxes.add(tax3);
+//
+//        paidInvoice.setPaidInvoiceTaxes(paidInvoiceTaxes);
+//        paidInvoices.add(paidInvoice);
+//        payment.setPaidInvoices(paidInvoices);
+//
+//        payments.add(payment);
+//        invoice.setPayments(payments);
+//
+//        ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+//        System.out.println(apiResponse);
 
 
         //endregion

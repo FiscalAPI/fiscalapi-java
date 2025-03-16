@@ -1,11 +1,13 @@
 package com.fiscalapi.models.invoicing;
 
+import java.math.BigDecimal;
+
 // Impuestos aplicables a la factura pagada
 public class PaidInvoiceTax {
     private Double base;
     private String taxCode;
     private String taxTypeCode;
-    private Double taxRate;
+    private BigDecimal taxRate;
     private String taxFlagCode;
 
     public Double getBase() {
@@ -26,11 +28,11 @@ public class PaidInvoiceTax {
     public void setTaxTypeCode(String taxTypeCode) {
         this.taxTypeCode = taxTypeCode;
     }
-    public Double getTaxRate() {
+    public BigDecimal getTaxRate() {
         return taxRate;
     }
-    public void setTaxRate(Double taxRate) {
-        this.taxRate = taxRate;
+    public void setTaxRate(String taxRate) {
+        this.taxRate = new BigDecimal(taxRate);
     }
     public String getTaxFlagCode() {
         return taxFlagCode;
