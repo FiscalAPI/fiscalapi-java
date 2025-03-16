@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fiscalapi.abstractions.IFiscalApiHttpClient;
 import com.fiscalapi.common.ApiResponse;
@@ -27,6 +28,7 @@ public class FiscalApiHttpClient implements IFiscalApiHttpClient {
         this.objectMapper.registerModule(new JavaTimeModule());
         this.objectMapper.setSerializationInclusion(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL);
         this.objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        this.objectMapper.enable(SerializationFeature.WRITE_BIGDECIMAL_AS_PLAIN);
     }
 
     @Override

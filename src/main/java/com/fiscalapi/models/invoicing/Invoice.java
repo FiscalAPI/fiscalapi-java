@@ -4,6 +4,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fiscalapi.common.BaseDto;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoField;
 import java.util.List;
 import java.time.format.DateTimeFormatter;
 
@@ -14,10 +18,30 @@ import java.time.format.DateTimeFormatter;
  * productos/servicios, importes, método de pago, tipo de factura, entre otros.
  */
 public class Invoice extends BaseDto{
-    private static final DateTimeFormatter SAT_DATE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+    // Formato para serialización (siempre debe ser exactamente yyyy-MM-ddTHH:mm:ss)
+    private static final DateTimeFormatter SAT_DATE_FORMAT_OUT = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+
+    // Formato flexible para deserialización (soporta varios formatos de entrada)
+    private static final DateTimeFormatter SAT_DATE_FORMAT_IN = new DateTimeFormatterBuilder()
+            .appendPattern("yyyy-MM-dd'T'HH:mm:ss")
+            .optionalStart()
+            .appendFraction(ChronoField.NANO_OF_SECOND, 0, 7, true)
+            .optionalEnd()
+            .optionalStart()
+            .appendOffset("+HH:MM", "Z")
+            .optionalEnd()
+            .toFormatter();
+
+
 
     private String versionCode;
     private String series;
+    private String number;
+    private String uuid;
+    private Integer consecutive;
+    private Double subtotal;
+    private Double discount;
+    private Double total;
     @JsonIgnore
     private LocalDateTime date;
     private String paymentFormCode;
@@ -44,6 +68,92 @@ public class Invoice extends BaseDto{
         this.exportCode = "01";
         //this.exchangeRate = 1.0;
     }
+
+    /**
+     * @return Número de la factura (atributo Folio del CFDI)
+     */
+    public String getNumber() {
+        return number;
+    }
+
+    /**
+     * @param number Número de la factura (1-40 caracteres alfanuméricos)
+     */
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    /**
+     * @return Identificador único universal de la factura timbrada
+     */
+    public String getUuid() {
+        return uuid;
+    }
+
+    /**
+     * @param uuid Identificador único universal (UUID) asignado por el PAC al timbrar la factura
+     */
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    /**
+     * @return Número consecutivo interno de control
+     */
+    public Integer getConsecutive() {
+        return consecutive;
+    }
+
+    /**
+     * @param consecutive Número consecutivo interno para control del sistema
+     */
+    public void setConsecutive(Integer consecutive) {
+        this.consecutive = consecutive;
+    }
+
+    /**
+     * @return Subtotal de la factura antes de impuestos y descuentos
+     */
+    public Double getSubtotal() {
+        return subtotal;
+    }
+
+    /**
+     * @param subtotal Suma de los importes de los conceptos antes de descuentos e impuestos
+     */
+    public void setSubtotal(Double subtotal) {
+        this.subtotal = subtotal;
+    }
+
+    /**
+     * @return Monto total de descuentos aplicados a la factura
+     */
+    public Double getDiscount() {
+        return discount;
+    }
+
+    /**
+     * @param discount Monto total de los descuentos aplicables
+     */
+    public void setDiscount(Double discount) {
+        this.discount = discount;
+    }
+
+    /**
+     * @return Monto total de la factura incluyendo impuestos
+     */
+    public Double getTotal() {
+        return total;
+    }
+
+    /**
+     * @param total Monto total de la factura incluyendo impuestos
+     */
+    public void setTotal(Double total) {
+        this.total = total;
+    }
+
+
 
     /**
      * @return Código de la versión de la factura
@@ -92,22 +202,24 @@ public class Invoice extends BaseDto{
     /**
      * Obtiene la fecha en formato SAT para serialización JSON.
      * Este método se serializa como "date" en el JSON resultante.
+     * Siempre se formatea exactamente como 'yyyy-MM-ddTHH:mm:ss' (sin fracciones ni zona)
      *
-     * @return Fecha y hora de expedición formateada según el estándar del SAT (AAAA-MM-DDThh:mm:ss)
+     * @return Fecha y hora de expedición formateada según el estándar del SAT
      */
     @JsonProperty("date")
     public String getSatDate() {
         if (date == null) {
             return null;
         }
-        return date.format(SAT_DATE_FORMAT);
+        return date.format(SAT_DATE_FORMAT_OUT);
     }
 
     /**
      * Establece la fecha a partir de una cadena en formato SAT.
      * Este método deserializa el campo "date" del JSON recibido.
+     * Acepta varios formatos de entrada (con milisegundos, con zona horaria, etc.)
      *
-     * @param satDate Fecha y hora en formato de texto según el estándar del SAT (AAAA-MM-DDThh:mm:ss)
+     * @param satDate Fecha y hora en formato de texto del SAT
      */
     @JsonProperty("date")
     public void setSatDate(String satDate) {
@@ -115,9 +227,22 @@ public class Invoice extends BaseDto{
             this.date = null;
             return;
         }
-        this.date = LocalDateTime.parse(satDate, SAT_DATE_FORMAT);
-    }
 
+        try {
+            // Intenta primero parsearlo como LocalDateTime
+            this.date = LocalDateTime.parse(satDate, SAT_DATE_FORMAT_IN);
+        } catch (DateTimeParseException e) {
+            try {
+                // Si falla, intenta parsearlo como ZonedDateTime y convertirlo a LocalDateTime
+                ZonedDateTime zdt = ZonedDateTime.parse(satDate);
+                this.date = zdt.toLocalDateTime();
+            } catch (DateTimeParseException e2) {
+                // Si todo falla, lanza la excepción original
+                throw new IllegalArgumentException("Formato de fecha inválido: " + satDate +
+                        " (debe ser compatible con el formato yyyy-MM-ddTHH:mm:ss)", e);
+            }
+        }
+    }
 
 
     /**

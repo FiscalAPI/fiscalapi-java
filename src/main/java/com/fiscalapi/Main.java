@@ -8,6 +8,7 @@ import com.fiscalapi.models.invoicing.*;
 import com.fiscalapi.services.FiscalApiClient;
 import org.jetbrains.annotations.NotNull;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -380,7 +381,7 @@ public class Main {
         ItemTax iva = new ItemTax();
         iva.setTaxCode("002"); // iva
         iva.setTaxTypeCode("Tasa"); // Tasa
-        iva.setTaxRate(0.160000); // 16%
+        iva.setTaxRate(new BigDecimal("0.160000")); // 16%
         iva.setTaxFlagCode("T"); // T = Traslado | R = Retención
 
         //Agrega iva a los impuestos

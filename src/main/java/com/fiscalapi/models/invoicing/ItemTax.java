@@ -1,10 +1,12 @@
 package com.fiscalapi.models.invoicing;
 
+import java.math.BigDecimal;
+
 // Impuestos aplicables al concepto
 public class ItemTax {
     private String taxCode;
     private String taxTypeCode;
-    private Double taxRate;
+    private BigDecimal taxRate;
     private String taxFlagCode;
 
     public String getTaxCode() {
@@ -19,10 +21,10 @@ public class ItemTax {
     public void setTaxTypeCode(String taxTypeCode) {
         this.taxTypeCode = taxTypeCode;
     }
-    public Double getTaxRate() {
+    public BigDecimal getTaxRate() {
         return taxRate;
     }
-    public void setTaxRate(Double taxRate) {
+    public void setTaxRate(BigDecimal taxRate) {
         this.taxRate = taxRate;
     }
     public String getTaxFlagCode() {
