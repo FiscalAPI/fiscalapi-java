@@ -1,6 +1,11 @@
 package com.fiscalapi.models.invoicing;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fiscalapi.common.BaseDto;
+
+import java.time.LocalDateTime;
 import java.util.List;
+import java.time.format.DateTimeFormatter;
 
 
 /**
@@ -9,9 +14,12 @@ import java.util.List;
  * productos/servicios, importes, método de pago, tipo de factura, entre otros.
  */
 public class Invoice extends BaseDto{
+    private static final DateTimeFormatter SAT_DATE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+
     private String versionCode;
     private String series;
-    private String date;
+    @JsonIgnore
+    private LocalDateTime date;
     private String paymentFormCode;
     private String currencyCode;
     private String typeCode;
@@ -34,7 +42,7 @@ public class Invoice extends BaseDto{
         this.versionCode = "4.0";
         this.currencyCode = "MXN";
         this.exportCode = "01";
-        this.exchangeRate = 1.0;
+        //this.exchangeRate = 1.0;
     }
 
     /**
@@ -68,16 +76,49 @@ public class Invoice extends BaseDto{
     /**
      * @return Fecha y hora de expedición del comprobante fiscal
      */
-    public String getDate() {
+    @JsonIgnore
+    public LocalDateTime getDate() {
         return date;
     }
 
     /**
-     * @param date Fecha y hora de expedición en formato AAAA-MM-DDThh:mm:ss
+     * @param date Fecha y hora de expedición como objeto LocalDateTime
      */
-    public void setDate(String date) {
+    @JsonIgnore
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
+
+    /**
+     * Obtiene la fecha en formato SAT para serialización JSON.
+     * Este método se serializa como "date" en el JSON resultante.
+     *
+     * @return Fecha y hora de expedición formateada según el estándar del SAT (AAAA-MM-DDThh:mm:ss)
+     */
+    @JsonProperty("date")
+    public String getSatDate() {
+        if (date == null) {
+            return null;
+        }
+        return date.format(SAT_DATE_FORMAT);
+    }
+
+    /**
+     * Establece la fecha a partir de una cadena en formato SAT.
+     * Este método deserializa el campo "date" del JSON recibido.
+     *
+     * @param satDate Fecha y hora en formato de texto según el estándar del SAT (AAAA-MM-DDThh:mm:ss)
+     */
+    @JsonProperty("date")
+    public void setSatDate(String satDate) {
+        if (satDate == null || satDate.isEmpty()) {
+            this.date = null;
+            return;
+        }
+        this.date = LocalDateTime.parse(satDate, SAT_DATE_FORMAT);
+    }
+
+
 
     /**
      * @return Código de la forma de pago para la factura
