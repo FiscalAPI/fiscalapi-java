@@ -56,6 +56,7 @@
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <gpg.executable>gpg</gpg.executable>
+        <gpg.passphrase>${env.GPG_PASSPHRASE}</gpg.passphrase>
     </properties>
 
     <dependencies>
@@ -113,29 +114,6 @@
                 </executions>
             </plugin>
 
-            <!-- Plugin para firmar los artefactos con GPG -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-gpg-plugin</artifactId>
-                <version>3.0.1</version>
-                <executions>
-                    <execution>
-                        <id>sign-artifacts</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>sign</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <gpgArguments>
-                        <arg>--pinentry-mode</arg>
-                        <arg>loopback</arg>
-                    </gpgArguments>
-                    <useAgent>false</useAgent>  <!-- Deshabilita prompt de contraseña -->
-                </configuration>
-            </plugin>
-
             <!-- Plugin para publicar en Central Publisher Portal -->
             <plugin>
                 <groupId>org.sonatype.central</groupId>
@@ -160,6 +138,7 @@
             </activation>
             <build>
                 <plugins>
+                    <!-- Plugin para firmar los artefactos con GPG -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
@@ -177,14 +156,19 @@
                             <gpgArguments>
                                 <arg>--pinentry-mode</arg>
                                 <arg>loopback</arg>
+                                <arg>--batch</arg>
+                                <arg>--no-tty</arg>
+                                <arg>--passphrase-fd</arg>
+                                <arg>0</arg>
                             </gpgArguments>
+                            <passphraseServerId>gpg.passphrase</passphraseServerId>
+                            <passphrase>${gpg.passphrase}</passphrase>
+                            <interactive>false</interactive>
                         </configuration>
                     </plugin>
                 </plugins>
             </build>
         </profile>
     </profiles>
-
-
 
 </project>
