@@ -1,43 +1,90 @@
-name: Deploy to Maven Central
+name: Publicar a Maven Central
 
 on:
-  workflow_dispatch:  # Permite ejecutar manualmente desde GitHub Actions
+  workflow_dispatch:
+    inputs:
+      release_notes:
+        description: 'Notas de la versión'
+        required: false
+        default: 'Nueva versión de la biblioteca FiscalAPI'
 
 jobs:
-  deploy:
+  publish:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout del código
         uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref_name }}
 
-      - name: Set up Java
+      - name: Configurar Java
         uses: actions/setup-java@v3
         with:
+          java-version: '8'
           distribution: 'temurin'
-          java-version: '17'
-          server-id: central
-          server-username: MAVEN_USERNAME
-          server-password: MAVEN_PASSWORD
-          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
-          gpg-passphrase: MAVEN_GPG_PASSPHRASE
+          cache: maven
 
-      - name: Extract version from POM
+      - name: Extraer versión del POM
         id: get_version
-        run: echo "VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
+        run: |
+          VERSION=$(grep -m 1 "<version>" pom.xml | sed 's/<version>//g' | sed 's/<\/version>//g' | xargs)
+          echo "Versión extraída del POM: $VERSION"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
 
-      - name: Build and Publish
-        run: mvn clean deploy -P release
+      - name: Configurar GPG
+        run: |
+          # Crear directorio para las claves GPG
+          mkdir -p ~/.gnupg/
+          chmod 700 ~/.gnupg/
+          
+          # Importar claves GPG
+          echo "${{ secrets.GPG_PUBLIC_KEY }}" | gpg --import
+          echo "${{ secrets.GPG_SECRET_KEY }}" | gpg --import --no-tty --batch --yes
+          
+          # Verificar que las claves se hayan importado correctamente
+          gpg --list-secret-keys --keyid-format LONG
+
+      - name: Verificar settings.xml
+        run: |
+          if [ -f "settings.xml" ]; then
+            echo "El archivo settings.xml existe."
+          else
+            echo "Error: No se encontró el archivo settings.xml"
+            exit 1
+          fi
+
+      - name: Desplegar a Maven Central
         env:
           MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
-          MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+        run: |
+          mvn clean deploy -P release --settings settings.xml -DskipTests=true
 
-      - name: Create GitHub Release
+      - name: Crear GitHub Release
+        if: success()
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: v${{ env.VERSION }}
-          name: Release v${{ env.VERSION }}
-          body: "New release v${{ env.VERSION }} deployed to Maven Central."
+          tag_name: v${{ steps.get_version.outputs.version }}
+          name: FiscalAPI ${{ steps.get_version.outputs.version }}
+          body: ${{ github.event.inputs.release_notes }}
           draft: false
           prerelease: false
+          files: |
+            target/fiscalapi-${{ steps.get_version.outputs.version }}.jar
+            target/fiscalapi-${{ steps.get_version.outputs.version }}-javadoc.jar
+            target/fiscalapi-${{ steps.get_version.outputs.version }}-sources.jar
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Notificar resultado
+        if: always()
+        run: |
+          VERSION="${{ steps.get_version.outputs.version }}"
+          if [ "${{ job.status }}" == "success" ]; then
+            echo "✅ Biblioteca publicada exitosamente en Maven Central"
+            echo "La biblioteca debería estar disponible pronto en: https://central.sonatype.com/artifact/com.fiscalapi/fiscalapi/$VERSION"
+          else
+            echo "❌ Error al publicar la biblioteca"
+            echo "Por favor, revisa los logs para más detalles."
+          fi
