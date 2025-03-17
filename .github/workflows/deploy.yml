@@ -1,5 +1,4 @@
 name: Publicar a Maven Central
-
 on:
   workflow_dispatch:
     inputs:
@@ -7,7 +6,6 @@ on:
         description: 'Notas de la versión'
         required: false
         default: 'Nueva versión de la biblioteca FiscalAPI'
-
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -16,21 +14,21 @@ jobs:
         uses: actions/checkout@v3
         with:
           ref: ${{ github.ref_name }}
-
+          
       - name: Configurar Java
         uses: actions/setup-java@v3
         with:
           java-version: '8'
           distribution: 'temurin'
           cache: maven
-
+          
       - name: Extraer versión del POM
         id: get_version
         run: |
           VERSION=$(grep -m 1 "<version>" pom.xml | sed 's/<version>//g' | sed 's/<\/version>//g' | xargs)
           echo "Versión extraída del POM: $VERSION"
           echo "version=$VERSION" >> $GITHUB_OUTPUT
-
+          
       - name: Configurar GPG
         run: |
           # Crear directorio para las claves GPG
@@ -43,7 +41,7 @@ jobs:
           
           # Verificar que las claves se hayan importado correctamente
           gpg --list-secret-keys --keyid-format LONG
-
+          
       - name: Verificar settings.xml
         run: |
           if [ -f "settings.xml" ]; then
@@ -52,7 +50,7 @@ jobs:
             echo "Error: No se encontró el archivo settings.xml"
             exit 1
           fi
-
+          
       - name: Desplegar a Maven Central
         env:
           MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
@@ -60,23 +58,7 @@ jobs:
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
         run: |
           mvn clean deploy -P release --settings settings.xml -DskipTests=true
-
-      - name: Crear GitHub Release
-        if: success()
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: v${{ steps.get_version.outputs.version }}
-          name: FiscalAPI ${{ steps.get_version.outputs.version }}
-          body: ${{ github.event.inputs.release_notes }}
-          draft: false
-          prerelease: false
-          files: |
-            target/fiscalapi-${{ steps.get_version.outputs.version }}.jar
-            target/fiscalapi-${{ steps.get_version.outputs.version }}-javadoc.jar
-            target/fiscalapi-${{ steps.get_version.outputs.version }}-sources.jar
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+          
       - name: Notificar resultado
         if: always()
         run: |
