@@ -1,4 +1,4 @@
-# FiscalAPI SDK para Java
+# Fiscalapi SDK para Java
 
 [![Maven Central](https://img.shields.io/maven-central/v/com.fiscalapi/fiscalapi)](https://search.maven.org/artifact/com.fiscalapi/fiscalapi)
 [![License](https://img.shields.io/github/license/FiscalAPI/fiscalapi-java)](https://github.com/FiscalAPI/fiscalapi-java/blob/main/LICENSE)
@@ -9,27 +9,35 @@
 
 - Soporte completo para **CFDI 4.0**
 - Compatible con múltiples versiones de Java (desde **Java 8** en adelante)
-- Operaciones asíncronas mediante CompletableFuture
-- Dos modos de operación: **Por valores** o **Por referencias**
+- Dos [modos de operación](https://docs.fiscalapi.com/modes-of-operation): **Por valores** o **Por referencias**
 - Manejo simplificado de errores
 - Búsqueda en catálogos del SAT
 - Documentación completa y ejemplos prácticos
 
 ## 📦 Instalación
 
+Snippets de instalación más comunes:
+
 **Maven**:
 ```xml
 <dependency>
     <groupId>com.fiscalapi</groupId>
     <artifactId>fiscalapi</artifactId>
-    <version>4.0.120</version>
+    <version>4.0.125</version>
 </dependency>
 ```
 
-**Gradle**:
+**Gradle (Groovy)**:
 ```groovy
-implementation 'com.fiscalapi:fiscalapi:4.0.120'
+implementation 'com.fiscalapi:fiscalapi:4.0.125'
 ```
+
+**Gradle (Kotlin)**:
+```kotlin
+implementation("com.fiscalapi:fiscalapi:4.0.125")
+```
+
+Para más información, consulta [Snippets en Maven Central](https://central.sonatype.com/artifact/com.fiscalapi/fiscalapi).
 
 ## ⚙️ Configuración
 
@@ -37,21 +45,17 @@ Puedes usar el SDK tanto en aplicaciones sin inyección de dependencias como en 
 
 ### A) Aplicaciones sin Inyección de Dependencias
 
-1. **Crea tu objeto de configuración** con [tus credenciales](https://docs.fiscalapi.com/credentials-info):
+1. **Crea tu objeto de configuración** con tus [credenciales](https://docs.fiscalapi.com/credentials-info): 
 ```java
-FiscalApiConfig config = new FiscalApiConfig.Builder()
-    .apiUrl("https://test.fiscalapi.com") // https://live.fiscalapi.com (producción)
-    .apiKey("<tu_api_key>")
-    .tenant("<tenant>")
-    .build();
+FiscalApiSettings settings = new FiscalApiSettings();
+settings.setDebugMode(true);
+settings.setApiUrl("https://test.fiscalapi.com"); // https://live.fiscalapi.com (producción) 
+settings.setApiKey("<api-key>");
+settings.setTenant("<tenant-key>");
+FiscalApiClient client = FiscalApiClient.create(settings);
 ```
 
-2. **Crea la instancia del cliente**:
-```java
-FiscalApiClient fiscalApi = new FiscalApiClient(config);
-```
-
-Para ejemplos completos, consulta [java-examples](https://github.com/FiscalAPI/fiscalapi-samples-java).
+2. **Utiliza los servicios** de `FiscalApiClient` según tus necesidades (ver ejemplos más adelante).
 
 ---
 
@@ -75,11 +79,11 @@ public class FiscalApiConfig {
         @Value("${fiscalapi.api-key}") String apiKey,
         @Value("${fiscalapi.tenant}") String tenant
     ) {
-        return new FiscalApiClient(new FiscalApiConfig.Builder()
-            .apiUrl(apiUrl)
-            .apiKey(apiKey)
-            .tenant(tenant)
-            .build());
+        FiscalApiSettings settings = new FiscalApiSettings();
+        settings.setApiUrl(apiUrl);
+        settings.setApiKey(apiKey);
+        settings.setTenant(tenant);
+        return FiscalApiClient.create(settings);
     }
 }
 ```
@@ -101,83 +105,103 @@ public class InvoicesController {
 
 ## 📝 Ejemplos de Uso
 
-### 1. Crear una Persona (Emisor o Receptor)
+### 1. Crear una Persona
 
 ```java
-Person request = new Person.Builder()
-    .legalName("Persona de Prueba")
-    .email("someone@somewhere.com")
-    .password("YourStrongPassword123!")
-    .build();
-
-ApiResponse<Person> response = fiscalApi.persons().create(request);
+// ***Crear persona ***//
+Person person = new Person();
+person.setLegalName("MI EMPRESA");
+person.setCapitalRegime("S.A De C.V");
+person.setEmail("john.doe@fiscalapi.com");
+person.setPassword("Password123!");
+ApiResponse<Person> apiResponse = client.getPersonService().create(person);
+System.out.printf("apiResponse: %s\n", apiResponse);
 ```
+
+---
 
 ### 2. Subir Certificados CSD
 
 ```java
-TaxFile certificadoCsd = new TaxFile.Builder()
-    .personId("984708c4-fcc0-43bd-9d30-ec017815c20e")
-    .base64File("MIIFsDCCA5igAwIBAgI...==") // Certificado .cer codificado en Base64
-    .fileType(FileType.CERTIFICATE_CSD)
-    .password("12345678a")
-    .tin("EKU9003173C9")
-    .build();
+// ***Subir archivo .cer (certificado)***//
+TaxFile archivoCer = new TaxFile();
+archivoCer.setPersonId("3f3478b4-60fd-459e-8bfc-f8239fc96257");
+archivoCer.setTin("FUNK671228PH6");
+archivoCer.setBase64File("MIIFgDCCA2igAwIBAgIUMzAwMDEwMDAwMDA1MDAwMDM0NDYwDQYJKoZIhvcNAQELBQAwggEr...");
+archivoCer.setFileType(0); // 0 para certificado
+archivoCer.setPassword("12345678a");
 
-TaxFile clavePrivadaCsd = new TaxFile.Builder()
-    .personId("984708c4-fcc0-43bd-9d30-ec017815c20e")
-    .base64File("MIIFDjBABgkqhkiG9w0BBQ0...==") // Llave privada .key codificada en Base64
-    .fileType(FileType.PRIVATE_KEY_CSD)
-    .password("12345678a")
-    .tin("EKU9003173C9")
-    .build();
+ApiResponse<TaxFile> apiResponseCer = client.getTaxFileService().create(archivoCer);
+System.out.printf("apiResponse: %s\n", apiResponseCer);
 
-ApiResponse<TaxFile> responseCer = fiscalApi.taxFiles().create(certificadoCsd);
-ApiResponse<TaxFile> responseKey = fiscalApi.taxFiles().create(clavePrivadaCsd);
+
+// ***Subir archivo .key (clave privada)***//
+TaxFile archivoKey = new TaxFile();
+archivoKey.setPersonId("3f3478b4-60fd-459e-8bfc-f8239fc96257");
+archivoKey.setTin("FUNK671228PH6");
+archivoKey.setBase64File("MIIFDjBABgkqhkiG9w0BBQ0...==");
+archivoKey.setFileType(1); // 1 para llave privada
+archivoKey.setPassword("12345678a");
+
+ApiResponse<TaxFile> apiResponseKey = client.getTaxFileService().create(archivoKey);
+System.out.printf("apiResponse: %s\n", apiResponseKey);
 ```
+
+---
 
 ### 3. Crear un Producto o Servicio
 
 ```java
-Product request = new Product.Builder()
-    .description("Servicios contables")
-    .unitPrice(new BigDecimal("100"))
-    .satUnitMeasurementId("E48")
-    .satTaxObjectId("02")
-    .satProductCodeId("84111500")
-    .build();
-
-ApiResponse<Product> response = fiscalApi.products().create(request);
+// ***Crear producto***//
+Product product = new Product();
+product.setDescription("Libro de Java sin impuestos");
+product.setUnitPrice(100.75986);
+ApiResponse<Product> apiResponseProduct = client.getProductService().create(product);
+System.out.printf("apiResponse: %s\n", apiResponseProduct);
 ```
+
+---
 
 ### 4. Crear una Factura de Ingreso (Por Referencias)
 
 ```java
-Invoice invoice = new Invoice.Builder()
-    .versionCode("4.0")
-    .series("SDK-F")
-    .date(LocalDateTime.now())
-    .paymentFormCode("01")
-    .currencyCode("MXN")
-    .typeCode("I")
-    .expeditionZipCode("42501")
-    .issuer(new InvoiceIssuer.Builder()
-        .id("<id-emisor-en-fiscalapi>")
-        .build())
-    .recipient(new InvoiceRecipient.Builder()
-        .id("<id-receptor-en-fiscalapi>")
-        .build())
-    .addItem(new InvoiceItem.Builder()
-        .id("<id-producto-en-fiscalapi>")
-        .quantity(new BigDecimal("1"))
-        .discount(new BigDecimal("10.85"))
-        .build())
-    .paymentMethodCode("PUE")
-    .build();
+// Generar factura por referencias
+Invoice invoice = new Invoice();
+invoice.setVersionCode("4.0");
+invoice.setSeries("F");
+invoice.setDate(LocalDateTime.now());
+invoice.setPaymentFormCode("01");
+invoice.setCurrencyCode("MXN");
+invoice.setTypeCode("I");
+invoice.setExpeditionZipCode("42501");
+invoice.setPaymentMethodCode("PUE");
 
-ApiResponse<Invoice> response = fiscalApi.invoices().create(invoice);
+// Emisor por referencia
+InvoiceIssuer issuer = new InvoiceIssuer();
+issuer.setId("3f3478b4-60fd-459e-8bfc-f8239fc96257");
+invoice.setIssuer(issuer);
+
+// Receptor por referencia
+InvoiceRecipient recipient = new InvoiceRecipient();
+recipient.setId("96b46762-d246-4a67-a562-510a25dbafa9");
+invoice.setRecipient(recipient);
+
+// Producto / Servicio por referencia
+List<InvoiceItem> items = new ArrayList<>();
+InvoiceItem item = new InvoiceItem();
+item.setId("114a4be5-fb65-40b2-a762-ff0c55c6ebfa");
+item.setQuantity(2.0);
+item.setDiscount(255.85);
+items.add(item);
+invoice.setItems(items);
+
+ApiResponse<Invoice> apiResponseInvoice = client.getInvoiceService().create(invoice);
+System.out.println(apiResponseInvoice);
 ```
 
+---
+
+💡 **Tip:** Para más ejemplos (facturas por valores, notas de crédito, complementos de pago, catálogos SAT, cancelaciones, etc.), revisa la documentación oficial en [docs.fiscalapi.com](https://docs.fiscalapi.com).
 
 ## 📄 Licencia
 
