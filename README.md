@@ -211,7 +211,7 @@ Este proyecto está licenciado bajo la Licencia **Apache 2.0**. Consulta el arch
 
 - [Documentación Oficial](https://docs.fiscalapi.com)
 - [Portal de FiscalAPI](https://fiscalapi.com)
-- [Ejemplos Java](https://github.com/FiscalAPI/fiscalapi-samples-java)
+- [Ejemplos Java](https://github.com/FiscalAPI/fiscalapi-samples-spring/blob/main/src/main/java/com/fiscalapi/samples/spring/AllSamples.java)
 - [Ejemplos Spring Boot](https://github.com/FiscalAPI/fiscalapi-samples-spring)
 
 ---
