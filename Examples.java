@@ -19,9 +19,10 @@ public class Examples {
 
         FiscalApiSettings settings = new FiscalApiSettings();
         settings.setDebugMode(true);
-        settings.setApiUrl("https://localhost:7173");
-        settings.setApiKey("sk_development_e0e47dfa_5146_40c2_b3a3_3055909a6b88");
-        settings.setTenant("e839651d-1765-4cd0-ba7f-547a4c20580f");
+        settings.setApiUrl("https://test.fiscalapi.com");
+        settings.setApiKey("<api-key>");
+        settings.setTenant("<tenant-key>");
+
         FiscalApiClient client = FiscalApiClient.create(settings);
 
         //region Personas (emisores/clientes/empresas, receptores/clientes/empresas, usuarios)
@@ -344,6 +345,170 @@ public class Examples {
 //
 //        ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
 //        System.out.println(apiResponse);
+
+
+//        // Crear factura global por valores
+
+//        Invoice invoice = new Invoice();
+//        invoice.setVersionCode("4.0");
+//        invoice.setTypeCode("I");
+//        invoice.setSeries("F");
+//        invoice.setDate(LocalDateTime.now().minusHours(2));
+//        invoice.setCurrencyCode("MXN");
+//        invoice.setPaymentFormCode("01");
+//        invoice.setPaymentMethodCode("PUE");
+//        invoice.setExpeditionZipCode("01160");
+//
+//        // Información global
+//        GlobalInformation globalInfo = new GlobalInformation();
+//        globalInfo.setPeriodicityCode("01");
+//        globalInfo.setMonthCode("05");
+//        globalInfo.setYear(2025);
+//        invoice.setGlobalInformation(globalInfo);
+//
+//        // Emisor
+//        InvoiceIssuer emisor = new InvoiceIssuer();
+//        emisor.setLegalName("KARLA FUENTE NOLASCO");
+//        emisor.setTin("FUNK671228PH6");
+//        emisor.setTaxRegimeCode("621");
+//
+//        // Certificados emisor (sellos)
+//        List<TaxCredential> sellos = new ArrayList<>();
+//
+//        TaxCredential cer = new TaxCredential();
+//        cer.setBase64File(base64Cer);
+//        cer.setFileType(0); // 0=Certificado (.cer) | 1 Clave privada (.key)
+//        cer.setPassword(password);
+//
+//        TaxCredential key = new TaxCredential();
+//        key.setBase64File(base64Key);
+//        key.setFileType(1); // 0=Certificado (.cer) | 1 Clave privada (.key)
+//        key.setPassword(password);
+//
+//        // asignar certificado y clave privada a la lista sellos
+//        sellos.add(cer);
+//        sellos.add(key);
+//
+//        // Asignar sellos del emisor al emisor.
+//        emisor.setTaxCredentials(sellos);
+//
+//        // Asignar el emisor a la factura
+//        invoice.setIssuer(emisor);
+//
+//        // Receptor (Público en general para factura global)
+//        InvoiceRecipient receptor = new InvoiceRecipient();
+//        receptor.setLegalName("PUBLICO EN GENERAL");
+//        receptor.setTin("XAXX010101000");
+//        receptor.setZipCode("01160");
+//        receptor.setTaxRegimeCode("616");
+//        receptor.setCfdiUseCode("S01");
+//        receptor.setEmail("someone@somewhere.com");
+//
+//        invoice.setRecipient(receptor);
+//
+//        // Ventas al publico en general
+//        List<InvoiceItem> items = new ArrayList<>();
+//        InvoiceItem item = new InvoiceItem();
+//
+//        item.setItemCode("01010101");
+//        item.setQuantity(1.0);
+//        item.setUnitOfMeasurementCode("ACT");
+//        item.setDescription("Venta");
+//        item.setUnitPrice(1230.00);
+//        item.setTaxObjectCode("02");
+//        item.setItemSku("venta0001");
+//        item.setDiscount(255.85);
+//
+//        // impuestos del producto
+//        List<ItemTax> taxes = new ArrayList<>();
+//        ItemTax iva = new ItemTax();
+//        iva.setTaxCode("002"); // IVA
+//        iva.setTaxTypeCode("Tasa"); // Tasa
+//        iva.setTaxRate("0.160000"); // 16%
+//        iva.setTaxFlagCode("T"); // T = Traslado | R = Retención
+//
+//        // Agrega iva a los impuestos
+//        taxes.add(iva);
+//
+//        // Agrega la lista de impuestos al producto
+//        item.setItemTaxes(taxes);
+//
+//        // Agrega el producto a la lista de productos
+//        items.add(item);
+//
+//        // Agrega la lista de productos a la factura
+//        invoice.setItems(items);
+//
+//        ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+//        System.out.println(apiResponse);
+
+
+
+//        // Crear factura global por referencias
+
+//        Invoice invoice = new Invoice();
+//        invoice.setVersionCode("4.0");
+//        invoice.setTypeCode("I");
+//        invoice.setSeries("F");
+//        invoice.setDate(LocalDateTime.now().minusHours(2));
+//        invoice.setCurrencyCode("MXN");
+//        invoice.setPaymentFormCode("01");
+//        invoice.setPaymentMethodCode("PUE");
+//        invoice.setExpeditionZipCode("01160");
+//
+//        // Información global
+//        GlobalInformation globalInfo = new GlobalInformation();
+//        globalInfo.setPeriodicityCode("01");
+//        globalInfo.setMonthCode("05");
+//        globalInfo.setYear(2025);
+//        invoice.setGlobalInformation(globalInfo);
+//
+//        // Emisor por referencia
+//        InvoiceIssuer issuer = new InvoiceIssuer();
+//        issuer.setId("78d380fd-1b69-4e3c-8bc0-4f57737f7d5f");
+//        invoice.setIssuer(issuer);
+//
+//        // Receptor por referencia
+//        InvoiceRecipient recipient = new InvoiceRecipient();
+//        recipient.setId("4e7ba2d7-2302-42f1-9fe4-6b75069f0fc9");
+//        invoice.setRecipient(recipient);
+//
+//        // Ventas al publico en general
+//        List<InvoiceItem> items = new ArrayList<>();
+//        InvoiceItem item = new InvoiceItem();
+//
+//        item.setItemCode("01010101");
+//        item.setQuantity(1.0);
+//        item.setUnitOfMeasurementCode("ACT");
+//        item.setDescription("Venta");
+//        item.setUnitPrice(1230.00);
+//        item.setTaxObjectCode("02");
+//        item.setItemSku("venta0001");
+//        item.setDiscount(255.85);
+//
+//        // impuestos del producto
+//        List<ItemTax> taxes = new ArrayList<>();
+//        ItemTax iva = new ItemTax();
+//        iva.setTaxCode("002"); // IVA
+//        iva.setTaxTypeCode("Tasa"); // Tasa
+//        iva.setTaxRate("0.160000"); // 16%
+//        iva.setTaxFlagCode("T"); // T = Traslado | R = Retención
+//
+//        // Agrega iva a los impuestos
+//        taxes.add(iva);
+//
+//        // Agrega la lista de impuestos al producto
+//        item.setItemTaxes(taxes);
+//
+//        // Agrega el producto a la lista de productos
+//        items.add(item);
+//
+//        // Agrega la lista de productos a la factura
+//        invoice.setItems(items);
+//
+//        ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+//        System.out.println(apiResponse);
+
 
 
 
