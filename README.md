@@ -37,7 +37,7 @@ implementation 'com.fiscalapi:fiscalapi:4.0.125'
 implementation("com.fiscalapi:fiscalapi:4.0.125")
 ```
 
-Para más información, consulta [Snippets en Maven Central](https://central.sonatype.com/artifact/com.fiscalapi/fiscalapi).
+Para más información, consulta [Snippets en Maven Central](https://central.sonatype.com/artifact/com.fiscalapi/fiscalapi).   
 💡 [Ejemplos Java](https://github.com/FiscalAPI/fiscalapi-java/blob/main/src/main/java/com/fiscalapi/Examples.java)
 ## ⚙️ Configuración
 
