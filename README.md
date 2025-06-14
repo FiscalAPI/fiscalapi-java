@@ -38,7 +38,7 @@ implementation("com.fiscalapi:fiscalapi:4.0.125")
 ```
 
 Para más información, consulta [Snippets en Maven Central](https://central.sonatype.com/artifact/com.fiscalapi/fiscalapi).
-
+💡 [Ejemplos Java](https://github.com/FiscalAPI/fiscalapi-java/blob/main/src/main/java/com/fiscalapi/Examples.java)
 ## ⚙️ Configuración
 
 Puedes usar el SDK tanto en aplicaciones sin inyección de dependencias como en proyectos que usan Spring Boot. A continuación se describen ambas formas:
@@ -203,7 +203,7 @@ System.out.println(apiResponseInvoice);
 
 💡 **Tip:** Para más ejemplos (facturas por valores, notas de crédito, complementos de pago, catálogos SAT, cancelaciones, etc.), revisa la documentación oficial en [docs.fiscalapi.com](https://docs.fiscalapi.com).
 
-💡 [Más ejemplos Java](https://github.com/FiscalAPI/fiscalapi-java/blob/main/src/main/java/com/fiscalapi/Examples.java)
+💡 [Ejemplos Java](https://github.com/FiscalAPI/fiscalapi-java/blob/main/src/main/java/com/fiscalapi/Examples.java)
 
 ## 📄 Licencia
 
