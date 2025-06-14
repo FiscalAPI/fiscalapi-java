@@ -203,6 +203,8 @@ System.out.println(apiResponseInvoice);
 
 💡 **Tip:** Para más ejemplos (facturas por valores, notas de crédito, complementos de pago, catálogos SAT, cancelaciones, etc.), revisa la documentación oficial en [docs.fiscalapi.com](https://docs.fiscalapi.com).
 
+💡 [Más ejemplos Java](https://github.com/FiscalAPI/fiscalapi-java/blob/main/src/main/java/com/fiscalapi/Examples.java)
+
 ## 📄 Licencia
 
 Este proyecto está licenciado bajo la Licencia **Apache 2.0**. Consulta el archivo [LICENSE](LICENSE) para más detalles.
