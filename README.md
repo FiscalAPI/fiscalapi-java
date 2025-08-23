@@ -5,6 +5,7 @@
 
 **SDK oficial de FiscalAPI para Java**, la API de facturación CFDI y otros servicios fiscales en México. Simplifica la integración con los servicios de facturación electrónica, eliminando las complejidades del SAT y facilitando la generación de facturas, notas de crédito, complementos de pago, nómina, carta porte, y más. ¡Factura sin dolor!
 
+
 ## 📋 Facturación CFDI 4.0
 - **Soporte completo para CFDI 4.0** con todas las especificaciones oficiales
 - **Timbrado de facturas de ingreso** con validación automática
@@ -50,8 +51,7 @@
 - Actualizaciones regulares conforme a cambios del SAT
 
 ## 📦 Instalación
-
-Snippets de instalación más comunes:
+Compatible con múltiples versiones de Java (desde **Java 8** en adelante)
 
 **Maven**:
 ```xml
@@ -248,8 +248,7 @@ Este proyecto está licenciado bajo la Licencia **Apache 2.0**. Consulta el arch
 - [Portal de FiscalAPI](https://fiscalapi.com)
 - [Ejemplos Java](https://github.com/FiscalAPI/fiscalapi-samples-spring/blob/main/src/main/java/com/fiscalapi/samples/spring/AllSamples.java)
 - [Ejemplos Spring Boot](https://github.com/FiscalAPI/fiscalapi-samples-spring)
-- [Postman Collection](https://documenter.getpostman.com/view/4346593/2sB2j4eqXr)
-- [SDKs](https://docs.fiscalapi.com/sdks)
+
 ---
 
 Desarrollado con ❤️ por [Fiscalapi](https://www.fiscalapi.com)
