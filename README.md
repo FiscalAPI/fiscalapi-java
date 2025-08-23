@@ -30,7 +30,7 @@
 
 ## 👥 Gestión de Personas
 - **Administración de personas** (emisores, receptores, clientes, usuarios, etc.)
-- **Gestión de certificados CSD** (subir archivos .cer y .key a FiscalAPI)
+- **Gestión de certificados CSD y FIEL** (subir archivos .cer y .key a FiscalAPI)
 - **Configuración de datos fiscales** (RFC, domicilio fiscal, régimen fiscal)
 
 ## 🛍️ Gestión de Productos/Servicios
