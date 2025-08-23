@@ -42,7 +42,7 @@
 - **Consulta en catálogos oficiales de Descarga masiva del SAT** actualizados
 - **Búsqueda de información** en catálogos del SAT con filtros avanzados
 - **Acceso y búsqueda** en catálogos completos
-- 
+  
 ## 📖 Recursos Adicionales
 - **Cientos de ejemplos de código** disponibles en múltiples lenguajes de programación
 - Documentación completa con guías paso a paso
