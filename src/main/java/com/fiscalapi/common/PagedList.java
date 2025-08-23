@@ -3,12 +3,10 @@ import java.util.List;
 
 public class PagedList<T> extends  SerializableDto {
     private List<T> items;
-    private int pageNumber;
-    private int pageSize;
-    private int totalCount;
 
-    // Propiedades adicionales que devuelve la API
+    private int pageNumber;
     private int totalPages;
+    private int totalCount;
     private boolean hasPreviousPage;
     private boolean hasNextPage;
 
@@ -23,21 +21,6 @@ public class PagedList<T> extends  SerializableDto {
         this.items = items;
     }
 
-    public int getPageNumber() {
-        return pageNumber;
-    }
-
-    public void setPageNumber(int pageNumber) {
-        this.pageNumber = pageNumber;
-    }
-
-    public int getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
-    }
 
     public int getTotalCount() {
         return totalCount;
@@ -71,4 +54,11 @@ public class PagedList<T> extends  SerializableDto {
         this.hasNextPage = hasNextPage;
     }
 
+    public int getPageNumber() {
+        return pageNumber;
+    }
+
+    public void setPageNumber(int pageNumber) {
+        this.pageNumber = pageNumber;
+    }
 }

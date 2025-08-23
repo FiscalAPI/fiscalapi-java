@@ -7,5 +7,8 @@ public interface IFiscalApiClient {
     IApiKeyService getApiKeyService();
     ITaxFileService getTaxFileService();
     ICatalogService getCatalogService();
+    IDownloadCatalogService getDownloadCatalogService();
+    IDownloadRuleService getDownloadRuleService();
+    IDownloadRequestService getDownloadRequestService();
     // ... etc
 }

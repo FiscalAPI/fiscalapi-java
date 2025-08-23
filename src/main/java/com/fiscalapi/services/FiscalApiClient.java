@@ -14,7 +14,9 @@ public class FiscalApiClient implements IFiscalApiClient {
     private final IApiKeyService apiKeyService;
     private final ITaxFileService taxFileService;
     private final ICatalogService catalogService;
-    // etc.
+    private final IDownloadCatalogService downloadCatalogService;
+    private final IDownloadRuleService downloadRuleService;
+    private final IDownloadRequestService downloadRequestService;
 
     private FiscalApiClient(FiscalApiSettings settings) {
         validateSettings(settings);
@@ -30,7 +32,9 @@ public class FiscalApiClient implements IFiscalApiClient {
         this.apiKeyService = new ApiKeyService(httpClient, settings);
         this.taxFileService = new TaxFileService(httpClient, settings);
         this.catalogService = new CatalogService(httpClient, settings);
-
+        this.downloadCatalogService = new DownloadCatalogService(httpClient, settings);
+        this.downloadRuleService = new DownloadRuleService(httpClient, settings);
+        this.downloadRequestService = new DownloadRequestService(httpClient, settings);
 
         // ...
     }
@@ -67,6 +71,21 @@ public class FiscalApiClient implements IFiscalApiClient {
     @Override
     public ICatalogService getCatalogService() {
         return catalogService;
+    }
+
+    @Override
+    public IDownloadCatalogService getDownloadCatalogService() {
+        return downloadCatalogService;
+    }
+
+    @Override
+    public IDownloadRuleService getDownloadRuleService() {
+        return downloadRuleService;
+    }
+
+    @Override
+    public IDownloadRequestService getDownloadRequestService() {
+        return downloadRequestService;
     }
 
 

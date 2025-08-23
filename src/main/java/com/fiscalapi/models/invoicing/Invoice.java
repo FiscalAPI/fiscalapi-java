@@ -2,15 +2,10 @@ package com.fiscalapi.models.invoicing;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fiscalapi.common.BaseDto;
-
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.DateTimeParseException;
-import java.time.temporal.ChronoField;
 import java.util.List;
-import java.time.format.DateTimeFormatter;
-
 import static com.fiscalapi.models.invoicing.InvoiceConstants.SAT_DATE_FORMAT_IN;
 import static com.fiscalapi.models.invoicing.InvoiceConstants.SAT_DATE_FORMAT_OUT;
 
@@ -225,7 +220,6 @@ public class Invoice extends BaseDto{
                 ZonedDateTime zdt = ZonedDateTime.parse(satDate);
                 this.date = zdt.toLocalDateTime();
             } catch (DateTimeParseException e2) {
-                // Si todo falla, lanza la excepción original
                 throw new IllegalArgumentException("Formato de fecha inválido: " + satDate +
                         " (debe ser compatible con el formato yyyy-MM-ddTHH:mm:ss)", e);
             }

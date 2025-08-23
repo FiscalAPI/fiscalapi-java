@@ -10,7 +10,7 @@ public interface ICatalogService extends IFiscalApiService<CatalogDto> {
     /**
      * GET /api/{apiVersion}/catalogs
      * Recupera todos los nombres de los catálogos disponibles para búsquedas.
-     * @return ApiResponse con una lista de nombres de catálogos (List&lt;String&gt;).
+     * @return ApiResponse con una lista de nombres de catálogos (List&lt; String&gt;).
      */
     ApiResponse<List<String>> getList();
 
