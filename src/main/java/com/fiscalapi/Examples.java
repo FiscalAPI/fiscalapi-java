@@ -29,8 +29,10 @@ public class Examples {
         FiscalApiSettings settings = new FiscalApiSettings();
         settings.setDebugMode(true);
         settings.setApiUrl("https://test.fiscalapi.com");
-        settings.setApiKey("<api-key>");
-        settings.setTenant("<tenant-key>");
+        //settings.setApiKey("<api-key>");
+        settings.setApiKey("sk_test_4e7ca2f5_6c02_4571_9767_212f32cebd59");
+        settings.setTenant("102e5f13-e114-41dd-bea7-507fce177281");
+        //settings.setTenant("<tenant-key>");
 
 
 
@@ -251,8 +253,8 @@ public class Examples {
         //region Facturas
 
 //        // ***Obtener una factura por Id***//
-//        ApiResponse<Invoice> apiResponse = client.getInvoiceService().getById("bda0b31d-e1e0-4644-91ea-c6f0e90fb57c",true);
-//        System.out.printf("apiResponse: %s\n", apiResponse);
+        ApiResponse<Invoice> apiResponse = client.getInvoiceService().getById("1207c05b-9c4b-42ed-aa39-1fab4e993c7b",true);
+        System.out.printf("apiResponse: %s\n", apiResponse);
 
 //        // ***Listar facturas***//
 //        ApiResponse<PagedList<Invoice>> apiResponse = client.getInvoiceService().getList(1,3);
@@ -864,42 +866,42 @@ public class Examples {
 //        System.out.println(apiResponse);
 
         // Generar nota de crédito con precios dinámicos
-        Invoice invoice = new Invoice();
-        invoice.setVersionCode("4.0");
-        invoice.setSeries("CN");
-        invoice.setDate(LocalDateTime.now().minusHours(2));
-        invoice.setPaymentFormCode("03");
-        invoice.setCurrencyCode("MXN");
-        invoice.setTypeCode("E");
-        invoice.setExpeditionZipCode("01160");
-        invoice.setPaymentMethodCode("PUE");
-
-        // Emisor por referencia
-        InvoiceIssuer issuer = new InvoiceIssuer();
-        issuer.setId("3f3478b4-60fd-459e-8bfc-f8239fc96257");
-        invoice.setIssuer(issuer);
-
-        // Receptor por referencia
-        InvoiceRecipient recipient = new InvoiceRecipient();
-        recipient.setId("96b46762-d246-4a67-a562-510a25dbafa9");
-        invoice.setRecipient(recipient);
-
-        // Facturas relacionadas
-        List<RelatedInvoice> relatedInvoices = new ArrayList<>();
-        RelatedInvoice related = new RelatedInvoice();
-        related.setUuid("5FB2822E-396D-4725-8521-CDC4BDD20CCF");
-        related.setRelationshipTypeCode("01");
-        relatedInvoices.add(related);
-        invoice.setRelatedInvoices(relatedInvoices);
-
-        // Productos / Servicios por referencia
-        List<InvoiceItem> items = new ArrayList<>();
-        InvoiceItem item = new InvoiceItem();
-        item.setId("114a4be5-fb65-40b2-a762-ff0c55c6ebfa");
-        item.setQuantity(0.5);
-        item.setUnitPrice(150.0);
-        items.add(item);
-        invoice.setItems(items);
+//        Invoice invoice = new Invoice();
+//        invoice.setVersionCode("4.0");
+//        invoice.setSeries("CN");
+//        invoice.setDate(LocalDateTime.now().minusHours(2));
+//        invoice.setPaymentFormCode("03");
+//        invoice.setCurrencyCode("MXN");
+//        invoice.setTypeCode("E");
+//        invoice.setExpeditionZipCode("01160");
+//        invoice.setPaymentMethodCode("PUE");
+//
+//        // Emisor por referencia
+//        InvoiceIssuer issuer = new InvoiceIssuer();
+//        issuer.setId("3f3478b4-60fd-459e-8bfc-f8239fc96257");
+//        invoice.setIssuer(issuer);
+//
+//        // Receptor por referencia
+//        InvoiceRecipient recipient = new InvoiceRecipient();
+//        recipient.setId("96b46762-d246-4a67-a562-510a25dbafa9");
+//        invoice.setRecipient(recipient);
+//
+//        // Facturas relacionadas
+//        List<RelatedInvoice> relatedInvoices = new ArrayList<>();
+//        RelatedInvoice related = new RelatedInvoice();
+//        related.setUuid("5FB2822E-396D-4725-8521-CDC4BDD20CCF");
+//        related.setRelationshipTypeCode("01");
+//        relatedInvoices.add(related);
+//        invoice.setRelatedInvoices(relatedInvoices);
+//
+//        // Productos / Servicios por referencia
+//        List<InvoiceItem> items = new ArrayList<>();
+//        InvoiceItem item = new InvoiceItem();
+//        item.setId("114a4be5-fb65-40b2-a762-ff0c55c6ebfa");
+//        item.setQuantity(0.5);
+//        item.setUnitPrice(150.0);
+//        items.add(item);
+//        invoice.setItems(items);
 
 //        ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
 //        System.out.println(apiResponse);

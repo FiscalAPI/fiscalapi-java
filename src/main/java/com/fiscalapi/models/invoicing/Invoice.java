@@ -2,6 +2,8 @@ package com.fiscalapi.models.invoicing;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fiscalapi.common.BaseDto;
+import com.fiscalapi.common.CatalogDto;
+
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeParseException;
@@ -41,6 +43,9 @@ public class Invoice extends BaseDto{
     private List<RelatedInvoice> relatedInvoices;
     private List<InvoicePayment> payments;
     private List<InvoiceResponse> responses;
+
+
+    private CatalogDto status;
 
     /**
      * Constructor por defecto
@@ -396,6 +401,13 @@ public class Invoice extends BaseDto{
     }
 
     /**
+     * @return estado asociado a la factura
+     */
+    public CatalogDto getStatus() {
+        return status;
+    }
+
+    /**
      * @return Lista de pagos asociados a la factura
      */
     public List<InvoicePayment> getPayments() {
@@ -422,4 +434,6 @@ public class Invoice extends BaseDto{
     public void setResponses(List<InvoiceResponse> responses) {
         this.responses = responses;
     }
+
+
 }
