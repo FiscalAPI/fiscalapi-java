@@ -17,6 +17,7 @@ public class FiscalApiClient implements IFiscalApiClient {
     private final IDownloadCatalogService downloadCatalogService;
     private final IDownloadRuleService downloadRuleService;
     private final IDownloadRequestService downloadRequestService;
+    private final IStampService stampService;
 
     private FiscalApiClient(FiscalApiSettings settings) {
         validateSettings(settings);
@@ -35,6 +36,7 @@ public class FiscalApiClient implements IFiscalApiClient {
         this.downloadCatalogService = new DownloadCatalogService(httpClient, settings);
         this.downloadRuleService = new DownloadRuleService(httpClient, settings);
         this.downloadRequestService = new DownloadRequestService(httpClient, settings);
+        this.stampService = new StampService(httpClient, settings);
 
         // ...
     }
@@ -88,7 +90,10 @@ public class FiscalApiClient implements IFiscalApiClient {
         return downloadRequestService;
     }
 
-
+    @Override
+    public IStampService getStampService() {
+        return stampService;
+    }
     // etc...
 
     private void validateSettings(FiscalApiSettings settings) {

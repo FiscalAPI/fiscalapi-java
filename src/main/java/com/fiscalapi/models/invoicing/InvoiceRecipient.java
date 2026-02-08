@@ -1,5 +1,7 @@
 package com.fiscalapi.models.invoicing;
 
+import com.fiscalapi.models.invoicing.payroll.EmployeeData;
+
 // Receptor de la factura
 public class InvoiceRecipient {
     private String id;
@@ -7,6 +9,16 @@ public class InvoiceRecipient {
     private String legalName;
     private String taxRegimeCode;
     private String cfdiUseCode;
+
+    public EmployeeData getEmployeeData() {
+        return employeeData;
+    }
+
+    public void setEmployeeData(EmployeeData employeeData) {
+        this.employeeData = employeeData;
+    }
+
+    private EmployeeData employeeData;
     private String zipCode;
     private String email;
 

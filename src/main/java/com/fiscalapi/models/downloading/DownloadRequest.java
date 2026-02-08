@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import com.fiscalapi.OptUtil;
 import com.fiscalapi.common.BaseDto;
 import com.fiscalapi.common.CatalogDto;
 import java.time.LocalDateTime;
@@ -222,9 +223,16 @@ public class DownloadRequest extends BaseDto {
     }
 
     /**
-     * @param startDate Fecha inicial - Fecha de inicio para la solicitud asociada
+     * @param startDate Fecha inicial - Fecha de inicio para la solicitud asociada como String
      */
-    public void setStartDate(LocalDateTime startDate) {
+    public void setStartDate(String startDate) {
+        this.startDate = OptUtil.formatInputDateToSATFormat(startDate);
+    }
+
+    /**
+     * @param startDate Fecha inicial - Fecha de inicio para la solicitud asociada como LocalDateTime
+     */
+    public void setStartDateFromLocalDateTime(LocalDateTime startDate) {
         this.startDate = startDate;
     }
 
@@ -236,9 +244,16 @@ public class DownloadRequest extends BaseDto {
     }
 
     /**
-     * @param endDate Fecha final - Fecha de fin para la solicitud asociada
+     * @param endDate Fecha final - Fecha de fin para la solicitud asociada como String
      */
-    public void setEndDate(LocalDateTime endDate) {
+    public void setEndDate(String endDate) {
+        this.endDate = OptUtil.formatInputDateToSATFormat(endDate);
+    }
+
+    /**
+     * @param endDate Fecha final - Fecha de fin para la solicitud asociada como LocalDateTime
+     */
+    public void setEndDateFromLocalDateTime(LocalDateTime endDate) {
         this.endDate = endDate;
     }
 
@@ -420,7 +435,11 @@ public class DownloadRequest extends BaseDto {
     /**
      * @param lastAttemptDate Fecha del último intento para la solicitud asociada
      */
-    public void setLastAttemptDate(LocalDateTime lastAttemptDate) {
+    public void setLastAttemptDate(String lastAttemptDate) {
+        this.lastAttemptDate = OptUtil.formatInputDateToSATFormat(lastAttemptDate);
+    }
+
+    public void setLastAttemptDateFromLocalDateTime(LocalDateTime lastAttemptDate) {
         this.lastAttemptDate = lastAttemptDate;
     }
 
@@ -434,7 +453,11 @@ public class DownloadRequest extends BaseDto {
     /**
      * @param nextAttemptDate Fecha del siguiente intento para la solicitud asociada
      */
-    public void setNextAttemptDate(LocalDateTime nextAttemptDate) {
+    public void setNextAttemptDate(String nextAttemptDate) {
+        this.nextAttemptDate = OptUtil.formatInputDateToSATFormat(nextAttemptDate);
+    }
+
+    public void setNextAttemptDateFromLocalDateTime(LocalDateTime nextAttemptDate) {
         this.nextAttemptDate = nextAttemptDate;
     }
 

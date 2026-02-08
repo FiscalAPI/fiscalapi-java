@@ -1,20 +1,20 @@
-package com.fiscalapi.models.invoicing;
+package com.fiscalapi.models.invoicing.paymentComplement;
 
 import java.math.BigDecimal;
 
 // Impuestos aplicables a la factura pagada
 public class PaidInvoiceTax {
-    private Double base;
+    private BigDecimal base;
     private String taxCode;
     private String taxTypeCode;
     private BigDecimal taxRate;
     private String taxFlagCode;
 
-    public Double getBase() {
+    public BigDecimal getBase() {
         return base;
     }
-    public void setBase(Double base) {
-        this.base = base;
+    public void setBase(String base) {
+        this.base = new BigDecimal(base);
     }
     public String getTaxCode() {
         return taxCode;

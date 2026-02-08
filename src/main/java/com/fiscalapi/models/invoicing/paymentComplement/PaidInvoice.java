@@ -1,20 +1,21 @@
-package com.fiscalapi.models.invoicing;
+package com.fiscalapi.models.invoicing.paymentComplement;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 // Factura pagada parcial o totalmente
 public class PaidInvoice {
     private String uuid;
     private String series;
-    private Double paymentAmount;
+    private BigDecimal paymentAmount;
     private String number;
     private String currencyCode;
     private Integer partialityNumber;
-    private Double subTotal;
-    private Double previousBalance;
-    private Double remainingBalance;
+    private BigDecimal subTotal;
+    private BigDecimal previousBalance;
+    private BigDecimal remainingBalance;
     private String taxObjectCode;
-    private Double equivalence;
+    private BigDecimal equivalence;
     private List<PaidInvoiceTax> paidInvoiceTaxes;
 
     public String getUuid() {
@@ -29,11 +30,11 @@ public class PaidInvoice {
     public void setSeries(String series) {
         this.series = series;
     }
-    public Double getPaymentAmount() {
+    public BigDecimal getPaymentAmount() {
         return paymentAmount;
     }
-    public void setPaymentAmount(Double amount) {
-        this.paymentAmount = amount;
+    public void setPaymentAmount(String amount) {
+        this.paymentAmount = new BigDecimal(amount);
     }
     public String getNumber() {
         return number;
@@ -53,23 +54,23 @@ public class PaidInvoice {
     public void setPartialityNumber(Integer partialityNumber) {
         this.partialityNumber = partialityNumber;
     }
-    public Double getSubTotal() {
+    public BigDecimal getSubTotal() {
         return subTotal;
     }
-    public void setSubTotal(Double subTotal) {
-        this.subTotal = subTotal;
+    public void setSubTotal(String subTotal) {
+        this.subTotal = new BigDecimal(subTotal);
     }
-    public Double getPreviousBalance() {
+    public BigDecimal getPreviousBalance() {
         return previousBalance;
     }
-    public void setPreviousBalance(Double previousBalance) {
-        this.previousBalance = previousBalance;
+    public void setPreviousBalance(String previousBalance) {
+        this.previousBalance = new BigDecimal(previousBalance);
     }
-    public Double getRemainingBalance() {
+    public BigDecimal getRemainingBalance() {
         return remainingBalance;
     }
-    public void setRemainingBalance(Double remainingBalance) {
-        this.remainingBalance = remainingBalance;
+    public void setRemainingBalance(String remainingBalance) {
+        this.remainingBalance = new BigDecimal(remainingBalance);
     }
     public String getTaxObjectCode() {
         return taxObjectCode;
@@ -77,11 +78,11 @@ public class PaidInvoice {
     public void setTaxObjectCode(String taxObjectCode) {
         this.taxObjectCode = taxObjectCode;
     }
-    public Double getEquivalence() {
+    public BigDecimal getEquivalence() {
         return equivalence;
     }
-    public void setEquivalence(Double equivalence) {
-        this.equivalence = equivalence;
+    public void setEquivalence(String equivalence) {
+        this.equivalence = new BigDecimal(equivalence);
     }
     public List<PaidInvoiceTax> getPaidInvoiceTaxes() {
         return paidInvoiceTaxes;

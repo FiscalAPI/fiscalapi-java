@@ -1,8 +1,9 @@
-package com.fiscalapi.models.invoicing;
+package com.fiscalapi.models.invoicing.paymentComplement;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeParseException;
@@ -18,8 +19,8 @@ public class InvoicePayment {
     private LocalDateTime paymentDate;
     private String paymentFormCode;
     private String currencyCode;
-    private Double exchangeRate;
-    private Double amount;
+    private BigDecimal exchangeRate;
+    private BigDecimal amount;
     private String sourceBankTin;
     private String sourceBankAccount;
     private String targetBankTin;
@@ -67,25 +68,14 @@ public class InvoicePayment {
      */
     @JsonProperty("paymentDate")
     public void setSatDate(String satDate) {
-        if (satDate == null || satDate.isEmpty()) {
-            this.paymentDate = null;
-            return;
-        }
+        this.paymentDate = com.fiscalapi.OptUtil.formatInputDateToSATFormat(satDate);
+    }
 
-        try {
-            // Intenta primero parsearlo como LocalDateTime
-            this.paymentDate = LocalDateTime.parse(satDate, SAT_DATE_FORMAT_IN);
-        } catch (DateTimeParseException e) {
-            try {
-                // Si falla, intenta parsearlo como ZonedDateTime y convertirlo a LocalDateTime
-                ZonedDateTime zdt = ZonedDateTime.parse(satDate);
-                this.paymentDate = zdt.toLocalDateTime();
-            } catch (DateTimeParseException e2) {
-                // Si todo falla, lanza la excepción original
-                throw new IllegalArgumentException("Formato de fecha inválido: " + satDate +
-                        " (debe ser compatible con el formato yyyy-MM-ddTHH:mm:ss)", e);
-            }
-        }
+    /**
+     * @param date Fecha y hora de expedición como String en formato SAT
+     */
+    public void setPaymentDate(String date) {
+        this.paymentDate = com.fiscalapi.OptUtil.formatInputDateToSATFormat(date);
     }
 
 
@@ -102,17 +92,17 @@ public class InvoicePayment {
     public void setCurrencyCode(String currencyCode) {
         this.currencyCode = currencyCode;
     }
-    public Double getExchangeRate() {
+    public BigDecimal getExchangeRate() {
         return exchangeRate;
     }
-    public void setExchangeRate(Double exchangeRate) {
-        this.exchangeRate = exchangeRate;
+    public void setExchangeRate(String exchangeRate) {
+        this.exchangeRate = new BigDecimal(exchangeRate);
     }
-    public Double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
-    public void setAmount(Double amount) {
-        this.amount = amount;
+    public void setAmount(String amount) {
+        this.amount = new BigDecimal(amount);
     }
     public String getSourceBankTin() {
         return sourceBankTin;

@@ -29,7 +29,7 @@ public class Product extends BaseDto {
     /**
      * Precio unitario del producto sin impuestos (requerido).
      */
-    private double unitPrice;
+    private java.math.BigDecimal unitPrice;
 
     /**
      * Código de la unidad de medida. Catálogo del SAT c_ClaveUnidad.
@@ -101,7 +101,7 @@ public class Product extends BaseDto {
      *
      * @return el precio unitario.
      */
-    public double getUnitPrice() {
+    public java.math.BigDecimal getUnitPrice() {
         return unitPrice;
     }
 
@@ -110,7 +110,7 @@ public class Product extends BaseDto {
      *
      * @param unitPrice el precio unitario a establecer.
      */
-    public void setUnitPrice(double unitPrice) {
+    public void setUnitPrice(java.math.BigDecimal unitPrice) {
         this.unitPrice = unitPrice;
     }
 

@@ -176,25 +176,14 @@ public class Xml extends BaseDto {
      */
     @JsonProperty("date")
     public void setSatDate(String satDate) {
-        if (satDate == null || satDate.isEmpty()) {
-            this.date = null;
-            return;
-        }
+        this.date = com.fiscalapi.OptUtil.formatInputDateToSATFormat(satDate);
+    }
 
-        try {
-            // Intenta primero parsearlo como LocalDateTime
-            this.date = LocalDateTime.parse(satDate, SAT_DATE_FORMAT_IN);
-        } catch (DateTimeParseException e) {
-            try {
-                // Si falla, intenta parsearlo como ZonedDateTime y convertirlo a LocalDateTime
-                ZonedDateTime zdt = ZonedDateTime.parse(satDate);
-                this.date = zdt.toLocalDateTime();
-            } catch (DateTimeParseException e2) {
-
-                throw new IllegalArgumentException("Formato de fecha inválido: " + satDate +
-                        " (debe ser compatible con el formato yyyy-MM-ddTHH:mm:ss)", e);
-            }
-        }
+    /**
+     * @param dateString Fecha y hora de expedición como String en formato SAT
+     */
+    public void setDate(String dateString) {
+        this.date = com.fiscalapi.OptUtil.formatInputDateToSATFormat(dateString);
     }
 
     public String getPaymentForm() {

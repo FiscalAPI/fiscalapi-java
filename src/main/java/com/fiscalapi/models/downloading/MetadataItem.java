@@ -154,20 +154,7 @@ public class MetadataItem extends BaseDto {
 
     @JsonProperty("invoiceDate")
     public void setSatInvoiceDate(String satDate) {
-        if (satDate == null || satDate.isEmpty()) {
-            this.invoiceDate = null;
-            return;
-        }
-        try {
-            this.invoiceDate = LocalDateTime.parse(satDate, SAT_DATE_FORMAT_IN);
-        } catch (DateTimeParseException e) {
-            try {
-                ZonedDateTime zdt = ZonedDateTime.parse(satDate);
-                this.invoiceDate = zdt.toLocalDateTime();
-            } catch (DateTimeParseException e2) {
-                throw new IllegalArgumentException("Formato de fecha inválido: " + satDate, e);
-            }
-        }
+        this.invoiceDate = com.fiscalapi.OptUtil.formatInputDateToSATFormat(satDate);
     }
 
     @JsonIgnore
@@ -190,20 +177,7 @@ public class MetadataItem extends BaseDto {
 
     @JsonProperty("satCertificationDate")
     public void setSatCertificationDateFormatted(String satDate) {
-        if (satDate == null || satDate.isEmpty()) {
-            this.satCertificationDate = null;
-            return;
-        }
-        try {
-            this.satCertificationDate = LocalDateTime.parse(satDate, SAT_DATE_FORMAT_IN);
-        } catch (DateTimeParseException e) {
-            try {
-                ZonedDateTime zdt = ZonedDateTime.parse(satDate);
-                this.satCertificationDate = zdt.toLocalDateTime();
-            } catch (DateTimeParseException e2) {
-                throw new IllegalArgumentException("Formato de fecha inválido: " + satDate, e);
-            }
-        }
+        this.satCertificationDate = com.fiscalapi.OptUtil.formatInputDateToSATFormat(satDate);
     }
 
     public BigDecimal getAmount() {
@@ -250,20 +224,7 @@ public class MetadataItem extends BaseDto {
 
     @JsonProperty("cancellationDate")
     public void setSatCancellationDate(String satDate) {
-        if (satDate == null || satDate.isEmpty()) {
-            this.cancellationDate = null;
-            return;
-        }
-        try {
-            this.cancellationDate = LocalDateTime.parse(satDate, SAT_DATE_FORMAT_IN);
-        } catch (DateTimeParseException e) {
-            try {
-                ZonedDateTime zdt = ZonedDateTime.parse(satDate);
-                this.cancellationDate = zdt.toLocalDateTime();
-            } catch (DateTimeParseException e2) {
-                throw new IllegalArgumentException("Formato de fecha inválido: " + satDate, e);
-            }
-        }
+        this.cancellationDate = com.fiscalapi.OptUtil.formatInputDateToSATFormat(satDate);
     }
 
     public String getDownloadPackageId() {

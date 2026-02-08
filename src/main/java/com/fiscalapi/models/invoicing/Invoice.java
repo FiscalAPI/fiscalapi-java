@@ -3,7 +3,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fiscalapi.common.BaseDto;
 import com.fiscalapi.common.CatalogDto;
+import com.fiscalapi.models.invoicing.paymentComplement.InvoicePayment;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeParseException;
@@ -24,24 +26,26 @@ public class Invoice extends BaseDto{
     private String number;
     private String uuid;
     private Integer consecutive;
-    private Double subtotal;
-    private Double discount;
-    private Double total;
+    private BigDecimal subtotal;
+    private BigDecimal discount;
+    private BigDecimal total;
     @JsonIgnore
     private LocalDateTime date;
     private String paymentFormCode;
+    private String paymentConditions;
     private String currencyCode;
     private String typeCode;
     private String expeditionZipCode;
     private String exportCode;
     private String paymentMethodCode;
-    private Double exchangeRate;
+    private BigDecimal exchangeRate;
     private InvoiceIssuer issuer;
     private InvoiceRecipient recipient;
     private List<InvoiceItem> items;
     private GlobalInformation globalInformation;
     private List<RelatedInvoice> relatedInvoices;
     private List<InvoicePayment> payments;
+    private Complement complement;
     private List<InvoiceResponse> responses;
 
 
@@ -102,43 +106,43 @@ public class Invoice extends BaseDto{
     /**
      * @return Subtotal de la factura antes de impuestos y descuentos
      */
-    public Double getSubtotal() {
+    public BigDecimal getSubtotal() {
         return subtotal;
     }
 
     /**
      * @param subtotal Suma de los importes de los conceptos antes de descuentos e impuestos
      */
-    public void setSubtotal(Double subtotal) {
-        this.subtotal = subtotal;
+    public void setSubtotal(String subtotal) {
+        this.subtotal = new BigDecimal(subtotal);
     }
 
     /**
      * @return Monto total de descuentos aplicados a la factura
      */
-    public Double getDiscount() {
+    public BigDecimal getDiscount() {
         return discount;
     }
 
     /**
      * @param discount Monto total de los descuentos aplicables
      */
-    public void setDiscount(Double discount) {
-        this.discount = discount;
+    public void setDiscount(String discount) {
+        this.discount = new BigDecimal(discount);
     }
 
     /**
      * @return Monto total de la factura incluyendo impuestos
      */
-    public Double getTotal() {
+    public BigDecimal getTotal() {
         return total;
     }
 
     /**
      * @param total Monto total de la factura incluyendo impuestos
      */
-    public void setTotal(Double total) {
-        this.total = total;
+    public void setTotal(String total) {
+        this.total = new BigDecimal(total);
     }
 
 
@@ -211,26 +215,15 @@ public class Invoice extends BaseDto{
      */
     @JsonProperty("date")
     public void setSatDate(String satDate) {
-        if (satDate == null || satDate.isEmpty()) {
-            this.date = null;
-            return;
-        }
-
-        try {
-            // Intenta primero parsearlo como LocalDateTime
-            this.date = LocalDateTime.parse(satDate, SAT_DATE_FORMAT_IN);
-        } catch (DateTimeParseException e) {
-            try {
-                // Si falla, intenta parsearlo como ZonedDateTime y convertirlo a LocalDateTime
-                ZonedDateTime zdt = ZonedDateTime.parse(satDate);
-                this.date = zdt.toLocalDateTime();
-            } catch (DateTimeParseException e2) {
-                throw new IllegalArgumentException("Formato de fecha inválido: " + satDate +
-                        " (debe ser compatible con el formato yyyy-MM-ddTHH:mm:ss)", e);
-            }
-        }
+        this.date = com.fiscalapi.OptUtil.formatInputDateToSATFormat(satDate);
     }
 
+    /**
+     * @param dateString Fecha y hora de expedición como String en formato SAT
+     */
+    public void setDate(String dateString) {
+        this.date = com.fiscalapi.OptUtil.formatInputDateToSATFormat(dateString);
+    }
 
     /**
      * @return Código de la forma de pago para la factura
@@ -319,15 +312,15 @@ public class Invoice extends BaseDto{
     /**
      * @return Tipo de cambio conforme a la moneda registrada
      */
-    public Double getExchangeRate() {
+    public BigDecimal getExchangeRate() {
         return exchangeRate;
     }
 
     /**
      * @param exchangeRate Tipo de cambio FIX (Si la moneda es MXN, el valor debe ser 1)
      */
-    public void setExchangeRate(Double exchangeRate) {
-        this.exchangeRate = exchangeRate;
+    public void setExchangeRate(String exchangeRate) {
+        this.exchangeRate = new BigDecimal(exchangeRate);
     }
 
     /**
@@ -435,5 +428,27 @@ public class Invoice extends BaseDto{
         this.responses = responses;
     }
 
+    /**
+     *
+     * @return Complemento de la factura
+     */
+    public Complement getComplement() {
+        return complement;
+    }
 
+    /**
+     *
+     * @param complement Complemento asociado a la factura
+     */
+    public void setComplement(Complement complement) {
+        this.complement = complement;
+    }
+
+    public String getPaymentConditions() {
+        return paymentConditions;
+    }
+
+    public void setPaymentConditions(String paymentConditions) {
+        this.paymentConditions = paymentConditions;
+    }
 }

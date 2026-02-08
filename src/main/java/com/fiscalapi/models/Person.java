@@ -23,8 +23,8 @@ public class Person extends BaseDto {
     private String zipCode;
     private String base64Photo;
     private String taxPassword;
-    private Double availableBalance;
-    private Double committedBalance;
+    private java.math.BigDecimal availableBalance;
+    private java.math.BigDecimal committedBalance;
     private String tenantId;
 //    private String phoneNumber;
 //    private LocalDateTime validTo;
@@ -146,19 +146,19 @@ public class Person extends BaseDto {
         this.taxPassword = taxPassword;
     }
 
-    public Double getAvailableBalance() {
+    public java.math.BigDecimal getAvailableBalance() {
         return availableBalance;
     }
 
-    public void setAvailableBalance(Double availableBalance) {
+    public void setAvailableBalance(java.math.BigDecimal availableBalance) {
         this.availableBalance = availableBalance;
     }
 
-    public Double getCommittedBalance() {
+    public java.math.BigDecimal getCommittedBalance() {
         return committedBalance;
     }
 
-    public void setCommittedBalance(Double committedBalance) {
+    public void setCommittedBalance(java.math.BigDecimal committedBalance) {
         this.committedBalance = committedBalance;
     }
 
