@@ -10,14 +10,15 @@
 - **Soporte completo para CFDI 4.0** con todas las especificaciones oficiales
 - **Timbrado de facturas de ingreso** con validación automática
 - **Timbrado de notas de crédito** (facturas de egreso)
-- **Timbrado de complementos de pago** en MXN, USD y EUR.
+- **Timbrado de complementos de pago** en MXN, USD y EUR
+- **Timbrado de facturas de nómina** - Soporte para los 13 tipos de CFDI de nómina
 - **Consulta del estatus de facturas** en el SAT en tiempo real
 - **Cancelación de facturas** 
 - **Generación de archivos PDF** de las facturas con formato profesional
 - **Personalización de logos y colores** en los PDF generados
 - **Envío de facturas por correo electrónico** automatizado
 - **Descarga de archivos XML** con estructura completa
-- **Almacenamiento y recuperación** de facturas por 5 años.
+- **Almacenamiento y recuperación** de facturas por 5 años
 - Dos [modos de operación](https://docs.fiscalapi.com/modes-of-operation): **Por valores** o **Por referencias**
 
 ## 📥 Descarga Masiva
@@ -32,16 +33,29 @@
 - **Administración de personas** (emisores, receptores, clientes, usuarios, etc.)
 - **Gestión de certificados CSD y FIEL** (subir archivos .cer y .key a FiscalAPI)
 - **Configuración de datos fiscales** (RFC, domicilio fiscal, régimen fiscal)
+- **Datos de empleado** (agrega/actualiza/elimina datos de empleado a una persona. CFDI Nómina)
+- **Datos de empleador** (agrega/actualiza/elimina datos de empleador a una persona. CFDI Nómina)
+
+## 🎖️ Gestión de Timbres 
+- **Gestión de folios fiscales** Compra timbres a fiscalapi y transfiere/retira a las personas de tu organizacion segun tus reglas de negocio.
 
 ## 🛍️ Gestión de Productos/Servicios
 - **Gestión de productos y servicios** con catálogo personalizable
 - **Administración de impuestos aplicables** (IVA, ISR, IEPS)
+- **Timbres**
+  Listar transacciones, transferir y retirar timbres entre personas.
 
 ## 📚 Consulta de Catálogos SAT
 - **Consulta en catálogos oficiales del SAT** actualizados
 - **Consulta en catálogos oficiales de Descarga masiva del SAT** actualizados
 - **Búsqueda de información** en catálogos del SAT con filtros avanzados
 - **Acceso y búsqueda** en catálogos completos
+
+## 🎫 Gestión de Timbres
+- **Listar transacciones de timbres** con paginación
+- **Consultar transacciones** por ID
+- **Transferir timbres** entre personas
+- **Retirar timbres** de una persona
   
 ## 📖 Recursos Adicionales
 - **Cientos de ejemplos de código** disponibles en múltiples lenguajes de programación
