@@ -55,8 +55,17 @@ public class PayrollEarning {
         this.overtime = overtime;
     }
 
+    public PayrollStockOptions getStockOptions() {
+        return stockOptions;
+    }
+
+    public void setStockOptions(PayrollStockOptions stockOptions) {
+        this.stockOptions = stockOptions;
+    }
+
     private String concept;
     private BigDecimal taxedAmount;
     private BigDecimal exemptAmount;
     private List<PayrollEarningOvertime> overtime;
+    private PayrollStockOptions stockOptions;
 }
