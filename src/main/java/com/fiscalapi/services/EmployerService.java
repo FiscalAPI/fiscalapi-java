@@ -17,27 +17,23 @@ public class EmployerService {
         this.httpClient = httpClient;
     }
 
-    public ApiResponse<EmployerData> GetById(String id) {
-        String endpoint = String.format("%s/%s/employer", baseEndpoint, id);
+    private String buildEndpoint(String personId) {
+        return String.format("%s/%s/employee", baseEndpoint, personId);
+    }
 
-        return httpClient.get(endpoint, EmployerData.class);
+    public ApiResponse<EmployerData> GetById(String id) {
+        return httpClient.get(buildEndpoint(id), EmployerData.class);
     }
 
     public ApiResponse<EmployerData>Create(EmployerData requestModel) {
-        String endpoint = String.format("%s/%s/employer", baseEndpoint, requestModel.getPersonId());
-
-        return httpClient.post(endpoint, requestModel, EmployerData.class);
+        return httpClient.post(buildEndpoint(requestModel.getPersonId()), requestModel, EmployerData.class);
     }
 
     public ApiResponse<EmployerData> Update(EmployerData requestModel) {
-        String endpoint = String.format("%s/%s/employer", baseEndpoint, requestModel.getPersonId());
-
-        return httpClient.put(endpoint, requestModel, EmployerData.class);
+        return httpClient.put(buildEndpoint(requestModel.getPersonId()), requestModel, EmployerData.class);
     }
 
     public ApiResponse<Boolean> Delete(String id) {
-        String endpoint = String.format("%s/%s/employer", baseEndpoint, id);
-
-        return httpClient.delete(endpoint);
+        return httpClient.delete(buildEndpoint(id));
     }
 }
