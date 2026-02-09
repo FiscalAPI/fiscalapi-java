@@ -18,7 +18,7 @@ public class EmployerService {
     }
 
     private String buildEndpoint(String personId) {
-        return String.format("%s/%s/employee", baseEndpoint, personId);
+        return String.format("%s/%s/employer", baseEndpoint, personId);
     }
 
     public ApiResponse<EmployerData> GetById(String id) {
