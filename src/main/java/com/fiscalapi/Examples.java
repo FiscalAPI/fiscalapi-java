@@ -24,17 +24,15 @@ public class Examples {
 
         System.out.printf("%s\n", "Hello Fiscalapi!");
 
-        FiscalApiSettings settings = new FiscalApiSettings();
-        settings.setDebugMode(true);
-        settings.setApiUrl("https://test.fiscalapi.com");
-        //settings.setApiKey("<api-key>");
-        settings.setApiKey("sk_test_4e7ca2f5_6c02_4571_9767_212f32cebd59");
-        settings.setTenant("102e5f13-e114-41dd-bea7-507fce177281");
-        //settings.setTenant("<tenant-key>");
+        // FiscalApiSettings settings = new FiscalApiSettings();
+        // settings.setDebugMode(true);
+        // settings.setApiUrl("https://test.fiscalapi.com");
+        // settings.setApiKey("<api-key>");
+        // settings.setTenant("<tenant-key>");
 
 
 
-        FiscalApiClient client = FiscalApiClient.create(settings);
+        // FiscalApiClient client = FiscalApiClient.create(settings);
 
         //region Personas (emisores/clientes/empresas, receptores/clientes/empresas, usuarios)
 
