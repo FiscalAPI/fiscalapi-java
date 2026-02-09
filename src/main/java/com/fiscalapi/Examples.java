@@ -1,19 +1,5 @@
 package com.fiscalapi;
-import com.fiscalapi.common.ApiResponse;
 import com.fiscalapi.common.FiscalApiSettings;
-import com.fiscalapi.common.PagedList;
-import com.fiscalapi.models.*;
-import com.fiscalapi.models.downloading.DownloadRequest;
-import com.fiscalapi.models.downloading.DownloadRule;
-import com.fiscalapi.models.invoicing.*;
-import com.fiscalapi.models.invoicing.payroll.BalanceCompensation;
-import com.fiscalapi.models.invoicing.payroll.EmployeeData;
-import com.fiscalapi.models.invoicing.payroll.EmployerData;
-import com.fiscalapi.models.invoicing.payroll.Payroll;
-import com.fiscalapi.models.invoicing.payroll.PayrollDeduction;
-import com.fiscalapi.models.invoicing.payroll.PayrollDisability;
-import com.fiscalapi.models.invoicing.payroll.PayrollEarning;
-import com.fiscalapi.models.invoicing.payroll.PayrollEarningOtherPayment;
 import com.fiscalapi.models.invoicing.payroll.PayrollEarningOvertime;
 import com.fiscalapi.models.invoicing.payroll.PayrollEarnings;
 import com.fiscalapi.models.invoicing.payroll.PayrollRetirement;
@@ -6631,7 +6617,7 @@ public class Examples {
         //  transParams.setToPersonId("bef56254-0892-4558-95c3-f9c8729e4b0e");
         //  transParams.setAmount(1);
         //  transParams.setComments("venta de timbres");
-        //  ApiResponse<Boolean> apiResponse = client.getStampService().TransferStamps(transParams);
+        //  ApiResponse<Boolean> apiResponse = client.getStampService().transferStamps(transParams);
         //  System.out.println(apiResponse);
 
         //  //Retirar timbres
@@ -6640,7 +6626,7 @@ public class Examples {
         //  transParams.setToPersonId("1");
         //  transParams.setAmount(1);
         //  transParams.setComments("prestamo");
-        //  ApiResponse<Boolean> apiResponse = client.getStampService().TransferStamps(transParams);
+        //  ApiResponse<Boolean> apiResponse = client.getStampService().withdrawStamps(transParams);
         //  System.out.println(apiResponse); 
 //end region
         System.out.printf("%s\n", "End Fiscalapi!");

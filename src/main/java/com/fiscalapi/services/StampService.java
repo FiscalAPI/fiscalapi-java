@@ -19,12 +19,12 @@ public class StampService extends BaseFiscalApiService<StampTransaction> impleme
     }
 
     @Override
-    public ApiResponse<Boolean> TransferStamps(StampTransactionParams requestModel) {
+    public ApiResponse<Boolean> transferStamps(StampTransactionParams requestModel) {
         return httpClient.post(buildEndpoint("", null), requestModel, Boolean.class);
     }
 
     @Override
-    public ApiResponse<Boolean> WithdrawStamps(StampTransactionParams requestModel) {
+    public ApiResponse<Boolean> withdrawStamps(StampTransactionParams requestModel) {
         return httpClient.post(buildEndpoint("", null), requestModel, Boolean.class);
     }
 }

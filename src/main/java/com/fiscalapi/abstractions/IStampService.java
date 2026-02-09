@@ -5,6 +5,6 @@ import com.fiscalapi.models.StampTransaction;
 import com.fiscalapi.models.StampTransactionParams;
 
 public interface IStampService extends IFiscalApiService<StampTransaction>{
-    ApiResponse<Boolean> TransferStamps(StampTransactionParams requestModel);
-    ApiResponse<Boolean> WithdrawStamps(StampTransactionParams requestModel);
+    ApiResponse<Boolean> transferStamps(StampTransactionParams requestModel);
+    ApiResponse<Boolean> withdrawStamps(StampTransactionParams requestModel);
 }

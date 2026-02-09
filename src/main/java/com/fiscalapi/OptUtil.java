@@ -8,7 +8,7 @@ import static com.fiscalapi.models.invoicing.InvoiceConstants.SAT_DATE_FORMAT_IN
 
 public class OptUtil {
     public static LocalDateTime formatInputDateToSATFormat(String stringDate) {
-        LocalDateTime parsedDate = LocalDateTime.MIN;
+        LocalDateTime parsedDate = null;
         if (stringDate == null || stringDate.isEmpty()) {
             return parsedDate;
         }
