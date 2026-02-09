@@ -6,8 +6,6 @@ import com.fiscalapi.models.invoicing.payroll.PayrollRetirement;
 import com.fiscalapi.models.invoicing.payroll.PayrollSeverance;
 import com.fiscalapi.services.FiscalApiClient;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -127,7 +125,7 @@ public class Examples {
         employeeData.setSatPaymentPeriodicityId("04");
         employeeData.setSatPayrollStateId("JAL");
         employeeData.setSocialSecurityNumber("123456789012345");
-        employeeData.setLaborRelationStartDate(LocalDateTime.parse("2023-01-15T00:00:00"));
+        employeeData.setLaborRelationStartDate("2023-01-15T00:00:00");
         employeeData.setSatWorkdayTypeId("01");
         employeeData.setSatJobRiskId("1");
         employeeData.setSatBankId("002");
@@ -136,8 +134,8 @@ public class Examples {
         employeeData.setPosition("Analista de Nóminas");
         employeeData.setSeniority("7Y3M1W");
         employeeData.setBankAccount("12345678901234567890");
-        employeeData.setBaseSalaryForContributions(490.22);
-        employeeData.setIntegratedDailySalary(146.47);
+        employeeData.setBaseSalaryForContributions("490.22");
+        employeeData.setIntegratedDailySalary("146.47");
 
         ApiResponse<EmployeeData> apiResponse = client.getPersonService().getEmployeeService().Create(employeeData);
         System.out.println(apiResponse);
@@ -155,7 +153,7 @@ public class Examples {
         employeeData.setSatPaymentPeriodicityId("04");
         employeeData.setSatPayrollStateId("JAL");
         employeeData.setSocialSecurityNumber("123456789012345");
-        employeeData.setLaborRelationStartDate(LocalDateTime.parse("2023-01-15T00:00:00"));
+        employeeData.setLaborRelationStartDate("2023-01-15T00:00:00");
         employeeData.setSatWorkdayTypeId("01");
         employeeData.setSatJobRiskId("1");
         employeeData.setSatBankId("002");
@@ -164,8 +162,8 @@ public class Examples {
         employeeData.setPosition("Analista de Nóminas");
         employeeData.setSeniority("7Y3M1W");
         employeeData.setBankAccount("12345678901234567890");
-        employeeData.setBaseSalaryForContributions(490.22);
-        employeeData.setIntegratedDailySalary(146.47);
+        employeeData.setBaseSalaryForContributions("490.22");
+        employeeData.setIntegratedDailySalary("146.47");
 
         ApiResponse<EmployeeData> apiResponse = client.getPersonService().getEmployeeService().Update(employeeData);
         System.out.println(apiResponse);
@@ -276,7 +274,7 @@ public class Examples {
 //        // ***Crear producto***//
 //        Product product = new Product();
 //        product.setDescription("Libro de Java sin impuestos");
-//        product.setUnitPrice(100.75986);
+//        product.setUnitPrice("100.75986");
 //        ApiResponse<Product> apiResponse = client.getProductService().create(product);
 //        System.out.printf("apiResponse: %s\n", apiResponse);
 
@@ -285,7 +283,7 @@ public class Examples {
 //        Product product = new Product();
 //        product.setId("f846e552-fcd1-489a-9674-cbae18116bdc");
 //        product.setDescription("Libro de Java con Impuestos");
-//        product.setUnitPrice(150.75);
+//        product.setUnitPrice("150.75");
 //        product.setSatUnitMeasurementId("H87"); // Pieza
 //        product.setSatProductCodeId("81111602"); // libros
 //        product.setSatTaxObjectId("02"); // Si objeto de impuesto
@@ -295,13 +293,13 @@ public class Examples {
 //
 //        ProductTax iva16 = new ProductTax();
 //        iva16.setTaxId("002"); // IVA
-//        iva16.setRate(0.160000); // 16%
+//        iva16.setRate("0.160000"); // 16%
 //        iva16.setTaxTypeId("Tasa"); //Tasa
 //        iva16.setTaxFlagId("T"); // Traslado
 //
 //        ProductTax iva1067 = new ProductTax(); // Retención 2/3 partes iva
 //        iva1067.setTaxId("002");
-//        iva1067.setRate(0.010667);
+//        iva1067.setRate("0.010667");
 //        iva1067.setTaxTypeId("Tasa");
 //        iva1067.setTaxFlagId("T");
 //
@@ -374,7 +372,7 @@ public class Examples {
 //        invoice.setVersionCode("4.0");
 //        invoice.setTypeCode("I");
 //        invoice.setSeries("F");
-//        invoice.setDate(LocalDateTime.now());
+//        invoice.setDate("2026-02-09T10:00:00");
 //        invoice.setPaymentFormCode("01");
 //        invoice.setPaymentMethodCode("PUE");
 //        invoice.setExpeditionZipCode("42501");
@@ -427,13 +425,13 @@ public class Examples {
 //        InvoiceItem item = new InvoiceItem();
 //
 //        item.setItemCode("01010101");
-//        item.setQuantity(9.5);
+//        item.setQuantity("9.5");
 //        item.setUnitOfMeasurementCode("E48");
 //        item.setDescription("Invoicing software as a service.");
-//        item.setUnitPrice(3587.75);
+//        item.setUnitPrice("3587.75");
 //        item.setTaxObjectCode("02");
 //        item.setItemSku("7506022301697");
-//        item.setDiscount(255.85);
+//        item.setDiscount("255.85");
 //
 //        // impuestos del producto
 //
@@ -467,7 +465,7 @@ public class Examples {
 //        invoice.setVersionCode("4.0");
 //        invoice.setTypeCode("I");
 //        invoice.setSeries("F");
-//        invoice.setDate(LocalDateTime.now().minusHours(2));
+//        invoice.setDate("2026-02-09T10:00:00");
 //        invoice.setCurrencyCode("MXN");
 //        invoice.setPaymentFormCode("01");
 //        invoice.setPaymentMethodCode("PUE");
@@ -525,13 +523,13 @@ public class Examples {
 //        InvoiceItem item = new InvoiceItem();
 //
 //        item.setItemCode("01010101");
-//        item.setQuantity(1.0);
+//        item.setQuantity("1.0");
 //        item.setUnitOfMeasurementCode("ACT");
 //        item.setDescription("Venta");
-//        item.setUnitPrice(1230.00);
+//        item.setUnitPrice("1230.00");
 //        item.setTaxObjectCode("02");
 //        item.setItemSku("venta0001");
-//        item.setDiscount(255.85);
+//        item.setDiscount("255.85");
 //
 //        // impuestos del producto
 //        List<ItemTax> taxes = new ArrayList<>();
@@ -564,7 +562,7 @@ public class Examples {
 //        invoice.setVersionCode("4.0");
 //        invoice.setTypeCode("I");
 //        invoice.setSeries("F");
-//        invoice.setDate(LocalDateTime.now().minusHours(2));
+//        invoice.setDate("2026-02-09T10:00:00");
 //        invoice.setCurrencyCode("MXN");
 //        invoice.setPaymentFormCode("01");
 //        invoice.setPaymentMethodCode("PUE");
@@ -592,13 +590,13 @@ public class Examples {
 //        InvoiceItem item = new InvoiceItem();
 //
 //        item.setItemCode("01010101");
-//        item.setQuantity(1.0);
+//        item.setQuantity("1.0");
 //        item.setUnitOfMeasurementCode("ACT");
 //        item.setDescription("Venta");
-//        item.setUnitPrice(1230.00);
+//        item.setUnitPrice("1230.00");
 //        item.setTaxObjectCode("02");
 //        item.setItemSku("venta0001");
-//        item.setDiscount(255.85);
+//        item.setDiscount("255.85");
 //
 //        // impuestos del producto
 //        List<ItemTax> taxes = new ArrayList<>();
@@ -631,7 +629,7 @@ public class Examples {
 //        invoice.setVersionCode("4.0");
 //        invoice.setTypeCode("I");
 //        invoice.setSeries("F");
-//        invoice.setDate(LocalDateTime.now());
+//        invoice.setDate("2026-02-09T10:00:00");
 //        invoice.setPaymentFormCode("01");
 //        invoice.setPaymentMethodCode("PUE");
 //        invoice.setExpeditionZipCode("42501");
@@ -675,13 +673,13 @@ public class Examples {
 //        List<InvoiceItem> items = new ArrayList<>();
 //        InvoiceItem item = new InvoiceItem();
 //        item.setItemCode("01010101");
-//        item.setQuantity(9.5);
+//        item.setQuantity("9.5");
 //        item.setUnitOfMeasurementCode("E48");
 //        item.setDescription("Invoicing software as a service");
-//        item.setUnitPrice(3587.75);
+//        item.setUnitPrice("3587.75");
 //        item.setTaxObjectCode("02");
 //        item.setItemSku("7506022301697");
-//        item.setDiscount(255.85);
+//        item.setDiscount("255.85");
 //
 //        // Impuestos del producto (IVA exento)
 //        List<ItemTax> taxes = new ArrayList<>();
@@ -704,7 +702,7 @@ public class Examples {
 //        invoice.setVersionCode("4.0");
 //        invoice.setTypeCode("I");
 //        invoice.setSeries("F");
-//        invoice.setDate(LocalDateTime.now());
+//        invoice.setDate("2026-02-09T10:00:00");
 //        invoice.setPaymentFormCode("01");
 //        invoice.setPaymentMethodCode("PUE");
 //        invoice.setExpeditionZipCode("42501");
@@ -748,13 +746,13 @@ public class Examples {
 //        List<InvoiceItem> items = new ArrayList<>();
 //        InvoiceItem item = new InvoiceItem();
 //        item.setItemCode("01010101");
-//        item.setQuantity(9.5);
+//        item.setQuantity("9.5");
 //        item.setUnitOfMeasurementCode("E48");
 //        item.setDescription("Invoicing software as a service");
-//        item.setUnitPrice(3587.75);
+//        item.setUnitPrice("3587.75");
 //        item.setTaxObjectCode("02");
 //        item.setItemSku("7506022301697");
-//        item.setDiscount(255.85);
+//        item.setDiscount("255.85");
 //
 //        // Impuestos del producto (IVA tasa cero)
 //        List<ItemTax> taxes = new ArrayList<>();
@@ -778,7 +776,7 @@ public class Examples {
 //        Invoice invoice = new Invoice();
 //        invoice.setVersionCode("4.0");
 //        invoice.setSeries("F");
-//        invoice.setDate(LocalDateTime.now());
+//        invoice.setDate("2026-02-09T10:00:00");
 //        invoice.setPaymentFormCode("01");
 //        invoice.setCurrencyCode("MXN");
 //        invoice.setTypeCode("I");
@@ -799,8 +797,8 @@ public class Examples {
 //        List<InvoiceItem> items = new ArrayList<>();
 //        InvoiceItem item = new InvoiceItem();
 //        item.setId("114a4be5-fb65-40b2-a762-ff0c55c6ebfa");
-//        item.setQuantity(2.0);
-//        item.setDiscount(255.85);
+//        item.setQuantity("2.0");
+//        item.setDiscount("255.85");
 //        items.add(item);
 //        invoice.setItems(items);
 //
@@ -812,7 +810,7 @@ public class Examples {
 //        Invoice invoice = new Invoice();
 //        invoice.setVersionCode("4.0");
 //        invoice.setSeries("F");
-//        invoice.setDate(LocalDateTime.now().minusHours(2));
+//        invoice.setDate("2026-02-09T10:00:00");
 //        invoice.setPaymentFormCode("01");
 //        invoice.setCurrencyCode("MXN");
 //        invoice.setTypeCode("I");
@@ -833,8 +831,8 @@ public class Examples {
 //        List<InvoiceItem> items = new ArrayList<>();
 //        InvoiceItem item = new InvoiceItem();
 //        item.setId("114a4be5-fb65-40b2-a762-ff0c55c6ebfa");
-//        item.setQuantity(1.0);
-//        item.setUnitPrice(200.00);
+//        item.setQuantity("1.0");
+//        item.setUnitPrice("200.00");
 //        items.add(item);
 //        invoice.setItems(items);
 //
@@ -847,7 +845,7 @@ public class Examples {
 //        Invoice invoice = new Invoice();
 //        invoice.setVersionCode("4.0");
 //        invoice.setSeries("CN");
-//        invoice.setDate(LocalDateTime.now());
+//        invoice.setDate("2026-02-09T10:00:00");
 //        invoice.setPaymentFormCode("03");
 //        invoice.setCurrencyCode("MXN");
 //        invoice.setTypeCode("E");
@@ -902,10 +900,10 @@ public class Examples {
 //        List<InvoiceItem> items = new ArrayList<>();
 //        InvoiceItem item = new InvoiceItem();
 //        item.setItemCode("01010101");
-//        item.setQuantity(0.5);
+//        item.setQuantity("0.5");
 //        item.setUnitOfMeasurementCode("E48");
 //        item.setDescription("Invoicing software as a service");
-//        item.setUnitPrice(3587.75);
+//        item.setUnitPrice("3587.75");
 //        item.setTaxObjectCode("02");
 //        item.setItemSku("7506022301697");
 //
@@ -930,7 +928,7 @@ public class Examples {
 //        Invoice invoice = new Invoice();
 //        invoice.setVersionCode("4.0");
 //        invoice.setSeries("CN");
-//        invoice.setDate(LocalDateTime.now());
+//        invoice.setDate("2026-02-09T10:00:00");
 //        invoice.setPaymentFormCode("03");
 //        invoice.setCurrencyCode("MXN");
 //        invoice.setTypeCode("E");
@@ -959,7 +957,7 @@ public class Examples {
 //        List<InvoiceItem> items = new ArrayList<>();
 //        InvoiceItem item = new InvoiceItem();
 //        item.setId("114a4be5-fb65-40b2-a762-ff0c55c6ebfa");
-//        item.setQuantity(0.5);
+//        item.setQuantity("0.5");
 //        items.add(item);
 //        invoice.setItems(items);
 //
@@ -970,7 +968,7 @@ public class Examples {
 //        Invoice invoice = new Invoice();
 //        invoice.setVersionCode("4.0");
 //        invoice.setSeries("CN");
-//        invoice.setDate(LocalDateTime.now().minusHours(2));
+//        invoice.setDate("2026-02-09T10:00:00");
 //        invoice.setPaymentFormCode("03");
 //        invoice.setCurrencyCode("MXN");
 //        invoice.setTypeCode("E");
@@ -999,8 +997,8 @@ public class Examples {
 //        List<InvoiceItem> items = new ArrayList<>();
 //        InvoiceItem item = new InvoiceItem();
 //        item.setId("114a4be5-fb65-40b2-a762-ff0c55c6ebfa");
-//        item.setQuantity(0.5);
-//        item.setUnitPrice(150.0);
+//        item.setQuantity("0.5");
+//        item.setUnitPrice("150.0");
 //        items.add(item);
 //        invoice.setItems(items);
 
@@ -1017,7 +1015,7 @@ public class Examples {
 //        Invoice invoice = new Invoice();
 //        invoice.setVersionCode("4.0");
 //        invoice.setSeries("CP");
-//        invoice.setDate(LocalDateTime.now());
+//        invoice.setDate("2026-02-09T10:00:00");
 //        invoice.setCurrencyCode("XXX");
 //        invoice.setTypeCode("P");
 //        invoice.setExpeditionZipCode("01160");
@@ -1061,10 +1059,10 @@ public class Examples {
 //        List<InvoiceItem> items = new ArrayList<>();
 //        InvoiceItem item = new InvoiceItem();
 //        item.setItemCode("84111506");
-//        item.setQuantity(1.0);
+//        item.setQuantity("1.0");
 //        item.setUnitOfMeasurementCode("ACT");
 //        item.setDescription("Pago");
-//        item.setUnitPrice(0.0);
+//        item.setUnitPrice("0.0");
 //        item.setTaxObjectCode("01");
 //        items.add(item);
 //        invoice.setItems(items);
@@ -1072,10 +1070,10 @@ public class Examples {
 //        // Pagos
 //        List<InvoicePayment> payments = new ArrayList<>();
 //        InvoicePayment payment = new InvoicePayment();
-//        payment.setPaymentDate(LocalDateTime.now());
+//        payment.setPaymentDate("2026-02-09T10:00:00");
 //        payment.setPaymentFormCode("28");
 //        payment.setCurrencyCode("MXN");
-//        payment.setAmount(11600.00);
+//        payment.setAmount("11600.00");
 //        payment.setSourceBankTin("BSM970519DU8");
 //        payment.setSourceBankAccount("1234567891012131");
 //        payment.setTargetBankTin("BBA830831LJ2");
@@ -1089,10 +1087,10 @@ public class Examples {
 //        paidInvoice.setNumber("1501");
 //        paidInvoice.setCurrencyCode("MXN");
 //        paidInvoice.setPartialityNumber(1);
-//        paidInvoice.setSubTotal(10000.0);
-//        paidInvoice.setPreviousBalance(11600.00);
-//        paidInvoice.setPaymentAmount(11600.00);
-//        paidInvoice.setRemainingBalance(0.0);
+//        paidInvoice.setSubTotal("10000.0");
+//        paidInvoice.setPreviousBalance("11600.00");
+//        paidInvoice.setPaymentAmount("11600.00");
+//        paidInvoice.setRemainingBalance("0.0");
 //        paidInvoice.setTaxObjectCode("02");
 //
 //        // Impuestos de la factura pagada
@@ -1119,7 +1117,7 @@ public class Examples {
 //        Invoice invoice = new Invoice();
 //        invoice.setVersionCode("4.0");
 //        invoice.setSeries("CP");
-//        invoice.setDate(LocalDateTime.now());
+//        invoice.setDate("2026-02-09T10:00:00");
 //        invoice.setCurrencyCode("XXX");
 //        invoice.setTypeCode("P");
 //        invoice.setExpeditionZipCode("01160");
@@ -1138,10 +1136,10 @@ public class Examples {
 //        // Pagos
 //        List<InvoicePayment> payments = new ArrayList<>();
 //        InvoicePayment payment = new InvoicePayment();
-//        payment.setPaymentDate(LocalDateTime.parse("2024-06-03T14:44:56"));
+//        payment.setPaymentDate("2024-06-03T14:44:56");
 //        payment.setPaymentFormCode("28");
 //        payment.setCurrencyCode("MXN");
-//        payment.setAmount(11600.00);
+//        payment.setAmount("11600.00");
 //        payment.setSourceBankTin("BSM970519DU8");
 //        payment.setSourceBankAccount("1234567891012131");
 //        payment.setTargetBankTin("BBA830831LJ2");
@@ -1155,10 +1153,10 @@ public class Examples {
 //        paidInvoice.setNumber("1501");
 //        paidInvoice.setCurrencyCode("MXN");
 //        paidInvoice.setPartialityNumber(1);
-//        paidInvoice.setSubTotal(10000.0);
-//        paidInvoice.setPreviousBalance(11600.00);
-//        paidInvoice.setPaymentAmount(11600.00);
-//        paidInvoice.setRemainingBalance(0.0);
+//        paidInvoice.setSubTotal("10000.0");
+//        paidInvoice.setPreviousBalance("11600.00");
+//        paidInvoice.setPaymentAmount("11600.00");
+//        paidInvoice.setRemainingBalance("0.0");
 //        paidInvoice.setTaxObjectCode("02");
 //
 //        // Impuestos de la factura pagada
@@ -1185,7 +1183,7 @@ public class Examples {
 //        Invoice invoice = new Invoice();
 //        invoice.setVersionCode("4.0");
 //        invoice.setSeries("usd-mxn");
-//        invoice.setDate(LocalDateTime.now());
+//        invoice.setDate("2026-02-09T10:00:00");
 //        invoice.setCurrencyCode("XXX");
 //        invoice.setTypeCode("P");
 //        invoice.setExpeditionZipCode("01160");
@@ -1229,10 +1227,10 @@ public class Examples {
 //        List<InvoiceItem> items = new ArrayList<>();
 //        InvoiceItem item = new InvoiceItem();
 //        item.setItemCode("84111506");
-//        item.setQuantity(1.0);
+//        item.setQuantity("1.0");
 //        item.setUnitOfMeasurementCode("ACT");
 //        item.setDescription("Pago");
-//        item.setUnitPrice(0.0);
+//        item.setUnitPrice("0.0");
 //        item.setTaxObjectCode("01");
 //        items.add(item);
 //        invoice.setItems(items);
@@ -1240,11 +1238,11 @@ public class Examples {
 //        // Pagos
 //        List<InvoicePayment> payments = new ArrayList<>();
 //        InvoicePayment payment = new InvoicePayment();
-//        payment.setPaymentDate(LocalDateTime.parse("2024-06-03T14:44:56"));
+//        payment.setPaymentDate("2024-06-03T14:44:56");
 //        payment.setPaymentFormCode("28");
 //        payment.setCurrencyCode("USD");
-//        payment.setExchangeRate(20.64);
-//        payment.setAmount(5.62);
+//        payment.setExchangeRate("20.64");
+//        payment.setAmount("5.62");
 //        payment.setSourceBankTin("BSM970519DU8");
 //        payment.setSourceBankAccount("1234567891012131");
 //        payment.setTargetBankTin("BBA830831LJ2");
@@ -1257,12 +1255,12 @@ public class Examples {
 //        paidInvoice.setSeries("F");
 //        paidInvoice.setNumber("2");
 //        paidInvoice.setCurrencyCode("MXN");
-//        paidInvoice.setEquivalence(20.64);
+//        paidInvoice.setEquivalence("20.64");
 //        paidInvoice.setPartialityNumber(1);
-//        paidInvoice.setSubTotal(100.00);
-//        paidInvoice.setPreviousBalance(116.00);
-//        paidInvoice.setPaymentAmount(116.00);
-//        paidInvoice.setRemainingBalance(0.0);
+//        paidInvoice.setSubTotal("100.00");
+//        paidInvoice.setPreviousBalance("116.00");
+//        paidInvoice.setPaymentAmount("116.00");
+//        paidInvoice.setRemainingBalance("0.0");
 //        paidInvoice.setTaxObjectCode("02");
 //
 //        // Impuestos de la factura pagada
@@ -1305,7 +1303,7 @@ public class Examples {
 //        Invoice invoice = new Invoice();
 //        invoice.setVersionCode("4.0");
 //        invoice.setSeries("MXN-USD");
-//        invoice.setDate(LocalDateTime.now());
+//        invoice.setDate("2026-02-09T10:00:00");
 //        invoice.setCurrencyCode("XXX");
 //        invoice.setTypeCode("P");
 //        invoice.setExpeditionZipCode("01160");
@@ -1349,10 +1347,10 @@ public class Examples {
 //        List<InvoiceItem> items = new ArrayList<>();
 //        InvoiceItem item = new InvoiceItem();
 //        item.setItemCode("84111506");
-//        item.setQuantity(1.0);
+//        item.setQuantity("1.0");
 //        item.setUnitOfMeasurementCode("ACT");
 //        item.setDescription("Pago");
-//        item.setUnitPrice(0.0);
+//        item.setUnitPrice("0.0");
 //        item.setTaxObjectCode("01");
 //        items.add(item);
 //        invoice.setItems(items);
@@ -1360,10 +1358,10 @@ public class Examples {
 //        // Pagos
 //        List<InvoicePayment> payments = new ArrayList<>();
 //        InvoicePayment payment = new InvoicePayment();
-//        payment.setPaymentDate(LocalDateTime.parse("2024-06-03T14:44:56"));
+//        payment.setPaymentDate("2024-06-03T14:44:56");
 //        payment.setPaymentFormCode("28");
 //        payment.setCurrencyCode("MXN");
-//        payment.setAmount(921.23);
+//        payment.setAmount("921.23");
 //        payment.setSourceBankTin("BSM970519DU8");
 //        payment.setSourceBankAccount("1234567891012131");
 //        payment.setTargetBankTin("BBA830831LJ2");
@@ -1376,12 +1374,12 @@ public class Examples {
 //        paidInvoice.setSeries("F");
 //        paidInvoice.setNumber("2");
 //        paidInvoice.setCurrencyCode("USD");
-//        paidInvoice.setEquivalence(0.045331);
+//        paidInvoice.setEquivalence("0.045331");
 //        paidInvoice.setPartialityNumber(1);
-//        paidInvoice.setSubTotal(36.000);
-//        paidInvoice.setPreviousBalance(41.76);
-//        paidInvoice.setPaymentAmount(41.76);
-//        paidInvoice.setRemainingBalance(0.0);
+//        paidInvoice.setSubTotal("36.000");
+//        paidInvoice.setPreviousBalance("41.76");
+//        paidInvoice.setPaymentAmount("41.76");
+//        paidInvoice.setRemainingBalance("0.0");
 //        paidInvoice.setTaxObjectCode("02");
 //
 //        // Impuestos de la factura pagada
@@ -1424,7 +1422,7 @@ public class Examples {
 //        Invoice invoice = new Invoice();
 //        invoice.setVersionCode("4.0");
 //        invoice.setSeries("MXN-USD");
-//        invoice.setDate(LocalDateTime.now());
+//        invoice.setDate("2026-02-09T10:00:00");
 //        invoice.setCurrencyCode("XXX");
 //        invoice.setTypeCode("P");
 //        invoice.setExpeditionZipCode("01160");
@@ -1469,10 +1467,10 @@ public class Examples {
 //        List<InvoiceItem> items = new ArrayList<>();
 //        InvoiceItem item = new InvoiceItem();
 //        item.setItemCode("84111506");
-//        item.setQuantity(1.0);
+//        item.setQuantity("1.0");
 //        item.setUnitOfMeasurementCode("ACT");
 //        item.setDescription("Pago");
-//        item.setUnitPrice(0.0);
+//        item.setUnitPrice("0.0");
 //        item.setTaxObjectCode("01");
 //        items.add(item);
 //        invoice.setItems(items);
@@ -1480,11 +1478,11 @@ public class Examples {
 //        // Pagos
 //        List<InvoicePayment> payments = new ArrayList<>();
 //        InvoicePayment payment = new InvoicePayment();
-//        payment.setPaymentDate(LocalDateTime.parse("2024-06-03T14:44:56"));
+//        payment.setPaymentDate("2024-06-03T14:44:56");
 //        payment.setPaymentFormCode("28");
 //        payment.setCurrencyCode("EUR");
-//        payment.setExchangeRate(25.00);
-//        payment.setAmount(100.00);
+//        payment.setExchangeRate("25.00");
+//        payment.setAmount("100.00");
 //        payment.setSourceBankTin("BSM970519DU8");
 //        payment.setSourceBankAccount("1234567891012131");
 //        payment.setTargetBankTin("BBA830831LJ2");
@@ -1497,12 +1495,12 @@ public class Examples {
 //        paidInvoice.setSeries("F");
 //        paidInvoice.setNumber("2");
 //        paidInvoice.setCurrencyCode("USD");
-//        paidInvoice.setEquivalence(1.160);
+//        paidInvoice.setEquivalence("1.160");
 //        paidInvoice.setPartialityNumber(1);
-//        paidInvoice.setSubTotal(100.0);
-//        paidInvoice.setPreviousBalance(116.00);
-//        paidInvoice.setPaymentAmount(116.00);
-//        paidInvoice.setRemainingBalance(0.0);
+//        paidInvoice.setSubTotal("100.0");
+//        paidInvoice.setPreviousBalance("116.00");
+//        paidInvoice.setPaymentAmount("116.00");
+//        paidInvoice.setRemainingBalance("0.0");
 //        paidInvoice.setTaxObjectCode("02");
 //
 //        // Impuestos de la factura pagada
@@ -1757,8 +1755,8 @@ public class Examples {
         // DownloadRequest request = new DownloadRequest();
         // request.setDownloadRuleId("a339a292-37fe-422e-a28a-f93e6025c72f");
         // request.setDownloadRequestTypeId("Manual");
-        // request.setStartDate(LocalDateTime.now().minusDays(5));
-        // request.setEndDate(LocalDateTime.now());
+        // request.setStartDate("2026-02-09T10:00:00");
+        // request.setEndDate("2026-02-09T10:00:00");
 
         // ApiResponse<DownloadRequest> apiResponse = client.getDownloadRequestService().create(request);
         // System.out.println(apiResponse);
@@ -1769,7 +1767,7 @@ public class Examples {
         // System.out.println(apiResponse);
 
         // Buscar solicitud de descarga masiva por fecha de creación
-        // ApiResponse<List<DownloadRequest>> apiResponse = client.getDownloadRequestService().search(LocalDate.now());
+        // ApiResponse<List<DownloadRequest>> apiResponse = client.getDownloadRequestService().search("2026-02-09T10:00:00");
         // System.out.println(apiResponse);
 
         // region Complemento de nómina
@@ -1816,7 +1814,7 @@ public class Examples {
         EmployeeData employeeData = new EmployeeData();
         employeeData.setCurp("XEXX010101MNEXXXA8");
         employeeData.setSocialSecurityNumber("04078873454");
-        employeeData.setLaborRelationStartDate(LocalDateTime.parse("2024-08-18"));
+        employeeData.setLaborRelationStartDate("2024-08-18");
         employeeData.setSeniority("P54W");
         employeeData.setSatContractTypeId("01");
         employeeData.setSatTaxRegimeTypeId("02");
@@ -1826,16 +1824,16 @@ public class Examples {
         employeeData.setSatJobRiskId("1");
         employeeData.setSatPaymentPeriodicityId("05");
         employeeData.setSatBankId("012");
-        employeeData.setBaseSalaryForContributions(282.50);
-        employeeData.setIntegratedDailySalary(2626.23);
+        employeeData.setBaseSalaryForContributions("282.50");
+        employeeData.setIntegratedDailySalary("2626.23");
         employeeData.setSatPayrollStateId("JAL");
 
         Payroll payroll = new Payroll();
         payroll.setVersion("1.2");
         payroll.setPayrollTypeCode("O");
-        payroll.setPaymentDate(LocalDateTime.parse("2025-08-30"));
-        payroll.setInitialPaymentDate(LocalDateTime.parse("2025-07-31"));
-        payroll.setFinalPaymentDate(LocalDateTime.parse("2025-08-30"));
+        payroll.setPaymentDate("2025-08-30");
+        payroll.setInitialPaymentDate("2025-07-31");
+        payroll.setFinalPaymentDate("2025-08-30");
         payroll.setDaysPaid(30);
         PayrollEarnings payrollEarnings = new PayrollEarnings();
         List<PayrollEarning> earnings = new ArrayList<>();
@@ -1858,7 +1856,7 @@ public class Examples {
         e3.setEarningTypeCode("038");
         e3.setCode("1885");
         e3.setConcept("Bono Ingles");
-        e3.setTaxedAmount(14254.50);
+        e3.setTaxedAmount("14254.50");
         e3.setExemptAmount(0);
 
         PayrollEarning e4 = new PayrollEarning();
@@ -1912,19 +1910,19 @@ public class Examples {
         d2.setDeductionTypeCode("004");
         d2.setCode("5910");
         d2.setConcept("Fondo de ahorro Empleado Inversión");
-        d2.setAmount(4412.46);
+        d2.setAmount("4412.46");
 
         PayrollDeduction d3 = new PayrollDeduction();
         d3.setDeductionTypeCode("004");
         d3.setCode("5914");
         d3.setConcept("Fondo de Ahorro Patrón Inversión");
-        d3.setAmount(4412.46);
+        d3.setAmount("4412.46");
 
         PayrollDeduction d4 = new PayrollDeduction();
         d4.setDeductionTypeCode("004");
         d4.setCode("1966");
         d4.setConcept("Contribución póliza exceso GMM");
-        d4.setAmount(519.91);
+        d4.setAmount("519.91");
 
         PayrollDeduction d5 = new PayrollDeduction();
         d5.setDeductionTypeCode("004");
@@ -1942,7 +1940,7 @@ public class Examples {
         d7.setDeductionTypeCode("001");
         d7.setCode("1895");
         d7.setConcept("IMSS");
-        d7.setAmount(2391.13);
+        d7.setAmount("2391.13");
 
         payrollDeductions.add(d1);
         payrollDeductions.add(d2);
@@ -1957,12 +1955,12 @@ public class Examples {
         Invoice invoice = new Invoice();
         invoice.setVersionCode("4.0");
         invoice.setSeries("F");
-        invoice.setDate(LocalDateTime.now());
+        invoice.setDate("2026-02-09T10:00:00");
         invoice.setTypeCode("I");
         invoice.setExpeditionZipCode("42501");
         invoice.setIssuer(issuer);
         invoice.setRecipient(recipient);
-        invoice.setDate(LocalDateTime.now());
+        invoice.setDate("2026-02-09T10:00:00");
         invoice.setPaymentMethodCode("PUE");
         invoice.setComplement(invoice.getComplement());
 
@@ -2007,36 +2005,36 @@ public class Examples {
         e1.setEarningTypeCode("001");
         e1.setCode("1003");
         e1.setConcept("Sueldo nominal");
-        e1.setTaxedAmount(new BigDecimal("95030"));
-        e1.setExemptAmount(new BigDecimal("0"));
+        e1.setTaxedAmount("95030");
+        e1.setExemptAmount("0");
 
         PayrollEarning e2 = new PayrollEarning();
         e2.setEarningTypeCode("005");
         e2.setCode("5913");
         e2.setConcept("Fondo de Ahorro Aportación Patrón");
-        e2.setTaxedAmount(new BigDecimal("0"));
-        e2.setExemptAmount(new BigDecimal("4412.46"));
+        e2.setTaxedAmount("0");
+        e2.setExemptAmount("4412.46");
 
         PayrollEarning e3 = new PayrollEarning();
         e3.setEarningTypeCode("038");
         e3.setCode("1885");
         e3.setConcept("Bono Ingles");
-        e3.setTaxedAmount(new BigDecimal("14254.50"));
-        e3.setExemptAmount(new BigDecimal("0"));
+        e3.setTaxedAmount("14254.50");
+        e3.setExemptAmount("0");
 
         PayrollEarning e4 = new PayrollEarning();
         e4.setEarningTypeCode("029");
         e4.setCode("1941");
         e4.setConcept("Vales Despensa");
-        e4.setTaxedAmount(new BigDecimal("0"));
-        e4.setExemptAmount(new BigDecimal("3439"));
+        e4.setTaxedAmount("0");
+        e4.setExemptAmount("3439");
 
         PayrollEarning e5 = new PayrollEarning();
         e5.setEarningTypeCode("038");
         e5.setCode("1824");
         e5.setConcept("Herramientas Teletrabajo (telecom y prop. electri)");
-        e5.setTaxedAmount(new BigDecimal("273"));
-        e5.setExemptAmount(new BigDecimal("0"));
+        e5.setTaxedAmount("273");
+        e5.setExemptAmount("0");
 
         earnings.add(e1);
         earnings.add(e2);
@@ -2049,8 +2047,8 @@ public class Examples {
         op1.setOtherPaymentTypeCode("002");
         op1.setCode("5050");
         op1.setConcept("exceso de subsidio al empleo");
-        op1.setAmount(new BigDecimal("0"));
-        op1.setSubsidyCaused(new BigDecimal("0"));
+        op1.setAmount("0");
+        op1.setSubsidyCaused("0");
         otherPayments.add(op1);
 
         payrollEarnings.setEarnings(earnings);
@@ -2116,12 +2114,12 @@ public class Examples {
         Invoice invoice = new Invoice();
         invoice.setVersionCode("4.0");
         invoice.setSeries("F");
-        invoice.setDate(LocalDateTime.now());
+        invoice.setDate("2026-02-09T10:00:00");
         invoice.setTypeCode("N");
         invoice.setExpeditionZipCode("20000");
         invoice.setIssuer(issuer);
         invoice.setRecipient(recipient);
-        invoice.setDate(LocalDateTime.now());
+        invoice.setDate("2026-02-09T10:00:00");
         invoice.setPaymentMethodCode("PUE");
         invoice.setComplement(complement);
 
@@ -2163,9 +2161,9 @@ public class Examples {
         Payroll payroll = new Payroll();
         payroll.setVersion("1.2");
         payroll.setPayrollTypeCode("E");
-        payroll.setPaymentDate(LocalDateTime.parse("2023-06-02T00:00:00"));
-        payroll.setInitialPaymentDate(LocalDateTime.parse("2023-06-01T00:00:00"));
-        payroll.setFinalPaymentDate(LocalDateTime.parse("2023-06-02T00:00:00"));
+        payroll.setPaymentDate("2023-06-02T00:00:00");
+        payroll.setInitialPaymentDate("2023-06-01T00:00:00");
+        payroll.setFinalPaymentDate("2023-06-02T00:00:00");
         payroll.setDaysPaid(1);
 
 // Earnings
@@ -2176,8 +2174,8 @@ public class Examples {
         e1.setEarningTypeCode("046");
         e1.setCode("010046");
         e1.setConcept("INGRESOS ASIMILADOS A SALARIOS");
-        e1.setTaxedAmount(111197.73);
-        e1.setExemptAmount(0.00);
+        e1.setTaxedAmount("111197.73");
+        e1.setExemptAmount("0.00");
 
         earnings.add(e1);
 
@@ -2193,7 +2191,7 @@ public class Examples {
         d1.setDeductionTypeCode("002");
         d1.setCode("020002");
         d1.setConcept("ISR");
-        d1.setAmount(36197.73);
+        d1.setAmount("36197.73");
 
         payrollDeductions.add(d1);
 
@@ -2204,7 +2202,7 @@ public class Examples {
         Invoice invoice = new Invoice();
         invoice.setVersionCode("4.0");
         invoice.setSeries("F");
-        invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+        invoice.setDate("2026-02-09T10:00:00"); // Or use {{currentDate}} placeholder
         invoice.setTypeCode("N");
         invoice.setPaymentMethodCode("PUE");
         invoice.setCurrencyCode("MXN");
@@ -2257,8 +2255,8 @@ public class Examples {
         e1.setEarningTypeCode("046");
         e1.setCode("010046");
         e1.setConcept("INGRESOS ASIMILADOS A SALARIOS");
-        e1.setTaxedAmount(new BigDecimal("111197.73"));
-        e1.setExemptAmount(new BigDecimal("0.00"));
+        e1.setTaxedAmount("111197.73");
+        e1.setExemptAmount("0.00");
 
         earnings.add(e1);
 
@@ -2286,7 +2284,7 @@ public class Examples {
         Invoice invoice = new Invoice();
         invoice.setVersionCode("4.0");
         invoice.setSeries("F");
-        invoice.setDate(LocalDateTime.now());
+        invoice.setDate("2026-02-09T10:00:00");
         invoice.setTypeCode("N");
         invoice.setPaymentMethodCode("PUE");
         invoice.setCurrencyCode("MXN");
@@ -2322,7 +2320,7 @@ public class Examples {
         EmployeeData employeeData = new EmployeeData();
         employeeData.setCurp("XEXX010101MNEXXXA8");
         employeeData.setSocialSecurityNumber("0000000000");
-        employeeData.setLaborRelationStartDate(LocalDateTime.parse("2022-03-02T00:00:00"));
+        employeeData.setLaborRelationStartDate("2022-03-02T00:00:00");
         employeeData.setSeniority("P66W");
         employeeData.setSatContractTypeId("01");
         employeeData.setSatUnionizedStatusId("No");
@@ -2330,7 +2328,7 @@ public class Examples {
         employeeData.setEmployeeNumber("111111");
         employeeData.setSatJobRiskId("4");
         employeeData.setSatPaymentPeriodicityId("02");
-        employeeData.setIntegratedDailySalary(180.96);
+        employeeData.setIntegratedDailySalary("180.96");
         employeeData.setSatPayrollStateId("GUA");
 
 // Items
@@ -2342,8 +2340,8 @@ public class Examples {
         item1.setQuantity(1);
         item1.setUnitOfMeasurementCode("ACT");
         item1.setDescription("Pago de nómina");
-        item1.setUnitPrice(1842.82);
-        item1.setDiscount(608.71);
+        item1.setUnitPrice("1842.82");
+        item1.setDiscount("608.71");
         item1.setTaxObjectCode("01");
 
         items.add(item1);
@@ -2352,9 +2350,9 @@ public class Examples {
         Payroll payroll = new Payroll();
         payroll.setVersion("1.2");
         payroll.setPayrollTypeCode("O");
-        payroll.setPaymentDate(LocalDateTime.parse("2023-06-11T00:00:00"));
-        payroll.setInitialPaymentDate(LocalDateTime.parse("2023-06-05T00:00:00"));
-        payroll.setFinalPaymentDate(LocalDateTime.parse("2023-06-11T00:00:00"));
+        payroll.setPaymentDate("2023-06-11T00:00:00");
+        payroll.setInitialPaymentDate("2023-06-05T00:00:00");
+        payroll.setFinalPaymentDate("2023-06-11T00:00:00");
         payroll.setDaysPaid(7);
 
 // Earnings
@@ -2365,36 +2363,36 @@ public class Examples {
         e1.setEarningTypeCode("001");
         e1.setCode("SP01");
         e1.setConcept("SUELDO");
-        e1.setTaxedAmount(1210.30);
-        e1.setExemptAmount(0.00);
+        e1.setTaxedAmount("1210.30");
+        e1.setExemptAmount("0.00");
 
         PayrollEarning e2 = new PayrollEarning();
         e2.setEarningTypeCode("010");
         e2.setCode("SP02");
         e2.setConcept("PREMIO PUNTUALIDAD");
-        e2.setTaxedAmount(121.03);
-        e2.setExemptAmount(0.00);
+        e2.setTaxedAmount("121.03");
+        e2.setExemptAmount("0.00");
 
         PayrollEarning e3 = new PayrollEarning();
         e3.setEarningTypeCode("029");
         e3.setCode("SP03");
         e3.setConcept("MONEDERO ELECTRONICO");
-        e3.setTaxedAmount(0.00);
-        e3.setExemptAmount(269.43);
+        e3.setTaxedAmount("0.00");
+        e3.setExemptAmount("269.43");
 
         PayrollEarning e4 = new PayrollEarning();
         e4.setEarningTypeCode("010");
         e4.setCode("SP04");
         e4.setConcept("PREMIO DE ASISTENCIA");
-        e4.setTaxedAmount(121.03);
-        e4.setExemptAmount(0.00);
+        e4.setTaxedAmount("121.03");
+        e4.setExemptAmount("0.00");
 
         PayrollEarning e5 = new PayrollEarning();
         e5.setEarningTypeCode("005");
         e5.setCode("SP54");
         e5.setConcept("APORTACION FONDO AHORRO");
-        e5.setTaxedAmount(0.00);
-        e5.setExemptAmount(121.03);
+        e5.setTaxedAmount("0.00");
+        e5.setExemptAmount("121.03");
 
         earnings.add(e1);
         earnings.add(e2);
@@ -2409,13 +2407,13 @@ public class Examples {
         op1.setOtherPaymentTypeCode("002");
         op1.setCode("ISRSUB");
         op1.setConcept("Subsidio ISR para empleo");
-        op1.setAmount(0.0);
-        op1.setSubsidyCaused(0.0);
+        op1.setAmount("0.0");
+        op1.setSubsidyCaused("0.0");
 
         BalanceCompensation balanceCompensation = new BalanceCompensation();
-        balanceCompensation.setFavorableBalance(0.0);
+        balanceCompensation.setFavorableBalance("0.0");
         balanceCompensation.setYear(2022);
-        balanceCompensation.setRemainingFavorableBalance(0.0);
+        balanceCompensation.setRemainingFavorableBalance("0.0");
 
         op1.setBalanceCompensation(balanceCompensation);
 
@@ -2431,31 +2429,31 @@ public class Examples {
         d1.setDeductionTypeCode("004");
         d1.setCode("ZA09");
         d1.setConcept("APORTACION FONDO AHORRO");
-        d1.setAmount(121.03);
+        d1.setAmount("121.03");
 
         PayrollDeduction d2 = new PayrollDeduction();
         d2.setDeductionTypeCode("002");
         d2.setCode("ISR");
         d2.setConcept("ISR");
-        d2.setAmount(36.57);
+        d2.setAmount("36.57");
 
         PayrollDeduction d3 = new PayrollDeduction();
         d3.setDeductionTypeCode("001");
         d3.setCode("IMSS");
         d3.setConcept("Cuota de Seguridad Social EE");
-        d3.setAmount(30.08);
+        d3.setAmount("30.08");
 
         PayrollDeduction d4 = new PayrollDeduction();
         d4.setDeductionTypeCode("004");
         d4.setCode("ZA68");
         d4.setConcept("DEDUCCION FDO AHORRO PAT");
-        d4.setAmount(121.03);
+        d4.setAmount("121.03");
 
         PayrollDeduction d5 = new PayrollDeduction();
         d5.setDeductionTypeCode("018");
         d5.setCode("ZA11");
         d5.setConcept("APORTACION CAJA AHORRO");
-        d5.setAmount(300.00);
+        d5.setAmount("300.00");
 
         payrollDeductions.add(d1);
         payrollDeductions.add(d2);
@@ -2470,7 +2468,7 @@ public class Examples {
         Invoice invoice = new Invoice();
         invoice.setVersionCode("4.0");
         invoice.setSeries("F");
-        invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+        invoice.setDate("2026-02-09T10:00:00"); // Or use {{currentDate}} placeholder
         invoice.setTypeCode("N");
         invoice.setPaymentMethodCode("PUE");
         invoice.setCurrencyCode("MXN");
@@ -2514,7 +2512,7 @@ public class Examples {
         EmployeeData employeeData = new EmployeeData();
         employeeData.setCurp("XEXX010101HNEXXXA4");
         employeeData.setSocialSecurityNumber("000000");
-        employeeData.setLaborRelationStartDate(LocalDateTime.parse("2015-01-01"));
+        employeeData.setLaborRelationStartDate("2015-01-01");
         employeeData.setSeniority("P437W");
         employeeData.setSatContractTypeId("01");
         employeeData.setSatWorkdayTypeId("01");
@@ -2526,17 +2524,17 @@ public class Examples {
         employeeData.setSatPaymentPeriodicityId("04");
         employeeData.setSatBankId("002");
         employeeData.setBankAccount("1111111111");
-        employeeData.setBaseSalaryForContributions(490.22);
-        employeeData.setIntegratedDailySalary(146.47);
+        employeeData.setBaseSalaryForContributions("490.22");
+        employeeData.setIntegratedDailySalary("146.47");
         employeeData.setSatPayrollStateId("JAL");
 
 // Payroll
         Payroll payroll = new Payroll();
         payroll.setVersion("1.2");
         payroll.setPayrollTypeCode("O");
-        payroll.setPaymentDate(LocalDateTime.parse("2023-05-24T00:00:00"));
-        payroll.setInitialPaymentDate(LocalDateTime.parse("2023-05-09T00:00:00"));
-        payroll.setFinalPaymentDate(LocalDateTime.parse("2023-05-24T00:00:00"));
+        payroll.setPaymentDate("2023-05-24T00:00:00");
+        payroll.setInitialPaymentDate("2023-05-09T00:00:00");
+        payroll.setFinalPaymentDate("2023-05-24T00:00:00");
         payroll.setDaysPaid(15);
 
 // Earnings
@@ -2547,22 +2545,22 @@ public class Examples {
         e1.setEarningTypeCode("001");
         e1.setCode("00500");
         e1.setConcept("Sueldos, Salarios Rayas y Jornales");
-        e1.setTaxedAmount(2808.8);
-        e1.setExemptAmount(2191.2);
+        e1.setTaxedAmount("2808.8");
+        e1.setExemptAmount("2191.2");
 
         PayrollEarning e2 = new PayrollEarning();
         e2.setEarningTypeCode("019");
         e2.setCode("00100");
         e2.setConcept("Horas Extra");
-        e2.setTaxedAmount(50.00);
-        e2.setExemptAmount(50.00);
+        e2.setTaxedAmount("50.00");
+        e2.setExemptAmount("50.00");
 
         List<PayrollEarningOvertime> overtimeList = new ArrayList<>();
         PayrollEarningOvertime overtime1 = new PayrollEarningOvertime();
         overtime1.setDays(1);
         overtime1.setHoursTypeCode("01");
         overtime1.setExtraHours(2);
-        overtime1.setAmountPaid(100.00);
+        overtime1.setAmountPaid("100.00");
         overtimeList.add(overtime1);
 
         e2.setOvertime(overtimeList);
@@ -2598,7 +2596,7 @@ public class Examples {
         Invoice invoice = new Invoice();
         invoice.setVersionCode("4.0");
         invoice.setSeries("F");
-        invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+        invoice.setDate("2026-02-09T10:00:00"); // Or use {{currentDate}} placeholder
         invoice.setTypeCode("N");
         invoice.setPaymentMethodCode("PUE");
         invoice.setCurrencyCode("MXN");
@@ -2635,7 +2633,7 @@ public class Examples {
         EmployeeData employeeData = new EmployeeData();
         employeeData.setCurp("XEXX010101HNEXXXA4");
         employeeData.setSocialSecurityNumber("000000");
-        employeeData.setLaborRelationStartDate(LocalDateTime.parse("2015-01-01"));
+        employeeData.setLaborRelationStartDate("2015-01-01");
         employeeData.setSeniority("P437W");
         employeeData.setSatContractTypeId("01");
         employeeData.setSatWorkdayTypeId("01");
@@ -2647,17 +2645,17 @@ public class Examples {
         employeeData.setSatPaymentPeriodicityId("04");
         employeeData.setSatBankId("002");
         employeeData.setBankAccount("1111111111");
-        employeeData.setBaseSalaryForContributions(490.22);
-        employeeData.setIntegratedDailySalary(146.47);
+        employeeData.setBaseSalaryForContributions("490.22");
+        employeeData.setIntegratedDailySalary("146.47");
         employeeData.setSatPayrollStateId("JAL");
 
 // Payroll
         Payroll payroll = new Payroll();
         payroll.setVersion("1.2");
         payroll.setPayrollTypeCode("O");
-        payroll.setPaymentDate(LocalDateTime.parse("2023-05-24T00:00:00"));
-        payroll.setInitialPaymentDate(LocalDateTime.parse("2023-05-09T00:00:00"));
-        payroll.setFinalPaymentDate(LocalDateTime.parse("2023-05-24T00:00:00"));
+        payroll.setPaymentDate("2023-05-24T00:00:00");
+        payroll.setInitialPaymentDate("2023-05-09T00:00:00");
+        payroll.setFinalPaymentDate("2023-05-24T00:00:00");
         payroll.setDaysPaid(15);
 
 // Earnings
@@ -2668,22 +2666,22 @@ public class Examples {
         e1.setEarningTypeCode("001");
         e1.setCode("00500");
         e1.setConcept("Sueldos, Salarios Rayas y Jornales");
-        e1.setTaxedAmount(2808.8);
-        e1.setExemptAmount(2191.2);
+        e1.setTaxedAmount("2808.8");
+        e1.setExemptAmount("2191.2");
 
         PayrollEarning e2 = new PayrollEarning();
         e2.setEarningTypeCode("019");
         e2.setCode("00100");
         e2.setConcept("Horas Extra");
-        e2.setTaxedAmount(50.00);
-        e2.setExemptAmount(50.00);
+        e2.setTaxedAmount("50.00");
+        e2.setExemptAmount("50.00");
 
         List<PayrollEarningOvertime> overtimeList = new ArrayList<>();
         PayrollEarningOvertime overtime1 = new PayrollEarningOvertime();
         overtime1.setDays(1);
         overtime1.setHoursTypeCode("01");
         overtime1.setExtraHours(2);
-        overtime1.setAmountPaid(100.00);
+        overtime1.setAmountPaid("100.00");
         overtimeList.add(overtime1);
 
         e2.setOvertime(overtimeList);
@@ -2719,7 +2717,7 @@ public class Examples {
         Invoice invoice = new Invoice();
         invoice.setVersionCode("4.0");
         invoice.setSeries("F");
-        invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+        invoice.setDate("2026-02-09T10:00:00"); // Or use {{currentDate}} placeholder
         invoice.setTypeCode("N");
         invoice.setPaymentMethodCode("PUE");
         invoice.setCurrencyCode("MXN");
@@ -2756,7 +2754,7 @@ public class Examples {
         EmployeeData employeeData = new EmployeeData();
         employeeData.setCurp("XEXX010101HNEXXXA4");
         employeeData.setSocialSecurityNumber("000000");
-        employeeData.setLaborRelationStartDate(LocalDateTime.parse("2015-01-01T00:00:00"));
+        employeeData.setLaborRelationStartDate("2015-01-01T00:00:00");
         employeeData.setSeniority("P437W");
         employeeData.setSatContractTypeId("01");
         employeeData.setSatWorkdayTypeId("01");
@@ -2768,17 +2766,17 @@ public class Examples {
         employeeData.setSatPaymentPeriodicityId("04");
         employeeData.setSatBankId("002");
         employeeData.setBankAccount("1111111111");
-        employeeData.setBaseSalaryForContributions(490.22);
-        employeeData.setIntegratedDailySalary(146.47);
+        employeeData.setBaseSalaryForContributions("490.22");
+        employeeData.setIntegratedDailySalary("146.47");
         employeeData.setSatPayrollStateId("JAL");
 
 // Payroll
         Payroll payroll = new Payroll();
         payroll.setVersion("1.2");
         payroll.setPayrollTypeCode("O");
-        payroll.setPaymentDate(LocalDateTime.parse("2023-05-24T00:00:00"));
-        payroll.setInitialPaymentDate(LocalDateTime.parse("2023-05-09T00:00:00"));
-        payroll.setFinalPaymentDate(LocalDateTime.parse("2023-05-24T00:00:00"));
+        payroll.setPaymentDate("2023-05-24T00:00:00");
+        payroll.setInitialPaymentDate("2023-05-09T00:00:00");
+        payroll.setFinalPaymentDate("2023-05-24T00:00:00");
         payroll.setDaysPaid(15);
 
 // Earnings
@@ -2789,8 +2787,8 @@ public class Examples {
         e1.setEarningTypeCode("001");
         e1.setCode("00500");
         e1.setConcept("Sueldos, Salarios Rayas y Jornales");
-        e1.setTaxedAmount(2808.8);
-        e1.setExemptAmount(2191.2);
+        e1.setTaxedAmount("2808.8");
+        e1.setExemptAmount("2191.2");
 
         earnings.add(e1);
 
@@ -2835,7 +2833,7 @@ public class Examples {
         Invoice invoice = new Invoice();
         invoice.setVersionCode("4.0");
         invoice.setSeries("F");
-        invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+        invoice.setDate("2026-02-09T10:00:00"); // Or use {{currentDate}} placeholder
         invoice.setTypeCode("N");
         invoice.setPaymentMethodCode("PUE");
         invoice.setCurrencyCode("MXN");
@@ -2875,8 +2873,8 @@ public class Examples {
         e1.setEarningTypeCode("001");
         e1.setCode("00500");
         e1.setConcept("Sueldos, Salarios Rayas y Jornales");
-        e1.setTaxedAmount(new BigDecimal("2808.8"));
-        e1.setExemptAmount(new BigDecimal("2191.2"));
+        e1.setTaxedAmount("2808.8");
+        e1.setExemptAmount("2191.2");
 
         earnings.add(e1);
 
@@ -2924,7 +2922,7 @@ public class Examples {
         Invoice invoice = new Invoice();
         invoice.setVersionCode("4.0");
         invoice.setSeries("F");
-        invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+        invoice.setDate("2026-02-09T10:00:00"); // Or use {{currentDate}} placeholder
         invoice.setTypeCode("N");
         invoice.setPaymentMethodCode("PUE");
         invoice.setCurrencyCode("MXN");
@@ -2960,23 +2958,23 @@ public class Examples {
         EmployeeData employeeData = new EmployeeData();
         employeeData.setCurp("XEXX010101HNEXXXA4");
         employeeData.setSocialSecurityNumber("80997742673");
-        employeeData.setLaborRelationStartDate(LocalDateTime.parse("2021-09-01"));
+        employeeData.setLaborRelationStartDate("2021-09-01");
         employeeData.setSeniority("P88W");
         employeeData.setSatContractTypeId("01");
         employeeData.setSatTaxRegimeTypeId("02");
         employeeData.setEmployeeNumber("273");
         employeeData.setSatJobRiskId("1");
         employeeData.setSatPaymentPeriodicityId("04");
-        employeeData.setIntegratedDailySalary(221.48);
+        employeeData.setIntegratedDailySalary("221.48");
         employeeData.setSatPayrollStateId("GRO");
 
 // Payroll
         Payroll payroll = new Payroll();
         payroll.setVersion("1.2");
         payroll.setPayrollTypeCode("O");
-        payroll.setPaymentDate(LocalDateTime.parse("2023-05-16T00:00:00"));
-        payroll.setInitialPaymentDate(LocalDateTime.parse("2023-05-01T00:00:00"));
-        payroll.setFinalPaymentDate(LocalDateTime.parse("2023-05-16T00:00:00"));
+        payroll.setPaymentDate("2023-05-16T00:00:00");
+        payroll.setInitialPaymentDate("2023-05-01T00:00:00");
+        payroll.setFinalPaymentDate("2023-05-16T00:00:00");
         payroll.setDaysPaid(15);
 
 // Earnings
@@ -2987,43 +2985,43 @@ public class Examples {
         e1.setEarningTypeCode("001");
         e1.setCode("P001");
         e1.setConcept("Sueldos, Salarios Rayas y Jornales");
-        e1.setTaxedAmount(3322.20);
-        e1.setExemptAmount(0.0);
+        e1.setTaxedAmount("3322.20");
+        e1.setExemptAmount("0.0");
 
         PayrollEarning e2 = new PayrollEarning();
         e2.setEarningTypeCode("038");
         e2.setCode("P540");
         e2.setConcept("Compensacion");
-        e2.setTaxedAmount(100.0);
-        e2.setExemptAmount(0.0);
+        e2.setTaxedAmount("100.0");
+        e2.setExemptAmount("0.0");
 
         PayrollEarning e3 = new PayrollEarning();
         e3.setEarningTypeCode("038");
         e3.setCode("P550");
         e3.setConcept("Compensación Garantizada Extraordinaria");
-        e3.setTaxedAmount(2200.0);
-        e3.setExemptAmount(0.0);
+        e3.setTaxedAmount("2200.0");
+        e3.setExemptAmount("0.0");
 
         PayrollEarning e4 = new PayrollEarning();
         e4.setEarningTypeCode("038");
         e4.setCode("P530");
         e4.setConcept("Servicio Extraordinario");
-        e4.setTaxedAmount(200.0);
-        e4.setExemptAmount(0.0);
+        e4.setTaxedAmount("200.0");
+        e4.setExemptAmount("0.0");
 
         PayrollEarning e5 = new PayrollEarning();
         e5.setEarningTypeCode("001");
         e5.setCode("P506");
         e5.setConcept("Otras Prestaciones");
-        e5.setTaxedAmount(1500.0);
-        e5.setExemptAmount(0.0);
+        e5.setTaxedAmount("1500.0");
+        e5.setExemptAmount("0.0");
 
         PayrollEarning e6 = new PayrollEarning();
         e6.setEarningTypeCode("001");
         e6.setCode("P505");
         e6.setConcept("Remuneración al Desempeño Legislativo");
-        e6.setTaxedAmount(17500.0);
-        e6.setExemptAmount(0.0);
+        e6.setTaxedAmount("17500.0");
+        e6.setExemptAmount("0.0");
 
         earnings.add(e1);
         earnings.add(e2);
@@ -3039,8 +3037,8 @@ public class Examples {
         op1.setOtherPaymentTypeCode("002");
         op1.setCode("o002");
         op1.setConcept("Subsidio para el empleo efectivamente entregado al trabajador");
-        op1.setAmount(0.0);
-        op1.setSubsidyCaused(0.0);
+        op1.setAmount("0.0");
+        op1.setSubsidyCaused("0.0");
 
         otherPayments.add(op1);
 
@@ -3054,19 +3052,19 @@ public class Examples {
         d1.setDeductionTypeCode("002");
         d1.setCode("D002");
         d1.setConcept("ISR");
-        d1.setAmount(4716.61);
+        d1.setAmount("4716.61");
 
         PayrollDeduction d2 = new PayrollDeduction();
         d2.setDeductionTypeCode("004");
         d2.setCode("D525");
         d2.setConcept("Redondeo");
-        d2.setAmount(0.81);
+        d2.setAmount("0.81");
 
         PayrollDeduction d3 = new PayrollDeduction();
         d3.setDeductionTypeCode("001");
         d3.setCode("D510");
         d3.setConcept("Cuota Trabajador ISSSTE");
-        d3.setAmount(126.78);
+        d3.setAmount("126.78");
 
         payrollDeductions.add(d1);
         payrollDeductions.add(d2);
@@ -3079,7 +3077,7 @@ public class Examples {
         Invoice invoice = new Invoice();
         invoice.setVersionCode("4.0");
         invoice.setSeries("F");
-        invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+        invoice.setDate("2026-02-09T10:00:00"); // Or use {{currentDate}} placeholder
         invoice.setTypeCode("N");
         invoice.setPaymentMethodCode("PUE");
         invoice.setCurrencyCode("MXN");
@@ -3119,43 +3117,43 @@ public class Examples {
         e1.setEarningTypeCode("001");
         e1.setCode("P001");
         e1.setConcept("Sueldos, Salarios Rayas y Jornales");
-        e1.setTaxedAmount(new BigDecimal("3322.20"));
-        e1.setExemptAmount(new BigDecimal("0"));
+        e1.setTaxedAmount("3322.20");
+        e1.setExemptAmount("0");
 
         PayrollEarning e2 = new PayrollEarning();
         e2.setEarningTypeCode("038");
         e2.setCode("P540");
         e2.setConcept("Compensacion");
-        e2.setTaxedAmount(new BigDecimal("100.00"));
-        e2.setExemptAmount(new BigDecimal("0"));
+        e2.setTaxedAmount("100.00");
+        e2.setExemptAmount("0");
 
         PayrollEarning e3 = new PayrollEarning();
         e3.setEarningTypeCode("038");
         e3.setCode("P550");
         e3.setConcept("Compensación Garantizada Extraordinaria");
-        e3.setTaxedAmount(new BigDecimal("2200.00"));
-        e3.setExemptAmount(new BigDecimal("0"));
+        e3.setTaxedAmount("2200.00");
+        e3.setExemptAmount("0");
 
         PayrollEarning e4 = new PayrollEarning();
         e4.setEarningTypeCode("038");
         e4.setCode("P530");
         e4.setConcept("Servicio Extraordinario");
-        e4.setTaxedAmount(new BigDecimal("200.00"));
-        e4.setExemptAmount(new BigDecimal("0"));
+        e4.setTaxedAmount("200.00");
+        e4.setExemptAmount("0");
 
         PayrollEarning e5 = new PayrollEarning();
         e5.setEarningTypeCode("001");
         e5.setCode("P506");
         e5.setConcept("Otras Prestaciones");
-        e5.setTaxedAmount(new BigDecimal("1500.00"));
-        e5.setExemptAmount(new BigDecimal("0"));
+        e5.setTaxedAmount("1500.00");
+        e5.setExemptAmount("0");
 
         PayrollEarning e6 = new PayrollEarning();
         e6.setEarningTypeCode("001");
         e6.setCode("P505");
         e6.setConcept("Remuneración al Desempeño Legislativo");
-        e6.setTaxedAmount(new BigDecimal("17500.00"));
-        e6.setExemptAmount(new BigDecimal("0"));
+        e6.setTaxedAmount("17500.00");
+        e6.setExemptAmount("0");
 
         earnings.add(e1);
         earnings.add(e2);
@@ -3171,8 +3169,8 @@ public class Examples {
         op1.setOtherPaymentTypeCode("002");
         op1.setCode("002");
         op1.setConcept("Subsidio para el empleo efectivamente entregado al trabajador");
-        op1.setAmount(new BigDecimal("0"));
-        op1.setSubsidyCaused(new BigDecimal("0"));
+        op1.setAmount("0");
+        op1.setSubsidyCaused("0");
 
         otherPayments.add(op1);
 
@@ -3214,7 +3212,7 @@ public class Examples {
         Invoice invoice = new Invoice();
         invoice.setVersionCode("4.0");
         invoice.setSeries("F");
-        invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+        invoice.setDate("2026-02-09T10:00:00"); // Or use {{currentDate}} placeholder
         invoice.setTypeCode("N");
         invoice.setPaymentMethodCode("PUE");
         invoice.setCurrencyCode("MXN");
@@ -3250,7 +3248,7 @@ public class Examples {
         EmployeeData employeeData = new EmployeeData();
         employeeData.setCurp("XEXX010101HNEXXXA4");
         employeeData.setSocialSecurityNumber("000000");
-        employeeData.setLaborRelationStartDate(LocalDateTime.parse("2015-01-01"));
+        employeeData.setLaborRelationStartDate("2015-01-01");
         employeeData.setSeniority("P439W");
         employeeData.setSatContractTypeId("01");
         employeeData.setSatWorkdayTypeId("01");
@@ -3262,16 +3260,16 @@ public class Examples {
         employeeData.setSatPaymentPeriodicityId("99");
         employeeData.setSatBankId("002");
         employeeData.setBankAccount("1111111111");
-        employeeData.setIntegratedDailySalary(146.47);
+        employeeData.setIntegratedDailySalary("146.47");
         employeeData.setSatPayrollStateId("JAL");
 
 // Payroll
         Payroll payroll = new Payroll();
         payroll.setVersion("1.2");
         payroll.setPayrollTypeCode("E");
-        payroll.setPaymentDate(LocalDateTime.parse("2023-06-04T00:00:00"));
-        payroll.setInitialPaymentDate(LocalDateTime.parse("2023-06-04T00:00:00"));
-        payroll.setFinalPaymentDate(LocalDateTime.parse("2023-06-04T00:00:00"));
+        payroll.setPaymentDate("2023-06-04T00:00:00");
+        payroll.setInitialPaymentDate("2023-06-04T00:00:00");
+        payroll.setFinalPaymentDate("2023-06-04T00:00:00");
         payroll.setDaysPaid(30);
 
 // Earnings
@@ -3282,8 +3280,8 @@ public class Examples {
         e1.setEarningTypeCode("002");
         e1.setCode("00500");
         e1.setConcept("Gratificación Anual (Aguinaldo)");
-        e1.setTaxedAmount(0.00);
-        e1.setExemptAmount(10000.00);
+        e1.setTaxedAmount("0.00");
+        e1.setExemptAmount("10000.00");
 
         earnings.add(e1);
 
@@ -3303,7 +3301,7 @@ public class Examples {
         Invoice invoice = new Invoice();
         invoice.setVersionCode("4.0");
         invoice.setSeries("F");
-        invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+        invoice.setDate("2026-02-09T10:00:00"); // Or use {{currentDate}} placeholder
         invoice.setTypeCode("N");
         invoice.setPaymentMethodCode("PUE");
         invoice.setCurrencyCode("MXN");
@@ -3343,8 +3341,8 @@ public class Examples {
         e1.setEarningTypeCode("002");
         e1.setCode("00500");
         e1.setConcept("Gratificación Anual (Aguinaldo)");
-        e1.setTaxedAmount(new BigDecimal("0.00"));
-        e1.setExemptAmount(new BigDecimal("10000.00"));
+        e1.setTaxedAmount("0.00");
+        e1.setExemptAmount("10000.00");
 
         earnings.add(e1);
 
@@ -3367,7 +3365,7 @@ public class Examples {
         Invoice invoice = new Invoice();
         invoice.setVersionCode("4.0");
         invoice.setSeries("F");
-        invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+        invoice.setDate("2026-02-09T10:00:00"); // Or use {{currentDate}} placeholder
         invoice.setTypeCode("N");
         invoice.setPaymentMethodCode("PUE");
         invoice.setCurrencyCode("MXN");
@@ -3403,7 +3401,7 @@ public class Examples {
         EmployeeData employeeData = new EmployeeData();
         employeeData.setCurp("XEXX010101HNEXXXA4");
         employeeData.setSocialSecurityNumber("000000");
-        employeeData.setLaborRelationStartDate(LocalDateTime.parse("2015-01-01"));
+        employeeData.setLaborRelationStartDate("2015-01-01");
         employeeData.setSeniority("P439W");
         employeeData.setSatContractTypeId("01");
         employeeData.setSatWorkdayTypeId("01");
@@ -3415,16 +3413,16 @@ public class Examples {
         employeeData.setSatPaymentPeriodicityId("99");
         employeeData.setSatBankId("002");
         employeeData.setBankAccount("1111111111");
-        employeeData.setIntegratedDailySalary(146.47);
+        employeeData.setIntegratedDailySalary("146.47");
         employeeData.setSatPayrollStateId("JAL");
 
 // Payroll
         Payroll payroll = new Payroll();
         payroll.setVersion("1.2");
         payroll.setPayrollTypeCode("E");
-        payroll.setPaymentDate(LocalDateTime.parse("2023-06-04T00:00:00"));
-        payroll.setInitialPaymentDate(LocalDateTime.parse("2023-05-05T00:00:00"));
-        payroll.setFinalPaymentDate(LocalDateTime.parse("2023-06-04T00:00:00"));
+        payroll.setPaymentDate("2023-06-04T00:00:00");
+        payroll.setInitialPaymentDate("2023-05-05T00:00:00");
+        payroll.setFinalPaymentDate("2023-06-04T00:00:00");
         payroll.setDaysPaid(30);
 
 // Earnings
@@ -3435,15 +3433,15 @@ public class Examples {
         e1.setEarningTypeCode("023");
         e1.setCode("00500");
         e1.setConcept("Pagos por separación");
-        e1.setTaxedAmount(0.00);
-        e1.setExemptAmount(10000.00);
+        e1.setTaxedAmount("0.00");
+        e1.setExemptAmount("10000.00");
 
         PayrollEarning e2 = new PayrollEarning();
         e2.setEarningTypeCode("025");
         e2.setCode("00900");
         e2.setConcept("Indemnizaciones");
-        e2.setTaxedAmount(0.00);
-        e2.setExemptAmount(500.00);
+        e2.setTaxedAmount("0.00");
+        e2.setExemptAmount("500.00");
 
         earnings.add(e1);
         earnings.add(e2);
@@ -3453,11 +3451,11 @@ public class Examples {
 
 // Severance
         PayrollSeverance severance = new PayrollSeverance();
-        severance.setTotalPaid(10500.00);
+        severance.setTotalPaid("10500.00");
         severance.setYearsOfService(1);
-        severance.setLastMonthlySalary(10000.00);
-        severance.setAccumulableIncome(10000.00);
-        severance.setNonAccumulableIncome(0.00);
+        severance.setLastMonthlySalary("10000.00");
+        severance.setAccumulableIncome("10000.00");
+        severance.setNonAccumulableIncome("0.00");
 
         payrollEarnings.setEarnings(earnings);
         payrollEarnings.setOtherPayments(otherPayments);
@@ -3473,7 +3471,7 @@ public class Examples {
         Invoice invoice = new Invoice();
         invoice.setVersionCode("4.0");
         invoice.setSeries("F");
-        invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+        invoice.setDate("2026-02-09T10:00:00"); // Or use {{currentDate}} placeholder
         invoice.setTypeCode("N");
         invoice.setPaymentMethodCode("PUE");
         invoice.setCurrencyCode("MXN");
@@ -3509,26 +3507,26 @@ public class Examples {
         e1.setEarningTypeCode("023");
         e1.setCode("00500");
         e1.setConcept("Pagos por separación");
-        e1.setTaxedAmount(new BigDecimal("0"));
-        e1.setExemptAmount(new BigDecimal("10000.0"));
+        e1.setTaxedAmount("0");
+        e1.setExemptAmount("10000.0");
 
         PayrollEarning e2 = new PayrollEarning();
         e2.setEarningTypeCode("025");
         e2.setCode("00900");
         e2.setConcept("Indemnizaciones");
-        e2.setTaxedAmount(new BigDecimal("0"));
-        e2.setExemptAmount(new BigDecimal("500.0"));
+        e2.setTaxedAmount("0");
+        e2.setExemptAmount("500.0");
 
         earnings.add(e1);
         earnings.add(e2);
 
         List<PayrollEarningOtherPayment> otherPayments = new ArrayList<>();
         PayrollSeverance severance = new PayrollSeverance();
-        severance.setTotalPaid(new BigDecimal("10500.00"));
+        severance.setTotalPaid("10500.00");
         severance.setYearsOfService(1);
-        severance.setLastMonthlySalary(new BigDecimal("10000.00"));
-        severance.setAccumulableIncome(new BigDecimal("10000.00"));
-        severance.setNonAccumulableIncome(new BigDecimal("0"));
+        severance.setLastMonthlySalary("10000.00");
+        severance.setAccumulableIncome("10000.00");
+        severance.setNonAccumulableIncome("0");
 
         payrollEarnings.setEarnings(earnings);
         payrollEarnings.setOtherPayments(otherPayments);
@@ -3544,12 +3542,12 @@ public class Examples {
         Invoice invoice = new Invoice();
         invoice.setVersionCode("4.0");
         invoice.setSeries("F");
-        invoice.setDate(LocalDateTime.now());
+        invoice.setDate("2026-02-09T10:00:00");
         invoice.setTypeCode("N");
         invoice.setExpeditionZipCode("20000");
         invoice.setIssuer(issuer);
         invoice.setRecipient(recipient);
-        invoice.setDate(LocalDateTime.now());
+        invoice.setDate("2026-02-09T10:00:00");
         invoice.setPaymentMethodCode("PUE");
         invoice.setComplement(complement);
 
@@ -3578,7 +3576,7 @@ public class Examples {
         EmployeeData employeeData = new EmployeeData();
         employeeData.setCurp("XEXX010101HNEXXXA4");
         employeeData.setSocialSecurityNumber("000000");
-        employeeData.setLaborRelationStartDate(LocalDateTime.parse("2015-01-01"));
+        employeeData.setLaborRelationStartDate("2015-01-01");
         employeeData.setSeniority("P439W");
         employeeData.setSatContractTypeId("01");
         employeeData.setSatWorkdayTypeId("01");
@@ -3590,16 +3588,16 @@ public class Examples {
         employeeData.setSatPaymentPeriodicityId("99");
         employeeData.setSatBankId("002");
         employeeData.setBankAccount("1111111111");
-        employeeData.setIntegratedDailySalary(146.47);
+        employeeData.setIntegratedDailySalary("146.47");
         employeeData.setSatPayrollStateId("JAL");
 
 // Payroll
         Payroll payroll = new Payroll();
         payroll.setVersion("1.2");
         payroll.setPayrollTypeCode("E");
-        payroll.setPaymentDate(LocalDateTime.parse("2023-05-05T00:00:00"));
-        payroll.setInitialPaymentDate(LocalDateTime.parse("2023-06-04T00:00:00"));
-        payroll.setFinalPaymentDate(LocalDateTime.parse("2023-06-04T00:00:00"));
+        payroll.setPaymentDate("2023-05-05T00:00:00");
+        payroll.setInitialPaymentDate("2023-06-04T00:00:00");
+        payroll.setFinalPaymentDate("2023-06-04T00:00:00");
         payroll.setDaysPaid(30);
 
 // Earnings
@@ -3610,8 +3608,8 @@ public class Examples {
         e1.setEarningTypeCode("039");
         e1.setCode("00500");
         e1.setConcept("Jubilaciones, pensiones o haberes de retiro");
-        e1.setTaxedAmount(0.00);
-        e1.setExemptAmount(10000.00);
+        e1.setTaxedAmount("0.00");
+        e1.setExemptAmount("10000.00");
 
         earnings.add(e1);
 
@@ -3620,9 +3618,9 @@ public class Examples {
 
 // Retirement
         PayrollRetirement retirement = new PayrollRetirement();
-        retirement.setTotalOneTime(10000.00);
-        retirement.setAccumulableIncome(10000.00);
-        retirement.setNonAccumulableIncome(0.00);
+        retirement.setTotalOneTime("10000.00");
+        retirement.setAccumulableIncome("10000.00");
+        retirement.setNonAccumulableIncome("0.00");
 
         payrollEarnings.setEarnings(earnings);
         payrollEarnings.setOtherPayments(otherPayments);
@@ -3638,7 +3636,7 @@ public class Examples {
         Invoice invoice = new Invoice();
         invoice.setVersionCode("4.0");
         invoice.setSeries("F");
-        invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+        invoice.setDate("2026-02-09T10:00:00"); // Or use {{currentDate}} placeholder
         invoice.setTypeCode("N");
         invoice.setPaymentMethodCode("PUE");
         invoice.setCurrencyCode("MXN");
@@ -3678,8 +3676,8 @@ public class Examples {
         e1.setEarningTypeCode("039");
         e1.setCode("00500");
         e1.setConcept("Jubilaciones, pensiones o haberes de retiro");
-        e1.setTaxedAmount(new BigDecimal("0.00"));
-        e1.setExemptAmount(new BigDecimal("10000.00"));
+        e1.setTaxedAmount("0.00");
+        e1.setExemptAmount("10000.00");
 
         earnings.add(e1);
 
@@ -3688,9 +3686,9 @@ public class Examples {
 
 // Retirement
         PayrollRetirement retirement = new PayrollRetirement();
-        retirement.setTotalOneTime(new BigDecimal("10000.00"));
-        retirement.setAccumulableIncome(new BigDecimal("10000.00"));
-        retirement.setNonAccumulableIncome(new BigDecimal("0.00"));
+        retirement.setTotalOneTime("10000.00");
+        retirement.setAccumulableIncome("10000.00");
+        retirement.setNonAccumulableIncome("0.00");
 
         payrollEarnings.setEarnings(earnings);
         payrollEarnings.setOtherPayments(otherPayments);
@@ -3709,7 +3707,7 @@ public class Examples {
         Invoice invoice = new Invoice();
         invoice.setVersionCode("4.0");
         invoice.setSeries("F");
-        invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+        invoice.setDate("2026-02-09T10:00:00"); // Or use {{currentDate}} placeholder
         invoice.setTypeCode("N");
         invoice.setPaymentMethodCode("PUE");
         invoice.setCurrencyCode("MXN");
@@ -3745,7 +3743,7 @@ public class Examples {
         EmployeeData employeeData = new EmployeeData();
         employeeData.setCurp("XEXX010101HNEXXXA4");
         employeeData.setSocialSecurityNumber("000000");
-        employeeData.setLaborRelationStartDate(LocalDateTime.parse("2015-01-01"));
+        employeeData.setLaborRelationStartDate("2015-01-01");
         employeeData.setSeniority("P437W");
         employeeData.setSatContractTypeId("01");
         employeeData.setSatWorkdayTypeId("01");
@@ -3757,17 +3755,17 @@ public class Examples {
         employeeData.setSatPaymentPeriodicityId("04");
         employeeData.setSatBankId("002");
         employeeData.setBankAccount("1111111111");
-        employeeData.setBaseSalaryForContributions(490.22);
-        employeeData.setIntegratedDailySalary(146.47);
+        employeeData.setBaseSalaryForContributions("490.22");
+        employeeData.setIntegratedDailySalary("146.47");
         employeeData.setSatPayrollStateId("JAL");
 
 // Payroll
         Payroll payroll = new Payroll();
         payroll.setVersion("1.2");
         payroll.setPayrollTypeCode("O");
-        payroll.setPaymentDate(LocalDateTime.parse("2023-05-24T00:00:00"));
-        payroll.setInitialPaymentDate(LocalDateTime.parse("2023-05-09T00:00:00"));
-        payroll.setFinalPaymentDate(LocalDateTime.parse("2023-05-24T00:00:00"));
+        payroll.setPaymentDate("2023-05-24T00:00:00");
+        payroll.setInitialPaymentDate("2023-05-09T00:00:00");
+        payroll.setFinalPaymentDate("2023-05-24T00:00:00");
         payroll.setDaysPaid(15);
 
 // Earnings
@@ -3778,8 +3776,8 @@ public class Examples {
         e1.setEarningTypeCode("001");
         e1.setCode("00500");
         e1.setConcept("Sueldos, Salarios Rayas y Jornales");
-        e1.setTaxedAmount(2808.8);
-        e1.setExemptAmount(2191.2);
+        e1.setTaxedAmount("2808.8");
+        e1.setExemptAmount("2191.2");
 
         earnings.add(e1);
 
@@ -3799,7 +3797,7 @@ public class Examples {
         Invoice invoice = new Invoice();
         invoice.setVersionCode("4.0");
         invoice.setSeries("F");
-        invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+        invoice.setDate("2026-02-09T10:00:00"); // Or use {{currentDate}} placeholder
         invoice.setTypeCode("N");
         invoice.setPaymentMethodCode("PUE");
         invoice.setCurrencyCode("MXN");
@@ -3839,8 +3837,8 @@ public class Examples {
         e1.setEarningTypeCode("001");
         e1.setCode("00500");
         e1.setConcept("Sueldos, Salarios Rayas y Jornales");
-        e1.setTaxedAmount(new BigDecimal("2808.8"));
-        e1.setExemptAmount(new BigDecimal("2191.2"));
+        e1.setTaxedAmount("2808.8");
+        e1.setExemptAmount("2191.2");
 
         earnings.add(e1);
 
@@ -3862,7 +3860,7 @@ public class Examples {
         Invoice invoice = new Invoice();
         invoice.setVersionCode("4.0");
         invoice.setSeries("F");
-        invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+        invoice.setDate("2026-02-09T10:00:00"); // Or use {{currentDate}} placeholder
         invoice.setTypeCode("N");
         invoice.setPaymentMethodCode("PUE");
         invoice.setCurrencyCode("MXN");
@@ -3898,7 +3896,7 @@ public class Examples {
         EmployeeData employeeData = new EmployeeData();
         employeeData.setCurp("XEXX010101HNEXXXA4");
         employeeData.setSocialSecurityNumber("000000");
-        employeeData.setLaborRelationStartDate(LocalDateTime.parse("2015-01-01T00:00:00"));
+        employeeData.setLaborRelationStartDate("2015-01-01T00:00:00");
         employeeData.setSeniority("P438W");
         employeeData.setSatContractTypeId("01");
         employeeData.setSatWorkdayTypeId("01");
@@ -3910,17 +3908,17 @@ public class Examples {
         employeeData.setSatPaymentPeriodicityId("04");
         employeeData.setSatBankId("002");
         employeeData.setBankAccount("1111111111");
-        employeeData.setBaseSalaryForContributions(490.22);
-        employeeData.setIntegratedDailySalary(146.47);
+        employeeData.setBaseSalaryForContributions("490.22");
+        employeeData.setIntegratedDailySalary("146.47");
         employeeData.setSatPayrollStateId("JAL");
 
 // Payroll
         Payroll payroll = new Payroll();
         payroll.setVersion("1.2");
         payroll.setPayrollTypeCode("O");
-        payroll.setPaymentDate(LocalDateTime.parse("2023-09-26T00:00:00"));
-        payroll.setInitialPaymentDate(LocalDateTime.parse("2023-09-11T00:00:00"));
-        payroll.setFinalPaymentDate(LocalDateTime.parse("2023-09-26T00:00:00"));
+        payroll.setPaymentDate("2023-09-26T00:00:00");
+        payroll.setInitialPaymentDate("2023-09-11T00:00:00");
+        payroll.setFinalPaymentDate("2023-09-26T00:00:00");
         payroll.setDaysPaid(15);
 
 // Earnings
@@ -3960,7 +3958,7 @@ public class Examples {
         Invoice invoice = new Invoice();
         invoice.setVersionCode("4.0");
         invoice.setSeries("F");
-        invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+        invoice.setDate("2026-02-09T10:00:00"); // Or use {{currentDate}} placeholder
         invoice.setTypeCode("N");
         invoice.setPaymentMethodCode("PUE");
         invoice.setCurrencyCode("MXN");
@@ -4000,8 +3998,8 @@ public class Examples {
         e1.setEarningTypeCode("050");
         e1.setCode("050");
         e1.setConcept("Viaticos");
-        e1.setTaxedAmount(new BigDecimal("0"));
-        e1.setExemptAmount(new BigDecimal("3000"));
+        e1.setTaxedAmount("0");
+        e1.setExemptAmount("3000");
 
         earnings.add(e1);
 
@@ -4032,7 +4030,7 @@ public class Examples {
         Invoice invoice = new Invoice();
         invoice.setVersionCode("4.0");
         invoice.setSeries("F");
-        invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+        invoice.setDate("2026-02-09T10:00:00"); // Or use {{currentDate}} placeholder
         invoice.setTypeCode("N");
         invoice.setPaymentMethodCode("PUE");
         invoice.setCurrencyCode("MXN");
@@ -4068,7 +4066,7 @@ public class Examples {
         EmployeeData employeeData = new EmployeeData();
         employeeData.setCurp("XEXX010101HNEXXXA4");
         employeeData.setSocialSecurityNumber("000000");
-        employeeData.setLaborRelationStartDate(LocalDateTime.parse("2015-01-01T00:00:00"));
+        employeeData.setLaborRelationStartDate("2015-01-01T00:00:00");
         employeeData.setSeniority("P437W");
         employeeData.setSatContractTypeId("01");
         employeeData.setSatWorkdayTypeId("01");
@@ -4080,17 +4078,17 @@ public class Examples {
         employeeData.setSatPaymentPeriodicityId("04");
         employeeData.setSatBankId("002");
         employeeData.setBankAccount("1111111111");
-        employeeData.setBaseSalaryForContributions(490.22);
-        employeeData.setIntegratedDailySalary(146.47);
+        employeeData.setBaseSalaryForContributions("490.22");
+        employeeData.setIntegratedDailySalary("146.47");
         employeeData.setSatPayrollStateId("JAL");
 
 // Payroll
         Payroll payroll = new Payroll();
         payroll.setVersion("1.2");
         payroll.setPayrollTypeCode("O");
-        payroll.setPaymentDate(LocalDateTime.parse("2023-05-24T00:00:00"));
-        payroll.setInitialPaymentDate(LocalDateTime.parse("2023-05-09T00:00:00"));
-        payroll.setFinalPaymentDate(LocalDateTime.parse("2023-05-24T00:00:00"));
+        payroll.setPaymentDate("2023-05-24T00:00:00");
+        payroll.setInitialPaymentDate("2023-05-09T00:00:00");
+        payroll.setFinalPaymentDate("2023-05-24T00:00:00");
         payroll.setDaysPaid(15);
 
 // Earnings
@@ -4101,8 +4099,8 @@ public class Examples {
         e1.setEarningTypeCode("001");
         e1.setCode("00500");
         e1.setConcept("Sueldos, Salarios Rayas y Jornales");
-        e1.setTaxedAmount(2808.8);
-        e1.setExemptAmount(2191.2);
+        e1.setTaxedAmount("2808.8");
+        e1.setExemptAmount("2191.2");
 
         earnings.add(e1);
 
@@ -4113,8 +4111,8 @@ public class Examples {
         op1.setOtherPaymentTypeCode("007");
         op1.setCode("0002");
         op1.setConcept("ISR ajustado por subsidio");
-        op1.setAmount(145.80);
-        op1.setSubsidyCaused(0.0);
+        op1.setAmount("145.80");
+        op1.setSubsidyCaused("0.0");
 
         otherPayments.add(op1);
 
@@ -4128,13 +4126,13 @@ public class Examples {
         d1.setDeductionTypeCode("107");
         d1.setCode("D002");
         d1.setConcept("Ajuste al Subsidio Causado");
-        d1.setAmount(160.35);
+        d1.setAmount("160.35");
 
         PayrollDeduction d2 = new PayrollDeduction();
         d2.setDeductionTypeCode("002");
         d2.setCode("D002");
         d2.setConcept("ISR");
-        d2.setAmount(145.80);
+        d2.setAmount("145.80");
 
         payrollDeductions.add(d1);
         payrollDeductions.add(d2);
@@ -4146,7 +4144,7 @@ public class Examples {
         Invoice invoice = new Invoice();
         invoice.setVersionCode("4.0");
         invoice.setSeries("F");
-        invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+        invoice.setDate("2026-02-09T10:00:00"); // Or use {{currentDate}} placeholder
         invoice.setTypeCode("N");
         invoice.setPaymentMethodCode("PUE");
         invoice.setCurrencyCode("MXN");
@@ -4186,8 +4184,8 @@ public class Examples {
         e1.setEarningTypeCode("001");
         e1.setCode("00500");
         e1.setConcept("Sueldos, Salarios Rayas y Jornales");
-        e1.setTaxedAmount(new BigDecimal("2808.8"));
-        e1.setExemptAmount(new BigDecimal("2191.2"));
+        e1.setTaxedAmount("2808.8");
+        e1.setExemptAmount("2191.2");
 
         earnings.add(e1);
 
@@ -4198,8 +4196,8 @@ public class Examples {
         op1.setOtherPaymentTypeCode("007");
         op1.setCode("0002");
         op1.setConcept("ISR ajustado por subsidio");
-        op1.setAmount(new BigDecimal("145.80"));
-        op1.setSubsidyCaused(new BigDecimal("0.0"));
+        op1.setAmount("145.80");
+        op1.setSubsidyCaused("0.0");
 
         otherPayments.add(op1);
 
@@ -4234,7 +4232,7 @@ public class Examples {
         Invoice invoice = new Invoice();
         invoice.setVersionCode("4.0");
         invoice.setSeries("F");
-        invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+        invoice.setDate("2026-02-09T10:00:00"); // Or use {{currentDate}} placeholder
         invoice.setTypeCode("N");
         invoice.setPaymentMethodCode("PUE");
         invoice.setCurrencyCode("MXN");
@@ -4270,7 +4268,7 @@ public class Examples {
         EmployeeData employeeData = new EmployeeData();
         employeeData.setCurp("XEXX010101HNEXXXA4");
         employeeData.setSocialSecurityNumber("000000");
-        employeeData.setLaborRelationStartDate(LocalDateTime.parse("2015-01-01T00:00:00"));
+        employeeData.setLaborRelationStartDate("2015-01-01T00:00:00");
         employeeData.setSeniority("P437W");
         employeeData.setSatContractTypeId("01");
         employeeData.setSatWorkdayTypeId("01");
@@ -4282,17 +4280,17 @@ public class Examples {
         employeeData.setSatPaymentPeriodicityId("04");
         employeeData.setSatBankId("002");
         employeeData.setBankAccount("1111111111");
-        employeeData.setBaseSalaryForContributions(490.22);
-        employeeData.setIntegratedDailySalary(146.47);
+        employeeData.setBaseSalaryForContributions("490.22");
+        employeeData.setIntegratedDailySalary("146.47");
         employeeData.setSatPayrollStateId("JAL");
 
 // Payroll
         Payroll payroll = new Payroll();
         payroll.setVersion("1.2");
         payroll.setPayrollTypeCode("O");
-        payroll.setPaymentDate(LocalDateTime.parse("2023-05-24T00:00:00"));
-        payroll.setInitialPaymentDate(LocalDateTime.parse("2023-05-09T00:00:00"));
-        payroll.setFinalPaymentDate(LocalDateTime.parse("2023-05-24T00:00:00"));
+        payroll.setPaymentDate("2023-05-24T00:00:00");
+        payroll.setInitialPaymentDate("2023-05-09T00:00:00");
+        payroll.setFinalPaymentDate("2023-05-24T00:00:00");
         payroll.setDaysPaid(15);
 
 // Earnings
@@ -4303,8 +4301,8 @@ public class Examples {
         e1.setEarningTypeCode("001");
         e1.setCode("00500");
         e1.setConcept("Sueldos, Salarios Rayas y Jornales");
-        e1.setTaxedAmount(2808.8);
-        e1.setExemptAmount(2191.2);
+        e1.setTaxedAmount("2808.8");
+        e1.setExemptAmount("2191.2");
 
         earnings.add(e1);
 
@@ -4339,7 +4337,7 @@ public class Examples {
         Invoice invoice = new Invoice();
         invoice.setVersionCode("4.0");
         invoice.setSeries("F");
-        invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+        invoice.setDate("2026-02-09T10:00:00"); // Or use {{currentDate}} placeholder
         invoice.setTypeCode("N");
         invoice.setPaymentMethodCode("PUE");
         invoice.setCurrencyCode("MXN");
@@ -4378,14 +4376,14 @@ public class Examples {
 // Item 1
         InvoiceItem item1 = new InvoiceItem();
         item1.setItemCode("01010101");
-        item1.setQuantity(9.5);
+        item1.setQuantity("9.5");
         item1.setUnitOfMeasurementCode("E48");
         item1.setUnitOfMeasurement("Unidad de servicio");
         item1.setDescription("Invoicing software as a service");
-        item1.setUnitPrice(3587.75);
+        item1.setUnitPrice("3587.75");
         item1.setTaxObjectCode("02");
         item1.setItemSku("7506022301697");
-        item1.setDiscount(255.85);
+        item1.setDiscount("255.85");
 
         List<ItemTax> taxes1 = new ArrayList<>();
         ItemTax tax1 = new ItemTax();
@@ -4400,14 +4398,14 @@ public class Examples {
 // Item 2
         InvoiceItem item2 = new InvoiceItem();
         item2.setItemCode("01010101");
-        item2.setQuantity(8.0);
+        item2.setQuantity("8.0");
         item2.setUnitOfMeasurementCode("E48");
         item2.setUnitOfMeasurement("Unidad de servicio2");
         item2.setDescription("Software Consultant");
-        item2.setUnitPrice(250.85);
+        item2.setUnitPrice("250.85");
         item2.setTaxObjectCode("02");
         item2.setItemSku("7506022301698");
-        item2.setDiscount(255.85);
+        item2.setDiscount("255.85");
 
         List<ItemTax> taxes2 = new ArrayList<>();
         ItemTax tax2 = new ItemTax();
@@ -4422,11 +4420,11 @@ public class Examples {
 // Item 3
         InvoiceItem item3 = new InvoiceItem();
         item3.setItemCode("01010101");
-        item3.setQuantity(6.0);
+        item3.setQuantity("6.0");
         item3.setUnitOfMeasurementCode("E48");
         item3.setUnitOfMeasurement("Unidad de servicio3");
         item3.setDescription("Computer software");
-        item3.setUnitPrice(1250.75);
+        item3.setUnitPrice("1250.75");
         item3.setTaxObjectCode("02");
         item3.setItemSku("7506022301699");
 
@@ -4457,14 +4455,14 @@ public class Examples {
 
         LocalTax localTax1 = new LocalTax();
         localTax1.setTaxName("CEDULAR");
-        localTax1.setTaxRate(3.00);
-        localTax1.setTaxAmount(6.00);
+        localTax1.setTaxRate("3.00");
+        localTax1.setTaxAmount("6.00");
         localTax1.setTaxFlagCode("R");
 
         LocalTax localTax2 = new LocalTax();
         localTax2.setTaxName("ISH");
-        localTax2.setTaxRate(8.00);
-        localTax2.setTaxAmount(16.00);
+        localTax2.setTaxRate("8.00");
+        localTax2.setTaxAmount("16.00");
         localTax2.setTaxFlagCode("R");
 
         localTaxList.add(localTax1);
@@ -4476,14 +4474,14 @@ public class Examples {
         Invoice invoice = new Invoice();
         invoice.setVersionCode("4.0");
         invoice.setSeries("F");
-        invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+        invoice.setDate("2026-02-09T10:00:00"); // Or use {{currentDate}} placeholder
         invoice.setPaymentFormCode("01");
         invoice.setPaymentConditions("Contado");
         invoice.setCurrencyCode("MXN");
         invoice.setTypeCode("I");
         invoice.setExpeditionZipCode("42501");
         invoice.setPaymentMethodCode("PUE");
-        invoice.setExchangeRate(1.0);
+        invoice.setExchangeRate("1.0");
         invoice.setExportCode("01");
         invoice.setIssuer(issuer);
         invoice.setRecipient(recipient);
@@ -4522,14 +4520,14 @@ public class Examples {
 // Item 1
         InvoiceItem item1 = new InvoiceItem();
         item1.setItemCode("01010101");
-        item1.setQuantity(9.5);
+        item1.setQuantity("9.5");
         item1.setUnitOfMeasurementCode("E48");
         item1.setUnitOfMeasurement("Unidad de servicio");
         item1.setDescription("Invoicing software as a service");
-        item1.setUnitPrice(3587.75);
+        item1.setUnitPrice("3587.75");
         item1.setTaxObjectCode("02");
         item1.setItemSku("7506022301697");
-        item1.setDiscount(255.85);
+        item1.setDiscount("255.85");
 
         List<ItemTax> taxes1 = new ArrayList<>();
         ItemTax tax1 = new ItemTax();
@@ -4544,14 +4542,14 @@ public class Examples {
 // Item 2
         InvoiceItem item2 = new InvoiceItem();
         item2.setItemCode("01010101");
-        item2.setQuantity(8.0);
+        item2.setQuantity("8.0");
         item2.setUnitOfMeasurementCode("E48");
         item2.setUnitOfMeasurement("Unidad de servicio2");
         item2.setDescription("Software Consultant");
-        item2.setUnitPrice(250.85);
+        item2.setUnitPrice("250.85");
         item2.setTaxObjectCode("02");
         item2.setItemSku("7506022301698");
-        item2.setDiscount(255.85);
+        item2.setDiscount("255.85");
 
         List<ItemTax> taxes2 = new ArrayList<>();
         ItemTax tax2 = new ItemTax();
@@ -4566,11 +4564,11 @@ public class Examples {
 // Item 3
         InvoiceItem item3 = new InvoiceItem();
         item3.setItemCode("01010101");
-        item3.setQuantity(6.0);
+        item3.setQuantity("6.0");
         item3.setUnitOfMeasurementCode("E48");
         item3.setUnitOfMeasurement("Unidad de servicio3");
         item3.setDescription("Computer software");
-        item3.setUnitPrice(1250.75);
+        item3.setUnitPrice("1250.75");
         item3.setTaxObjectCode("02");
         item3.setItemSku("7506022301699");
 
@@ -4601,8 +4599,8 @@ public class Examples {
 
         LocalTax cedularTax = new LocalTax();
         cedularTax.setTaxName("CEDULAR");
-        cedularTax.setTaxRate(3.00);
-        cedularTax.setTaxAmount(6.00);
+        cedularTax.setTaxRate("3.00");
+        cedularTax.setTaxAmount("6.00");
         cedularTax.setTaxFlagCode("R");
 
         localTaxList.add(cedularTax);
@@ -4613,14 +4611,14 @@ public class Examples {
         Invoice invoice = new Invoice();
         invoice.setVersionCode("4.0");
         invoice.setSeries("F");
-        invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+        invoice.setDate("2026-02-09T10:00:00"); // Or use {{currentDate}} placeholder
         invoice.setPaymentFormCode("01");
         invoice.setPaymentConditions("Contado");
         invoice.setCurrencyCode("MXN");
         invoice.setTypeCode("I");
         invoice.setExpeditionZipCode("42501");
         invoice.setPaymentMethodCode("PUE");
-        invoice.setExchangeRate(1.0);
+        invoice.setExchangeRate("1.0");
         invoice.setExportCode("01");
         invoice.setIssuer(issuer);
         invoice.setRecipient(recipient);
@@ -4659,14 +4657,14 @@ public class Examples {
 // Item 1
         InvoiceItem item1 = new InvoiceItem();
         item1.setItemCode("01010101");
-        item1.setQuantity(9.5);
+        item1.setQuantity("9.5");
         item1.setUnitOfMeasurementCode("E48");
         item1.setUnitOfMeasurement("Unidad de servicio");
         item1.setDescription("Invoicing software as a service");
-        item1.setUnitPrice(3587.75);
+        item1.setUnitPrice("3587.75");
         item1.setTaxObjectCode("02");
         item1.setItemSku("7506022301697");
-        item1.setDiscount(255.85);
+        item1.setDiscount("255.85");
 
         List<ItemTax> taxes1 = new ArrayList<>();
         ItemTax tax1 = new ItemTax();
@@ -4681,14 +4679,14 @@ public class Examples {
 // Item 2
         InvoiceItem item2 = new InvoiceItem();
         item2.setItemCode("01010101");
-        item2.setQuantity(8.0);
+        item2.setQuantity("8.0");
         item2.setUnitOfMeasurementCode("E48");
         item2.setUnitOfMeasurement("Unidad de servicio2");
         item2.setDescription("Software Consultant");
-        item2.setUnitPrice(250.85);
+        item2.setUnitPrice("250.85");
         item2.setTaxObjectCode("02");
         item2.setItemSku("7506022301698");
-        item2.setDiscount(255.85);
+        item2.setDiscount("255.85");
 
         List<ItemTax> taxes2 = new ArrayList<>();
         ItemTax tax2 = new ItemTax();
@@ -4703,11 +4701,11 @@ public class Examples {
 // Item 3
         InvoiceItem item3 = new InvoiceItem();
         item3.setItemCode("01010101");
-        item3.setQuantity(6.0);
+        item3.setQuantity("6.0");
         item3.setUnitOfMeasurementCode("E48");
         item3.setUnitOfMeasurement("Unidad de servicio3");
         item3.setDescription("Computer software");
-        item3.setUnitPrice(1250.75);
+        item3.setUnitPrice("1250.75");
         item3.setTaxObjectCode("02");
         item3.setItemSku("7506022301699");
 
@@ -4738,8 +4736,8 @@ public class Examples {
 
         LocalTax ishTax = new LocalTax();
         ishTax.setTaxName("ISH");
-        ishTax.setTaxRate(8.00);
-        ishTax.setTaxAmount(16.00);
+        ishTax.setTaxRate("8.00");
+        ishTax.setTaxAmount("16.00");
         ishTax.setTaxFlagCode("R");
 
         localTaxList.add(ishTax);
@@ -4750,14 +4748,14 @@ public class Examples {
         Invoice invoice = new Invoice();
         invoice.setVersionCode("4.0");
         invoice.setSeries("F");
-        invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+        invoice.setDate("2026-02-09T10:00:00"); // Or use {{currentDate}} placeholder
         invoice.setPaymentFormCode("01");
         invoice.setPaymentConditions("Contado");
         invoice.setCurrencyCode("MXN");
         invoice.setTypeCode("I");
         invoice.setExpeditionZipCode("42501");
         invoice.setPaymentMethodCode("PUE");
-        invoice.setExchangeRate(1.0);
+        invoice.setExchangeRate("1.0");
         invoice.setExportCode("01");
         invoice.setIssuer(issuer);
         invoice.setRecipient(recipient);
@@ -4844,36 +4842,36 @@ public class Examples {
         // e1.setEarningTypeCode("001");
         // e1.setCode("1003");
         // e1.setConcept("Sueldo nominal");
-        // e1.setTaxedAmount(new BigDecimal("95030"));
-        // e1.setExemptAmount(new BigDecimal("0"));
+        // e1.setTaxedAmount("95030");
+        // e1.setExemptAmount("0");
 
         // PayrollEarning e2 = new PayrollEarning();
         // e2.setEarningTypeCode("005");
         // e2.setCode("5913");
         // e2.setConcept("Fondo de Ahorro Aportación Patrón");
-        // e2.setTaxedAmount(new BigDecimal("0"));
-        // e2.setExemptAmount(new BigDecimal("4412.46"));
+        // e2.setTaxedAmount("0");
+        // e2.setExemptAmount("4412.46");
 
         // PayrollEarning e3 = new PayrollEarning();
         // e3.setEarningTypeCode("038");
         // e3.setCode("1885");
         // e3.setConcept("Bono Ingles");
-        // e3.setTaxedAmount(new BigDecimal("14254.50"));
-        // e3.setExemptAmount(new BigDecimal("0"));
+        // e3.setTaxedAmount("14254.50");
+        // e3.setExemptAmount("0");
 
         // PayrollEarning e4 = new PayrollEarning();
         // e4.setEarningTypeCode("029");
         // e4.setCode("1941");
         // e4.setConcept("Vales Despensa");
-        // e4.setTaxedAmount(new BigDecimal("0"));
-        // e4.setExemptAmount(new BigDecimal("3439"));
+        // e4.setTaxedAmount("0");
+        // e4.setExemptAmount("3439");
 
         // PayrollEarning e5 = new PayrollEarning();
         // e5.setEarningTypeCode("038");
         // e5.setCode("1824");
         // e5.setConcept("Herramientas Teletrabajo (telecom y prop. electri)");
-        // e5.setTaxedAmount(new BigDecimal("273"));
-        // e5.setExemptAmount(new BigDecimal("0"));
+        // e5.setTaxedAmount("273");
+        // e5.setExemptAmount("0");
 
         // earnings.add(e1);
         // earnings.add(e2);
@@ -4886,8 +4884,8 @@ public class Examples {
         // op1.setOtherPaymentTypeCode("002");
         // op1.setCode("5050");
         // op1.setConcept("exceso de subsidio al empleo");
-        // op1.setAmount(new BigDecimal("0"));
-        // op1.setSubsidyCaused(new BigDecimal("0"));
+        // op1.setAmount("0");
+        // op1.setSubsidyCaused("0");
         // otherPayments.add(op1);
 
         // payrollEarnings.setEarnings(earnings);
@@ -4953,12 +4951,12 @@ public class Examples {
         // Invoice invoice = new Invoice();
         // invoice.setVersionCode("4.0");
         // invoice.setSeries("F");
-        // invoice.setDate(LocalDateTime.now());
+        // invoice.setDate("2026-02-09T10:00:00");
         // invoice.setTypeCode("N");
         // invoice.setExpeditionZipCode("20000");
         // invoice.setIssuer(issuer);
         // invoice.setRecipient(recipient);
-        // invoice.setDate(LocalDateTime.now());
+        // invoice.setDate("2026-02-09T10:00:00");
         // invoice.setPaymentMethodCode("PUE");
         // invoice.setComplement(complement);
 
@@ -5033,8 +5031,8 @@ public class Examples {
 //         e1.setEarningTypeCode("046");
 //         e1.setCode("010046");
 //         e1.setConcept("INGRESOS ASIMILADOS A SALARIOS");
-//         e1.setTaxedAmount(new BigDecimal("111197.73"));
-//         e1.setExemptAmount(new BigDecimal("0.00"));
+//         e1.setTaxedAmount("111197.73");
+//         e1.setExemptAmount("0.00");
 
 //         earnings.add(e1);
 
@@ -5064,7 +5062,7 @@ public class Examples {
 //         Invoice invoice = new Invoice();
 //         invoice.setVersionCode("4.0");
 //         invoice.setSeries("F");
-//         invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+//         invoice.setDate("2026-02-09T10:00:00"); // Or use {{currentDate}} placeholder
 //         invoice.setTypeCode("N");
 //         invoice.setPaymentMethodCode("PUE");
 //         invoice.setCurrencyCode("MXN");
@@ -5163,36 +5161,36 @@ public class Examples {
 //         e1.setEarningTypeCode("001");
 //         e1.setCode("SP01");
 //         e1.setConcept("SUELDO");
-//         e1.setTaxedAmount(new BigDecimal("1210.30"));
-//         e1.setExemptAmount(new BigDecimal("0.00"));
+//         e1.setTaxedAmount("1210.30");
+//         e1.setExemptAmount("0.00");
 
 //         PayrollEarning e2 = new PayrollEarning();
 //         e2.setEarningTypeCode("010");
 //         e2.setCode("SP02");
 //         e2.setConcept("PREMIO PUNTUALIDAD");
-//         e2.setTaxedAmount(new BigDecimal("121.03"));
-//         e2.setExemptAmount(new BigDecimal("0.00"));
+//         e2.setTaxedAmount("121.03");
+//         e2.setExemptAmount("0.00");
 
 //         PayrollEarning e3 = new PayrollEarning();
 //         e3.setEarningTypeCode("029");
 //         e3.setCode("SP03");
 //         e3.setConcept("MONEDERO ELECTRONICO");
-//         e3.setTaxedAmount(new BigDecimal("0.00"));
-//         e3.setExemptAmount(new BigDecimal("269.43"));
+//         e3.setTaxedAmount("0.00");
+//         e3.setExemptAmount("269.43");
 
 //         PayrollEarning e4 = new PayrollEarning();
 //         e4.setEarningTypeCode("010");
 //         e4.setCode("SP04");
 //         e4.setConcept("PREMIO DE ASISTENCIA");
-//         e4.setTaxedAmount(new BigDecimal("121.03"));
-//         e4.setExemptAmount(new BigDecimal("0.00"));
+//         e4.setTaxedAmount("121.03");
+//         e4.setExemptAmount("0.00");
 
 //         PayrollEarning e5 = new PayrollEarning();
 //         e5.setEarningTypeCode("005");
 //         e5.setCode("SP54");
 //         e5.setConcept("APORTACION FONDO AHORRO");
-//         e5.setTaxedAmount(new BigDecimal("0.00"));
-//         e5.setExemptAmount(new BigDecimal("121.03"));
+//         e5.setTaxedAmount("0.00");
+//         e5.setExemptAmount("121.03");
 
 //         earnings.add(e1);
 //         earnings.add(e2);
@@ -5207,13 +5205,13 @@ public class Examples {
 //         op1.setOtherPaymentTypeCode("002");
 //         op1.setCode("ISRSUB");
 //         op1.setConcept("Subsidio ISR para empleo");
-//         op1.setAmount(new BigDecimal("0.0"));
-//         op1.setSubsidyCaused(new BigDecimal("0.0"));
+//         op1.setAmount("0.0");
+//         op1.setSubsidyCaused("0.0");
 
 //         BalanceCompensation balanceCompensation = new BalanceCompensation();
-//         balanceCompensation.setFavorableBalance(new BigDecimal("0.0"));
+//         balanceCompensation.setFavorableBalance("0.0");
 //         balanceCompensation.setYear(2022);
-//         balanceCompensation.setRemainingFavorableBalance(new BigDecimal("0.0"));
+//         balanceCompensation.setRemainingFavorableBalance("0.0");
 
 //         op1.setBalanceCompensation(balanceCompensation);
 
@@ -5271,7 +5269,7 @@ public class Examples {
 //         Invoice invoice = new Invoice();
 //         invoice.setVersionCode("4.0");
 //         invoice.setSeries("F");
-//         invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+//         invoice.setDate("2026-02-09T10:00:00"); // Or use {{currentDate}} placeholder
 //         invoice.setTypeCode("N");
 //         invoice.setPaymentMethodCode("PUE");
 //         invoice.setCurrencyCode("MXN");
@@ -5362,22 +5360,22 @@ public class Examples {
 //         e1.setEarningTypeCode("001");
 //         e1.setCode("00500");
 //         e1.setConcept("Sueldos, Salarios Rayas y Jornales");
-//         e1.setTaxedAmount(new BigDecimal("2808.8"));
-//         e1.setExemptAmount(new BigDecimal("2191.2"));
+//         e1.setTaxedAmount("2808.8");
+//         e1.setExemptAmount("2191.2");
 
 //         PayrollEarning e2 = new PayrollEarning();
 //         e2.setEarningTypeCode("019");
 //         e2.setCode("00100");
 //         e2.setConcept("Horas Extra");
-//         e2.setTaxedAmount(new BigDecimal("50.00"));
-//         e2.setExemptAmount(new BigDecimal("50.00"));
+//         e2.setTaxedAmount("50.00");
+//         e2.setExemptAmount("50.00");
 
 //         List<PayrollEarningOvertime> overtimeList = new ArrayList<>();
 //         PayrollEarningOvertime overtime1 = new PayrollEarningOvertime();
 //         overtime1.setDays(1);
 //         overtime1.setHoursTypeCode("01");
 //         overtime1.setExtraHours(2);
-//         overtime1.setAmountPaid(new BigDecimal("100.00"));
+//         overtime1.setAmountPaid("100.00");
 //         overtimeList.add(overtime1);
 
 //         e2.setOvertime(overtimeList);
@@ -5418,7 +5416,7 @@ public class Examples {
 //         Invoice invoice = new Invoice();
 //         invoice.setVersionCode("4.0");
 //         invoice.setSeries("F");
-//         invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+//         invoice.setDate("2026-02-09T10:00:00"); // Or use {{currentDate}} placeholder
 //         invoice.setTypeCode("N");
 //         invoice.setPaymentMethodCode("PUE");
 //         invoice.setCurrencyCode("MXN");
@@ -5508,8 +5506,8 @@ public class Examples {
 //         e1.setEarningTypeCode("001");
 //         e1.setCode("00500");
 //         e1.setConcept("Sueldos, Salarios Rayas y Jornales");
-//         e1.setTaxedAmount(new BigDecimal("2808.8"));
-//         e1.setExemptAmount(new BigDecimal("2191.2"));
+//         e1.setTaxedAmount("2808.8");
+//         e1.setExemptAmount("2191.2");
 
 //         earnings.add(e1);
 
@@ -5557,7 +5555,7 @@ public class Examples {
 //         Invoice invoice = new Invoice();
 //         invoice.setVersionCode("4.0");
 //         invoice.setSeries("F");
-//         invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+//         invoice.setDate("2026-02-09T10:00:00"); // Or use {{currentDate}} placeholder
 //         invoice.setTypeCode("N");
 //         invoice.setPaymentMethodCode("PUE");
 //         invoice.setCurrencyCode("MXN");
@@ -5641,43 +5639,43 @@ public class Examples {
 //         e1.setEarningTypeCode("001");
 //         e1.setCode("P001");
 //         e1.setConcept("Sueldos, Salarios Rayas y Jornales");
-//         e1.setTaxedAmount(new BigDecimal("3322.20"));
-//         e1.setExemptAmount(new BigDecimal("0"));
+//         e1.setTaxedAmount("3322.20");
+//         e1.setExemptAmount("0");
 
 //         PayrollEarning e2 = new PayrollEarning();
 //         e2.setEarningTypeCode("038");
 //         e2.setCode("P540");
 //         e2.setConcept("Compensacion");
-//         e2.setTaxedAmount(new BigDecimal("100.00"));
-//         e2.setExemptAmount(new BigDecimal("0"));
+//         e2.setTaxedAmount("100.00");
+//         e2.setExemptAmount("0");
 
 //         PayrollEarning e3 = new PayrollEarning();
 //         e3.setEarningTypeCode("038");
 //         e3.setCode("P550");
 //         e3.setConcept("Compensación Garantizada Extraordinaria");
-//         e3.setTaxedAmount(new BigDecimal("2200.00"));
-//         e3.setExemptAmount(new BigDecimal("0"));
+//         e3.setTaxedAmount("2200.00");
+//         e3.setExemptAmount("0");
 
 //         PayrollEarning e4 = new PayrollEarning();
 //         e4.setEarningTypeCode("038");
 //         e4.setCode("P530");
 //         e4.setConcept("Servicio Extraordinario");
-//         e4.setTaxedAmount(new BigDecimal("200.00"));
-//         e4.setExemptAmount(new BigDecimal("0"));
+//         e4.setTaxedAmount("200.00");
+//         e4.setExemptAmount("0");
 
 //         PayrollEarning e5 = new PayrollEarning();
 //         e5.setEarningTypeCode("001");
 //         e5.setCode("P506");
 //         e5.setConcept("Otras Prestaciones");
-//         e5.setTaxedAmount(new BigDecimal("1500.00"));
-//         e5.setExemptAmount(new BigDecimal("0"));
+//         e5.setTaxedAmount("1500.00");
+//         e5.setExemptAmount("0");
 
 //         PayrollEarning e6 = new PayrollEarning();
 //         e6.setEarningTypeCode("001");
 //         e6.setCode("P505");
 //         e6.setConcept("Remuneración al Desempeño Legislativo");
-//         e6.setTaxedAmount(new BigDecimal("17500.00"));
-//         e6.setExemptAmount(new BigDecimal("0"));
+//         e6.setTaxedAmount("17500.00");
+//         e6.setExemptAmount("0");
 
 //         earnings.add(e1);
 //         earnings.add(e2);
@@ -5693,8 +5691,8 @@ public class Examples {
 //         op1.setOtherPaymentTypeCode("002");
 //         op1.setCode("002");
 //         op1.setConcept("Subsidio para el empleo efectivamente entregado al trabajador");
-//         op1.setAmount(new BigDecimal("0"));
-//         op1.setSubsidyCaused(new BigDecimal("0"));
+//         op1.setAmount("0");
+//         op1.setSubsidyCaused("0");
 
 //         otherPayments.add(op1);
 
@@ -5736,7 +5734,7 @@ public class Examples {
 //         Invoice invoice = new Invoice();
 //         invoice.setVersionCode("4.0");
 //         invoice.setSeries("F");
-//         invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+//         invoice.setDate("2026-02-09T10:00:00"); // Or use {{currentDate}} placeholder
 //         invoice.setTypeCode("N");
 //         invoice.setPaymentMethodCode("PUE");
 //         invoice.setCurrencyCode("MXN");
@@ -5825,8 +5823,8 @@ public class Examples {
 //         e1.setEarningTypeCode("002");
 //         e1.setCode("00500");
 //         e1.setConcept("Gratificación Anual (Aguinaldo)");
-//         e1.setTaxedAmount(new BigDecimal("0.00"));
-//         e1.setExemptAmount(new BigDecimal("10000.00"));
+//         e1.setTaxedAmount("0.00");
+//         e1.setExemptAmount("10000.00");
 
 //         earnings.add(e1);
 
@@ -5849,7 +5847,7 @@ public class Examples {
 //         Invoice invoice = new Invoice();
 //         invoice.setVersionCode("4.0");
 //         invoice.setSeries("F");
-//         invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+//         invoice.setDate("2026-02-09T10:00:00"); // Or use {{currentDate}} placeholder
 //         invoice.setTypeCode("N");
 //         invoice.setPaymentMethodCode("PUE");
 //         invoice.setCurrencyCode("MXN");
@@ -5934,26 +5932,26 @@ public class Examples {
 //         e1.setEarningTypeCode("023");
 //         e1.setCode("00500");
 //         e1.setConcept("Pagos por separación");
-//         e1.setTaxedAmount(new BigDecimal("0"));
-//         e1.setExemptAmount(new BigDecimal("10000.0"));
+//         e1.setTaxedAmount("0");
+//         e1.setExemptAmount("10000.0");
 
 //         PayrollEarning e2 = new PayrollEarning();
 //         e2.setEarningTypeCode("025");
 //         e2.setCode("00900");
 //         e2.setConcept("Indemnizaciones");
-//         e2.setTaxedAmount(new BigDecimal("0"));
-//         e2.setExemptAmount(new BigDecimal("500.0"));
+//         e2.setTaxedAmount("0");
+//         e2.setExemptAmount("500.0");
 
 //         earnings.add(e1);
 //         earnings.add(e2);
 
 //         List<PayrollEarningOtherPayment> otherPayments = new ArrayList<>();
 //         PayrollSeverance severance = new PayrollSeverance();
-//         severance.setTotalPaid(new BigDecimal("10500.00"));
+//         severance.setTotalPaid("10500.00");
 //         severance.setYearsOfService(1);
-//         severance.setLastMonthlySalary(new BigDecimal("10000.00"));
-//         severance.setAccumulableIncome(new BigDecimal("10000.00"));
-//         severance.setNonAccumulableIncome(new BigDecimal("0"));
+//         severance.setLastMonthlySalary("10000.00");
+//         severance.setAccumulableIncome("10000.00");
+//         severance.setNonAccumulableIncome("0");
 
 //         payrollEarnings.setEarnings(earnings);
 //         payrollEarnings.setOtherPayments(otherPayments);
@@ -5969,12 +5967,12 @@ public class Examples {
 //         Invoice invoice = new Invoice();
 //         invoice.setVersionCode("4.0");
 //         invoice.setSeries("F");
-//         invoice.setDate(LocalDateTime.now());
+//         invoice.setDate("2026-02-09T10:00:00");
 //         invoice.setTypeCode("N");
 //         invoice.setExpeditionZipCode("20000");
 //         invoice.setIssuer(issuer);
 //         invoice.setRecipient(recipient);
-//         invoice.setDate(LocalDateTime.now());
+//         invoice.setDate("2026-02-09T10:00:00");
 //         invoice.setPaymentMethodCode("PUE");
 //         invoice.setComplement(complement);
 
@@ -6056,8 +6054,8 @@ public class Examples {
 //         e1.setEarningTypeCode("039");
 //         e1.setCode("00500");
 //         e1.setConcept("Jubilaciones, pensiones o haberes de retiro");
-//         e1.setTaxedAmount(new BigDecimal("0.00"));
-//         e1.setExemptAmount(new BigDecimal("10000.00"));
+//         e1.setTaxedAmount("0.00");
+//         e1.setExemptAmount("10000.00");
 
 //         earnings.add(e1);
 
@@ -6066,9 +6064,9 @@ public class Examples {
 
 // // Retirement
 //         PayrollRetirement retirement = new PayrollRetirement();
-//         retirement.setTotalOneTime(new BigDecimal("10000.00"));
-//         retirement.setAccumulableIncome(new BigDecimal("10000.00"));
-//         retirement.setNonAccumulableIncome(new BigDecimal("0.00"));
+//         retirement.setTotalOneTime("10000.00");
+//         retirement.setAccumulableIncome("10000.00");
+//         retirement.setNonAccumulableIncome("0.00");
 
 //         payrollEarnings.setEarnings(earnings);
 //         payrollEarnings.setOtherPayments(otherPayments);
@@ -6087,7 +6085,7 @@ public class Examples {
 //         Invoice invoice = new Invoice();
 //         invoice.setVersionCode("4.0");
 //         invoice.setSeries("F");
-//         invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+//         invoice.setDate("2026-02-09T10:00:00"); // Or use {{currentDate}} placeholder
 //         invoice.setTypeCode("N");
 //         invoice.setPaymentMethodCode("PUE");
 //         invoice.setCurrencyCode("MXN");
@@ -6177,8 +6175,8 @@ public class Examples {
 //         e1.setEarningTypeCode("001");
 //         e1.setCode("00500");
 //         e1.setConcept("Sueldos, Salarios Rayas y Jornales");
-//         e1.setTaxedAmount(new BigDecimal("2808.8"));
-//         e1.setExemptAmount(new BigDecimal("2191.2"));
+//         e1.setTaxedAmount("2808.8");
+//         e1.setExemptAmount("2191.2");
 
 //         earnings.add(e1);
 
@@ -6200,7 +6198,7 @@ public class Examples {
 //         Invoice invoice = new Invoice();
 //         invoice.setVersionCode("4.0");
 //         invoice.setSeries("F");
-//         invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+//         invoice.setDate("2026-02-09T10:00:00"); // Or use {{currentDate}} placeholder
 //         invoice.setTypeCode("N");
 //         invoice.setPaymentMethodCode("PUE");
 //         invoice.setCurrencyCode("MXN");
@@ -6290,8 +6288,8 @@ public class Examples {
 //         e1.setEarningTypeCode("050");
 //         e1.setCode("050");
 //         e1.setConcept("Viaticos");
-//         e1.setTaxedAmount(new BigDecimal("0"));
-//         e1.setExemptAmount(new BigDecimal("3000"));
+//         e1.setTaxedAmount("0");
+//         e1.setExemptAmount("3000");
 
 //         earnings.add(e1);
 
@@ -6322,7 +6320,7 @@ public class Examples {
 //         Invoice invoice = new Invoice();
 //         invoice.setVersionCode("4.0");
 //         invoice.setSeries("F");
-//         invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+//         invoice.setDate("2026-02-09T10:00:00"); // Or use {{currentDate}} placeholder
 //         invoice.setTypeCode("N");
 //         invoice.setPaymentMethodCode("PUE");
 //         invoice.setCurrencyCode("MXN");
@@ -6412,8 +6410,8 @@ public class Examples {
 //         e1.setEarningTypeCode("001");
 //         e1.setCode("00500");
 //         e1.setConcept("Sueldos, Salarios Rayas y Jornales");
-//         e1.setTaxedAmount(new BigDecimal("2808.8"));
-//         e1.setExemptAmount(new BigDecimal("2191.2"));
+//         e1.setTaxedAmount("2808.8");
+//         e1.setExemptAmount("2191.2");
 
 //         earnings.add(e1);
 
@@ -6424,8 +6422,8 @@ public class Examples {
 //         op1.setOtherPaymentTypeCode("007");
 //         op1.setCode("0002");
 //         op1.setConcept("ISR ajustado por subsidio");
-//         op1.setAmount(new BigDecimal("145.80"));
-//         op1.setSubsidyCaused(new BigDecimal("0.0"));
+//         op1.setAmount("145.80");
+//         op1.setSubsidyCaused("0.0");
 
 //         otherPayments.add(op1);
 
@@ -6460,7 +6458,7 @@ public class Examples {
 //         Invoice invoice = new Invoice();
 //         invoice.setVersionCode("4.0");
 //         invoice.setSeries("F");
-//         invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+//         invoice.setDate("2026-02-09T10:00:00"); // Or use {{currentDate}} placeholder
 //         invoice.setTypeCode("N");
 //         invoice.setPaymentMethodCode("PUE");
 //         invoice.setCurrencyCode("MXN");
@@ -6550,8 +6548,8 @@ public class Examples {
 //         e1.setEarningTypeCode("001");
 //         e1.setCode("00500");
 //         e1.setConcept("Sueldos, Salarios Rayas y Jornales");
-//         e1.setTaxedAmount(new BigDecimal("2808.8"));
-//         e1.setExemptAmount(new BigDecimal("2191.2"));
+//         e1.setTaxedAmount("2808.8");
+//         e1.setExemptAmount("2191.2");
 
 //         earnings.add(e1);
 
@@ -6589,7 +6587,7 @@ public class Examples {
 //         Invoice invoice = new Invoice();
 //         invoice.setVersionCode("4.0");
 //         invoice.setSeries("F");
-//         invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+//         invoice.setDate("2026-02-09T10:00:00"); // Or use {{currentDate}} placeholder
 //         invoice.setTypeCode("N");
 //         invoice.setPaymentMethodCode("PUE");
 //         invoice.setCurrencyCode("MXN");
