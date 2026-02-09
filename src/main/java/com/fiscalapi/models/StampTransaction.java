@@ -72,7 +72,7 @@ public class StampTransaction extends BaseDto {
         return transactionStatus;
     }
 
-    public void seTransactionStatus(StampTransactionStatus transactionStatus) {
+    public void setTransactionStatus(StampTransactionStatus transactionStatus) {
         this.transactionStatus = transactionStatus;
     }
 }
