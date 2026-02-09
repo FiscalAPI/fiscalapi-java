@@ -5,7 +5,7 @@ public class StampTransactionParams
     private String fromPersonId;
     private String toPersonId;
     private int amount;
-    public String comments;
+    private String comments;
 
     public String getFromPersonId() {
         return fromPersonId;

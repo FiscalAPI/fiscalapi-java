@@ -1,5 +1,7 @@
 package com.fiscalapi.models.invoicing.payroll;
 
+import java.math.BigDecimal;
+
 public class PayrollEarningOvertime {
     private int days;
     private String hoursTypeCode;
@@ -29,13 +31,13 @@ public class PayrollEarningOvertime {
         this.extraHours = extraHours;
     }
 
-    public java.math.BigDecimal getAmountPaid() {
+    public BigDecimal getAmountPaid() {
         return amountPaid;
     }
 
-    public void setAmountPaid(java.math.BigDecimal amountPaid) {
+    public void setAmountPaid(BigDecimal amountPaid) {
         this.amountPaid = amountPaid;
     }
 
-    private java.math.BigDecimal amountPaid;
+    private BigDecimal amountPaid;
 }

@@ -1,13 +1,14 @@
 package com.fiscalapi.models.invoicing.payroll;
 
 import com.fiscalapi.common.CatalogDto;
+import java.math.BigDecimal;
 
 public class EmployerData {
     private String personId;
     private String employerRegistration;
     private CatalogDto satFundSource;
     private String satFundSourceId;
-    private java.math.BigDecimal ownResourceAmount;
+    private BigDecimal ownResourceAmount;
     private String originEmployerTin;
 
     public void setPersonId(String personId) {
@@ -22,7 +23,7 @@ public class EmployerData {
         this.satFundSourceId = satFundSourceId;
     }
 
-    public void setOwnResourceAmount(java.math.BigDecimal ownResourceAmount) {
+    public void setOwnResourceAmount(BigDecimal ownResourceAmount) {
         this.ownResourceAmount = ownResourceAmount;
     }
 
@@ -42,7 +43,7 @@ public class EmployerData {
         return satFundSourceId;
     }
 
-    public java.math.BigDecimal getOwnResourceAmount() {
+    public BigDecimal getOwnResourceAmount() {
         return ownResourceAmount;
     }
 

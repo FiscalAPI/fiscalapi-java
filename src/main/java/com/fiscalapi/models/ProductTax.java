@@ -31,7 +31,7 @@ public class ProductTax extends BaseDto {
     /**
      * Tasa del impuesto. El valor debe estar entre 0.00000 y 1.000000 (ej: 0.160000).
      */
-    private java.math.BigDecimal rate;
+    private BigDecimal rate;
 
     /**
      * Código del impuesto según el catálogo del SAT (valores: "001", "002", "003").
@@ -93,7 +93,7 @@ public class ProductTax extends BaseDto {
      *
      * @return la tasa del impuesto.
      */
-    public java.math.BigDecimal getRate() {
+    public BigDecimal getRate() {
         return rate;
     }
 
@@ -102,7 +102,7 @@ public class ProductTax extends BaseDto {
      *
      * @param rate la tasa a establecer.
      */
-    public void setRate(java.math.BigDecimal rate) {
+    public void setRate(BigDecimal rate) {
         this.rate = rate;
     }
 

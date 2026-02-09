@@ -36,10 +36,10 @@ public class EmployeeData {
     private String satBankId;
     private String satPayrollStateId;
     private String bankAccount;
-    private java.math.BigDecimal baseSalaryForContributions;
-    private java.math.BigDecimal integratedDailySalary;
+    private BigDecimal baseSalaryForContributions;
+    private BigDecimal integratedDailySalary;
     private String subcontractorRfc;
-    private java.math.BigDecimal timePercentage;
+    private BigDecimal timePercentage;
 
     public String getCurp() {
         return curp;
@@ -254,7 +254,7 @@ public class EmployeeData {
         this.bankAccount = bankAccount;
     }
 
-    public java.math.BigDecimal getBaseSalaryForContributions() {
+    public BigDecimal getBaseSalaryForContributions() {
         return baseSalaryForContributions;
     }
 
@@ -262,7 +262,7 @@ public class EmployeeData {
         this.baseSalaryForContributions = new BigDecimal(baseSalaryForContributions);
     }
 
-    public java.math.BigDecimal getIntegratedDailySalary() {
+    public BigDecimal getIntegratedDailySalary() {
         return integratedDailySalary;
     }
 
@@ -278,11 +278,11 @@ public class EmployeeData {
         this.subcontractorRfc = subcontractorRfc;
     }
 
-    public java.math.BigDecimal getTimePercentage() {
+    public BigDecimal getTimePercentage() {
         return timePercentage;
     }
 
-    public void setTimePercentage(java.math.BigDecimal timePercentage) {
+    public void setTimePercentage(BigDecimal timePercentage) {
         this.timePercentage = timePercentage;
     }
 }

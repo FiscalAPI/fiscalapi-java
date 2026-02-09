@@ -5,6 +5,7 @@ import com.fiscalapi.common.BaseDto;
 import com.fiscalapi.common.CatalogDto;
 import com.fiscalapi.common.StripePaymentMethodDto;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 
@@ -23,8 +24,8 @@ public class Person extends BaseDto {
     private String zipCode;
     private String base64Photo;
     private String taxPassword;
-    private java.math.BigDecimal availableBalance;
-    private java.math.BigDecimal committedBalance;
+    private BigDecimal availableBalance;
+    private BigDecimal committedBalance;
     private String tenantId;
 //    private String phoneNumber;
 //    private LocalDateTime validTo;
@@ -146,19 +147,19 @@ public class Person extends BaseDto {
         this.taxPassword = taxPassword;
     }
 
-    public java.math.BigDecimal getAvailableBalance() {
+    public BigDecimal getAvailableBalance() {
         return availableBalance;
     }
 
-    public void setAvailableBalance(java.math.BigDecimal availableBalance) {
+    public void setAvailableBalance(BigDecimal availableBalance) {
         this.availableBalance = availableBalance;
     }
 
-    public java.math.BigDecimal getCommittedBalance() {
+    public BigDecimal getCommittedBalance() {
         return committedBalance;
     }
 
-    public void setCommittedBalance(java.math.BigDecimal committedBalance) {
+    public void setCommittedBalance(BigDecimal committedBalance) {
         this.committedBalance = committedBalance;
     }
 
