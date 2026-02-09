@@ -1,16 +1,14 @@
 package com.fiscalapi.models.invoicing;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fiscalapi.OptUtil;
 import com.fiscalapi.common.BaseDto;
 import com.fiscalapi.common.CatalogDto;
 import com.fiscalapi.models.invoicing.paymentComplement.InvoicePayment;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeParseException;
 import java.util.List;
-import static com.fiscalapi.models.invoicing.InvoiceConstants.SAT_DATE_FORMAT_IN;
 import static com.fiscalapi.models.invoicing.InvoiceConstants.SAT_DATE_FORMAT_OUT;
 
 
@@ -114,7 +112,7 @@ public class Invoice extends BaseDto{
      * @param subtotal Suma de los importes de los conceptos antes de descuentos e impuestos
      */
     public void setSubtotal(String subtotal) {
-        this.subtotal = new BigDecimal(subtotal);
+        this.subtotal = OptUtil.parseBigDecimal(subtotal);
     }
 
     /**
@@ -128,7 +126,7 @@ public class Invoice extends BaseDto{
      * @param discount Monto total de los descuentos aplicables
      */
     public void setDiscount(String discount) {
-        this.discount = new BigDecimal(discount);
+        this.discount = OptUtil.parseBigDecimal(discount);
     }
 
     /**
@@ -142,7 +140,7 @@ public class Invoice extends BaseDto{
      * @param total Monto total de la factura incluyendo impuestos
      */
     public void setTotal(String total) {
-        this.total = new BigDecimal(total);
+        this.total = OptUtil.parseBigDecimal(total);
     }
 
 
@@ -215,7 +213,7 @@ public class Invoice extends BaseDto{
      */
     @JsonProperty("date")
     public void setSatDate(String satDate) {
-        this.date = com.fiscalapi.OptUtil.formatInputDateToSATFormat(satDate);
+        this.date = OptUtil.formatInputDateToSATFormat(satDate);
     }
 
     @JsonIgnore
@@ -223,7 +221,7 @@ public class Invoice extends BaseDto{
      * @param dateString Fecha y hora de expedición como String en formato SAT
      */
     public void setDate(String dateString) {
-        this.date = com.fiscalapi.OptUtil.formatInputDateToSATFormat(dateString);
+        this.date = OptUtil.formatInputDateToSATFormat(dateString);
     }
 
     /**
@@ -321,7 +319,7 @@ public class Invoice extends BaseDto{
      * @param exchangeRate Tipo de cambio FIX (Si la moneda es MXN, el valor debe ser 1)
      */
     public void setExchangeRate(String exchangeRate) {
-        this.exchangeRate = new BigDecimal(exchangeRate);
+        this.exchangeRate = OptUtil.parseBigDecimal(exchangeRate);
     }
 
     /**

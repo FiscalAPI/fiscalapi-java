@@ -1,5 +1,7 @@
 package com.fiscalapi.models.invoicing.paymentComplement;
 
+import com.fiscalapi.OptUtil;
+
 import java.math.BigDecimal;
 
 // Impuestos aplicables a la factura pagada
@@ -14,7 +16,7 @@ public class PaidInvoiceTax {
         return base;
     }
     public void setBase(String base) {
-        this.base = new BigDecimal(base);
+        this.base = OptUtil.parseBigDecimal(base);
     }
     public String getTaxCode() {
         return taxCode;
@@ -32,7 +34,7 @@ public class PaidInvoiceTax {
         return taxRate;
     }
     public void setTaxRate(String taxRate) {
-        this.taxRate = new BigDecimal(taxRate);
+        this.taxRate = OptUtil.parseBigDecimal(taxRate);
     }
     public String getTaxFlagCode() {
         return taxFlagCode;

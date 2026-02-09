@@ -3,16 +3,14 @@ package com.fiscalapi.models.downloading;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fiscalapi.OptUtil;
 import com.fiscalapi.common.BaseDto;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.fiscalapi.models.invoicing.InvoiceConstants.SAT_DATE_FORMAT_IN;
 import static com.fiscalapi.models.invoicing.InvoiceConstants.SAT_DATE_FORMAT_OUT;
 
 /**
@@ -176,7 +174,7 @@ public class Xml extends BaseDto {
      */
     @JsonProperty("date")
     public void setSatDate(String satDate) {
-        this.date = com.fiscalapi.OptUtil.formatInputDateToSATFormat(satDate);
+        this.date = OptUtil.formatInputDateToSATFormat(satDate);
     }
 
     @JsonIgnore
@@ -184,7 +182,7 @@ public class Xml extends BaseDto {
      * @param dateString Fecha y hora de expedición como String en formato SAT
      */
     public void setDate(String dateString) {
-        this.date = com.fiscalapi.OptUtil.formatInputDateToSATFormat(dateString);
+        this.date = OptUtil.formatInputDateToSATFormat(dateString);
     }
 
     public String getPaymentForm() {

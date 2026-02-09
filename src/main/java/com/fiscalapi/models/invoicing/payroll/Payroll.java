@@ -1,13 +1,11 @@
 package com.fiscalapi.models.invoicing.payroll;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fiscalapi.OptUtil;
 
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeParseException;
 import java.util.List;
 
-import static com.fiscalapi.models.invoicing.InvoiceConstants.SAT_DATE_FORMAT_IN;
 import static com.fiscalapi.models.invoicing.InvoiceConstants.SAT_DATE_FORMAT_OUT;
 
 public class Payroll {
@@ -45,7 +43,7 @@ public class Payroll {
 
     @JsonProperty("paymentDate")
     public void setPaymentDate(String paymentDate) {
-        this.paymentDate = com.fiscalapi.OptUtil.formatInputDateToSATFormat(paymentDate);
+        this.paymentDate = OptUtil.formatInputDateToSATFormat(paymentDate);
     }
 
     public String getInitialPaymentDate() {
@@ -56,7 +54,7 @@ public class Payroll {
     }
 
     public void setInitialPaymentDate(String initialPaymentDate) {
-        this.initialPaymentDate = com.fiscalapi.OptUtil.formatInputDateToSATFormat(initialPaymentDate);
+        this.initialPaymentDate = OptUtil.formatInputDateToSATFormat(initialPaymentDate);
     }
 
     public String getFinalPaymentDate() {
@@ -67,7 +65,7 @@ public class Payroll {
     }
 
     public void setFinalPaymentDate(String finalPaymentDate) {
-        this.finalPaymentDate = com.fiscalapi.OptUtil.formatInputDateToSATFormat(finalPaymentDate);
+        this.finalPaymentDate = OptUtil.formatInputDateToSATFormat(finalPaymentDate);
     }
 
     public int getDaysPaid() {

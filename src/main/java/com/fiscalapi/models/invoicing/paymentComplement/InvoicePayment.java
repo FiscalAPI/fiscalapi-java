@@ -2,14 +2,12 @@ package com.fiscalapi.models.invoicing.paymentComplement;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fiscalapi.OptUtil;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeParseException;
 import java.util.List;
 
-import static com.fiscalapi.models.invoicing.InvoiceConstants.SAT_DATE_FORMAT_IN;
 import static com.fiscalapi.models.invoicing.InvoiceConstants.SAT_DATE_FORMAT_OUT;
 
 
@@ -68,7 +66,7 @@ public class InvoicePayment {
      */
     @JsonProperty("paymentDate")
     public void setSatDate(String satDate) {
-        this.paymentDate = com.fiscalapi.OptUtil.formatInputDateToSATFormat(satDate);
+        this.paymentDate = OptUtil.formatInputDateToSATFormat(satDate);
     }
 
     @JsonIgnore
@@ -76,7 +74,7 @@ public class InvoicePayment {
      * @param date Fecha y hora de expedición como String en formato SAT
      */
     public void setPaymentDate(String date) {
-        this.paymentDate = com.fiscalapi.OptUtil.formatInputDateToSATFormat(date);
+        this.paymentDate = OptUtil.formatInputDateToSATFormat(date);
     }
 
 
@@ -97,13 +95,13 @@ public class InvoicePayment {
         return exchangeRate;
     }
     public void setExchangeRate(String exchangeRate) {
-        this.exchangeRate = new BigDecimal(exchangeRate);
+        this.exchangeRate = OptUtil.parseBigDecimal(exchangeRate);
     }
     public BigDecimal getAmount() {
         return amount;
     }
     public void setAmount(String amount) {
-        this.amount = new BigDecimal(amount);
+        this.amount = OptUtil.parseBigDecimal(amount);
     }
     public String getSourceBankTin() {
         return sourceBankTin;

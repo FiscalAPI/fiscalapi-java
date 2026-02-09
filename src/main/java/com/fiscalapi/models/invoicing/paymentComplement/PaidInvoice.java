@@ -1,5 +1,7 @@
 package com.fiscalapi.models.invoicing.paymentComplement;
 
+import com.fiscalapi.OptUtil;
+
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -34,7 +36,7 @@ public class PaidInvoice {
         return paymentAmount;
     }
     public void setPaymentAmount(String amount) {
-        this.paymentAmount = new BigDecimal(amount);
+        this.paymentAmount = OptUtil.parseBigDecimal(amount);
     }
     public String getNumber() {
         return number;
@@ -58,19 +60,19 @@ public class PaidInvoice {
         return subTotal;
     }
     public void setSubTotal(String subTotal) {
-        this.subTotal = new BigDecimal(subTotal);
+        this.subTotal = OptUtil.parseBigDecimal(subTotal);
     }
     public BigDecimal getPreviousBalance() {
         return previousBalance;
     }
     public void setPreviousBalance(String previousBalance) {
-        this.previousBalance = new BigDecimal(previousBalance);
+        this.previousBalance = OptUtil.parseBigDecimal(previousBalance);
     }
     public BigDecimal getRemainingBalance() {
         return remainingBalance;
     }
     public void setRemainingBalance(String remainingBalance) {
-        this.remainingBalance = new BigDecimal(remainingBalance);
+        this.remainingBalance = OptUtil.parseBigDecimal(remainingBalance);
     }
     public String getTaxObjectCode() {
         return taxObjectCode;
@@ -82,7 +84,7 @@ public class PaidInvoice {
         return equivalence;
     }
     public void setEquivalence(String equivalence) {
-        this.equivalence = new BigDecimal(equivalence);
+        this.equivalence = OptUtil.parseBigDecimal(equivalence);
     }
     public List<PaidInvoiceTax> getPaidInvoiceTaxes() {
         return paidInvoiceTaxes;

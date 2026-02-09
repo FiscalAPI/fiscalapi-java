@@ -1,5 +1,7 @@
 package com.fiscalapi.models.invoicing;
 
+import com.fiscalapi.OptUtil;
+
 import java.math.BigDecimal;
 
 /**
@@ -42,7 +44,7 @@ public class InvoiceStatusRequest {
     }
 
     public void setInvoiceTotal(String invoiceTotal) {
-        this.invoiceTotal = new BigDecimal(invoiceTotal);
+        this.invoiceTotal = OptUtil.parseBigDecimal(invoiceTotal);
     }
 
     public String getInvoiceUuid() {

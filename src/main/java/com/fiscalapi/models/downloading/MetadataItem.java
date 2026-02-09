@@ -2,13 +2,10 @@ package com.fiscalapi.models.downloading;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fiscalapi.OptUtil;
 import com.fiscalapi.common.BaseDto;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeParseException;
-
-import static com.fiscalapi.models.invoicing.InvoiceConstants.SAT_DATE_FORMAT_IN;
 import static com.fiscalapi.models.invoicing.InvoiceConstants.SAT_DATE_FORMAT_OUT;
 
 /**
@@ -154,7 +151,7 @@ public class MetadataItem extends BaseDto {
 
     @JsonProperty("invoiceDate")
     public void setSatInvoiceDate(String satDate) {
-        this.invoiceDate = com.fiscalapi.OptUtil.formatInputDateToSATFormat(satDate);
+        this.invoiceDate = OptUtil.formatInputDateToSATFormat(satDate);
     }
 
     @JsonIgnore
@@ -177,7 +174,7 @@ public class MetadataItem extends BaseDto {
 
     @JsonProperty("satCertificationDate")
     public void setSatCertificationDateFormatted(String satDate) {
-        this.satCertificationDate = com.fiscalapi.OptUtil.formatInputDateToSATFormat(satDate);
+        this.satCertificationDate = OptUtil.formatInputDateToSATFormat(satDate);
     }
 
     public BigDecimal getAmount() {
@@ -224,7 +221,7 @@ public class MetadataItem extends BaseDto {
 
     @JsonProperty("cancellationDate")
     public void setSatCancellationDate(String satDate) {
-        this.cancellationDate = com.fiscalapi.OptUtil.formatInputDateToSATFormat(satDate);
+        this.cancellationDate = OptUtil.formatInputDateToSATFormat(satDate);
     }
 
     public String getDownloadPackageId() {

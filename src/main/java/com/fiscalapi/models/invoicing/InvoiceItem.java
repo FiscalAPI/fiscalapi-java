@@ -1,5 +1,7 @@
 package com.fiscalapi.models.invoicing;
 
+import com.fiscalapi.OptUtil;
+
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -34,13 +36,13 @@ public class InvoiceItem {
         return quantity;
     }
     public void setQuantity(String quantity) {
-        this.quantity = new BigDecimal(quantity);
+        this.quantity = OptUtil.parseBigDecimal(quantity);
     }
     public BigDecimal getDiscount() {
         return discount;
     }
     public void setDiscount(String discount) {
-        this.discount = new BigDecimal(discount);
+        this.discount = OptUtil.parseBigDecimal(discount);
     }
     public String getUnitOfMeasurementCode() {
         return unitOfMeasurementCode;
@@ -58,7 +60,7 @@ public class InvoiceItem {
         return unitPrice;
     }
     public void setUnitPrice(String unitPrice) {
-        this.unitPrice = new BigDecimal(unitPrice);
+        this.unitPrice = OptUtil.parseBigDecimal(unitPrice);
     }
     public String getTaxObjectCode() {
         return taxObjectCode;

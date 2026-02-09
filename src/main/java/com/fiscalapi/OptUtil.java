@@ -1,5 +1,6 @@
 package com.fiscalapi;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeParseException;
@@ -27,5 +28,16 @@ public class OptUtil {
             }
         }
         return parsedDate;
+    }
+
+    public static BigDecimal parseBigDecimal(String value) {
+        if (value == null || value.isEmpty()) {
+            throw new IllegalArgumentException("Valor numérico inválido: " + value);
+        }
+        try {
+            return new BigDecimal(value);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Valor numérico inválido: " + value, e);
+        }
     }
 }

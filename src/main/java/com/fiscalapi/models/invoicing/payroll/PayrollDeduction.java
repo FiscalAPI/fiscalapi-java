@@ -1,5 +1,7 @@
 package com.fiscalapi.models.invoicing.payroll;
 
+import com.fiscalapi.OptUtil;
+
 import java.math.BigDecimal;
 
 public class PayrollDeduction {
@@ -37,6 +39,6 @@ public class PayrollDeduction {
     }
 
     public void setAmount(String amount) {
-        this.amount = new BigDecimal(amount);
+        this.amount = OptUtil.parseBigDecimal(amount);
     }
 }

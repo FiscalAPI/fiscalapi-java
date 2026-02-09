@@ -1,5 +1,7 @@
 package com.fiscalapi.models.invoicing;
 
+import com.fiscalapi.OptUtil;
+
 import java.math.BigDecimal;
 
 // Impuestos aplicables al concepto
@@ -27,7 +29,7 @@ public class ItemTax {
 
     //string para facilitar la asignación de valores, Big decimal para evitar la perdida de escala y presición del dooble.
     public void setTaxRate(String taxRate) {
-        this.taxRate = new BigDecimal(taxRate);
+        this.taxRate = OptUtil.parseBigDecimal(taxRate);
     }
     public String getTaxFlagCode() {
         return taxFlagCode;

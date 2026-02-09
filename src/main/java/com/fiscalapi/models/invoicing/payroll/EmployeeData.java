@@ -259,7 +259,7 @@ public class EmployeeData {
     }
 
     public void setBaseSalaryForContributions(String baseSalaryForContributions) {
-        this.baseSalaryForContributions = new BigDecimal(baseSalaryForContributions);
+        this.baseSalaryForContributions = OptUtil.parseBigDecimal(baseSalaryForContributions);
     }
 
     public BigDecimal getIntegratedDailySalary() {
@@ -267,7 +267,7 @@ public class EmployeeData {
     }
 
     public void setIntegratedDailySalary(String integratedDailySalary) {
-        this.integratedDailySalary = new BigDecimal(integratedDailySalary);
+        this.integratedDailySalary = OptUtil.parseBigDecimal(integratedDailySalary);
     }
 
     public String getSubcontractorRfc() {

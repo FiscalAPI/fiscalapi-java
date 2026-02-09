@@ -1,5 +1,7 @@
 package com.fiscalapi.models.invoicing.payroll;
 
+import com.fiscalapi.OptUtil;
+
 import java.math.BigDecimal;
 
 public class PayrollStockOptions {
@@ -11,7 +13,7 @@ public class PayrollStockOptions {
     }
 
     public void setMarketPrice(String marketPrice) {
-        this.marketPrice = new BigDecimal(marketPrice);
+        this.marketPrice = OptUtil.parseBigDecimal(marketPrice);
     }
 
     public BigDecimal getGrantPrice() {
@@ -19,6 +21,6 @@ public class PayrollStockOptions {
     }
     
     public void setGrantPrice(String grantPrice) {
-        this.grantPrice = new BigDecimal(grantPrice);
+        this.grantPrice = OptUtil.parseBigDecimal(grantPrice);
     }
 }

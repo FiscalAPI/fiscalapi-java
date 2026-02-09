@@ -1,5 +1,7 @@
 package com.fiscalapi.models.invoicing.localTaxes;
 
+import com.fiscalapi.OptUtil;
+
 import java.math.BigDecimal;
 
 public class LocalTax {
@@ -21,7 +23,7 @@ public class LocalTax {
     }
 
     public void setTaxRate(String taxRate) {
-        this.taxRate = new BigDecimal(taxRate);
+        this.taxRate = OptUtil.parseBigDecimal(taxRate);
     }
 
     public String getTaxFlagCode() {
@@ -37,6 +39,6 @@ public class LocalTax {
     }
 
     public void setTaxAmount(String taxAmount) {
-        this.taxAmount = new BigDecimal(taxAmount);
+        this.taxAmount = OptUtil.parseBigDecimal(taxAmount);
     }
 }
