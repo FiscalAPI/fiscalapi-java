@@ -2,11 +2,25 @@ package com.fiscalapi;
 import com.fiscalapi.common.ApiResponse;
 import com.fiscalapi.common.FiscalApiSettings;
 import com.fiscalapi.common.PagedList;
+import com.fiscalapi.models.*;
 import com.fiscalapi.models.downloading.DownloadRequest;
 import com.fiscalapi.models.downloading.DownloadRule;
 import com.fiscalapi.models.invoicing.*;
+import com.fiscalapi.models.invoicing.payroll.BalanceCompensation;
+import com.fiscalapi.models.invoicing.payroll.EmployeeData;
+import com.fiscalapi.models.invoicing.payroll.EmployerData;
+import com.fiscalapi.models.invoicing.payroll.Payroll;
+import com.fiscalapi.models.invoicing.payroll.PayrollDeduction;
+import com.fiscalapi.models.invoicing.payroll.PayrollDisability;
+import com.fiscalapi.models.invoicing.payroll.PayrollEarning;
+import com.fiscalapi.models.invoicing.payroll.PayrollEarningOtherPayment;
+import com.fiscalapi.models.invoicing.payroll.PayrollEarningOvertime;
+import com.fiscalapi.models.invoicing.payroll.PayrollEarnings;
+import com.fiscalapi.models.invoicing.payroll.PayrollRetirement;
+import com.fiscalapi.models.invoicing.payroll.PayrollSeverance;
 import com.fiscalapi.services.FiscalApiClient;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -74,6 +88,107 @@ public class Examples {
 //        // ***Eliminar persona ***//
 //        ApiResponse<Boolean> apiResponse = client.getPersonService().delete("ca3df64a-2ecc-47b0-899d-38c29141979e");
 //        System.out.println(apiResponse);
+
+        // region Datos de empleador
+        //Obtener datos de empleador
+        //ApiResponse<EmployerData> apiResponse = client.getPersonService().getEmployerService().GetById("0e82a655-5f0c-4e07-abab-8f322e4123ef");
+        //System.out.println(apiResponse);
+
+        //Crear datos de empleador
+        /*
+        String personId = "bd199ed8-02ef-47c0-919c-9479dd8ecae7";
+
+        EmployerData employerData = new EmployerData();
+        employerData.setPersonId(personId);
+        employerData.setEmployerRegistration("B5510768108");
+        employerData.setOriginEmployerTin("URE180429TM6");
+
+        ApiResponse<EmployerData> apiResponse = client.getPersonService().getEmployerService().Create(employerData);
+        System.out.println(apiResponse);
+        */
+        //Actualizar datos de empleador
+        /*
+        String personId = "bd199ed8-02ef-47c0-919c-9479dd8ecae7";
+
+        EmployerData employerData = new EmployerData();
+        employerData.setPersonId(personId);
+        employerData.setEmployerRegistration("A1230768108");
+        employerData.setOriginEmployerTin("ARE180429TM6");
+
+        ApiResponse<EmployerData> apiResponse = client.getPersonService().getEmployerService().Create(employerData);
+        System.out.println(apiResponse);
+         */
+
+        //Eliminar datos de empleador
+        //ApiResponse<Boolean> apiResponse = client.getPersonService().getEmployerService().Delete("0e82a655-5f0c-4e07-abab-8f322e4123ef");
+        //System.out.println(apiResponse);
+// endregion
+//region Datos de empleado
+        //Datos de empleado
+        //Obtener datos de empleado
+        //ApiResponse<EmployeeData> apiResponse = client.getPersonService().getEmployerService().GetById("0e82a655-5f0c-4e07-abab-8f322e4123ef");
+        //System.out.println(apiResponse);
+
+        //Crear datos de empleado
+        /*
+        EmployeeData employeeData = new EmployeeData();
+
+        employeeData.setEmployerPersonId("bef56254-0892-4558-95c3-f9c8729e4b0e");
+        employeeData.setEmployeePersonId("54fc14ae-c88f-4afc-996b-0574d63341e2");
+        employeeData.setEmployeeNumber("12345");
+        employeeData.setSatContractTypeId("01");
+        employeeData.setSatTaxRegimeTypeId("02");
+        employeeData.setSatPaymentPeriodicityId("04");
+        employeeData.setSatPayrollStateId("JAL");
+        employeeData.setSocialSecurityNumber("123456789012345");
+        employeeData.setLaborRelationStartDate(LocalDateTime.parse("2023-01-15T00:00:00"));
+        employeeData.setSatWorkdayTypeId("01");
+        employeeData.setSatJobRiskId("1");
+        employeeData.setSatBankId("002");
+        employeeData.setSatUnionizedStatusId("No");
+        employeeData.setDepartment("Recursos Humanos");
+        employeeData.setPosition("Analista de Nóminas");
+        employeeData.setSeniority("7Y3M1W");
+        employeeData.setBankAccount("12345678901234567890");
+        employeeData.setBaseSalaryForContributions(490.22);
+        employeeData.setIntegratedDailySalary(146.47);
+
+        ApiResponse<EmployeeData> apiResponse = client.getPersonService().getEmployeeService().Create(employeeData);
+        System.out.println(apiResponse);
+         */
+
+        //Actualizar datos de empleado
+        /*
+        EmployeeData employeeData = new EmployeeData();
+
+        employeeData.setEmployerPersonId("bef56254-0892-4558-95c3-f9c8729e4b0e");
+        employeeData.setEmployeePersonId("54fc14ae-c88f-4afc-996b-0574d63341e2");
+        employeeData.setEmployeeNumber("12345");
+        employeeData.setSatContractTypeId("01");
+        employeeData.setSatTaxRegimeTypeId("02");
+        employeeData.setSatPaymentPeriodicityId("04");
+        employeeData.setSatPayrollStateId("JAL");
+        employeeData.setSocialSecurityNumber("123456789012345");
+        employeeData.setLaborRelationStartDate(LocalDateTime.parse("2023-01-15T00:00:00"));
+        employeeData.setSatWorkdayTypeId("01");
+        employeeData.setSatJobRiskId("1");
+        employeeData.setSatBankId("002");
+        employeeData.setSatUnionizedStatusId("No");
+        employeeData.setDepartment("Recursos Humanos");
+        employeeData.setPosition("Analista de Nóminas");
+        employeeData.setSeniority("7Y3M1W");
+        employeeData.setBankAccount("12345678901234567890");
+        employeeData.setBaseSalaryForContributions(490.22);
+        employeeData.setIntegratedDailySalary(146.47);
+
+        ApiResponse<EmployeeData> apiResponse = client.getPersonService().getEmployeeService().Update(employeeData);
+        System.out.println(apiResponse);
+         */
+
+        //Eliminar datos de empleado
+        //ApiResponse<Boolean> apiResponse = client.getPersonService().getEmployeeService().Delete("54fc14ae-c88f-4afc-996b-0574d63341e2");
+        //System.out.println(apiResponse);
+        // endregion
         //endregion
 
         //region Certificados (sellos SAT)
@@ -253,8 +368,8 @@ public class Examples {
         //region Facturas
 
 //        // ***Obtener una factura por Id***//
-        ApiResponse<Invoice> apiResponse = client.getInvoiceService().getById("1207c05b-9c4b-42ed-aa39-1fab4e993c7b",true);
-        System.out.printf("apiResponse: %s\n", apiResponse);
+        //ApiResponse<Invoice> apiResponse = client.getInvoiceService().getById("1207c05b-9c4b-42ed-aa39-1fab4e993c7b",true);
+        //System.out.printf("apiResponse: %s\n", apiResponse);
 
 //        // ***Listar facturas***//
 //        ApiResponse<PagedList<Invoice>> apiResponse = client.getInvoiceService().getList(1,3);
@@ -1671,6 +1786,4863 @@ public class Examples {
         // ApiResponse<List<DownloadRequest>> apiResponse = client.getDownloadRequestService().search(LocalDate.now());
         // System.out.println(apiResponse);
 
+        // region Complemento de nómina
+        // Complemento de Nómina
+
+        // Crear nómina ordinaria por valores
+        // Emisor
+        /*
+        InvoiceIssuer issuer = new InvoiceIssuer();
+        issuer.setTin("FUNK671228PH6");
+        issuer.setLegalName("KARLA FUENTE NOLASCO");
+        issuer.setTaxRegimeCode("621");
+
+        EmployerData employerData = new EmployerData();
+        employerData.setEmployerRegistration("B5510768108");
+
+        // Certificados del emisor
+        List<TaxCredential> credentials = new ArrayList<>();
+
+        TaxCredential cer = new TaxCredential();
+        cer.setBase64File(base64Cer);
+        cer.setFileType(0); // 0 = Certificado (.cer)
+        cer.setPassword(password);
+
+        TaxCredential key = new TaxCredential();
+        key.setBase64File(base64Key);
+        key.setFileType(1); // 1 = Clave privada (.key)
+        key.setPassword(password);
+
+        credentials.add(cer);
+        credentials.add(key);
+
+        issuer.setTaxCredentials(credentials);
+
+        // Receptor
+        InvoiceRecipient recipient = new InvoiceRecipient();
+        recipient.setTin("EKU9003173C9");
+        recipient.setLegalName("ESCUELA KEMPER URGATE");
+        recipient.setZipCode("42501");
+        recipient.setTaxRegimeCode("601");
+        recipient.setCfdiUseCode("CP01");
+        recipient.setEmail("someone@somewhere.com");
+
+        EmployeeData employeeData = new EmployeeData();
+        employeeData.setCurp("XEXX010101MNEXXXA8");
+        employeeData.setSocialSecurityNumber("04078873454");
+        employeeData.setLaborRelationStartDate(LocalDateTime.parse("2024-08-18"));
+        employeeData.setSeniority("P54W");
+        employeeData.setSatContractTypeId("01");
+        employeeData.setSatTaxRegimeTypeId("02");
+        employeeData.setEmployeeNumber("123456789");
+        employeeData.setDepartment("GenAI");
+        employeeData.setPosition("Sr Software Engineer");
+        employeeData.setSatJobRiskId("1");
+        employeeData.setSatPaymentPeriodicityId("05");
+        employeeData.setSatBankId("012");
+        employeeData.setBaseSalaryForContributions(282.50);
+        employeeData.setIntegratedDailySalary(2626.23);
+        employeeData.setSatPayrollStateId("JAL");
+
+        Payroll payroll = new Payroll();
+        payroll.setVersion("1.2");
+        payroll.setPayrollTypeCode("O");
+        payroll.setPaymentDate(LocalDateTime.parse("2025-08-30"));
+        payroll.setInitialPaymentDate(LocalDateTime.parse("2025-07-31"));
+        payroll.setFinalPaymentDate(LocalDateTime.parse("2025-08-30"));
+        payroll.setDaysPaid(30);
+        PayrollEarnings payrollEarnings = new PayrollEarnings();
+        List<PayrollEarning> earnings = new ArrayList<>();
+
+        PayrollEarning e1 = new PayrollEarning();
+        e1.setEarningTypeCode("001");
+        e1.setCode("1003");
+        e1.setConcept("Sueldo nominal");
+        e1.setTaxedAmount(95030);
+        e1.setExemptAmount(0);
+
+        PayrollEarning e2 = new PayrollEarning();
+        e2.setEarningTypeCode("005");
+        e2.setCode("5913");
+        e2.setConcept("Fondo de Ahorro Aportación Patrón");
+        e2.setTaxedAmount(0);
+        e2.setExemptAmount(0);
+
+        PayrollEarning e3 = new PayrollEarning();
+        e3.setEarningTypeCode("038");
+        e3.setCode("1885");
+        e3.setConcept("Bono Ingles");
+        e3.setTaxedAmount(14254.50);
+        e3.setExemptAmount(0);
+
+        PayrollEarning e4 = new PayrollEarning();
+        e4.setEarningTypeCode("029");
+        e4.setCode("1941");
+        e4.setConcept("Vales Despensa");
+        e4.setTaxedAmount(0);
+        e4.setExemptAmount(3439);
+
+        PayrollEarning e5 = new PayrollEarning();
+        e5.setEarningTypeCode("038");
+        e5.setCode("1824");
+        e5.setConcept("Herramientas Teletrabajo (telecom y prop. electri)");
+        e5.setTaxedAmount(273);
+        e5.setExemptAmount(0);
+
+        PayrollEarning e6 = new PayrollEarning();
+        e6.setEarningTypeCode("002");
+        e6.setCode("5050");
+        e6.setConcept("Exceso de subsidio al empleo");
+        e6.setTaxedAmount(0);
+        e6.setExemptAmount(0);
+
+        earnings.add(e1);
+        earnings.add(e2);
+        earnings.add(e3);
+        earnings.add(e4);
+        earnings.add(e5);
+        earnings.add(e6);
+
+        List<PayrollEarningOtherPayment> otherPayments = new ArrayList<>();
+        PayrollEarningOtherPayment op1 = new PayrollEarningOtherPayment();
+        op1.setOtherPaymentCode("002");
+        op1.setCode("5050");
+        op1.setConcept("exceso de subsidio al empleo");
+        op1.setAmount(0);
+        op1.setSubsidyCaused(0);
+
+        payrollEarnings.setEarnings(earnings);
+        payrollEarnings.setOtherPayments(otherPayments);
+
+        List<PayrollDeduction> payrollDeductions = new ArrayList<>();
+
+        PayrollDeduction d1 = new PayrollDeduction();
+        d1.setDeductionTypeCode("002");
+        d1.setCode("5003");
+        d1.setConcept("ISR Causado");
+        d1.setAmount(27645);
+
+        PayrollDeduction d2 = new PayrollDeduction();
+        d2.setDeductionTypeCode("004");
+        d2.setCode("5910");
+        d2.setConcept("Fondo de ahorro Empleado Inversión");
+        d2.setAmount(4412.46);
+
+        PayrollDeduction d3 = new PayrollDeduction();
+        d3.setDeductionTypeCode("004");
+        d3.setCode("5914");
+        d3.setConcept("Fondo de Ahorro Patrón Inversión");
+        d3.setAmount(4412.46);
+
+        PayrollDeduction d4 = new PayrollDeduction();
+        d4.setDeductionTypeCode("004");
+        d4.setCode("1966");
+        d4.setConcept("Contribución póliza exceso GMM");
+        d4.setAmount(519.91);
+
+        PayrollDeduction d5 = new PayrollDeduction();
+        d5.setDeductionTypeCode("004");
+        d5.setCode("1934");
+        d5.setConcept("Descuento Vales Despensa");
+        d5.setAmount(1);
+
+        PayrollDeduction d6 = new PayrollDeduction();
+        d6.setDeductionTypeCode("004");
+        d6.setCode("1942");
+        d6.setConcept("Vales Despensa Electrónico");
+        d6.setAmount(3439);
+
+        PayrollDeduction d7 = new PayrollDeduction();
+        d7.setDeductionTypeCode("001");
+        d7.setCode("1895");
+        d7.setConcept("IMSS");
+        d7.setAmount(2391.13);
+
+        payrollDeductions.add(d1);
+        payrollDeductions.add(d2);
+        payrollDeductions.add(d3);
+        payrollDeductions.add(d4);
+        payrollDeductions.add(d5);
+        payrollDeductions.add(d6);
+        payrollDeductions.add(d7);
+
+        payroll.setDeductions(payrollDeductions);
+
+        Invoice invoice = new Invoice();
+        invoice.setVersionCode("4.0");
+        invoice.setSeries("F");
+        invoice.setDate(LocalDateTime.now());
+        invoice.setTypeCode("I");
+        invoice.setExpeditionZipCode("42501");
+        invoice.setIssuer(issuer);
+        invoice.setRecipient(recipient);
+        invoice.setDate(LocalDateTime.now());
+        invoice.setPaymentMethodCode("PUE");
+        invoice.setComplement(invoice.getComplement());
+
+        ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+        System.out.println(apiResponse);
+
+        // Nómina ordinaria por referencias
+        InvoiceIssuer issuer = new InvoiceIssuer();
+        issuer.setId("0e82a655-5f0c-4e07-abab-8f322e4123ef");
+
+        List<TaxCredential> credentials = new ArrayList<>();
+
+        TaxCredential cer = new TaxCredential();
+        cer.setBase64File(base64Cer);
+        cer.setFileType(0);
+        cer.setPassword(password);
+
+        TaxCredential key = new TaxCredential();
+        key.setBase64File(base64Key);
+        key.setFileType(1);
+        key.setPassword(password);
+
+        credentials.add(cer);
+        credentials.add(key);
+
+        issuer.setTaxCredentials(credentials);
+
+        InvoiceRecipient recipient = new InvoiceRecipient();
+        recipient.setId("da71df0c-f328-45ee-9bd9-3096ed02c164");
+
+        Payroll payroll = new Payroll();
+        payroll.setVersion("1.2");
+        payroll.setPayrollTypeCode("O");
+        payroll.setPaymentDate("2025-08-30T00:00:00");
+        payroll.setInitialPaymentDate("2025-07-31T00:00:00");
+        payroll.setFinalPaymentDate("2025-08-30T00:00:00");
+        payroll.setDaysPaid(30);
+        PayrollEarnings payrollEarnings = new PayrollEarnings();
+        List<PayrollEarning> earnings = new ArrayList<>();
+
+        PayrollEarning e1 = new PayrollEarning();
+        e1.setEarningTypeCode("001");
+        e1.setCode("1003");
+        e1.setConcept("Sueldo nominal");
+        e1.setTaxedAmount(new BigDecimal("95030"));
+        e1.setExemptAmount(new BigDecimal("0"));
+
+        PayrollEarning e2 = new PayrollEarning();
+        e2.setEarningTypeCode("005");
+        e2.setCode("5913");
+        e2.setConcept("Fondo de Ahorro Aportación Patrón");
+        e2.setTaxedAmount(new BigDecimal("0"));
+        e2.setExemptAmount(new BigDecimal("4412.46"));
+
+        PayrollEarning e3 = new PayrollEarning();
+        e3.setEarningTypeCode("038");
+        e3.setCode("1885");
+        e3.setConcept("Bono Ingles");
+        e3.setTaxedAmount(new BigDecimal("14254.50"));
+        e3.setExemptAmount(new BigDecimal("0"));
+
+        PayrollEarning e4 = new PayrollEarning();
+        e4.setEarningTypeCode("029");
+        e4.setCode("1941");
+        e4.setConcept("Vales Despensa");
+        e4.setTaxedAmount(new BigDecimal("0"));
+        e4.setExemptAmount(new BigDecimal("3439"));
+
+        PayrollEarning e5 = new PayrollEarning();
+        e5.setEarningTypeCode("038");
+        e5.setCode("1824");
+        e5.setConcept("Herramientas Teletrabajo (telecom y prop. electri)");
+        e5.setTaxedAmount(new BigDecimal("273"));
+        e5.setExemptAmount(new BigDecimal("0"));
+
+        earnings.add(e1);
+        earnings.add(e2);
+        earnings.add(e3);
+        earnings.add(e4);
+        earnings.add(e5);
+
+        List<PayrollEarningOtherPayment> otherPayments = new ArrayList<>();
+        PayrollEarningOtherPayment op1 = new PayrollEarningOtherPayment();
+        op1.setOtherPaymentTypeCode("002");
+        op1.setCode("5050");
+        op1.setConcept("exceso de subsidio al empleo");
+        op1.setAmount(new BigDecimal("0"));
+        op1.setSubsidyCaused(new BigDecimal("0"));
+        otherPayments.add(op1);
+
+        payrollEarnings.setEarnings(earnings);
+        payrollEarnings.setOtherPayments(otherPayments);
+        payroll.setEarnings(payrollEarnings);
+
+        List<PayrollDeduction> payrollDeductions = new ArrayList<>();
+
+        PayrollDeduction d1 = new PayrollDeduction();
+        d1.setDeductionTypeCode("002");
+        d1.setCode("5003");
+        d1.setConcept("ISR Causado");
+        d1.setAmount("27645.00");
+
+        PayrollDeduction d2 = new PayrollDeduction();
+        d2.setDeductionTypeCode("004");
+        d2.setCode("5910");
+        d2.setConcept("Fondo de ahorro Empleado Inversión");
+        d2.setAmount("4412.46");
+
+        PayrollDeduction d3 = new PayrollDeduction();
+        d3.setDeductionTypeCode("004");
+        d3.setCode("5914");
+        d3.setConcept("Fondo de Ahorro Patrón Inversión");
+        d3.setAmount("4412.46");
+
+        PayrollDeduction d4 = new PayrollDeduction();
+        d4.setDeductionTypeCode("004");
+        d4.setCode("1966");
+        d4.setConcept("Contribución póliza exceso GMM");
+        d4.setAmount("519.91");
+
+        PayrollDeduction d5 = new PayrollDeduction();
+        d5.setDeductionTypeCode("004");
+        d5.setCode("1934");
+        d5.setConcept("Descuento Vales Despensa");
+        d5.setAmount("1.00");
+
+        PayrollDeduction d6 = new PayrollDeduction();
+        d6.setDeductionTypeCode("004");
+        d6.setCode("1942");
+        d6.setConcept("Vales Despensa Electrónico");
+        d6.setAmount("3439.00");
+
+        PayrollDeduction d7 = new PayrollDeduction();
+        d7.setDeductionTypeCode("001");
+        d7.setCode("1895");
+        d7.setConcept("IMSS");
+        d7.setAmount("2391.13");
+
+        payrollDeductions.add(d1);
+        payrollDeductions.add(d2);
+        payrollDeductions.add(d3);
+        payrollDeductions.add(d4);
+        payrollDeductions.add(d5);
+        payrollDeductions.add(d6);
+        payrollDeductions.add(d7);
+
+        payroll.setDeductions(payrollDeductions);
+        Complement complement = new Complement();
+        complement.setPayroll(payroll);
+
+        Invoice invoice = new Invoice();
+        invoice.setVersionCode("4.0");
+        invoice.setSeries("F");
+        invoice.setDate(LocalDateTime.now());
+        invoice.setTypeCode("N");
+        invoice.setExpeditionZipCode("20000");
+        invoice.setIssuer(issuer);
+        invoice.setRecipient(recipient);
+        invoice.setDate(LocalDateTime.now());
+        invoice.setPaymentMethodCode("PUE");
+        invoice.setComplement(complement);
+
+        ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+        System.out.println(apiResponse);
+
+        // Nómina asimilados por valores
+        // Emisor
+        InvoiceIssuer issuer = new InvoiceIssuer();
+        issuer.setTin("EKU9003173C9");
+        issuer.setLegalName("ESCUELA KEMPER URGATE");
+        issuer.setTaxRegimeCode("601");
+
+        EmployerData employerData = new EmployerData();
+        employerData.setOriginEmployerTin("EKU9003173C9");
+
+// Receptor
+        InvoiceRecipient recipient = new InvoiceRecipient();
+        recipient.setTin("CACX7605101P8");
+        recipient.setLegalName("XOCHILT CASAS CHAVEZ");
+        recipient.setZipCode("36257");
+        recipient.setTaxRegimeCode("605");
+        recipient.setCfdiUseCode("CN01");
+
+        EmployeeData employeeData = new EmployeeData();
+        employeeData.setCurp("XEXX010101HNEXXXA4");
+        employeeData.setSatContractTypeId("09");
+        employeeData.setSatUnionizedStatusId("No");
+        employeeData.setSatTaxRegimeTypeId("09");
+        employeeData.setEmployeeNumber("00002");
+        employeeData.setDepartment("ADMINISTRACION");
+        employeeData.setPosition("DIRECTOR DE ADMINISTRACION");
+        employeeData.setSatPaymentPeriodicityId("99");
+        employeeData.setSatBankId("012");
+        employeeData.setBankAccount("1111111111");
+        employeeData.setSatPayrollStateId("CMX");
+
+// Payroll
+        Payroll payroll = new Payroll();
+        payroll.setVersion("1.2");
+        payroll.setPayrollTypeCode("E");
+        payroll.setPaymentDate(LocalDateTime.parse("2023-06-02T00:00:00"));
+        payroll.setInitialPaymentDate(LocalDateTime.parse("2023-06-01T00:00:00"));
+        payroll.setFinalPaymentDate(LocalDateTime.parse("2023-06-02T00:00:00"));
+        payroll.setDaysPaid(1);
+
+// Earnings
+        PayrollEarnings payrollEarnings = new PayrollEarnings();
+        List<PayrollEarning> earnings = new ArrayList<>();
+
+        PayrollEarning e1 = new PayrollEarning();
+        e1.setEarningTypeCode("046");
+        e1.setCode("010046");
+        e1.setConcept("INGRESOS ASIMILADOS A SALARIOS");
+        e1.setTaxedAmount(111197.73);
+        e1.setExemptAmount(0.00);
+
+        earnings.add(e1);
+
+        List<PayrollEarningOtherPayment> otherPayments = new ArrayList<>();
+
+        payrollEarnings.setEarnings(earnings);
+        payrollEarnings.setOtherPayments(otherPayments);
+
+// Deductions
+        List<PayrollDeduction> payrollDeductions = new ArrayList<>();
+
+        PayrollDeduction d1 = new PayrollDeduction();
+        d1.setDeductionTypeCode("002");
+        d1.setCode("020002");
+        d1.setConcept("ISR");
+        d1.setAmount(36197.73);
+
+        payrollDeductions.add(d1);
+
+        payroll.setEarnings(payrollEarnings);
+        payroll.setDeductions(payrollDeductions);
+
+// Invoice
+        Invoice invoice = new Invoice();
+        invoice.setVersionCode("4.0");
+        invoice.setSeries("F");
+        invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+        invoice.setTypeCode("N");
+        invoice.setPaymentMethodCode("PUE");
+        invoice.setCurrencyCode("MXN");
+        invoice.setExpeditionZipCode("06880");
+        invoice.setExportCode("01");
+        invoice.setIssuer(issuer);
+        invoice.setRecipient(recipient);
+        invoice.setComplement(invoice.getComplement());
+
+        ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+
+        System.out.println(apiResponse);
+
+        // Nómina asimilados por referencias
+        InvoiceIssuer issuer = new InvoiceIssuer();
+        issuer.setId("0e82a655-5f0c-4e07-abab-8f322e4123ef");
+
+        List<TaxCredential> credentials = new ArrayList<>();
+
+        TaxCredential cer = new TaxCredential();
+        cer.setBase64File(base64Cer);
+        cer.setFileType(0);
+        cer.setPassword(password);
+
+        TaxCredential key = new TaxCredential();
+        key.setBase64File(base64Key);
+        key.setFileType(1);
+        key.setPassword(password);
+
+        credentials.add(cer);
+        credentials.add(key);
+
+        issuer.setTaxCredentials(credentials);
+
+        InvoiceRecipient recipient = new InvoiceRecipient();
+        recipient.setId("da71df0c-f328-45ee-9bd9-3096ed02c164");
+
+        Payroll payroll = new Payroll();
+        payroll.setVersion("1.2");
+        payroll.setPayrollTypeCode("E");
+        payroll.setPaymentDate("2023-06-02T00:00:00");
+        payroll.setInitialPaymentDate("2023-06-01T00:00:00");
+        payroll.setFinalPaymentDate("2023-06-02T00:00:00");
+        payroll.setDaysPaid(1);
+
+        PayrollEarnings payrollEarnings = new PayrollEarnings();
+        List<PayrollEarning> earnings = new ArrayList<>();
+
+        PayrollEarning e1 = new PayrollEarning();
+        e1.setEarningTypeCode("046");
+        e1.setCode("010046");
+        e1.setConcept("INGRESOS ASIMILADOS A SALARIOS");
+        e1.setTaxedAmount(new BigDecimal("111197.73"));
+        e1.setExemptAmount(new BigDecimal("0.00"));
+
+        earnings.add(e1);
+
+        List<PayrollEarningOtherPayment> otherPayments = new ArrayList<>();
+
+        payrollEarnings.setEarnings(earnings);
+        payrollEarnings.setOtherPayments(otherPayments);
+
+        List<PayrollDeduction> payrollDeductions = new ArrayList<>();
+
+        PayrollDeduction d1 = new PayrollDeduction();
+        d1.setDeductionTypeCode("002");
+        d1.setCode("020002");
+        d1.setConcept("ISR");
+        d1.setAmount("36197.73");
+
+        payrollDeductions.add(d1);
+
+        payroll.setEarnings(payrollEarnings);
+        payroll.setDeductions(payrollDeductions);
+
+        Complement complement = new Complement();
+        complement.setPayroll(payroll);
+
+        Invoice invoice = new Invoice();
+        invoice.setVersionCode("4.0");
+        invoice.setSeries("F");
+        invoice.setDate(LocalDateTime.now());
+        invoice.setTypeCode("N");
+        invoice.setPaymentMethodCode("PUE");
+        invoice.setCurrencyCode("MXN");
+        invoice.setExpeditionZipCode("06880");
+        invoice.setExportCode("01");
+        invoice.setIssuer(issuer);
+        invoice.setRecipient(recipient);
+        invoice.setComplement(complement);
+
+        ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+
+        System.out.println(apiResponse);
+
+        //Nómina con bonos fondo de ahorro y deducciones
+        // Emisor
+        /*
+        InvoiceIssuer issuer = new InvoiceIssuer();
+        issuer.setTin("EKU9003173C9");
+        issuer.setLegalName("ESCUELA KEMPER URGATE");
+        issuer.setTaxRegimeCode("601");
+
+        EmployerData employerData = new EmployerData();
+        employerData.setEmployerRegistration("Z0000001234");
+
+// Receptor
+        InvoiceRecipient recipient = new InvoiceRecipient();
+        recipient.setTin("XOJI740919U48");
+        recipient.setLegalName("INGRID XODAR JIMENEZ");
+        recipient.setZipCode("76028");
+        recipient.setTaxRegimeCode("605");
+        recipient.setCfdiUseCode("CN01");
+
+        EmployeeData employeeData = new EmployeeData();
+        employeeData.setCurp("XEXX010101MNEXXXA8");
+        employeeData.setSocialSecurityNumber("0000000000");
+        employeeData.setLaborRelationStartDate(LocalDateTime.parse("2022-03-02T00:00:00"));
+        employeeData.setSeniority("P66W");
+        employeeData.setSatContractTypeId("01");
+        employeeData.setSatUnionizedStatusId("No");
+        employeeData.setSatTaxRegimeTypeId("02");
+        employeeData.setEmployeeNumber("111111");
+        employeeData.setSatJobRiskId("4");
+        employeeData.setSatPaymentPeriodicityId("02");
+        employeeData.setIntegratedDailySalary(180.96);
+        employeeData.setSatPayrollStateId("GUA");
+
+// Items
+        List<InvoiceItem> items = new ArrayList<>();
+
+        InvoiceItem item1 = new InvoiceItem();
+        item1.setItemCode("84111505");
+        item1.setItemSku("84111505");
+        item1.setQuantity(1);
+        item1.setUnitOfMeasurementCode("ACT");
+        item1.setDescription("Pago de nómina");
+        item1.setUnitPrice(1842.82);
+        item1.setDiscount(608.71);
+        item1.setTaxObjectCode("01");
+
+        items.add(item1);
+
+// Payroll
+        Payroll payroll = new Payroll();
+        payroll.setVersion("1.2");
+        payroll.setPayrollTypeCode("O");
+        payroll.setPaymentDate(LocalDateTime.parse("2023-06-11T00:00:00"));
+        payroll.setInitialPaymentDate(LocalDateTime.parse("2023-06-05T00:00:00"));
+        payroll.setFinalPaymentDate(LocalDateTime.parse("2023-06-11T00:00:00"));
+        payroll.setDaysPaid(7);
+
+// Earnings
+        PayrollEarnings payrollEarnings = new PayrollEarnings();
+        List<PayrollEarning> earnings = new ArrayList<>();
+
+        PayrollEarning e1 = new PayrollEarning();
+        e1.setEarningTypeCode("001");
+        e1.setCode("SP01");
+        e1.setConcept("SUELDO");
+        e1.setTaxedAmount(1210.30);
+        e1.setExemptAmount(0.00);
+
+        PayrollEarning e2 = new PayrollEarning();
+        e2.setEarningTypeCode("010");
+        e2.setCode("SP02");
+        e2.setConcept("PREMIO PUNTUALIDAD");
+        e2.setTaxedAmount(121.03);
+        e2.setExemptAmount(0.00);
+
+        PayrollEarning e3 = new PayrollEarning();
+        e3.setEarningTypeCode("029");
+        e3.setCode("SP03");
+        e3.setConcept("MONEDERO ELECTRONICO");
+        e3.setTaxedAmount(0.00);
+        e3.setExemptAmount(269.43);
+
+        PayrollEarning e4 = new PayrollEarning();
+        e4.setEarningTypeCode("010");
+        e4.setCode("SP04");
+        e4.setConcept("PREMIO DE ASISTENCIA");
+        e4.setTaxedAmount(121.03);
+        e4.setExemptAmount(0.00);
+
+        PayrollEarning e5 = new PayrollEarning();
+        e5.setEarningTypeCode("005");
+        e5.setCode("SP54");
+        e5.setConcept("APORTACION FONDO AHORRO");
+        e5.setTaxedAmount(0.00);
+        e5.setExemptAmount(121.03);
+
+        earnings.add(e1);
+        earnings.add(e2);
+        earnings.add(e3);
+        earnings.add(e4);
+        earnings.add(e5);
+
+// Other Payments
+        List<PayrollEarningOtherPayment> otherPayments = new ArrayList<>();
+
+        PayrollEarningOtherPayment op1 = new PayrollEarningOtherPayment();
+        op1.setOtherPaymentTypeCode("002");
+        op1.setCode("ISRSUB");
+        op1.setConcept("Subsidio ISR para empleo");
+        op1.setAmount(0.0);
+        op1.setSubsidyCaused(0.0);
+
+        BalanceCompensation balanceCompensation = new BalanceCompensation();
+        balanceCompensation.setFavorableBalance(0.0);
+        balanceCompensation.setYear(2022);
+        balanceCompensation.setRemainingFavorableBalance(0.0);
+
+        op1.setBalanceCompensation(balanceCompensation);
+
+        otherPayments.add(op1);
+
+        payrollEarnings.setEarnings(earnings);
+        payrollEarnings.setOtherPayments(otherPayments);
+
+// Deductions
+        List<PayrollDeduction> payrollDeductions = new ArrayList<>();
+
+        PayrollDeduction d1 = new PayrollDeduction();
+        d1.setDeductionTypeCode("004");
+        d1.setCode("ZA09");
+        d1.setConcept("APORTACION FONDO AHORRO");
+        d1.setAmount(121.03);
+
+        PayrollDeduction d2 = new PayrollDeduction();
+        d2.setDeductionTypeCode("002");
+        d2.setCode("ISR");
+        d2.setConcept("ISR");
+        d2.setAmount(36.57);
+
+        PayrollDeduction d3 = new PayrollDeduction();
+        d3.setDeductionTypeCode("001");
+        d3.setCode("IMSS");
+        d3.setConcept("Cuota de Seguridad Social EE");
+        d3.setAmount(30.08);
+
+        PayrollDeduction d4 = new PayrollDeduction();
+        d4.setDeductionTypeCode("004");
+        d4.setCode("ZA68");
+        d4.setConcept("DEDUCCION FDO AHORRO PAT");
+        d4.setAmount(121.03);
+
+        PayrollDeduction d5 = new PayrollDeduction();
+        d5.setDeductionTypeCode("018");
+        d5.setCode("ZA11");
+        d5.setConcept("APORTACION CAJA AHORRO");
+        d5.setAmount(300.00);
+
+        payrollDeductions.add(d1);
+        payrollDeductions.add(d2);
+        payrollDeductions.add(d3);
+        payrollDeductions.add(d4);
+        payrollDeductions.add(d5);
+
+        payroll.setEarnings(payrollEarnings);
+        payroll.setDeductions(payrollDeductions);
+
+// Invoice
+        Invoice invoice = new Invoice();
+        invoice.setVersionCode("4.0");
+        invoice.setSeries("F");
+        invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+        invoice.setTypeCode("N");
+        invoice.setPaymentMethodCode("PUE");
+        invoice.setCurrencyCode("MXN");
+        invoice.setExpeditionZipCode("20000");
+        invoice.setExportCode("01");
+        invoice.setIssuer(issuer);
+        invoice.setRecipient(recipient);
+        invoice.setItems(items);
+        invoice.setComplement(invoice.getComplement());
+
+        ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+
+        System.out.println(apiResponse);
+
+        // Nómina con horas extra por referencias
+        // Emisor
+        /*
+        InvoiceIssuer issuer = new InvoiceIssuer();
+        issuer.setId("0e82a655-5f0c-4e07-abab-8f322e4123ef");
+
+        List<TaxCredential> credentials = new ArrayList<>();
+
+        TaxCredential cer = new TaxCredential();
+        cer.setBase64File(base64Cer);
+        cer.setFileType(0);
+        cer.setPassword(password);
+
+        TaxCredential key = new TaxCredential();
+        key.setBase64File(base64Key);
+        key.setFileType(1);
+        key.setPassword(password);
+
+        credentials.add(cer);
+        credentials.add(key);
+
+        issuer.setTaxCredentials(credentials);
+
+        InvoiceRecipient recipient = new InvoiceRecipient();
+        recipient.setId("da71df0c-f328-45ee-9bd9-3096ed02c164");
+
+        EmployeeData employeeData = new EmployeeData();
+        employeeData.setCurp("XEXX010101HNEXXXA4");
+        employeeData.setSocialSecurityNumber("000000");
+        employeeData.setLaborRelationStartDate(LocalDateTime.parse("2015-01-01"));
+        employeeData.setSeniority("P437W");
+        employeeData.setSatContractTypeId("01");
+        employeeData.setSatWorkdayTypeId("01");
+        employeeData.setSatTaxRegimeTypeId("03");
+        employeeData.setEmployeeNumber("120");
+        employeeData.setDepartment("Desarrollo");
+        employeeData.setPosition("Ingeniero de Software");
+        employeeData.setSatJobRiskId("1");
+        employeeData.setSatPaymentPeriodicityId("04");
+        employeeData.setSatBankId("002");
+        employeeData.setBankAccount("1111111111");
+        employeeData.setBaseSalaryForContributions(490.22);
+        employeeData.setIntegratedDailySalary(146.47);
+        employeeData.setSatPayrollStateId("JAL");
+
+// Payroll
+        Payroll payroll = new Payroll();
+        payroll.setVersion("1.2");
+        payroll.setPayrollTypeCode("O");
+        payroll.setPaymentDate(LocalDateTime.parse("2023-05-24T00:00:00"));
+        payroll.setInitialPaymentDate(LocalDateTime.parse("2023-05-09T00:00:00"));
+        payroll.setFinalPaymentDate(LocalDateTime.parse("2023-05-24T00:00:00"));
+        payroll.setDaysPaid(15);
+
+// Earnings
+        PayrollEarnings payrollEarnings = new PayrollEarnings();
+        List<PayrollEarning> earnings = new ArrayList<>();
+
+        PayrollEarning e1 = new PayrollEarning();
+        e1.setEarningTypeCode("001");
+        e1.setCode("00500");
+        e1.setConcept("Sueldos, Salarios Rayas y Jornales");
+        e1.setTaxedAmount(2808.8);
+        e1.setExemptAmount(2191.2);
+
+        PayrollEarning e2 = new PayrollEarning();
+        e2.setEarningTypeCode("019");
+        e2.setCode("00100");
+        e2.setConcept("Horas Extra");
+        e2.setTaxedAmount(50.00);
+        e2.setExemptAmount(50.00);
+
+        List<PayrollEarningOvertime> overtimeList = new ArrayList<>();
+        PayrollEarningOvertime overtime1 = new PayrollEarningOvertime();
+        overtime1.setDays(1);
+        overtime1.setHoursTypeCode("01");
+        overtime1.setExtraHours(2);
+        overtime1.setAmountPaid(100.00);
+        overtimeList.add(overtime1);
+
+        e2.setOvertime(overtimeList);
+
+        earnings.add(e1);
+        earnings.add(e2);
+
+// Other Payments
+        List<PayrollEarningOtherPayment> otherPayments = new ArrayList<>();
+
+        payrollEarnings.setEarnings(earnings);
+        payrollEarnings.setOtherPayments(otherPayments);
+
+// Deductions
+        List<PayrollDeduction> payrollDeductions = new ArrayList<>();
+
+        PayrollDeduction d1 = new PayrollDeduction();
+        d1.setDeductionTypeCode("001");
+        d1.setCode("00301");
+        d1.setConcept("Seguridad Social");
+        d1.setAmount(200);
+
+        PayrollDeduction d2 = new PayrollDeduction();
+        d2.setDeductionTypeCode("002");
+        d2.setCode("00302");
+        d2.setConcept("ISR");
+        d2.setAmount(100);
+
+        payrollDeductions.add(d1);
+        payrollDeductions.add(d2);
+
+// Invoice
+        Invoice invoice = new Invoice();
+        invoice.setVersionCode("4.0");
+        invoice.setSeries("F");
+        invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+        invoice.setTypeCode("N");
+        invoice.setPaymentMethodCode("PUE");
+        invoice.setCurrencyCode("MXN");
+        invoice.setExpeditionZipCode("20000");
+        invoice.setExportCode("01");
+        invoice.setIssuer(issuer);
+        invoice.setRecipient(recipient);
+        invoice.setComplement(invoice.getComplement());
+
+        ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+
+        System.out.println(apiResponse);
+
+        //Nómina con horas extra
+        // Emisor
+        /*
+        InvoiceIssuer issuer = new InvoiceIssuer();
+        issuer.setTin("EKU9003173C9");
+        issuer.setLegalName("ESCUELA KEMPER URGATE");
+        issuer.setTaxRegimeCode("601");
+
+        EmployerData employerData = new EmployerData();
+        employerData.setEmployerRegistration("B5510768108");
+        employerData.setOriginEmployerTin("URE180429TM6");
+
+// Receptor
+        InvoiceRecipient recipient = new InvoiceRecipient();
+        recipient.setTin("XOJI740919U48");
+        recipient.setLegalName("INGRID XODAR JIMENEZ");
+        recipient.setZipCode("76028");
+        recipient.setTaxRegimeCode("605");
+        recipient.setCfdiUseCode("CN01");
+
+        EmployeeData employeeData = new EmployeeData();
+        employeeData.setCurp("XEXX010101HNEXXXA4");
+        employeeData.setSocialSecurityNumber("000000");
+        employeeData.setLaborRelationStartDate(LocalDateTime.parse("2015-01-01"));
+        employeeData.setSeniority("P437W");
+        employeeData.setSatContractTypeId("01");
+        employeeData.setSatWorkdayTypeId("01");
+        employeeData.setSatTaxRegimeTypeId("03");
+        employeeData.setEmployeeNumber("120");
+        employeeData.setDepartment("Desarrollo");
+        employeeData.setPosition("Ingeniero de Software");
+        employeeData.setSatJobRiskId("1");
+        employeeData.setSatPaymentPeriodicityId("04");
+        employeeData.setSatBankId("002");
+        employeeData.setBankAccount("1111111111");
+        employeeData.setBaseSalaryForContributions(490.22);
+        employeeData.setIntegratedDailySalary(146.47);
+        employeeData.setSatPayrollStateId("JAL");
+
+// Payroll
+        Payroll payroll = new Payroll();
+        payroll.setVersion("1.2");
+        payroll.setPayrollTypeCode("O");
+        payroll.setPaymentDate(LocalDateTime.parse("2023-05-24T00:00:00"));
+        payroll.setInitialPaymentDate(LocalDateTime.parse("2023-05-09T00:00:00"));
+        payroll.setFinalPaymentDate(LocalDateTime.parse("2023-05-24T00:00:00"));
+        payroll.setDaysPaid(15);
+
+// Earnings
+        PayrollEarnings payrollEarnings = new PayrollEarnings();
+        List<PayrollEarning> earnings = new ArrayList<>();
+
+        PayrollEarning e1 = new PayrollEarning();
+        e1.setEarningTypeCode("001");
+        e1.setCode("00500");
+        e1.setConcept("Sueldos, Salarios Rayas y Jornales");
+        e1.setTaxedAmount(2808.8);
+        e1.setExemptAmount(2191.2);
+
+        PayrollEarning e2 = new PayrollEarning();
+        e2.setEarningTypeCode("019");
+        e2.setCode("00100");
+        e2.setConcept("Horas Extra");
+        e2.setTaxedAmount(50.00);
+        e2.setExemptAmount(50.00);
+
+        List<PayrollEarningOvertime> overtimeList = new ArrayList<>();
+        PayrollEarningOvertime overtime1 = new PayrollEarningOvertime();
+        overtime1.setDays(1);
+        overtime1.setHoursTypeCode("01");
+        overtime1.setExtraHours(2);
+        overtime1.setAmountPaid(100.00);
+        overtimeList.add(overtime1);
+
+        e2.setOvertime(overtimeList);
+
+        earnings.add(e1);
+        earnings.add(e2);
+
+// Other Payments
+        List<PayrollEarningOtherPayment> otherPayments = new ArrayList<>();
+
+        payrollEarnings.setEarnings(earnings);
+        payrollEarnings.setOtherPayments(otherPayments);
+
+// Deductions
+        List<PayrollDeduction> payrollDeductions = new ArrayList<>();
+
+        PayrollDeduction d1 = new PayrollDeduction();
+        d1.setDeductionTypeCode("001");
+        d1.setCode("00301");
+        d1.setConcept("Seguridad Social");
+        d1.setAmount(200);
+
+        PayrollDeduction d2 = new PayrollDeduction();
+        d2.setDeductionTypeCode("002");
+        d2.setCode("00302");
+        d2.setConcept("ISR");
+        d2.setAmount(100);
+
+        payrollDeductions.add(d1);
+        payrollDeductions.add(d2);
+
+// Invoice
+        Invoice invoice = new Invoice();
+        invoice.setVersionCode("4.0");
+        invoice.setSeries("F");
+        invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+        invoice.setTypeCode("N");
+        invoice.setPaymentMethodCode("PUE");
+        invoice.setCurrencyCode("MXN");
+        invoice.setExpeditionZipCode("20000");
+        invoice.setExportCode("01");
+        invoice.setIssuer(issuer);
+        invoice.setRecipient(recipient);
+        invoice.setComplement(invoice.getComplement());
+
+        ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+
+        System.out.println(apiResponse);
+
+
+        // Nómina con incapacidades
+        // Emisor
+        InvoiceIssuer issuer = new InvoiceIssuer();
+        issuer.setTin("EKU9003173C9");
+        issuer.setLegalName("ESCUELA KEMPER URGATE");
+        issuer.setTaxRegimeCode("601");
+
+        EmployerData employerData = new EmployerData();
+        employerData.setEmployerRegistration("B5510768108");
+        employerData.setOriginEmployerTin("URE180429TM6");
+
+// Receptor
+        InvoiceRecipient recipient = new InvoiceRecipient();
+        recipient.setTin("XOJI740919U48");
+        recipient.setLegalName("INGRID XODAR JIMENEZ");
+        recipient.setZipCode("76028");
+        recipient.setTaxRegimeCode("605");
+        recipient.setCfdiUseCode("CN01");
+
+        EmployeeData employeeData = new EmployeeData();
+        employeeData.setCurp("XEXX010101HNEXXXA4");
+        employeeData.setSocialSecurityNumber("000000");
+        employeeData.setLaborRelationStartDate(LocalDateTime.parse("2015-01-01T00:00:00"));
+        employeeData.setSeniority("P437W");
+        employeeData.setSatContractTypeId("01");
+        employeeData.setSatWorkdayTypeId("01");
+        employeeData.setSatTaxRegimeTypeId("03");
+        employeeData.setEmployeeNumber("120");
+        employeeData.setDepartment("Desarrollo");
+        employeeData.setPosition("Ingeniero de Software");
+        employeeData.setSatJobRiskId("1");
+        employeeData.setSatPaymentPeriodicityId("04");
+        employeeData.setSatBankId("002");
+        employeeData.setBankAccount("1111111111");
+        employeeData.setBaseSalaryForContributions(490.22);
+        employeeData.setIntegratedDailySalary(146.47);
+        employeeData.setSatPayrollStateId("JAL");
+
+// Payroll
+        Payroll payroll = new Payroll();
+        payroll.setVersion("1.2");
+        payroll.setPayrollTypeCode("O");
+        payroll.setPaymentDate(LocalDateTime.parse("2023-05-24T00:00:00"));
+        payroll.setInitialPaymentDate(LocalDateTime.parse("2023-05-09T00:00:00"));
+        payroll.setFinalPaymentDate(LocalDateTime.parse("2023-05-24T00:00:00"));
+        payroll.setDaysPaid(15);
+
+// Earnings
+        PayrollEarnings payrollEarnings = new PayrollEarnings();
+        List<PayrollEarning> earnings = new ArrayList<>();
+
+        PayrollEarning e1 = new PayrollEarning();
+        e1.setEarningTypeCode("001");
+        e1.setCode("00500");
+        e1.setConcept("Sueldos, Salarios Rayas y Jornales");
+        e1.setTaxedAmount(2808.8);
+        e1.setExemptAmount(2191.2);
+
+        earnings.add(e1);
+
+// Other Payments
+        List<PayrollEarningOtherPayment> otherPayments = new ArrayList<>();
+
+        payrollEarnings.setEarnings(earnings);
+        payrollEarnings.setOtherPayments(otherPayments);
+
+// Deductions
+        List<PayrollDeduction> payrollDeductions = new ArrayList<>();
+
+        PayrollDeduction d1 = new PayrollDeduction();
+        d1.setDeductionTypeCode("001");
+        d1.setCode("00301");
+        d1.setConcept("Seguridad Social");
+        d1.setAmount(200);
+
+        PayrollDeduction d2 = new PayrollDeduction();
+        d2.setDeductionTypeCode("002");
+        d2.setCode("00302");
+        d2.setConcept("ISR");
+        d2.setAmount(100);
+
+        payrollDeductions.add(d1);
+        payrollDeductions.add(d2);
+
+// Disabilities
+        List<PayrollDisability> disabilities = new ArrayList<>();
+
+        PayrollDisability disability1 = new PayrollDisability();
+        disability1.setDisabilityDays(1);
+        disability1.setDisabilityTypeCode("01");
+
+        disabilities.add(disability1);
+
+        payroll.setEarnings(payrollEarnings);
+        payroll.setDeductions(payrollDeductions);
+        payroll.setDisabilities(disabilities);
+
+// Invoice
+        Invoice invoice = new Invoice();
+        invoice.setVersionCode("4.0");
+        invoice.setSeries("F");
+        invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+        invoice.setTypeCode("N");
+        invoice.setPaymentMethodCode("PUE");
+        invoice.setCurrencyCode("MXN");
+        invoice.setExpeditionZipCode("20000");
+        invoice.setExportCode("01");
+        invoice.setIssuer(issuer);
+        invoice.setRecipient(recipient);
+        invoice.setComplement(invoice.getComplement());
+
+        ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+
+        System.out.println(apiResponse);
+
+        //Nómina con incapacidades por referencias
+        // Emisor
+        InvoiceIssuer issuer = new InvoiceIssuer();
+        issuer.setId("bef56254-0892-4558-95c3-f9c8729e4b0e");
+
+// Receptor
+        InvoiceRecipient recipient = new InvoiceRecipient();
+        recipient.setId("54fc14ae-c88f-4afc-996b-0574d63341e2");
+
+// Payroll
+        Payroll payroll = new Payroll();
+        payroll.setVersion("1.2");
+        payroll.setPayrollTypeCode("O");
+        payroll.setPaymentDate("2023-05-24T00:00:00");
+        payroll.setInitialPaymentDate("2023-05-09T00:00:00");
+        payroll.setFinalPaymentDate("2023-05-24T00:00:00");
+        payroll.setDaysPaid(15);
+
+// Earnings
+        PayrollEarnings payrollEarnings = new PayrollEarnings();
+        List<PayrollEarning> earnings = new ArrayList<>();
+
+        PayrollEarning e1 = new PayrollEarning();
+        e1.setEarningTypeCode("001");
+        e1.setCode("00500");
+        e1.setConcept("Sueldos, Salarios Rayas y Jornales");
+        e1.setTaxedAmount(new BigDecimal("2808.8"));
+        e1.setExemptAmount(new BigDecimal("2191.2"));
+
+        earnings.add(e1);
+
+// Other Payments
+        List<PayrollEarningOtherPayment> otherPayments = new ArrayList<>();
+
+        payrollEarnings.setEarnings(earnings);
+        payrollEarnings.setOtherPayments(otherPayments);
+
+// Deductions
+        List<PayrollDeduction> payrollDeductions = new ArrayList<>();
+
+        PayrollDeduction d1 = new PayrollDeduction();
+        d1.setDeductionTypeCode("001");
+        d1.setCode("00301");
+        d1.setConcept("Seguridad Social");
+        d1.setAmount("200.00");
+
+        PayrollDeduction d2 = new PayrollDeduction();
+        d2.setDeductionTypeCode("002");
+        d2.setCode("00302");
+        d2.setConcept("ISR");
+        d2.setAmount("100.00");
+
+        payrollDeductions.add(d1);
+        payrollDeductions.add(d2);
+
+// Disabilities
+        List<PayrollDisability> disabilities = new ArrayList<>();
+
+        PayrollDisability disability1 = new PayrollDisability();
+        disability1.setDisabilityDays(1);
+        disability1.setDisabilityTypeCode("01");
+
+        disabilities.add(disability1);
+
+        payroll.setEarnings(payrollEarnings);
+        payroll.setDeductions(payrollDeductions);
+        payroll.setDisabilities(disabilities);
+
+        Complement complement = new Complement();
+        complement.setPayroll(payroll);
+
+// Invoice
+        Invoice invoice = new Invoice();
+        invoice.setVersionCode("4.0");
+        invoice.setSeries("F");
+        invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+        invoice.setTypeCode("N");
+        invoice.setPaymentMethodCode("PUE");
+        invoice.setCurrencyCode("MXN");
+        invoice.setExpeditionZipCode("20000");
+        invoice.setExportCode("01");
+        invoice.setIssuer(issuer);
+        invoice.setRecipient(recipient);
+        invoice.setComplement(complement);
+
+        ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+
+        System.out.println(apiResponse);
+
+        //Nómina con SNCF
+        // Emisor
+        InvoiceIssuer issuer = new InvoiceIssuer();
+        issuer.setTin("OÑO120726RX3");
+        issuer.setLegalName("ORGANICOS ÑAVEZ OSORIO");
+        issuer.setTaxRegimeCode("601");
+
+        EmployerData employerData = new EmployerData();
+        employerData.setEmployerRegistration("27112029");
+        employerData.setSatFundSourceId("IP");
+
+// Receptor
+        InvoiceRecipient recipient = new InvoiceRecipient();
+        recipient.setTin("CACX7605101P8");
+        recipient.setLegalName("XOCHILT CASAS CHAVEZ");
+        recipient.setZipCode("36257");
+        recipient.setTaxRegimeCode("605");
+        recipient.setCfdiUseCode("CN01");
+
+        EmployeeData employeeData = new EmployeeData();
+        employeeData.setCurp("XEXX010101HNEXXXA4");
+        employeeData.setSocialSecurityNumber("80997742673");
+        employeeData.setLaborRelationStartDate(LocalDateTime.parse("2021-09-01"));
+        employeeData.setSeniority("P88W");
+        employeeData.setSatContractTypeId("01");
+        employeeData.setSatTaxRegimeTypeId("02");
+        employeeData.setEmployeeNumber("273");
+        employeeData.setSatJobRiskId("1");
+        employeeData.setSatPaymentPeriodicityId("04");
+        employeeData.setIntegratedDailySalary(221.48);
+        employeeData.setSatPayrollStateId("GRO");
+
+// Payroll
+        Payroll payroll = new Payroll();
+        payroll.setVersion("1.2");
+        payroll.setPayrollTypeCode("O");
+        payroll.setPaymentDate(LocalDateTime.parse("2023-05-16T00:00:00"));
+        payroll.setInitialPaymentDate(LocalDateTime.parse("2023-05-01T00:00:00"));
+        payroll.setFinalPaymentDate(LocalDateTime.parse("2023-05-16T00:00:00"));
+        payroll.setDaysPaid(15);
+
+// Earnings
+        PayrollEarnings payrollEarnings = new PayrollEarnings();
+        List<PayrollEarning> earnings = new ArrayList<>();
+
+        PayrollEarning e1 = new PayrollEarning();
+        e1.setEarningTypeCode("001");
+        e1.setCode("P001");
+        e1.setConcept("Sueldos, Salarios Rayas y Jornales");
+        e1.setTaxedAmount(3322.20);
+        e1.setExemptAmount(0.0);
+
+        PayrollEarning e2 = new PayrollEarning();
+        e2.setEarningTypeCode("038");
+        e2.setCode("P540");
+        e2.setConcept("Compensacion");
+        e2.setTaxedAmount(100.0);
+        e2.setExemptAmount(0.0);
+
+        PayrollEarning e3 = new PayrollEarning();
+        e3.setEarningTypeCode("038");
+        e3.setCode("P550");
+        e3.setConcept("Compensación Garantizada Extraordinaria");
+        e3.setTaxedAmount(2200.0);
+        e3.setExemptAmount(0.0);
+
+        PayrollEarning e4 = new PayrollEarning();
+        e4.setEarningTypeCode("038");
+        e4.setCode("P530");
+        e4.setConcept("Servicio Extraordinario");
+        e4.setTaxedAmount(200.0);
+        e4.setExemptAmount(0.0);
+
+        PayrollEarning e5 = new PayrollEarning();
+        e5.setEarningTypeCode("001");
+        e5.setCode("P506");
+        e5.setConcept("Otras Prestaciones");
+        e5.setTaxedAmount(1500.0);
+        e5.setExemptAmount(0.0);
+
+        PayrollEarning e6 = new PayrollEarning();
+        e6.setEarningTypeCode("001");
+        e6.setCode("P505");
+        e6.setConcept("Remuneración al Desempeño Legislativo");
+        e6.setTaxedAmount(17500.0);
+        e6.setExemptAmount(0.0);
+
+        earnings.add(e1);
+        earnings.add(e2);
+        earnings.add(e3);
+        earnings.add(e4);
+        earnings.add(e5);
+        earnings.add(e6);
+
+// Other Payments
+        List<PayrollEarningOtherPayment> otherPayments = new ArrayList<>();
+
+        PayrollEarningOtherPayment op1 = new PayrollEarningOtherPayment();
+        op1.setOtherPaymentTypeCode("002");
+        op1.setCode("o002");
+        op1.setConcept("Subsidio para el empleo efectivamente entregado al trabajador");
+        op1.setAmount(0.0);
+        op1.setSubsidyCaused(0.0);
+
+        otherPayments.add(op1);
+
+        payrollEarnings.setEarnings(earnings);
+        payrollEarnings.setOtherPayments(otherPayments);
+
+// Deductions
+        List<PayrollDeduction> payrollDeductions = new ArrayList<>();
+
+        PayrollDeduction d1 = new PayrollDeduction();
+        d1.setDeductionTypeCode("002");
+        d1.setCode("D002");
+        d1.setConcept("ISR");
+        d1.setAmount(4716.61);
+
+        PayrollDeduction d2 = new PayrollDeduction();
+        d2.setDeductionTypeCode("004");
+        d2.setCode("D525");
+        d2.setConcept("Redondeo");
+        d2.setAmount(0.81);
+
+        PayrollDeduction d3 = new PayrollDeduction();
+        d3.setDeductionTypeCode("001");
+        d3.setCode("D510");
+        d3.setConcept("Cuota Trabajador ISSSTE");
+        d3.setAmount(126.78);
+
+        payrollDeductions.add(d1);
+        payrollDeductions.add(d2);
+        payrollDeductions.add(d3);
+
+        payroll.setEarnings(payrollEarnings);
+        payroll.setDeductions(payrollDeductions);
+
+// Invoice
+        Invoice invoice = new Invoice();
+        invoice.setVersionCode("4.0");
+        invoice.setSeries("F");
+        invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+        invoice.setTypeCode("N");
+        invoice.setPaymentMethodCode("PUE");
+        invoice.setCurrencyCode("MXN");
+        invoice.setExpeditionZipCode("39074");
+        invoice.setExportCode("01");
+        invoice.setIssuer(issuer);
+        invoice.setRecipient(recipient);
+        invoice.setComplement(invoice.getComplement());
+
+        ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+
+        System.out.println(apiResponse);
+
+        //Nómina con SNCF por referencias
+        // Emisor
+        InvoiceIssuer issuer = new InvoiceIssuer();
+        issuer.setId("ab7ec306-6f81-4f9f-b55f-bbbb1ab2f153");
+
+// Receptor
+        InvoiceRecipient recipient = new InvoiceRecipient();
+        recipient.setId("acf43966-4672-48b6-a01a-d04cac6c3d64");
+
+// Payroll
+        Payroll payroll = new Payroll();
+        payroll.setVersion("1.2");
+        payroll.setPayrollTypeCode("O");
+        payroll.setPaymentDate("2023-05-16T00:00:00");
+        payroll.setInitialPaymentDate("2023-05-01T00:00:00");
+        payroll.setFinalPaymentDate("2023-05-16T00:00:00");
+        payroll.setDaysPaid(15);
+
+// Earnings
+        PayrollEarnings payrollEarnings = new PayrollEarnings();
+        List<PayrollEarning> earnings = new ArrayList<>();
+
+        PayrollEarning e1 = new PayrollEarning();
+        e1.setEarningTypeCode("001");
+        e1.setCode("P001");
+        e1.setConcept("Sueldos, Salarios Rayas y Jornales");
+        e1.setTaxedAmount(new BigDecimal("3322.20"));
+        e1.setExemptAmount(new BigDecimal("0"));
+
+        PayrollEarning e2 = new PayrollEarning();
+        e2.setEarningTypeCode("038");
+        e2.setCode("P540");
+        e2.setConcept("Compensacion");
+        e2.setTaxedAmount(new BigDecimal("100.00"));
+        e2.setExemptAmount(new BigDecimal("0"));
+
+        PayrollEarning e3 = new PayrollEarning();
+        e3.setEarningTypeCode("038");
+        e3.setCode("P550");
+        e3.setConcept("Compensación Garantizada Extraordinaria");
+        e3.setTaxedAmount(new BigDecimal("2200.00"));
+        e3.setExemptAmount(new BigDecimal("0"));
+
+        PayrollEarning e4 = new PayrollEarning();
+        e4.setEarningTypeCode("038");
+        e4.setCode("P530");
+        e4.setConcept("Servicio Extraordinario");
+        e4.setTaxedAmount(new BigDecimal("200.00"));
+        e4.setExemptAmount(new BigDecimal("0"));
+
+        PayrollEarning e5 = new PayrollEarning();
+        e5.setEarningTypeCode("001");
+        e5.setCode("P506");
+        e5.setConcept("Otras Prestaciones");
+        e5.setTaxedAmount(new BigDecimal("1500.00"));
+        e5.setExemptAmount(new BigDecimal("0"));
+
+        PayrollEarning e6 = new PayrollEarning();
+        e6.setEarningTypeCode("001");
+        e6.setCode("P505");
+        e6.setConcept("Remuneración al Desempeño Legislativo");
+        e6.setTaxedAmount(new BigDecimal("17500.00"));
+        e6.setExemptAmount(new BigDecimal("0"));
+
+        earnings.add(e1);
+        earnings.add(e2);
+        earnings.add(e3);
+        earnings.add(e4);
+        earnings.add(e5);
+        earnings.add(e6);
+
+// Other Payments
+        List<PayrollEarningOtherPayment> otherPayments = new ArrayList<>();
+
+        PayrollEarningOtherPayment op1 = new PayrollEarningOtherPayment();
+        op1.setOtherPaymentTypeCode("002");
+        op1.setCode("002");
+        op1.setConcept("Subsidio para el empleo efectivamente entregado al trabajador");
+        op1.setAmount(new BigDecimal("0"));
+        op1.setSubsidyCaused(new BigDecimal("0"));
+
+        otherPayments.add(op1);
+
+        payrollEarnings.setEarnings(earnings);
+        payrollEarnings.setOtherPayments(otherPayments);
+
+// Deductions
+        List<PayrollDeduction> payrollDeductions = new ArrayList<>();
+
+        PayrollDeduction d1 = new PayrollDeduction();
+        d1.setDeductionTypeCode("002");
+        d1.setCode("D002");
+        d1.setConcept("ISR");
+        d1.setAmount("4716.61");
+
+        PayrollDeduction d2 = new PayrollDeduction();
+        d2.setDeductionTypeCode("004");
+        d2.setCode("D525");
+        d2.setConcept("Redondeo");
+        d2.setAmount("0.81");
+
+        PayrollDeduction d3 = new PayrollDeduction();
+        d3.setDeductionTypeCode("001");
+        d3.setCode("D510");
+        d3.setConcept("Cuota Trabajador ISSSTE");
+        d3.setAmount("126.78");
+
+        payrollDeductions.add(d1);
+        payrollDeductions.add(d2);
+        payrollDeductions.add(d3);
+
+        payroll.setEarnings(payrollEarnings);
+        payroll.setDeductions(payrollDeductions);
+
+        Complement complement = new Complement();
+        complement.setPayroll(payroll);
+
+// Invoice
+        Invoice invoice = new Invoice();
+        invoice.setVersionCode("4.0");
+        invoice.setSeries("F");
+        invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+        invoice.setTypeCode("N");
+        invoice.setPaymentMethodCode("PUE");
+        invoice.setCurrencyCode("MXN");
+        invoice.setExpeditionZipCode("39074");
+        invoice.setExportCode("01");
+        invoice.setIssuer(issuer);
+        invoice.setRecipient(recipient);
+        invoice.setComplement(complement);
+
+        ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+
+        System.out.println(apiResponse);
+
+        // Nómina extraordinaria
+        // Emisor
+        InvoiceIssuer issuer = new InvoiceIssuer();
+        issuer.setTin("EKU9003173C9");
+        issuer.setLegalName("ESCUELA KEMPER URGATE");
+        issuer.setTaxRegimeCode("601");
+
+        EmployerData employerData = new EmployerData();
+        employerData.setEmployerRegistration("B5510768108");
+        employerData.setOriginEmployerTin("URE180429TM6");
+
+// Receptor
+        InvoiceRecipient recipient = new InvoiceRecipient();
+        recipient.setTin("XOJI740919U48");
+        recipient.setLegalName("INGRID XODAR JIMENEZ");
+        recipient.setZipCode("76028");
+        recipient.setTaxRegimeCode("605");
+        recipient.setCfdiUseCode("CN01");
+
+        EmployeeData employeeData = new EmployeeData();
+        employeeData.setCurp("XEXX010101HNEXXXA4");
+        employeeData.setSocialSecurityNumber("000000");
+        employeeData.setLaborRelationStartDate(LocalDateTime.parse("2015-01-01"));
+        employeeData.setSeniority("P439W");
+        employeeData.setSatContractTypeId("01");
+        employeeData.setSatWorkdayTypeId("01");
+        employeeData.setSatTaxRegimeTypeId("03");
+        employeeData.setEmployeeNumber("120");
+        employeeData.setDepartment("Desarrollo");
+        employeeData.setPosition("Ingeniero de Software");
+        employeeData.setSatJobRiskId("1");
+        employeeData.setSatPaymentPeriodicityId("99");
+        employeeData.setSatBankId("002");
+        employeeData.setBankAccount("1111111111");
+        employeeData.setIntegratedDailySalary(146.47);
+        employeeData.setSatPayrollStateId("JAL");
+
+// Payroll
+        Payroll payroll = new Payroll();
+        payroll.setVersion("1.2");
+        payroll.setPayrollTypeCode("E");
+        payroll.setPaymentDate(LocalDateTime.parse("2023-06-04T00:00:00"));
+        payroll.setInitialPaymentDate(LocalDateTime.parse("2023-06-04T00:00:00"));
+        payroll.setFinalPaymentDate(LocalDateTime.parse("2023-06-04T00:00:00"));
+        payroll.setDaysPaid(30);
+
+// Earnings
+        PayrollEarnings payrollEarnings = new PayrollEarnings();
+        List<PayrollEarning> earnings = new ArrayList<>();
+
+        PayrollEarning e1 = new PayrollEarning();
+        e1.setEarningTypeCode("002");
+        e1.setCode("00500");
+        e1.setConcept("Gratificación Anual (Aguinaldo)");
+        e1.setTaxedAmount(0.00);
+        e1.setExemptAmount(10000.00);
+
+        earnings.add(e1);
+
+// Other Payments
+        List<PayrollEarningOtherPayment> otherPayments = new ArrayList<>();
+
+        payrollEarnings.setEarnings(earnings);
+        payrollEarnings.setOtherPayments(otherPayments);
+
+// Deductions (empty list)
+        List<PayrollDeduction> payrollDeductions = new ArrayList<>();
+
+        payroll.setEarnings(payrollEarnings);
+        payroll.setDeductions(payrollDeductions);
+
+// Invoice
+        Invoice invoice = new Invoice();
+        invoice.setVersionCode("4.0");
+        invoice.setSeries("F");
+        invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+        invoice.setTypeCode("N");
+        invoice.setPaymentMethodCode("PUE");
+        invoice.setCurrencyCode("MXN");
+        invoice.setExpeditionZipCode("20000");
+        invoice.setExportCode("01");
+        invoice.setIssuer(issuer);
+        invoice.setRecipient(recipient);
+        invoice.setComplement(invoice.getComplement());
+
+        ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+
+        System.out.println(apiResponse);
+
+        Nómina extraordinaria por referencias
+        // Emisor
+        InvoiceIssuer issuer = new InvoiceIssuer();
+        issuer.setId("bef56254-0892-4558-95c3-f9c8729e4b0e");
+
+// Receptor
+        InvoiceRecipient recipient = new InvoiceRecipient();
+        recipient.setId("54fc14ae-c88f-4afc-996b-0574d63341e2");
+
+// Payroll
+        Payroll payroll = new Payroll();
+        payroll.setVersion("1.2");
+        payroll.setPayrollTypeCode("E");
+        payroll.setPaymentDate("2023-06-04T00:00:00");
+        payroll.setInitialPaymentDate("2023-06-04T00:00:00");
+        payroll.setFinalPaymentDate("2023-06-04T00:00:00");
+        payroll.setDaysPaid(30);
+
+// Earnings
+        PayrollEarnings payrollEarnings = new PayrollEarnings();
+        List<PayrollEarning> earnings = new ArrayList<>();
+
+        PayrollEarning e1 = new PayrollEarning();
+        e1.setEarningTypeCode("002");
+        e1.setCode("00500");
+        e1.setConcept("Gratificación Anual (Aguinaldo)");
+        e1.setTaxedAmount(new BigDecimal("0.00"));
+        e1.setExemptAmount(new BigDecimal("10000.00"));
+
+        earnings.add(e1);
+
+// Other Payments
+        List<PayrollEarningOtherPayment> otherPayments = new ArrayList<>();
+
+        payrollEarnings.setEarnings(earnings);
+        payrollEarnings.setOtherPayments(otherPayments);
+
+// Deductions (empty list)
+        List<PayrollDeduction> payrollDeductions = new ArrayList<>();
+
+        payroll.setEarnings(payrollEarnings);
+        payroll.setDeductions(payrollDeductions);
+
+        Complement complement = new Complement();
+        complement.setPayroll(payroll);
+
+// Invoice
+        Invoice invoice = new Invoice();
+        invoice.setVersionCode("4.0");
+        invoice.setSeries("F");
+        invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+        invoice.setTypeCode("N");
+        invoice.setPaymentMethodCode("PUE");
+        invoice.setCurrencyCode("MXN");
+        invoice.setExpeditionZipCode("20000");
+        invoice.setExportCode("01");
+        invoice.setIssuer(issuer);
+        invoice.setRecipient(recipient);
+        invoice.setComplement(complement);
+
+        ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+
+        System.out.println(apiResponse);
+
+        // Nómina separacion indemnización
+        // Emisor
+        InvoiceIssuer issuer = new InvoiceIssuer();
+        issuer.setTin("EKU9003173C9");
+        issuer.setLegalName("ESCUELA KEMPER URGATE");
+        issuer.setTaxRegimeCode("601");
+
+        EmployerData employerData = new EmployerData();
+        employerData.setEmployerRegistration("B5510768108");
+        employerData.setOriginEmployerTin("URE180429TM6");
+
+// Receptor
+        InvoiceRecipient recipient = new InvoiceRecipient();
+        recipient.setTin("XOJI740919U48");
+        recipient.setLegalName("INGRID XODAR JIMENEZ");
+        recipient.setZipCode("76028");
+        recipient.setTaxRegimeCode("605");
+        recipient.setCfdiUseCode("CN01");
+
+        EmployeeData employeeData = new EmployeeData();
+        employeeData.setCurp("XEXX010101HNEXXXA4");
+        employeeData.setSocialSecurityNumber("000000");
+        employeeData.setLaborRelationStartDate(LocalDateTime.parse("2015-01-01"));
+        employeeData.setSeniority("P439W");
+        employeeData.setSatContractTypeId("01");
+        employeeData.setSatWorkdayTypeId("01");
+        employeeData.setSatTaxRegimeTypeId("03");
+        employeeData.setEmployeeNumber("120");
+        employeeData.setDepartment("Desarrollo");
+        employeeData.setPosition("Ingeniero de Software");
+        employeeData.setSatJobRiskId("1");
+        employeeData.setSatPaymentPeriodicityId("99");
+        employeeData.setSatBankId("002");
+        employeeData.setBankAccount("1111111111");
+        employeeData.setIntegratedDailySalary(146.47);
+        employeeData.setSatPayrollStateId("JAL");
+
+// Payroll
+        Payroll payroll = new Payroll();
+        payroll.setVersion("1.2");
+        payroll.setPayrollTypeCode("E");
+        payroll.setPaymentDate(LocalDateTime.parse("2023-06-04T00:00:00"));
+        payroll.setInitialPaymentDate(LocalDateTime.parse("2023-05-05T00:00:00"));
+        payroll.setFinalPaymentDate(LocalDateTime.parse("2023-06-04T00:00:00"));
+        payroll.setDaysPaid(30);
+
+// Earnings
+        PayrollEarnings payrollEarnings = new PayrollEarnings();
+        List<PayrollEarning> earnings = new ArrayList<>();
+
+        PayrollEarning e1 = new PayrollEarning();
+        e1.setEarningTypeCode("023");
+        e1.setCode("00500");
+        e1.setConcept("Pagos por separación");
+        e1.setTaxedAmount(0.00);
+        e1.setExemptAmount(10000.00);
+
+        PayrollEarning e2 = new PayrollEarning();
+        e2.setEarningTypeCode("025");
+        e2.setCode("00900");
+        e2.setConcept("Indemnizaciones");
+        e2.setTaxedAmount(0.00);
+        e2.setExemptAmount(500.00);
+
+        earnings.add(e1);
+        earnings.add(e2);
+
+// Other Payments
+        List<PayrollEarningOtherPayment> otherPayments = new ArrayList<>();
+
+// Severance
+        PayrollSeverance severance = new PayrollSeverance();
+        severance.setTotalPaid(10500.00);
+        severance.setYearsOfService(1);
+        severance.setLastMonthlySalary(10000.00);
+        severance.setAccumulableIncome(10000.00);
+        severance.setNonAccumulableIncome(0.00);
+
+        payrollEarnings.setEarnings(earnings);
+        payrollEarnings.setOtherPayments(otherPayments);
+        payrollEarnings.setSeverance(severance);
+
+// Deductions (empty list)
+        List<PayrollDeduction> payrollDeductions = new ArrayList<>();
+
+        payroll.setEarnings(payrollEarnings);
+        payroll.setDeductions(payrollDeductions);
+
+// Invoice
+        Invoice invoice = new Invoice();
+        invoice.setVersionCode("4.0");
+        invoice.setSeries("F");
+        invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+        invoice.setTypeCode("N");
+        invoice.setPaymentMethodCode("PUE");
+        invoice.setCurrencyCode("MXN");
+        invoice.setExpeditionZipCode("20000");
+        invoice.setExportCode("01");
+        invoice.setIssuer(issuer);
+        invoice.setRecipient(recipient);
+        invoice.setComplement(invoice.getComplement());
+
+        ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+
+        // Nómina separacion indemnización por referencias
+        // Emisor
+        InvoiceIssuer issuer = new InvoiceIssuer();
+        issuer.setId("0e82a655-5f0c-4e07-abab-8f322e4123ef");
+
+        // Receptor
+        InvoiceRecipient recipient = new InvoiceRecipient();
+        recipient.setId("aa2ad8c3-6ec5-4601-91be-d827d9a865bc");
+        
+
+        Payroll payroll = new Payroll();
+        payroll.setVersion("1.2");
+        payroll.setPayrollTypeCode("E");
+        payroll.setPaymentDate("2023-06-04T00:00:00");
+        payroll.setInitialPaymentDate("2023-06-04T00:00:00");
+        payroll.setFinalPaymentDate("2023-06-04T00:00:00");
+        payroll.setDaysPaid(30);
+        PayrollEarnings payrollEarnings = new PayrollEarnings();
+        List<PayrollEarning> earnings = new ArrayList<>();
+
+        PayrollEarning e1 = new PayrollEarning();
+        e1.setEarningTypeCode("023");
+        e1.setCode("00500");
+        e1.setConcept("Pagos por separación");
+        e1.setTaxedAmount(new BigDecimal("0"));
+        e1.setExemptAmount(new BigDecimal("10000.0"));
+
+        PayrollEarning e2 = new PayrollEarning();
+        e2.setEarningTypeCode("025");
+        e2.setCode("00900");
+        e2.setConcept("Indemnizaciones");
+        e2.setTaxedAmount(new BigDecimal("0"));
+        e2.setExemptAmount(new BigDecimal("500.0"));
+
+        earnings.add(e1);
+        earnings.add(e2);
+
+        List<PayrollEarningOtherPayment> otherPayments = new ArrayList<>();
+        PayrollSeverance severance = new PayrollSeverance();
+        severance.setTotalPaid(new BigDecimal("10500.00"));
+        severance.setYearsOfService(1);
+        severance.setLastMonthlySalary(new BigDecimal("10000.00"));
+        severance.setAccumulableIncome(new BigDecimal("10000.00"));
+        severance.setNonAccumulableIncome(new BigDecimal("0"));
+
+        payrollEarnings.setEarnings(earnings);
+        payrollEarnings.setOtherPayments(otherPayments);
+        payrollEarnings.setSeverance(severance);
+        payroll.setEarnings(payrollEarnings);
+
+        List<PayrollDeduction> payrollDeductions = new ArrayList<>();
+
+        payroll.setDeductions(payrollDeductions);
+        Complement complement = new Complement();
+        complement.setPayroll(payroll);
+
+        Invoice invoice = new Invoice();
+        invoice.setVersionCode("4.0");
+        invoice.setSeries("F");
+        invoice.setDate(LocalDateTime.now());
+        invoice.setTypeCode("N");
+        invoice.setExpeditionZipCode("20000");
+        invoice.setIssuer(issuer);
+        invoice.setRecipient(recipient);
+        invoice.setDate(LocalDateTime.now());
+        invoice.setPaymentMethodCode("PUE");
+        invoice.setComplement(complement);
+
+        ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+        System.out.println(apiResponse);
+
+        // Nómina jubilación
+        // Emisor
+        InvoiceIssuer issuer = new InvoiceIssuer();
+        issuer.setTin("EKU9003173C9");
+        issuer.setLegalName("ESCUELA KEMPER URGATE");
+        issuer.setTaxRegimeCode("601");
+
+        EmployerData employerData = new EmployerData();
+        employerData.setEmployerRegistration("B5510768108");
+        employerData.setOriginEmployerTin("URE180429TM6");
+
+// Receptor
+        InvoiceRecipient recipient = new InvoiceRecipient();
+        recipient.setTin("XOJI740919U48");
+        recipient.setLegalName("INGRID XODAR JIMENEZ");
+        recipient.setZipCode("76028");
+        recipient.setTaxRegimeCode("605");
+        recipient.setCfdiUseCode("CN01");
+
+        EmployeeData employeeData = new EmployeeData();
+        employeeData.setCurp("XEXX010101HNEXXXA4");
+        employeeData.setSocialSecurityNumber("000000");
+        employeeData.setLaborRelationStartDate(LocalDateTime.parse("2015-01-01"));
+        employeeData.setSeniority("P439W");
+        employeeData.setSatContractTypeId("01");
+        employeeData.setSatWorkdayTypeId("01");
+        employeeData.setSatTaxRegimeTypeId("03");
+        employeeData.setEmployeeNumber("120");
+        employeeData.setDepartment("Desarrollo");
+        employeeData.setPosition("Ingeniero de Software");
+        employeeData.setSatJobRiskId("1");
+        employeeData.setSatPaymentPeriodicityId("99");
+        employeeData.setSatBankId("002");
+        employeeData.setBankAccount("1111111111");
+        employeeData.setIntegratedDailySalary(146.47);
+        employeeData.setSatPayrollStateId("JAL");
+
+// Payroll
+        Payroll payroll = new Payroll();
+        payroll.setVersion("1.2");
+        payroll.setPayrollTypeCode("E");
+        payroll.setPaymentDate(LocalDateTime.parse("2023-05-05T00:00:00"));
+        payroll.setInitialPaymentDate(LocalDateTime.parse("2023-06-04T00:00:00"));
+        payroll.setFinalPaymentDate(LocalDateTime.parse("2023-06-04T00:00:00"));
+        payroll.setDaysPaid(30);
+
+// Earnings
+        PayrollEarnings payrollEarnings = new PayrollEarnings();
+        List<PayrollEarning> earnings = new ArrayList<>();
+
+        PayrollEarning e1 = new PayrollEarning();
+        e1.setEarningTypeCode("039");
+        e1.setCode("00500");
+        e1.setConcept("Jubilaciones, pensiones o haberes de retiro");
+        e1.setTaxedAmount(0.00);
+        e1.setExemptAmount(10000.00);
+
+        earnings.add(e1);
+
+// Other Payments
+        List<PayrollEarningOtherPayment> otherPayments = new ArrayList<>();
+
+// Retirement
+        PayrollRetirement retirement = new PayrollRetirement();
+        retirement.setTotalOneTime(10000.00);
+        retirement.setAccumulableIncome(10000.00);
+        retirement.setNonAccumulableIncome(0.00);
+
+        payrollEarnings.setEarnings(earnings);
+        payrollEarnings.setOtherPayments(otherPayments);
+        payrollEarnings.setRetirement(retirement);
+
+// Deductions (empty list)
+        List<PayrollDeduction> payrollDeductions = new ArrayList<>();
+
+        payroll.setEarnings(payrollEarnings);
+        payroll.setDeductions(payrollDeductions);
+
+// Invoice
+        Invoice invoice = new Invoice();
+        invoice.setVersionCode("4.0");
+        invoice.setSeries("F");
+        invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+        invoice.setTypeCode("N");
+        invoice.setPaymentMethodCode("PUE");
+        invoice.setCurrencyCode("MXN");
+        invoice.setExpeditionZipCode("20000");
+        invoice.setExportCode("01");
+        invoice.setIssuer(issuer);
+        invoice.setRecipient(recipient);
+        invoice.setComplement(invoice.getComplement());
+
+        ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+
+        System.out.println(apiResponse);
+
+        // Nómina jubilación por referencias
+        // Emisor
+        InvoiceIssuer issuer = new InvoiceIssuer();
+        issuer.setId("bef56254-0892-4558-95c3-f9c8729e4b0e");
+
+// Receptor
+        InvoiceRecipient recipient = new InvoiceRecipient();
+        recipient.setId("54fc14ae-c88f-4afc-996b-0574d63341e2");
+
+// Payroll
+        Payroll payroll = new Payroll();
+        payroll.setVersion("1.2");
+        payroll.setPayrollTypeCode("E");
+        payroll.setPaymentDate("2023-05-05T00:00:00");
+        payroll.setInitialPaymentDate("2023-06-04T00:00:00");
+        payroll.setFinalPaymentDate("2023-06-04T00:00:00");
+        payroll.setDaysPaid(30);
+
+// Earnings
+        PayrollEarnings payrollEarnings = new PayrollEarnings();
+        List<PayrollEarning> earnings = new ArrayList<>();
+
+        PayrollEarning e1 = new PayrollEarning();
+        e1.setEarningTypeCode("039");
+        e1.setCode("00500");
+        e1.setConcept("Jubilaciones, pensiones o haberes de retiro");
+        e1.setTaxedAmount(new BigDecimal("0.00"));
+        e1.setExemptAmount(new BigDecimal("10000.00"));
+
+        earnings.add(e1);
+
+// Other Payments
+        List<PayrollEarningOtherPayment> otherPayments = new ArrayList<>();
+
+// Retirement
+        PayrollRetirement retirement = new PayrollRetirement();
+        retirement.setTotalOneTime(new BigDecimal("10000.00"));
+        retirement.setAccumulableIncome(new BigDecimal("10000.00"));
+        retirement.setNonAccumulableIncome(new BigDecimal("0.00"));
+
+        payrollEarnings.setEarnings(earnings);
+        payrollEarnings.setOtherPayments(otherPayments);
+        payrollEarnings.setRetirement(retirement);
+
+// Deductions (empty list)
+        List<PayrollDeduction> payrollDeductions = new ArrayList<>();
+
+        payroll.setEarnings(payrollEarnings);
+        payroll.setDeductions(payrollDeductions);
+
+        Complement complement = new Complement();
+        complement.setPayroll(payroll);
+
+// Invoice
+        Invoice invoice = new Invoice();
+        invoice.setVersionCode("4.0");
+        invoice.setSeries("F");
+        invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+        invoice.setTypeCode("N");
+        invoice.setPaymentMethodCode("PUE");
+        invoice.setCurrencyCode("MXN");
+        invoice.setExpeditionZipCode("20000");
+        invoice.setExportCode("01");
+        invoice.setIssuer(issuer);
+        invoice.setRecipient(recipient);
+        invoice.setComplement(complement);
+
+        ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+
+        System.out.println(apiResponse);
+
+        // Nómina sin deducciones
+        // Emisor
+        InvoiceIssuer issuer = new InvoiceIssuer();
+        issuer.setTin("EKU9003173C9");
+        issuer.setLegalName("ESCUELA KEMPER URGATE");
+        issuer.setTaxRegimeCode("601");
+
+        EmployerData employerData = new EmployerData();
+        employerData.setEmployerRegistration("B5510768108");
+        employerData.setOriginEmployerTin("URE180429TM6");
+
+// Receptor
+        InvoiceRecipient recipient = new InvoiceRecipient();
+        recipient.setTin("XOJI740919U48");
+        recipient.setLegalName("INGRID XODAR JIMENEZ");
+        recipient.setZipCode("76028");
+        recipient.setTaxRegimeCode("605");
+        recipient.setCfdiUseCode("CN01");
+
+        EmployeeData employeeData = new EmployeeData();
+        employeeData.setCurp("XEXX010101HNEXXXA4");
+        employeeData.setSocialSecurityNumber("000000");
+        employeeData.setLaborRelationStartDate(LocalDateTime.parse("2015-01-01"));
+        employeeData.setSeniority("P437W");
+        employeeData.setSatContractTypeId("01");
+        employeeData.setSatWorkdayTypeId("01");
+        employeeData.setSatTaxRegimeTypeId("03");
+        employeeData.setEmployeeNumber("120");
+        employeeData.setDepartment("Desarrollo");
+        employeeData.setPosition("Ingeniero de Software");
+        employeeData.setSatJobRiskId("1");
+        employeeData.setSatPaymentPeriodicityId("04");
+        employeeData.setSatBankId("002");
+        employeeData.setBankAccount("1111111111");
+        employeeData.setBaseSalaryForContributions(490.22);
+        employeeData.setIntegratedDailySalary(146.47);
+        employeeData.setSatPayrollStateId("JAL");
+
+// Payroll
+        Payroll payroll = new Payroll();
+        payroll.setVersion("1.2");
+        payroll.setPayrollTypeCode("O");
+        payroll.setPaymentDate(LocalDateTime.parse("2023-05-24T00:00:00"));
+        payroll.setInitialPaymentDate(LocalDateTime.parse("2023-05-09T00:00:00"));
+        payroll.setFinalPaymentDate(LocalDateTime.parse("2023-05-24T00:00:00"));
+        payroll.setDaysPaid(15);
+
+// Earnings
+        PayrollEarnings payrollEarnings = new PayrollEarnings();
+        List<PayrollEarning> earnings = new ArrayList<>();
+
+        PayrollEarning e1 = new PayrollEarning();
+        e1.setEarningTypeCode("001");
+        e1.setCode("00500");
+        e1.setConcept("Sueldos, Salarios Rayas y Jornales");
+        e1.setTaxedAmount(2808.8);
+        e1.setExemptAmount(2191.2);
+
+        earnings.add(e1);
+
+// Other Payments
+        List<PayrollEarningOtherPayment> otherPayments = new ArrayList<>();
+
+        payrollEarnings.setEarnings(earnings);
+        payrollEarnings.setOtherPayments(otherPayments);
+
+// Deductions (empty list)
+        List<PayrollDeduction> payrollDeductions = new ArrayList<>();
+
+        payroll.setEarnings(payrollEarnings);
+        payroll.setDeductions(payrollDeductions);
+
+// Invoice
+        Invoice invoice = new Invoice();
+        invoice.setVersionCode("4.0");
+        invoice.setSeries("F");
+        invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+        invoice.setTypeCode("N");
+        invoice.setPaymentMethodCode("PUE");
+        invoice.setCurrencyCode("MXN");
+        invoice.setExpeditionZipCode("20000");
+        invoice.setExportCode("01");
+        invoice.setIssuer(issuer);
+        invoice.setRecipient(recipient);
+        invoice.setComplement(invoice.getComplement());
+
+        ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+
+        System.out.println(apiResponse);
+
+        //Nómina sin deducciones por referencias
+        // Emisor
+        InvoiceIssuer issuer = new InvoiceIssuer();
+        issuer.setId("bef56254-0892-4558-95c3-f9c8729e4b0e");
+
+// Receptor
+        InvoiceRecipient recipient = new InvoiceRecipient();
+        recipient.setId("54fc14ae-c88f-4afc-996b-0574d63341e2");
+
+// Payroll
+        Payroll payroll = new Payroll();
+        payroll.setVersion("1.2");
+        payroll.setPayrollTypeCode("O");
+        payroll.setPaymentDate("2023-05-24T00:00:00");
+        payroll.setInitialPaymentDate("2023-05-09T00:00:00");
+        payroll.setFinalPaymentDate("2023-05-24T00:00:00");
+        payroll.setDaysPaid(15);
+
+// Earnings
+        PayrollEarnings payrollEarnings = new PayrollEarnings();
+        List<PayrollEarning> earnings = new ArrayList<>();
+
+        PayrollEarning e1 = new PayrollEarning();
+        e1.setEarningTypeCode("001");
+        e1.setCode("00500");
+        e1.setConcept("Sueldos, Salarios Rayas y Jornales");
+        e1.setTaxedAmount(new BigDecimal("2808.8"));
+        e1.setExemptAmount(new BigDecimal("2191.2"));
+
+        earnings.add(e1);
+
+// Other Payments
+        List<PayrollEarningOtherPayment> otherPayments = new ArrayList<>();
+
+        payrollEarnings.setEarnings(earnings);
+        payrollEarnings.setOtherPayments(otherPayments);
+
+// Deductions (empty list)
+        List<PayrollDeduction> payrollDeductions = new ArrayList<>();
+
+        payroll.setEarnings(payrollEarnings);
+        payroll.setDeductions(payrollDeductions);
+
+        Complement complement = new Complement();
+        complement.setPayroll(payroll);
+// Invoice
+        Invoice invoice = new Invoice();
+        invoice.setVersionCode("4.0");
+        invoice.setSeries("F");
+        invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+        invoice.setTypeCode("N");
+        invoice.setPaymentMethodCode("PUE");
+        invoice.setCurrencyCode("MXN");
+        invoice.setExpeditionZipCode("20000");
+        invoice.setExportCode("01");
+        invoice.setIssuer(issuer);
+        invoice.setRecipient(recipient);
+        invoice.setComplement(complement);
+
+        ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+
+        System.out.println(apiResponse);
+
+        // Nómina viáticos
+        // Emisor
+        InvoiceIssuer issuer = new InvoiceIssuer();
+        issuer.setTin("EKU9003173C9");
+        issuer.setLegalName("ESCUELA KEMPER URGATE");
+        issuer.setTaxRegimeCode("601");
+
+        EmployerData employerData = new EmployerData();
+        employerData.setEmployerRegistration("B5510768108");
+        employerData.setOriginEmployerTin("URE180429TM6");
+
+// Receptor
+        InvoiceRecipient recipient = new InvoiceRecipient();
+        recipient.setTin("XOJI740919U48");
+        recipient.setLegalName("INGRID XODAR JIMENEZ");
+        recipient.setZipCode("76028");
+        recipient.setTaxRegimeCode("605");
+        recipient.setCfdiUseCode("CN01");
+
+        EmployeeData employeeData = new EmployeeData();
+        employeeData.setCurp("XEXX010101HNEXXXA4");
+        employeeData.setSocialSecurityNumber("000000");
+        employeeData.setLaborRelationStartDate(LocalDateTime.parse("2015-01-01T00:00:00"));
+        employeeData.setSeniority("P438W");
+        employeeData.setSatContractTypeId("01");
+        employeeData.setSatWorkdayTypeId("01");
+        employeeData.setSatTaxRegimeTypeId("03");
+        employeeData.setEmployeeNumber("120");
+        employeeData.setDepartment("Desarrollo");
+        employeeData.setPosition("Ingeniero de Software");
+        employeeData.setSatJobRiskId("1");
+        employeeData.setSatPaymentPeriodicityId("04");
+        employeeData.setSatBankId("002");
+        employeeData.setBankAccount("1111111111");
+        employeeData.setBaseSalaryForContributions(490.22);
+        employeeData.setIntegratedDailySalary(146.47);
+        employeeData.setSatPayrollStateId("JAL");
+
+// Payroll
+        Payroll payroll = new Payroll();
+        payroll.setVersion("1.2");
+        payroll.setPayrollTypeCode("O");
+        payroll.setPaymentDate(LocalDateTime.parse("2023-09-26T00:00:00"));
+        payroll.setInitialPaymentDate(LocalDateTime.parse("2023-09-11T00:00:00"));
+        payroll.setFinalPaymentDate(LocalDateTime.parse("2023-09-26T00:00:00"));
+        payroll.setDaysPaid(15);
+
+// Earnings
+        PayrollEarnings payrollEarnings = new PayrollEarnings();
+        List<PayrollEarning> earnings = new ArrayList<>();
+
+        PayrollEarning e1 = new PayrollEarning();
+        e1.setEarningTypeCode("050");
+        e1.setCode("050");
+        e1.setConcept("Viaticos");
+        e1.setTaxedAmount(0);
+        e1.setExemptAmount(3000);
+
+        earnings.add(e1);
+
+// Other Payments
+        List<PayrollEarningOtherPayment> otherPayments = new ArrayList<>();
+
+        payrollEarnings.setEarnings(earnings);
+        payrollEarnings.setOtherPayments(otherPayments);
+
+// Deductions
+        List<PayrollDeduction> payrollDeductions = new ArrayList<>();
+
+        PayrollDeduction d1 = new PayrollDeduction();
+        d1.setDeductionTypeCode("081");
+        d1.setCode("081");
+        d1.setConcept("Ajuste en viaticos entregados al trabajador");
+        d1.setAmount(3000);
+
+        payrollDeductions.add(d1);
+
+        payroll.setEarnings(payrollEarnings);
+        payroll.setDeductions(payrollDeductions);
+
+// Invoice
+        Invoice invoice = new Invoice();
+        invoice.setVersionCode("4.0");
+        invoice.setSeries("F");
+        invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+        invoice.setTypeCode("N");
+        invoice.setPaymentMethodCode("PUE");
+        invoice.setCurrencyCode("MXN");
+        invoice.setExpeditionZipCode("20000");
+        invoice.setExportCode("01");
+        invoice.setIssuer(issuer);
+        invoice.setRecipient(recipient);
+        invoice.setComplement(invoice.getComplement());
+
+        ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+
+        System.out.println(apiResponse);
+
+        // Nómina viáticos por referencias
+        // Emisor
+        InvoiceIssuer issuer = new InvoiceIssuer();
+        issuer.setId("0e82a655-5f0c-4e07-abab-8f322e4123ef");
+
+// Receptor
+        InvoiceRecipient recipient = new InvoiceRecipient();
+        recipient.setId("54fc14ae-c88f-4afc-996b-0574d63341e2");
+
+// Payroll
+        Payroll payroll = new Payroll();
+        payroll.setVersion("1.2");
+        payroll.setPayrollTypeCode("O");
+        payroll.setPaymentDate("2023-09-26T00:00:00");
+        payroll.setInitialPaymentDate("2023-09-11T00:00:00");
+        payroll.setFinalPaymentDate("2023-09-26T00:00:00");
+        payroll.setDaysPaid(15);
+
+// Earnings
+        PayrollEarnings payrollEarnings = new PayrollEarnings();
+        List<PayrollEarning> earnings = new ArrayList<>();
+
+        PayrollEarning e1 = new PayrollEarning();
+        e1.setEarningTypeCode("050");
+        e1.setCode("050");
+        e1.setConcept("Viaticos");
+        e1.setTaxedAmount(new BigDecimal("0"));
+        e1.setExemptAmount(new BigDecimal("3000"));
+
+        earnings.add(e1);
+
+// Other Payments
+        List<PayrollEarningOtherPayment> otherPayments = new ArrayList<>();
+
+        payrollEarnings.setEarnings(earnings);
+        payrollEarnings.setOtherPayments(otherPayments);
+
+// Deductions
+        List<PayrollDeduction> payrollDeductions = new ArrayList<>();
+
+        PayrollDeduction d1 = new PayrollDeduction();
+        d1.setDeductionTypeCode("081");
+        d1.setCode("081");
+        d1.setConcept("Ajuste en viaticos entregados al trabajador");
+        d1.setAmount("3000.00");
+
+        payrollDeductions.add(d1);
+
+        payroll.setEarnings(payrollEarnings);
+        payroll.setDeductions(payrollDeductions);
+
+        Complement complement = new Complement();
+        complement.setPayroll(payroll);
+
+// Invoice
+        Invoice invoice = new Invoice();
+        invoice.setVersionCode("4.0");
+        invoice.setSeries("F");
+        invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+        invoice.setTypeCode("N");
+        invoice.setPaymentMethodCode("PUE");
+        invoice.setCurrencyCode("MXN");
+        invoice.setExpeditionZipCode("20000");
+        invoice.setExportCode("01");
+        invoice.setIssuer(issuer);
+        invoice.setRecipient(recipient);
+        invoice.setComplement(complement);
+
+        ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+
+        System.out.println(apiResponse);
+
+        // Nómina subsidio causado al empleo
+        // Emisor
+        InvoiceIssuer issuer = new InvoiceIssuer();
+        issuer.setTin("EKU9003173C9");
+        issuer.setLegalName("ESCUELA KEMPER URGATE");
+        issuer.setTaxRegimeCode("601");
+
+        EmployerData employerData = new EmployerData();
+        employerData.setEmployerRegistration("B5510768108");
+        employerData.setOriginEmployerTin("URE180429TM6");
+
+// Receptor
+        InvoiceRecipient recipient = new InvoiceRecipient();
+        recipient.setTin("XOJI740919U48");
+        recipient.setLegalName("INGRID XODAR JIMENEZ");
+        recipient.setZipCode("76028");
+        recipient.setTaxRegimeCode("605");
+        recipient.setCfdiUseCode("CN01");
+
+        EmployeeData employeeData = new EmployeeData();
+        employeeData.setCurp("XEXX010101HNEXXXA4");
+        employeeData.setSocialSecurityNumber("000000");
+        employeeData.setLaborRelationStartDate(LocalDateTime.parse("2015-01-01T00:00:00"));
+        employeeData.setSeniority("P437W");
+        employeeData.setSatContractTypeId("01");
+        employeeData.setSatWorkdayTypeId("01");
+        employeeData.setSatTaxRegimeTypeId("0aa2ad8c3-6ec5-4601-91be-d827d9a865bc2");
+        employeeData.setEmployeeNumber("120");
+        employeeData.setDepartment("Desarrollo");
+        employeeData.setPosition("Ingeniero de Software");
+        employeeData.setSatJobRiskId("1");
+        employeeData.setSatPaymentPeriodicityId("04");
+        employeeData.setSatBankId("002");
+        employeeData.setBankAccount("1111111111");
+        employeeData.setBaseSalaryForContributions(490.22);
+        employeeData.setIntegratedDailySalary(146.47);
+        employeeData.setSatPayrollStateId("JAL");
+
+// Payroll
+        Payroll payroll = new Payroll();
+        payroll.setVersion("1.2");
+        payroll.setPayrollTypeCode("O");
+        payroll.setPaymentDate(LocalDateTime.parse("2023-05-24T00:00:00"));
+        payroll.setInitialPaymentDate(LocalDateTime.parse("2023-05-09T00:00:00"));
+        payroll.setFinalPaymentDate(LocalDateTime.parse("2023-05-24T00:00:00"));
+        payroll.setDaysPaid(15);
+
+// Earnings
+        PayrollEarnings payrollEarnings = new PayrollEarnings();
+        List<PayrollEarning> earnings = new ArrayList<>();
+
+        PayrollEarning e1 = new PayrollEarning();
+        e1.setEarningTypeCode("001");
+        e1.setCode("00500");
+        e1.setConcept("Sueldos, Salarios Rayas y Jornales");
+        e1.setTaxedAmount(2808.8);
+        e1.setExemptAmount(2191.2);
+
+        earnings.add(e1);
+
+// Other Payments
+        List<PayrollEarningOtherPayment> otherPayments = new ArrayList<>();
+
+        PayrollEarningOtherPayment op1 = new PayrollEarningOtherPayment();
+        op1.setOtherPaymentTypeCode("007");
+        op1.setCode("0002");
+        op1.setConcept("ISR ajustado por subsidio");
+        op1.setAmount(145.80);
+        op1.setSubsidyCaused(0.0);
+
+        otherPayments.add(op1);
+
+        payrollEarnings.setEarnings(earnings);
+        payrollEarnings.setOtherPayments(otherPayments);
+
+// Deductions
+        List<PayrollDeduction> payrollDeductions = new ArrayList<>();
+
+        PayrollDeduction d1 = new PayrollDeduction();
+        d1.setDeductionTypeCode("107");
+        d1.setCode("D002");
+        d1.setConcept("Ajuste al Subsidio Causado");
+        d1.setAmount(160.35);
+
+        PayrollDeduction d2 = new PayrollDeduction();
+        d2.setDeductionTypeCode("002");
+        d2.setCode("D002");
+        d2.setConcept("ISR");
+        d2.setAmount(145.80);
+
+        payrollDeductions.add(d1);
+        payrollDeductions.add(d2);
+
+        payroll.setEarnings(payrollEarnings);
+        payroll.setDeductions(payrollDeductions);
+
+// Invoice
+        Invoice invoice = new Invoice();
+        invoice.setVersionCode("4.0");
+        invoice.setSeries("F");
+        invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+        invoice.setTypeCode("N");
+        invoice.setPaymentMethodCode("PUE");
+        invoice.setCurrencyCode("MXN");
+        invoice.setExpeditionZipCode("20000");
+        invoice.setExportCode("01");
+        invoice.setIssuer(issuer);
+        invoice.setRecipient(recipient);
+        invoice.setComplement(invoice.getComplement());
+
+        ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+
+        System.out.println(apiResponse);
+
+        //Nómina subsidio causado al empleo por referencias
+        // Emisor
+        InvoiceIssuer issuer = new InvoiceIssuer();
+        issuer.setId("bef56254-0892-4558-95c3-f9c8729e4b0e");
+
+// Receptor
+        InvoiceRecipient recipient = new InvoiceRecipient();
+        recipient.setId("54fc14ae-c88f-4afc-996b-0574d63341e2");
+
+// Payroll
+        Payroll payroll = new Payroll();
+        payroll.setVersion("1.2");
+        payroll.setPayrollTypeCode("O");
+        payroll.setPaymentDate("2023-05-24T00:00:00");
+        payroll.setInitialPaymentDate("2023-05-09T00:00:00");
+        payroll.setFinalPaymentDate("2023-05-24T00:00:00");
+        payroll.setDaysPaid(15);
+
+// Earnings
+        PayrollEarnings payrollEarnings = new PayrollEarnings();
+        List<PayrollEarning> earnings = new ArrayList<>();
+
+        PayrollEarning e1 = new PayrollEarning();
+        e1.setEarningTypeCode("001");
+        e1.setCode("00500");
+        e1.setConcept("Sueldos, Salarios Rayas y Jornales");
+        e1.setTaxedAmount(new BigDecimal("2808.8"));
+        e1.setExemptAmount(new BigDecimal("2191.2"));
+
+        earnings.add(e1);
+
+// Other Payments
+        List<PayrollEarningOtherPayment> otherPayments = new ArrayList<>();
+
+        PayrollEarningOtherPayment op1 = new PayrollEarningOtherPayment();
+        op1.setOtherPaymentTypeCode("007");
+        op1.setCode("0002");
+        op1.setConcept("ISR ajustado por subsidio");
+        op1.setAmount(new BigDecimal("145.80"));
+        op1.setSubsidyCaused(new BigDecimal("0.0"));
+
+        otherPayments.add(op1);
+
+        payrollEarnings.setEarnings(earnings);
+        payrollEarnings.setOtherPayments(otherPayments);
+
+// Deductions
+        List<PayrollDeduction> payrollDeductions = new ArrayList<>();
+
+        PayrollDeduction d1 = new PayrollDeduction();
+        d1.setDeductionTypeCode("107");
+        d1.setCode("D002");
+        d1.setConcept("Ajuste al Subsidio Causado");
+        d1.setAmount("160.35");
+
+        PayrollDeduction d2 = new PayrollDeduction();
+        d2.setDeductionTypeCode("002");
+        d2.setCode("D002");
+        d2.setConcept("ISR");
+        d2.setAmount("145.80");
+
+        payrollDeductions.add(d1);
+        payrollDeductions.add(d2);
+
+        payroll.setEarnings(payrollEarnings);
+        payroll.setDeductions(payrollDeductions);
+
+        Complement complement = new Complement();
+        complement.setPayroll(payroll);
+
+// Invoice
+        Invoice invoice = new Invoice();
+        invoice.setVersionCode("4.0");
+        invoice.setSeries("F");
+        invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+        invoice.setTypeCode("N");
+        invoice.setPaymentMethodCode("PUE");
+        invoice.setCurrencyCode("MXN");
+        invoice.setExpeditionZipCode("20000");
+        invoice.setExportCode("01");
+        invoice.setIssuer(issuer);
+        invoice.setRecipient(recipient);
+        invoice.setComplement(complement);
+
+        ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+
+        System.out.println(apiResponse);
+
+        // Nómina
+        // Emisor
+        InvoiceIssuer issuer = new InvoiceIssuer();
+        issuer.setTin("EKU9003173C9");
+        issuer.setLegalName("ESCUELA KEMPER URGATE");
+        issuer.setTaxRegimeCode("601");
+
+        EmployerData employerData = new EmployerData();
+        employerData.setEmployerRegistration("B5510768108");
+        employerData.setOriginEmployerTin("URE180429TM6");
+
+// Receptor
+        InvoiceRecipient recipient = new InvoiceRecipient();
+        recipient.setTin("XOJI740919U48");
+        recipient.setLegalName("INGRID XODAR JIMENEZ");
+        recipient.setZipCode("76028");
+        recipient.setTaxRegimeCode("605");
+        recipient.setCfdiUseCode("CN01");
+
+        EmployeeData employeeData = new EmployeeData();
+        employeeData.setCurp("XEXX010101HNEXXXA4");
+        employeeData.setSocialSecurityNumber("000000");
+        employeeData.setLaborRelationStartDate(LocalDateTime.parse("2015-01-01T00:00:00"));
+        employeeData.setSeniority("P437W");
+        employeeData.setSatContractTypeId("01");
+        employeeData.setSatWorkdayTypeId("01");
+        employeeData.setSatTaxRegimeTypeId("03");
+        employeeData.setEmployeeNumber("120");
+        employeeData.setDepartment("Desarrollo");
+        employeeData.setPosition("Ingeniero de Software");
+        employeeData.setSatJobRiskId("1");
+        employeeData.setSatPaymentPeriodicityId("04");
+        employeeData.setSatBankId("002");
+        employeeData.setBankAccount("1111111111");
+        employeeData.setBaseSalaryForContributions(490.22);
+        employeeData.setIntegratedDailySalary(146.47);
+        employeeData.setSatPayrollStateId("JAL");
+
+// Payroll
+        Payroll payroll = new Payroll();
+        payroll.setVersion("1.2");
+        payroll.setPayrollTypeCode("O");
+        payroll.setPaymentDate(LocalDateTime.parse("2023-05-24T00:00:00"));
+        payroll.setInitialPaymentDate(LocalDateTime.parse("2023-05-09T00:00:00"));
+        payroll.setFinalPaymentDate(LocalDateTime.parse("2023-05-24T00:00:00"));
+        payroll.setDaysPaid(15);
+
+// Earnings
+        PayrollEarnings payrollEarnings = new PayrollEarnings();
+        List<PayrollEarning> earnings = new ArrayList<>();
+
+        PayrollEarning e1 = new PayrollEarning();
+        e1.setEarningTypeCode("001");
+        e1.setCode("00500");
+        e1.setConcept("Sueldos, Salarios Rayas y Jornales");
+        e1.setTaxedAmount(2808.8);
+        e1.setExemptAmount(2191.2);
+
+        earnings.add(e1);
+
+// Other Payments
+        List<PayrollEarningOtherPayment> otherPayments = new ArrayList<>();
+
+        payrollEarnings.setEarnings(earnings);
+        payrollEarnings.setOtherPayments(otherPayments);
+
+// Deductions
+        List<PayrollDeduction> payrollDeductions = new ArrayList<>();
+
+        PayrollDeduction d1 = new PayrollDeduction();
+        d1.setDeductionTypeCode("001");
+        d1.setCode("00301");
+        d1.setConcept("Seguridad Social");
+        d1.setAmount(200);
+
+        PayrollDeduction d2 = new PayrollDeduction();
+        d2.setDeductionTypeCode("002");
+        d2.setCode("00302");
+        d2.setConcept("ISR");
+        d2.setAmount(100);
+
+        payrollDeductions.add(d1);
+        payrollDeductions.add(d2);
+
+        payroll.setEarnings(payrollEarnings);
+        payroll.setDeductions(payrollDeductions);
+
+// Invoice
+        Invoice invoice = new Invoice();
+        invoice.setVersionCode("4.0");
+        invoice.setSeries("F");
+        invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+        invoice.setTypeCode("N");
+        invoice.setPaymentMethodCode("PUE");
+        invoice.setCurrencyCode("MXN");
+        invoice.setExpeditionZipCode("20000");
+        invoice.setExportCode("01");
+        invoice.setIssuer(issuer);
+        invoice.setRecipient(recipient);
+        invoice.setComplement(invoice.getComplement());
+
+        ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+
+        System.out.println(apiResponse);
+         */
+
+        //Complemento Impuestos locales
+        //Ingreso Impuestos locales
+        // Emisor
+        /*
+        InvoiceIssuer issuer = new InvoiceIssuer();
+        issuer.setTin("EKU9003173C9");
+        issuer.setLegalName("ESCUELA KEMPER URGATE");
+        issuer.setTaxRegimeCode("601");
+
+// Receptor
+        InvoiceRecipient recipient = new InvoiceRecipient();
+        recipient.setTin("EKU9003173C9");
+        recipient.setLegalName("ESCUELA KEMPER URGATE");
+        recipient.setZipCode("42501");
+        recipient.setTaxRegimeCode("601");
+        recipient.setCfdiUseCode("G01");
+        recipient.setEmail("someone@somewhere.com");
+
+// Items
+        List<InvoiceItem> items = new ArrayList<>();
+
+// Item 1
+        InvoiceItem item1 = new InvoiceItem();
+        item1.setItemCode("01010101");
+        item1.setQuantity(9.5);
+        item1.setUnitOfMeasurementCode("E48");
+        item1.setUnitOfMeasurement("Unidad de servicio");
+        item1.setDescription("Invoicing software as a service");
+        item1.setUnitPrice(3587.75);
+        item1.setTaxObjectCode("02");
+        item1.setItemSku("7506022301697");
+        item1.setDiscount(255.85);
+
+        List<ItemTax> taxes1 = new ArrayList<>();
+        ItemTax tax1 = new ItemTax();
+        tax1.setTaxCode("002");
+        tax1.setTaxTypeCode("Tasa");
+        tax1.setTaxRate("0.160000");
+        tax1.setTaxFlagCode("T");
+        taxes1.add(tax1);
+
+        item1.setItemTaxes(taxes1);
+
+// Item 2
+        InvoiceItem item2 = new InvoiceItem();
+        item2.setItemCode("01010101");
+        item2.setQuantity(8.0);
+        item2.setUnitOfMeasurementCode("E48");
+        item2.setUnitOfMeasurement("Unidad de servicio2");
+        item2.setDescription("Software Consultant");
+        item2.setUnitPrice(250.85);
+        item2.setTaxObjectCode("02");
+        item2.setItemSku("7506022301698");
+        item2.setDiscount(255.85);
+
+        List<ItemTax> taxes2 = new ArrayList<>();
+        ItemTax tax2 = new ItemTax();
+        tax2.setTaxCode("002");
+        tax2.setTaxTypeCode("Tasa");
+        tax2.setTaxRate("0.160000");
+        tax2.setTaxFlagCode("T");
+        taxes2.add(tax2);
+
+        item2.setItemTaxes(taxes2);
+
+// Item 3
+        InvoiceItem item3 = new InvoiceItem();
+        item3.setItemCode("01010101");
+        item3.setQuantity(6.0);
+        item3.setUnitOfMeasurementCode("E48");
+        item3.setUnitOfMeasurement("Unidad de servicio3");
+        item3.setDescription("Computer software");
+        item3.setUnitPrice(1250.75);
+        item3.setTaxObjectCode("02");
+        item3.setItemSku("7506022301699");
+
+        List<ItemTax> taxes3 = new ArrayList<>();
+        ItemTax tax3a = new ItemTax();
+        tax3a.setTaxCode("002");
+        tax3a.setTaxTypeCode("Tasa");
+        tax3a.setTaxRate("0.160000");
+        tax3a.setTaxFlagCode("T");
+        taxes3.add(tax3a);
+
+        ItemTax tax3b = new ItemTax();
+        tax3b.setTaxCode("002");
+        tax3b.setTaxTypeCode("Tasa");
+        tax3b.setTaxRate("0.106666");
+        tax3b.setTaxFlagCode("R");
+        taxes3.add(tax3b);
+
+        item3.setItemTaxes(taxes3);
+
+        items.add(item1);
+        items.add(item2);
+        items.add(item3);
+
+// Local Taxes Complement
+        LocalTaxes localTaxes = new LocalTaxes();
+        List<LocalTax> localTaxList = new ArrayList<>();
+
+        LocalTax localTax1 = new LocalTax();
+        localTax1.setTaxName("CEDULAR");
+        localTax1.setTaxRate(3.00);
+        localTax1.setTaxAmount(6.00);
+        localTax1.setTaxFlagCode("R");
+
+        LocalTax localTax2 = new LocalTax();
+        localTax2.setTaxName("ISH");
+        localTax2.setTaxRate(8.00);
+        localTax2.setTaxAmount(16.00);
+        localTax2.setTaxFlagCode("R");
+
+        localTaxList.add(localTax1);
+        localTaxList.add(localTax2);
+
+        localTaxes.setTaxes(localTaxList);
+
+// Invoice
+        Invoice invoice = new Invoice();
+        invoice.setVersionCode("4.0");
+        invoice.setSeries("F");
+        invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+        invoice.setPaymentFormCode("01");
+        invoice.setPaymentConditions("Contado");
+        invoice.setCurrencyCode("MXN");
+        invoice.setTypeCode("I");
+        invoice.setExpeditionZipCode("42501");
+        invoice.setPaymentMethodCode("PUE");
+        invoice.setExchangeRate(1.0);
+        invoice.setExportCode("01");
+        invoice.setIssuer(issuer);
+        invoice.setRecipient(recipient);
+        invoice.setItems(items);
+
+// Set complement with local taxes
+        Complement complement = new Complement();
+        complement.setLocalTaxes(localTaxes);
+        invoice.setComplement(complement);
+
+        ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+
+        System.out.println(apiResponse);
+         */
+
+        //Ingreso impuestos locales CEDULAR
+        // Emisor
+        /*
+        InvoiceIssuer issuer = new InvoiceIssuer();
+        issuer.setTin("EKU9003173C9");
+        issuer.setLegalName("ESCUELA KEMPER URGATE");
+        issuer.setTaxRegimeCode("601");
+
+// Receptor
+        InvoiceRecipient recipient = new InvoiceRecipient();
+        recipient.setTin("EKU9003173C9");
+        recipient.setLegalName("ESCUELA KEMPER URGATE");
+        recipient.setZipCode("42501");
+        recipient.setTaxRegimeCode("601");
+        recipient.setCfdiUseCode("G01");
+        recipient.setEmail("someone@somewhere.com");
+
+// Items
+        List<InvoiceItem> items = new ArrayList<>();
+
+// Item 1
+        InvoiceItem item1 = new InvoiceItem();
+        item1.setItemCode("01010101");
+        item1.setQuantity(9.5);
+        item1.setUnitOfMeasurementCode("E48");
+        item1.setUnitOfMeasurement("Unidad de servicio");
+        item1.setDescription("Invoicing software as a service");
+        item1.setUnitPrice(3587.75);
+        item1.setTaxObjectCode("02");
+        item1.setItemSku("7506022301697");
+        item1.setDiscount(255.85);
+
+        List<ItemTax> taxes1 = new ArrayList<>();
+        ItemTax tax1 = new ItemTax();
+        tax1.setTaxCode("002");
+        tax1.setTaxTypeCode("Tasa");
+        tax1.setTaxRate("0.160000");
+        tax1.setTaxFlagCode("T");
+        taxes1.add(tax1);
+
+        item1.setItemTaxes(taxes1);
+
+// Item 2
+        InvoiceItem item2 = new InvoiceItem();
+        item2.setItemCode("01010101");
+        item2.setQuantity(8.0);
+        item2.setUnitOfMeasurementCode("E48");
+        item2.setUnitOfMeasurement("Unidad de servicio2");
+        item2.setDescription("Software Consultant");
+        item2.setUnitPrice(250.85);
+        item2.setTaxObjectCode("02");
+        item2.setItemSku("7506022301698");
+        item2.setDiscount(255.85);
+
+        List<ItemTax> taxes2 = new ArrayList<>();
+        ItemTax tax2 = new ItemTax();
+        tax2.setTaxCode("002");
+        tax2.setTaxTypeCode("Tasa");
+        tax2.setTaxRate("0.160000");
+        tax2.setTaxFlagCode("T");
+        taxes2.add(tax2);
+
+        item2.setItemTaxes(taxes2);
+
+// Item 3
+        InvoiceItem item3 = new InvoiceItem();
+        item3.setItemCode("01010101");
+        item3.setQuantity(6.0);
+        item3.setUnitOfMeasurementCode("E48");
+        item3.setUnitOfMeasurement("Unidad de servicio3");
+        item3.setDescription("Computer software");
+        item3.setUnitPrice(1250.75);
+        item3.setTaxObjectCode("02");
+        item3.setItemSku("7506022301699");
+
+        List<ItemTax> taxes3 = new ArrayList<>();
+        ItemTax tax3a = new ItemTax();
+        tax3a.setTaxCode("002");
+        tax3a.setTaxTypeCode("Tasa");
+        tax3a.setTaxRate("0.160000");
+        tax3a.setTaxFlagCode("T");
+        taxes3.add(tax3a);
+
+        ItemTax tax3b = new ItemTax();
+        tax3b.setTaxCode("002");
+        tax3b.setTaxTypeCode("Tasa");
+        tax3b.setTaxRate("0.106666");
+        tax3b.setTaxFlagCode("R");
+        taxes3.add(tax3b);
+
+        item3.setItemTaxes(taxes3);
+
+        items.add(item1);
+        items.add(item2);
+        items.add(item3);
+
+// Local Taxes Complement - CEDULAR only
+        LocalTaxes localTaxes = new LocalTaxes();
+        List<LocalTax> localTaxList = new ArrayList<>();
+
+        LocalTax cedularTax = new LocalTax();
+        cedularTax.setTaxName("CEDULAR");
+        cedularTax.setTaxRate(3.00);
+        cedularTax.setTaxAmount(6.00);
+        cedularTax.setTaxFlagCode("R");
+
+        localTaxList.add(cedularTax);
+
+        localTaxes.setTaxes(localTaxList);
+
+// Invoice
+        Invoice invoice = new Invoice();
+        invoice.setVersionCode("4.0");
+        invoice.setSeries("F");
+        invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+        invoice.setPaymentFormCode("01");
+        invoice.setPaymentConditions("Contado");
+        invoice.setCurrencyCode("MXN");
+        invoice.setTypeCode("I");
+        invoice.setExpeditionZipCode("42501");
+        invoice.setPaymentMethodCode("PUE");
+        invoice.setExchangeRate(1.0);
+        invoice.setExportCode("01");
+        invoice.setIssuer(issuer);
+        invoice.setRecipient(recipient);
+        invoice.setItems(items);
+
+// Set complement with local taxes
+        Complement complement = new Complement();
+        complement.setLocalTaxes(localTaxes);
+        invoice.setComplement(complement);
+
+        ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+
+        System.out.println(apiResponse);
+         */
+
+        // Factura ingreso impuestos locales ISH
+        // Emisor
+        /*
+        InvoiceIssuer issuer = new InvoiceIssuer();
+        issuer.setTin("EKU9003173C9");
+        issuer.setLegalName("ESCUELA KEMPER URGATE");
+        issuer.setTaxRegimeCode("601");
+
+// Receptor
+        InvoiceRecipient recipient = new InvoiceRecipient();
+        recipient.setTin("EKU9003173C9");
+        recipient.setLegalName("ESCUELA KEMPER URGATE");
+        recipient.setZipCode("42501");
+        recipient.setTaxRegimeCode("601");
+        recipient.setCfdiUseCode("G01");
+        recipient.setEmail("someone@somewhere.com");
+
+// Items
+        List<InvoiceItem> items = new ArrayList<>();
+
+// Item 1
+        InvoiceItem item1 = new InvoiceItem();
+        item1.setItemCode("01010101");
+        item1.setQuantity(9.5);
+        item1.setUnitOfMeasurementCode("E48");
+        item1.setUnitOfMeasurement("Unidad de servicio");
+        item1.setDescription("Invoicing software as a service");
+        item1.setUnitPrice(3587.75);
+        item1.setTaxObjectCode("02");
+        item1.setItemSku("7506022301697");
+        item1.setDiscount(255.85);
+
+        List<ItemTax> taxes1 = new ArrayList<>();
+        ItemTax tax1 = new ItemTax();
+        tax1.setTaxCode("002");
+        tax1.setTaxTypeCode("Tasa");
+        tax1.setTaxRate("0.160000");
+        tax1.setTaxFlagCode("T");
+        taxes1.add(tax1);
+
+        item1.setItemTaxes(taxes1);
+
+// Item 2
+        InvoiceItem item2 = new InvoiceItem();
+        item2.setItemCode("01010101");
+        item2.setQuantity(8.0);
+        item2.setUnitOfMeasurementCode("E48");
+        item2.setUnitOfMeasurement("Unidad de servicio2");
+        item2.setDescription("Software Consultant");
+        item2.setUnitPrice(250.85);
+        item2.setTaxObjectCode("02");
+        item2.setItemSku("7506022301698");
+        item2.setDiscount(255.85);
+
+        List<ItemTax> taxes2 = new ArrayList<>();
+        ItemTax tax2 = new ItemTax();
+        tax2.setTaxCode("002");
+        tax2.setTaxTypeCode("Tasa");
+        tax2.setTaxRate("0.160000");
+        tax2.setTaxFlagCode("T");
+        taxes2.add(tax2);
+
+        item2.setItemTaxes(taxes2);
+
+// Item 3
+        InvoiceItem item3 = new InvoiceItem();
+        item3.setItemCode("01010101");
+        item3.setQuantity(6.0);
+        item3.setUnitOfMeasurementCode("E48");
+        item3.setUnitOfMeasurement("Unidad de servicio3");
+        item3.setDescription("Computer software");
+        item3.setUnitPrice(1250.75);
+        item3.setTaxObjectCode("02");
+        item3.setItemSku("7506022301699");
+
+        List<ItemTax> taxes3 = new ArrayList<>();
+        ItemTax tax3a = new ItemTax();
+        tax3a.setTaxCode("002");
+        tax3a.setTaxTypeCode("Tasa");
+        tax3a.setTaxRate("0.160000");
+        tax3a.setTaxFlagCode("T");
+        taxes3.add(tax3a);
+
+        ItemTax tax3b = new ItemTax();
+        tax3b.setTaxCode("002");
+        tax3b.setTaxTypeCode("Tasa");
+        tax3b.setTaxRate("0.106666");
+        tax3b.setTaxFlagCode("R");
+        taxes3.add(tax3b);
+
+        item3.setItemTaxes(taxes3);
+
+        items.add(item1);
+        items.add(item2);
+        items.add(item3);
+
+// Local Taxes Complement - ISH only
+        LocalTaxes localTaxes = new LocalTaxes();
+        List<LocalTax> localTaxList = new ArrayList<>();
+
+        LocalTax ishTax = new LocalTax();
+        ishTax.setTaxName("ISH");
+        ishTax.setTaxRate(8.00);
+        ishTax.setTaxAmount(16.00);
+        ishTax.setTaxFlagCode("R");
+
+        localTaxList.add(ishTax);
+
+        localTaxes.setTaxes(localTaxList);
+
+// Invoice
+        Invoice invoice = new Invoice();
+        invoice.setVersionCode("4.0");
+        invoice.setSeries("F");
+        invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+        invoice.setPaymentFormCode("01");
+        invoice.setPaymentConditions("Contado");
+        invoice.setCurrencyCode("MXN");
+        invoice.setTypeCode("I");
+        invoice.setExpeditionZipCode("42501");
+        invoice.setPaymentMethodCode("PUE");
+        invoice.setExchangeRate(1.0);
+        invoice.setExportCode("01");
+        invoice.setIssuer(issuer);
+        invoice.setRecipient(recipient);
+        invoice.setItems(items);
+
+// Set complement with local taxes
+        Complement complement = new Complement();
+        complement.setLocalTaxes(localTaxes);
+        invoice.setComplement(complement);
+
+        ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+
+        System.out.println(apiResponse);
+         */
+
+
+//      Nómina por valores
+//         Nómina Ordinaria
+        // InvoiceIssuer issuer = new InvoiceIssuer();
+        // issuer.setTin("EKU9003173C9");
+        // issuer.setLegalName("ESCUELA KEMPER URGATE");
+        // issuer.setTaxRegimeCode("601");
+
+        // EmployerData employerData = new EmployerData();
+        // employerData.setEmployerRegistration("B5510768108");
+        // issuer.setEmployerData(employerData);
+
+        // // Certificados del emisor
+        // List<TaxCredential> credentials = new ArrayList<>();
+
+        // TaxCredential cer = new TaxCredential();
+        // cer.setBase64File(base64Cer);
+        // cer.setFileType(0); // 0 = Certificado (.cer)
+        // cer.setPassword(password);
+
+        // TaxCredential key = new TaxCredential();
+        // key.setBase64File(base64Key);
+        // key.setFileType(1); // 1 = Clave privada (.key)
+        // key.setPassword(password);
+
+        // credentials.add(cer);
+        // credentials.add(key);
+
+        // issuer.setTaxCredentials(credentials);
+
+        // // Receptor
+        // InvoiceRecipient recipient = new InvoiceRecipient();
+        // recipient.setTin("FUNK671228PH6");
+        // recipient.setLegalName("KARLA FUENTE NOLASCO");
+        // recipient.setZipCode("01160");
+        // recipient.setTaxRegimeCode("605");
+        // recipient.setCfdiUseCode("CN01");
+        // recipient.setEmail("someone@somewhere.com");
+
+        // EmployeeData employeeData = new EmployeeData();
+        // employeeData.setCurp("XEXX010101MNEXXXA8");
+        // employeeData.setSocialSecurityNumber("04078873454");
+        // employeeData.setLaborRelationStartDate("2024-08-18T00:00:00");
+        // employeeData.setSeniority("P54W");
+        // employeeData.setSatContractTypeId("01");
+        // employeeData.setSatTaxRegimeTypeId("02");
+        // employeeData.setEmployeeNumber("123456789");
+        // employeeData.setDepartment("GenAI");
+        // employeeData.setPosition("Sr Software Engineer");
+        // employeeData.setSatJobRiskId("1");
+        // employeeData.setSatPaymentPeriodicityId("05");
+        // employeeData.setSatBankId("012");
+        // employeeData.setBaseSalaryForContributions("282.50");
+        // employeeData.setIntegratedDailySalary("2626.23");
+        // employeeData.setSatPayrollStateId("JAL");
+        // recipient.setEmployeeData(employeeData);
+
+        // Payroll payroll = new Payroll();
+        // payroll.setVersion("1.2");
+        // payroll.setPayrollTypeCode("O");
+        // payroll.setPaymentDate("2025-08-30T00:00:00");
+        // payroll.setInitialPaymentDate("2025-07-31T00:00:00");
+        // payroll.setFinalPaymentDate("2025-08-30T00:00:00");
+        // payroll.setDaysPaid(30);
+        // PayrollEarnings payrollEarnings = new PayrollEarnings();
+        // List<PayrollEarning> earnings = new ArrayList<>();
+
+        // PayrollEarning e1 = new PayrollEarning();
+        // e1.setEarningTypeCode("001");
+        // e1.setCode("1003");
+        // e1.setConcept("Sueldo nominal");
+        // e1.setTaxedAmount(new BigDecimal("95030"));
+        // e1.setExemptAmount(new BigDecimal("0"));
+
+        // PayrollEarning e2 = new PayrollEarning();
+        // e2.setEarningTypeCode("005");
+        // e2.setCode("5913");
+        // e2.setConcept("Fondo de Ahorro Aportación Patrón");
+        // e2.setTaxedAmount(new BigDecimal("0"));
+        // e2.setExemptAmount(new BigDecimal("4412.46"));
+
+        // PayrollEarning e3 = new PayrollEarning();
+        // e3.setEarningTypeCode("038");
+        // e3.setCode("1885");
+        // e3.setConcept("Bono Ingles");
+        // e3.setTaxedAmount(new BigDecimal("14254.50"));
+        // e3.setExemptAmount(new BigDecimal("0"));
+
+        // PayrollEarning e4 = new PayrollEarning();
+        // e4.setEarningTypeCode("029");
+        // e4.setCode("1941");
+        // e4.setConcept("Vales Despensa");
+        // e4.setTaxedAmount(new BigDecimal("0"));
+        // e4.setExemptAmount(new BigDecimal("3439"));
+
+        // PayrollEarning e5 = new PayrollEarning();
+        // e5.setEarningTypeCode("038");
+        // e5.setCode("1824");
+        // e5.setConcept("Herramientas Teletrabajo (telecom y prop. electri)");
+        // e5.setTaxedAmount(new BigDecimal("273"));
+        // e5.setExemptAmount(new BigDecimal("0"));
+
+        // earnings.add(e1);
+        // earnings.add(e2);
+        // earnings.add(e3);
+        // earnings.add(e4);
+        // earnings.add(e5);
+
+        // List<PayrollEarningOtherPayment> otherPayments = new ArrayList<>();
+        // PayrollEarningOtherPayment op1 = new PayrollEarningOtherPayment();
+        // op1.setOtherPaymentTypeCode("002");
+        // op1.setCode("5050");
+        // op1.setConcept("exceso de subsidio al empleo");
+        // op1.setAmount(new BigDecimal("0"));
+        // op1.setSubsidyCaused(new BigDecimal("0"));
+        // otherPayments.add(op1);
+
+        // payrollEarnings.setEarnings(earnings);
+        // payrollEarnings.setOtherPayments(otherPayments);
+        // payroll.setEarnings(payrollEarnings);
+
+        // List<PayrollDeduction> payrollDeductions = new ArrayList<>();
+
+        // PayrollDeduction d1 = new PayrollDeduction();
+        // d1.setDeductionTypeCode("002");
+        // d1.setCode("5003");
+        // d1.setConcept("ISR Causado");
+        // d1.setAmount("27645.00");
+
+        // PayrollDeduction d2 = new PayrollDeduction();
+        // d2.setDeductionTypeCode("004");
+        // d2.setCode("5910");
+        // d2.setConcept("Fondo de ahorro Empleado Inversión");
+        // d2.setAmount("4412.46");
+
+        // PayrollDeduction d3 = new PayrollDeduction();
+        // d3.setDeductionTypeCode("004");
+        // d3.setCode("5914");
+        // d3.setConcept("Fondo de Ahorro Patrón Inversión");
+        // d3.setAmount("4412.46");
+
+        // PayrollDeduction d4 = new PayrollDeduction();
+        // d4.setDeductionTypeCode("004");
+        // d4.setCode("1966");
+        // d4.setConcept("Contribución póliza exceso GMM");
+        // d4.setAmount("519.91");
+
+        // PayrollDeduction d5 = new PayrollDeduction();
+        // d5.setDeductionTypeCode("004");
+        // d5.setCode("1934");
+        // d5.setConcept("Descuento Vales Despensa");
+        // d5.setAmount("1.00");
+
+        // PayrollDeduction d6 = new PayrollDeduction();
+        // d6.setDeductionTypeCode("004");
+        // d6.setCode("1942");
+        // d6.setConcept("Vales Despensa Electrónico");
+        // d6.setAmount("3439.00");
+
+        // PayrollDeduction d7 = new PayrollDeduction();
+        // d7.setDeductionTypeCode("001");
+        // d7.setCode("1895");
+        // d7.setConcept("IMSS");
+        // d7.setAmount("2391.13");
+
+        // payrollDeductions.add(d1);
+        // payrollDeductions.add(d2);
+        // payrollDeductions.add(d3);
+        // payrollDeductions.add(d4);
+        // payrollDeductions.add(d5);
+        // payrollDeductions.add(d6);
+        // payrollDeductions.add(d7);
+
+        // payroll.setDeductions(payrollDeductions);
+        // Complement complement = new Complement();
+        // complement.setPayroll(payroll);
+
+        // Invoice invoice = new Invoice();
+        // invoice.setVersionCode("4.0");
+        // invoice.setSeries("F");
+        // invoice.setDate(LocalDateTime.now());
+        // invoice.setTypeCode("N");
+        // invoice.setExpeditionZipCode("20000");
+        // invoice.setIssuer(issuer);
+        // invoice.setRecipient(recipient);
+        // invoice.setDate(LocalDateTime.now());
+        // invoice.setPaymentMethodCode("PUE");
+        // invoice.setComplement(complement);
+
+        // ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+        // System.out.println(apiResponse);
+
+//         // Nómina asimilados
+//         // Emisor
+//         InvoiceIssuer issuer = new InvoiceIssuer();
+//         issuer.setTin("EKU9003173C9");
+//         issuer.setLegalName("ESCUELA KEMPER URGATE");
+//         issuer.setTaxRegimeCode("601");
+
+//         EmployerData employerData = new EmployerData();
+//         employerData.setOriginEmployerTin("EKU9003173C9");
+
+//         // Certificados del emisor
+//         // Certificados del emisor
+//         List<TaxCredential> credentials = new ArrayList<>();
+
+//         TaxCredential cer = new TaxCredential();
+//         cer.setBase64File(base64Cer);
+//         cer.setFileType(0); // 0 = Certificado (.cer)
+//         cer.setPassword(password);
+
+//         TaxCredential key = new TaxCredential();
+//         key.setBase64File(base64Key);
+//         key.setFileType(1); // 1 = Clave privada (.key)
+//         key.setPassword(password);
+
+//         credentials.add(cer);
+//         credentials.add(key);
+
+//         issuer.setTaxCredentials(credentials);
+
+// // Receptor
+//         InvoiceRecipient recipient = new InvoiceRecipient();
+//         recipient.setTin("CACX7605101P8");
+//         recipient.setLegalName("XOCHILT CASAS CHAVEZ");
+//         recipient.setZipCode("36257");
+//         recipient.setTaxRegimeCode("605");
+//         recipient.setCfdiUseCode("CN01");
+
+//         EmployeeData employeeData = new EmployeeData();
+//         employeeData.setCurp("XEXX010101HNEXXXA4");
+//         employeeData.setSatContractTypeId("09");
+//         employeeData.setSatUnionizedStatusId("No");
+//         employeeData.setSatTaxRegimeTypeId("09");
+//         employeeData.setEmployeeNumber("00002");
+//         employeeData.setDepartment("ADMINISTRACION");
+//         employeeData.setPosition("DIRECTOR DE ADMINISTRACION");
+//         employeeData.setSatPaymentPeriodicityId("99");
+//         employeeData.setSatBankId("012");
+//         employeeData.setBankAccount("1111111111");
+//         employeeData.setSatPayrollStateId("CMX");
+//         recipient.setEmployeeData(employeeData);
+
+// // Payroll
+//         Payroll payroll = new Payroll();
+//         payroll.setVersion("1.2");
+//         payroll.setPayrollTypeCode("E");
+//         payroll.setPaymentDate("2023-06-02T00:00:00");
+//         payroll.setInitialPaymentDate("2023-06-01T00:00:00");
+//         payroll.setFinalPaymentDate("2023-06-02T00:00:00");
+//         payroll.setDaysPaid(1);
+
+// // Earnings
+//         PayrollEarnings payrollEarnings = new PayrollEarnings();
+//         List<PayrollEarning> earnings = new ArrayList<>();
+
+//         PayrollEarning e1 = new PayrollEarning();
+//         e1.setEarningTypeCode("046");
+//         e1.setCode("010046");
+//         e1.setConcept("INGRESOS ASIMILADOS A SALARIOS");
+//         e1.setTaxedAmount(new BigDecimal("111197.73"));
+//         e1.setExemptAmount(new BigDecimal("0.00"));
+
+//         earnings.add(e1);
+
+//         List<PayrollEarningOtherPayment> otherPayments = new ArrayList<>();
+
+//         payrollEarnings.setEarnings(earnings);
+//         payrollEarnings.setOtherPayments(otherPayments);
+
+// // Deductions
+//         List<PayrollDeduction> payrollDeductions = new ArrayList<>();
+
+//         PayrollDeduction d1 = new PayrollDeduction();
+//         d1.setDeductionTypeCode("002");
+//         d1.setCode("020002");
+//         d1.setConcept("ISR");
+//         d1.setAmount("36197.73");
+
+//         payrollDeductions.add(d1);
+
+//         payroll.setEarnings(payrollEarnings);
+//         payroll.setDeductions(payrollDeductions);
+
+//         Complement complement = new Complement();
+//         complement.setPayroll(payroll);
+
+// // Invoice
+//         Invoice invoice = new Invoice();
+//         invoice.setVersionCode("4.0");
+//         invoice.setSeries("F");
+//         invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+//         invoice.setTypeCode("N");
+//         invoice.setPaymentMethodCode("PUE");
+//         invoice.setCurrencyCode("MXN");
+//         invoice.setExpeditionZipCode("06880");
+//         invoice.setExportCode("01");
+//         invoice.setIssuer(issuer);
+//         invoice.setRecipient(recipient);
+//         invoice.setComplement(complement);
+
+//         ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+
+//         System.out.println(apiResponse);
+
+        //Nómina con bonos, fondo de ahorrro y deducciones
+        // Emisor
+//         InvoiceIssuer issuer = new InvoiceIssuer();
+//         issuer.setTin("EKU9003173C9");
+//         issuer.setLegalName("ESCUELA KEMPER URGATE");
+//         issuer.setTaxRegimeCode("601");
+
+//         // Certificados del emisor
+//         // Certificados del emisor
+//         List<TaxCredential> credentials = new ArrayList<>();
+
+//         TaxCredential cer = new TaxCredential();
+//         cer.setBase64File(base64Cer);
+//         cer.setFileType(0); // 0 = Certificado (.cer)
+//         cer.setPassword(password);
+
+//         TaxCredential key = new TaxCredential();
+//         key.setBase64File(base64Key);
+//         key.setFileType(1); // 1 = Clave privada (.key)
+//         key.setPassword(password);
+
+//         credentials.add(cer);
+//         credentials.add(key);
+
+//         issuer.setTaxCredentials(credentials);
+
+//         EmployerData employerData = new EmployerData();
+//         employerData.setEmployerRegistration("Z0000001234");
+//         issuer.setEmployerData(employerData);
+
+// // Receptor
+//         InvoiceRecipient recipient = new InvoiceRecipient();
+//         recipient.setTin("XOJI740919U48");
+//         recipient.setLegalName("INGRID XODAR JIMENEZ");
+//         recipient.setZipCode("76028");
+//         recipient.setTaxRegimeCode("605");
+//         recipient.setCfdiUseCode("CN01");
+
+//         EmployeeData employeeData = new EmployeeData();
+//         employeeData.setCurp("XEXX010101MNEXXXA8");
+//         employeeData.setSocialSecurityNumber("0000000000");
+//         employeeData.setLaborRelationStartDate("2022-03-02T00:00:00");
+//         employeeData.setSeniority("P66W");
+//         employeeData.setSatContractTypeId("01");
+//         employeeData.setSatUnionizedStatusId("No");
+//         employeeData.setSatTaxRegimeTypeId("02");
+//         employeeData.setEmployeeNumber("111111");
+//         employeeData.setSatJobRiskId("4");
+//         employeeData.setSatPaymentPeriodicityId("02");
+//         employeeData.setIntegratedDailySalary("180.96");
+//         employeeData.setSatPayrollStateId("GUA");
+//         recipient.setEmployeeData(employeeData);
+
+// // Items
+//         List<InvoiceItem> items = new ArrayList<>();
+
+//         InvoiceItem item1 = new InvoiceItem();
+//         item1.setItemCode("84111505");
+//         item1.setItemSku("84111505");
+//         item1.setQuantity("1.0");
+//         item1.setUnitOfMeasurementCode("ACT");
+//         item1.setDescription("Pago de nómina");
+//         item1.setUnitPrice("1842.82");
+//         item1.setDiscount("608.71");
+//         item1.setTaxObjectCode("01");
+
+//         items.add(item1);
+
+// // Payroll
+//         Payroll payroll = new Payroll();
+//         payroll.setVersion("1.2");
+//         payroll.setPayrollTypeCode("O");
+//         payroll.setPaymentDate("2023-06-11T00:00:00");
+//         payroll.setInitialPaymentDate("2023-06-05T00:00:00");
+//         payroll.setFinalPaymentDate("2023-06-11T00:00:00");
+//         payroll.setDaysPaid(7);
+
+// // Earnings
+//         PayrollEarnings payrollEarnings = new PayrollEarnings();
+//         List<PayrollEarning> earnings = new ArrayList<>();
+
+//         PayrollEarning e1 = new PayrollEarning();
+//         e1.setEarningTypeCode("001");
+//         e1.setCode("SP01");
+//         e1.setConcept("SUELDO");
+//         e1.setTaxedAmount(new BigDecimal("1210.30"));
+//         e1.setExemptAmount(new BigDecimal("0.00"));
+
+//         PayrollEarning e2 = new PayrollEarning();
+//         e2.setEarningTypeCode("010");
+//         e2.setCode("SP02");
+//         e2.setConcept("PREMIO PUNTUALIDAD");
+//         e2.setTaxedAmount(new BigDecimal("121.03"));
+//         e2.setExemptAmount(new BigDecimal("0.00"));
+
+//         PayrollEarning e3 = new PayrollEarning();
+//         e3.setEarningTypeCode("029");
+//         e3.setCode("SP03");
+//         e3.setConcept("MONEDERO ELECTRONICO");
+//         e3.setTaxedAmount(new BigDecimal("0.00"));
+//         e3.setExemptAmount(new BigDecimal("269.43"));
+
+//         PayrollEarning e4 = new PayrollEarning();
+//         e4.setEarningTypeCode("010");
+//         e4.setCode("SP04");
+//         e4.setConcept("PREMIO DE ASISTENCIA");
+//         e4.setTaxedAmount(new BigDecimal("121.03"));
+//         e4.setExemptAmount(new BigDecimal("0.00"));
+
+//         PayrollEarning e5 = new PayrollEarning();
+//         e5.setEarningTypeCode("005");
+//         e5.setCode("SP54");
+//         e5.setConcept("APORTACION FONDO AHORRO");
+//         e5.setTaxedAmount(new BigDecimal("0.00"));
+//         e5.setExemptAmount(new BigDecimal("121.03"));
+
+//         earnings.add(e1);
+//         earnings.add(e2);
+//         earnings.add(e3);
+//         earnings.add(e4);
+//         earnings.add(e5);
+
+// // Other Payments
+//         List<PayrollEarningOtherPayment> otherPayments = new ArrayList<>();
+
+//         PayrollEarningOtherPayment op1 = new PayrollEarningOtherPayment();
+//         op1.setOtherPaymentTypeCode("002");
+//         op1.setCode("ISRSUB");
+//         op1.setConcept("Subsidio ISR para empleo");
+//         op1.setAmount(new BigDecimal("0.0"));
+//         op1.setSubsidyCaused(new BigDecimal("0.0"));
+
+//         BalanceCompensation balanceCompensation = new BalanceCompensation();
+//         balanceCompensation.setFavorableBalance(new BigDecimal("0.0"));
+//         balanceCompensation.setYear(2022);
+//         balanceCompensation.setRemainingFavorableBalance(new BigDecimal("0.0"));
+
+//         op1.setBalanceCompensation(balanceCompensation);
+
+//         otherPayments.add(op1);
+
+//         payrollEarnings.setEarnings(earnings);
+//         payrollEarnings.setOtherPayments(otherPayments);
+
+// // Deductions
+//         List<PayrollDeduction> payrollDeductions = new ArrayList<>();
+
+//         PayrollDeduction d1 = new PayrollDeduction();
+//         d1.setDeductionTypeCode("004");
+//         d1.setCode("ZA09");
+//         d1.setConcept("APORTACION FONDO AHORRO");
+//         d1.setAmount("121.03");
+
+//         PayrollDeduction d2 = new PayrollDeduction();
+//         d2.setDeductionTypeCode("002");
+//         d2.setCode("ISR");
+//         d2.setConcept("ISR");
+//         d2.setAmount("36.57");
+
+//         PayrollDeduction d3 = new PayrollDeduction();
+//         d3.setDeductionTypeCode("001");
+//         d3.setCode("IMSS");
+//         d3.setConcept("Cuota de Seguridad Social EE");
+//         d3.setAmount("30.08");
+
+//         PayrollDeduction d4 = new PayrollDeduction();
+//         d4.setDeductionTypeCode("004");
+//         d4.setCode("ZA68");
+//         d4.setConcept("DEDUCCION FDO AHORRO PAT");
+//         d4.setAmount("121.03");
+
+//         PayrollDeduction d5 = new PayrollDeduction();
+//         d5.setDeductionTypeCode("018");
+//         d5.setCode("ZA11");
+//         d5.setConcept("APORTACION CAJA AHORRO");
+//         d5.setAmount("300.00");
+
+//         payrollDeductions.add(d1);
+//         payrollDeductions.add(d2);
+//         payrollDeductions.add(d3);
+//         payrollDeductions.add(d4);
+//         payrollDeductions.add(d5);
+
+//         payroll.setEarnings(payrollEarnings);
+//         payroll.setDeductions(payrollDeductions);
+
+//         Complement complement = new Complement();
+//         complement.setPayroll(payroll);
+
+// // Invoice
+//         Invoice invoice = new Invoice();
+//         invoice.setVersionCode("4.0");
+//         invoice.setSeries("F");
+//         invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+//         invoice.setTypeCode("N");
+//         invoice.setPaymentMethodCode("PUE");
+//         invoice.setCurrencyCode("MXN");
+//         invoice.setExpeditionZipCode("20000");
+//         invoice.setExportCode("01");
+//         invoice.setIssuer(issuer);
+//         invoice.setRecipient(recipient);
+//         invoice.setItems(items);
+//         invoice.setComplement(complement);
+
+//         ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+
+//         System.out.println(apiResponse);
+
+        // Nómina con horas extra
+        // Emisor
+//         InvoiceIssuer issuer = new InvoiceIssuer();
+//         issuer.setTin("EKU9003173C9");
+//         issuer.setLegalName("ESCUELA KEMPER URGATE");
+//         issuer.setTaxRegimeCode("601");
+
+//         EmployerData employerData = new EmployerData();
+//         employerData.setEmployerRegistration("B5510768108");
+//         employerData.setOriginEmployerTin("URE180429TM6");
+//         issuer.setEmployerData(employerData);
+
+//         // Certificados del emisor
+//         // Certificados del emisor
+//         List<TaxCredential> credentials = new ArrayList<>();
+
+//         TaxCredential cer = new TaxCredential();
+//         cer.setBase64File(base64Cer);
+//         cer.setFileType(0); // 0 = Certificado (.cer)
+//         cer.setPassword(password);
+
+//         TaxCredential key = new TaxCredential();
+//         key.setBase64File(base64Key);
+//         key.setFileType(1); // 1 = Clave privada (.key)
+//         key.setPassword(password);
+
+//         credentials.add(cer);
+//         credentials.add(key);
+
+//         issuer.setTaxCredentials(credentials);
+
+// // Receptor
+//         InvoiceRecipient recipient = new InvoiceRecipient();
+//         recipient.setTin("XOJI740919U48");
+//         recipient.setLegalName("INGRID XODAR JIMENEZ");
+//         recipient.setZipCode("76028");
+//         recipient.setTaxRegimeCode("605");
+//         recipient.setCfdiUseCode("CN01");
+
+//         EmployeeData employeeData = new EmployeeData();
+//         employeeData.setCurp("XEXX010101HNEXXXA4");
+//         employeeData.setSocialSecurityNumber("000000");
+//         employeeData.setLaborRelationStartDate("2015-01-01T00:00:00");
+//         employeeData.setSeniority("P437W");
+//         employeeData.setSatContractTypeId("01");
+//         employeeData.setSatWorkdayTypeId("01");
+//         employeeData.setSatTaxRegimeTypeId("03");
+//         employeeData.setEmployeeNumber("120");
+//         employeeData.setDepartment("Desarrollo");
+//         employeeData.setPosition("Ingeniero de Software");
+//         employeeData.setSatJobRiskId("1");
+//         employeeData.setSatPaymentPeriodicityId("04");
+//         employeeData.setSatBankId("002");
+//         employeeData.setBankAccount("1111111111");
+//         employeeData.setBaseSalaryForContributions("490.22");
+//         employeeData.setIntegratedDailySalary("146.47");
+//         employeeData.setSatPayrollStateId("JAL");
+//         recipient.setEmployeeData(employeeData);
+
+// // Payroll
+//         Payroll payroll = new Payroll();
+//         payroll.setVersion("1.2");
+//         payroll.setPayrollTypeCode("O");
+//         payroll.setPaymentDate("2023-05-24T00:00:00");
+//         payroll.setInitialPaymentDate("2023-05-09T00:00:00");
+//         payroll.setFinalPaymentDate("2023-05-24T00:00:00");
+//         payroll.setDaysPaid(15);
+
+// // Earnings
+//         PayrollEarnings payrollEarnings = new PayrollEarnings();
+//         List<PayrollEarning> earnings = new ArrayList<>();
+
+//         PayrollEarning e1 = new PayrollEarning();
+//         e1.setEarningTypeCode("001");
+//         e1.setCode("00500");
+//         e1.setConcept("Sueldos, Salarios Rayas y Jornales");
+//         e1.setTaxedAmount(new BigDecimal("2808.8"));
+//         e1.setExemptAmount(new BigDecimal("2191.2"));
+
+//         PayrollEarning e2 = new PayrollEarning();
+//         e2.setEarningTypeCode("019");
+//         e2.setCode("00100");
+//         e2.setConcept("Horas Extra");
+//         e2.setTaxedAmount(new BigDecimal("50.00"));
+//         e2.setExemptAmount(new BigDecimal("50.00"));
+
+//         List<PayrollEarningOvertime> overtimeList = new ArrayList<>();
+//         PayrollEarningOvertime overtime1 = new PayrollEarningOvertime();
+//         overtime1.setDays(1);
+//         overtime1.setHoursTypeCode("01");
+//         overtime1.setExtraHours(2);
+//         overtime1.setAmountPaid(new BigDecimal("100.00"));
+//         overtimeList.add(overtime1);
+
+//         e2.setOvertime(overtimeList);
+
+//         earnings.add(e1);
+//         earnings.add(e2);
+
+// // Other Payments
+//         List<PayrollEarningOtherPayment> otherPayments = new ArrayList<>();
+
+//         payrollEarnings.setEarnings(earnings);
+//         payrollEarnings.setOtherPayments(otherPayments);
+
+// // Deductions
+//         List<PayrollDeduction> payrollDeductions = new ArrayList<>();
+
+//         PayrollDeduction d1 = new PayrollDeduction();
+//         d1.setDeductionTypeCode("001");
+//         d1.setCode("00301");
+//         d1.setConcept("Seguridad Social");
+//         d1.setAmount("200.00");
+
+//         PayrollDeduction d2 = new PayrollDeduction();
+//         d2.setDeductionTypeCode("002");
+//         d2.setCode("00302");
+//         d2.setConcept("ISR");
+//         d2.setAmount("100.00");
+
+//         payrollDeductions.add(d1);
+//         payrollDeductions.add(d2);
+//         payroll.setEarnings(payrollEarnings);
+//         payroll.setDeductions(payrollDeductions);
+
+//         Complement complement = new Complement();
+//         complement.setPayroll(payroll);
+
+// // Invoice
+//         Invoice invoice = new Invoice();
+//         invoice.setVersionCode("4.0");
+//         invoice.setSeries("F");
+//         invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+//         invoice.setTypeCode("N");
+//         invoice.setPaymentMethodCode("PUE");
+//         invoice.setCurrencyCode("MXN");
+//         invoice.setExpeditionZipCode("20000");
+//         invoice.setExportCode("01");
+//         invoice.setIssuer(issuer);
+//         invoice.setRecipient(recipient);
+//         invoice.setComplement(complement);
+
+//         ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+
+//         System.out.println(apiResponse);
+
+        // Nómina con incapacidades
+        // Emisor
+//         InvoiceIssuer issuer = new InvoiceIssuer();
+//         issuer.setTin("EKU9003173C9");
+//         issuer.setLegalName("ESCUELA KEMPER URGATE");
+//         issuer.setTaxRegimeCode("601");
+
+//         EmployerData employerData = new EmployerData();
+//         employerData.setEmployerRegistration("B5510768108");
+//         employerData.setOriginEmployerTin("URE180429TM6");
+//         issuer.setEmployerData(employerData);
+
+//         // Certificados del emisor
+//         // Certificados del emisor
+//         List<TaxCredential> credentials = new ArrayList<>();
+
+//         TaxCredential cer = new TaxCredential();
+//         cer.setBase64File(base64Cer);
+//         cer.setFileType(0); // 0 = Certificado (.cer)
+//         cer.setPassword(password);
+
+//         TaxCredential key = new TaxCredential();
+//         key.setBase64File(base64Key);
+//         key.setFileType(1); // 1 = Clave privada (.key)
+//         key.setPassword(password);
+
+//         credentials.add(cer);
+//         credentials.add(key);
+
+//         issuer.setTaxCredentials(credentials);
+
+// // Receptor
+//         InvoiceRecipient recipient = new InvoiceRecipient();
+//         recipient.setTin("XOJI740919U48");
+//         recipient.setLegalName("INGRID XODAR JIMENEZ");
+//         recipient.setZipCode("76028");
+//         recipient.setTaxRegimeCode("605");
+//         recipient.setCfdiUseCode("CN01");
+
+//         EmployeeData employeeData = new EmployeeData();
+//         employeeData.setCurp("XEXX010101HNEXXXA4");
+//         employeeData.setSocialSecurityNumber("000000");
+//         employeeData.setLaborRelationStartDate("2015-01-01T00:00:00");
+//         employeeData.setSeniority("P437W");
+//         employeeData.setSatContractTypeId("01");
+//         employeeData.setSatWorkdayTypeId("01");
+//         employeeData.setSatTaxRegimeTypeId("03");
+//         employeeData.setEmployeeNumber("120");
+//         employeeData.setDepartment("Desarrollo");
+//         employeeData.setPosition("Ingeniero de Software");
+//         employeeData.setSatJobRiskId("1");
+//         employeeData.setSatPaymentPeriodicityId("04");
+//         employeeData.setSatBankId("002");
+//         employeeData.setBankAccount("1111111111");
+//         employeeData.setBaseSalaryForContributions("490.22");
+//         employeeData.setIntegratedDailySalary("146.47");
+//         employeeData.setSatPayrollStateId("JAL");
+//         recipient.setEmployeeData(employeeData);
+
+// // Payroll
+//         Payroll payroll = new Payroll();
+//         payroll.setVersion("1.2");
+//         payroll.setPayrollTypeCode("O");
+//         payroll.setPaymentDate("2023-05-24T00:00:00");
+//         payroll.setInitialPaymentDate("2023-05-09T00:00:00");
+//         payroll.setFinalPaymentDate("2023-05-24T00:00:00");
+//         payroll.setDaysPaid(15);
+
+// // Earnings
+//         PayrollEarnings payrollEarnings = new PayrollEarnings();
+//         List<PayrollEarning> earnings = new ArrayList<>();
+
+//         PayrollEarning e1 = new PayrollEarning();
+//         e1.setEarningTypeCode("001");
+//         e1.setCode("00500");
+//         e1.setConcept("Sueldos, Salarios Rayas y Jornales");
+//         e1.setTaxedAmount(new BigDecimal("2808.8"));
+//         e1.setExemptAmount(new BigDecimal("2191.2"));
+
+//         earnings.add(e1);
+
+// // Other Payments
+//         List<PayrollEarningOtherPayment> otherPayments = new ArrayList<>();
+
+//         payrollEarnings.setEarnings(earnings);
+//         payrollEarnings.setOtherPayments(otherPayments);
+
+// // Deductions
+//         List<PayrollDeduction> payrollDeductions = new ArrayList<>();
+
+//         PayrollDeduction d1 = new PayrollDeduction();
+//         d1.setDeductionTypeCode("001");
+//         d1.setCode("00301");
+//         d1.setConcept("Seguridad Social");
+//         d1.setAmount("200.00");
+
+//         PayrollDeduction d2 = new PayrollDeduction();
+//         d2.setDeductionTypeCode("002");
+//         d2.setCode("00302");
+//         d2.setConcept("ISR");
+//         d2.setAmount("100.00");
+
+//         payrollDeductions.add(d1);
+//         payrollDeductions.add(d2);
+
+// // Disabilities
+//         List<PayrollDisability> disabilities = new ArrayList<>();
+
+//         PayrollDisability disability1 = new PayrollDisability();
+//         disability1.setDisabilityDays(1);
+//         disability1.setDisabilityTypeCode("01");
+
+//         disabilities.add(disability1);
+
+//         payroll.setEarnings(payrollEarnings);
+//         payroll.setDeductions(payrollDeductions);
+//         payroll.setDisabilities(disabilities);
+
+//         Complement complement = new Complement();
+//         complement.setPayroll(payroll);
+
+// // Invoice
+//         Invoice invoice = new Invoice();
+//         invoice.setVersionCode("4.0");
+//         invoice.setSeries("F");
+//         invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+//         invoice.setTypeCode("N");
+//         invoice.setPaymentMethodCode("PUE");
+//         invoice.setCurrencyCode("MXN");
+//         invoice.setExpeditionZipCode("20000");
+//         invoice.setExportCode("01");
+//         invoice.setIssuer(issuer);
+//         invoice.setRecipient(recipient);
+//         invoice.setComplement(complement);
+
+//         ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+
+//         System.out.println(apiResponse);
+
+//       Nómina con SNCF
+// Emisor
+//         InvoiceIssuer issuer = new InvoiceIssuer();
+//         issuer.setTin("OÑO120726RX3");
+//         issuer.setLegalName("ORGANICOS ÑAVEZ OSORIO");
+//         issuer.setTaxRegimeCode("601");
+
+//         EmployerData employerData = new EmployerData();
+//         employerData.setEmployerRegistration("27112029");
+//         employerData.setSatFundSourceId("IP");
+//         issuer.setEmployerData(employerData);
+
+//         // Certificados del emisor
+//         // Certificados del emisor
+//         List<TaxCredential> credentials = new ArrayList<>();
+
+//         TaxCredential cer = new TaxCredential();
+//         cer.setBase64File(base64Cer);
+//         cer.setFileType(0); // 0 = Certificado (.cer)
+//         cer.setPassword(password);
+
+//         TaxCredential key = new TaxCredential();
+//         key.setBase64File(base64Key);
+//         key.setFileType(1); // 1 = Clave privada (.key)
+//         key.setPassword(password);
+
+//         credentials.add(cer);
+//         credentials.add(key);
+
+//         issuer.setTaxCredentials(credentials);
+
+// // Receptor
+//         InvoiceRecipient recipient = new InvoiceRecipient();
+//         recipient.setTin("CACX7605101P8");
+//         recipient.setLegalName("XOCHILT CASAS CHAVEZ");
+//         recipient.setZipCode("36257");
+//         recipient.setTaxRegimeCode("605");
+//         recipient.setCfdiUseCode("CN01");
+
+//         EmployeeData employeeData = new EmployeeData();
+//         employeeData.setCurp("XEXX010101HNEXXXA4");
+//         employeeData.setSocialSecurityNumber("80997742673");
+//         employeeData.setLaborRelationStartDate("2021-09-01T00:00:00");
+//         employeeData.setSeniority("P88W");
+//         employeeData.setSatContractTypeId("01");
+//         employeeData.setSatTaxRegimeTypeId("02");
+//         employeeData.setEmployeeNumber("273");
+//         employeeData.setSatJobRiskId("1");
+//         employeeData.setSatPaymentPeriodicityId("04");
+//         employeeData.setIntegratedDailySalary("221.48");
+//         employeeData.setSatPayrollStateId("GRO");
+//         recipient.setEmployeeData(employeeData);
+
+// // Payroll
+//         Payroll payroll = new Payroll();
+//         payroll.setVersion("1.2");
+//         payroll.setPayrollTypeCode("O");
+//         payroll.setPaymentDate("2023-05-16T00:00:00");
+//         payroll.setInitialPaymentDate("2023-05-01T00:00:00");
+//         payroll.setFinalPaymentDate("2023-05-16T00:00:00");
+//         payroll.setDaysPaid(15);
+
+// // Earnings
+//         PayrollEarnings payrollEarnings = new PayrollEarnings();
+//         List<PayrollEarning> earnings = new ArrayList<>();
+
+//         PayrollEarning e1 = new PayrollEarning();
+//         e1.setEarningTypeCode("001");
+//         e1.setCode("P001");
+//         e1.setConcept("Sueldos, Salarios Rayas y Jornales");
+//         e1.setTaxedAmount(new BigDecimal("3322.20"));
+//         e1.setExemptAmount(new BigDecimal("0"));
+
+//         PayrollEarning e2 = new PayrollEarning();
+//         e2.setEarningTypeCode("038");
+//         e2.setCode("P540");
+//         e2.setConcept("Compensacion");
+//         e2.setTaxedAmount(new BigDecimal("100.00"));
+//         e2.setExemptAmount(new BigDecimal("0"));
+
+//         PayrollEarning e3 = new PayrollEarning();
+//         e3.setEarningTypeCode("038");
+//         e3.setCode("P550");
+//         e3.setConcept("Compensación Garantizada Extraordinaria");
+//         e3.setTaxedAmount(new BigDecimal("2200.00"));
+//         e3.setExemptAmount(new BigDecimal("0"));
+
+//         PayrollEarning e4 = new PayrollEarning();
+//         e4.setEarningTypeCode("038");
+//         e4.setCode("P530");
+//         e4.setConcept("Servicio Extraordinario");
+//         e4.setTaxedAmount(new BigDecimal("200.00"));
+//         e4.setExemptAmount(new BigDecimal("0"));
+
+//         PayrollEarning e5 = new PayrollEarning();
+//         e5.setEarningTypeCode("001");
+//         e5.setCode("P506");
+//         e5.setConcept("Otras Prestaciones");
+//         e5.setTaxedAmount(new BigDecimal("1500.00"));
+//         e5.setExemptAmount(new BigDecimal("0"));
+
+//         PayrollEarning e6 = new PayrollEarning();
+//         e6.setEarningTypeCode("001");
+//         e6.setCode("P505");
+//         e6.setConcept("Remuneración al Desempeño Legislativo");
+//         e6.setTaxedAmount(new BigDecimal("17500.00"));
+//         e6.setExemptAmount(new BigDecimal("0"));
+
+//         earnings.add(e1);
+//         earnings.add(e2);
+//         earnings.add(e3);
+//         earnings.add(e4);
+//         earnings.add(e5);
+//         earnings.add(e6);
+
+// // Other Payments
+//         List<PayrollEarningOtherPayment> otherPayments = new ArrayList<>();
+
+//         PayrollEarningOtherPayment op1 = new PayrollEarningOtherPayment();
+//         op1.setOtherPaymentTypeCode("002");
+//         op1.setCode("002");
+//         op1.setConcept("Subsidio para el empleo efectivamente entregado al trabajador");
+//         op1.setAmount(new BigDecimal("0"));
+//         op1.setSubsidyCaused(new BigDecimal("0"));
+
+//         otherPayments.add(op1);
+
+//         payrollEarnings.setEarnings(earnings);
+//         payrollEarnings.setOtherPayments(otherPayments);
+
+// // Deductions
+//         List<PayrollDeduction> payrollDeductions = new ArrayList<>();
+
+//         PayrollDeduction d1 = new PayrollDeduction();
+//         d1.setDeductionTypeCode("002");
+//         d1.setCode("D002");
+//         d1.setConcept("ISR");
+//         d1.setAmount("4716.61");
+
+//         PayrollDeduction d2 = new PayrollDeduction();
+//         d2.setDeductionTypeCode("004");
+//         d2.setCode("D525");
+//         d2.setConcept("Redondeo");
+//         d2.setAmount("0.81");
+
+//         PayrollDeduction d3 = new PayrollDeduction();
+//         d3.setDeductionTypeCode("001");
+//         d3.setCode("D510");
+//         d3.setConcept("Cuota Trabajador ISSSTE");
+//         d3.setAmount("126.78");
+
+//         payrollDeductions.add(d1);
+//         payrollDeductions.add(d2);
+//         payrollDeductions.add(d3);
+
+//         payroll.setEarnings(payrollEarnings);
+//         payroll.setDeductions(payrollDeductions);
+
+//         Complement complement = new Complement();
+//         complement.setPayroll(payroll);
+
+// // Invoice
+//         Invoice invoice = new Invoice();
+//         invoice.setVersionCode("4.0");
+//         invoice.setSeries("F");
+//         invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+//         invoice.setTypeCode("N");
+//         invoice.setPaymentMethodCode("PUE");
+//         invoice.setCurrencyCode("MXN");
+//         invoice.setExpeditionZipCode("39074");
+//         invoice.setExportCode("01");
+//         invoice.setIssuer(issuer);
+//         invoice.setRecipient(recipient);
+//         invoice.setComplement(complement);
+
+//         ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+
+//         System.out.println(apiResponse);
+
+//       Nómina extraordinaria
+// Emisor
+//         InvoiceIssuer issuer = new InvoiceIssuer();
+//         issuer.setTin("EKU9003173C9");
+//         issuer.setLegalName("ESCUELA KEMPER URGATE");
+//         issuer.setTaxRegimeCode("601");
+
+//         EmployerData employerData = new EmployerData();
+//         employerData.setEmployerRegistration("B5510768108");
+//         employerData.setOriginEmployerTin("URE180429TM6");
+//         issuer.setEmployerData(employerData);
+
+//         // Certificados del emisor
+//         // Certificados del emisor
+//         List<TaxCredential> credentials = new ArrayList<>();
+
+//         TaxCredential cer = new TaxCredential();
+//         cer.setBase64File(base64Cer);
+//         cer.setFileType(0); // 0 = Certificado (.cer)
+//         cer.setPassword(password);
+
+//         TaxCredential key = new TaxCredential();
+//         key.setBase64File(base64Key);
+//         key.setFileType(1); // 1 = Clave privada (.key)
+//         key.setPassword(password);
+
+//         credentials.add(cer);
+//         credentials.add(key);
+
+//         issuer.setTaxCredentials(credentials);
+
+// // Receptor
+//         InvoiceRecipient recipient = new InvoiceRecipient();
+//         recipient.setTin("XOJI740919U48");
+//         recipient.setLegalName("INGRID XODAR JIMENEZ");
+//         recipient.setZipCode("76028");
+//         recipient.setTaxRegimeCode("605");
+//         recipient.setCfdiUseCode("CN01");
+
+//         EmployeeData employeeData = new EmployeeData();
+//         employeeData.setCurp("XEXX010101HNEXXXA4");
+//         employeeData.setSocialSecurityNumber("000000");
+//         employeeData.setLaborRelationStartDate("2015-01-01T00:00:00");
+//         employeeData.setSeniority("P439W");
+//         employeeData.setSatContractTypeId("01");
+//         employeeData.setSatWorkdayTypeId("01");
+//         employeeData.setSatTaxRegimeTypeId("03");
+//         employeeData.setEmployeeNumber("120");
+//         employeeData.setDepartment("Desarrollo");
+//         employeeData.setPosition("Ingeniero de Software");
+//         employeeData.setSatJobRiskId("1");
+//         employeeData.setSatPaymentPeriodicityId("99");
+//         employeeData.setSatBankId("002");
+//         employeeData.setBankAccount("1111111111");
+//         employeeData.setIntegratedDailySalary("146.47");
+//         employeeData.setSatPayrollStateId("JAL");
+//         recipient.setEmployeeData(employeeData);
+
+// // Payroll
+//         Payroll payroll = new Payroll();
+//         payroll.setVersion("1.2");
+//         payroll.setPayrollTypeCode("E");
+//         payroll.setPaymentDate("2023-06-04T00:00:00");
+//         payroll.setInitialPaymentDate("2023-06-04T00:00:00");
+//         payroll.setFinalPaymentDate("2023-06-04T00:00:00");
+//         payroll.setDaysPaid(30);
+
+// // Earnings
+//         PayrollEarnings payrollEarnings = new PayrollEarnings();
+//         List<PayrollEarning> earnings = new ArrayList<>();
+
+//         PayrollEarning e1 = new PayrollEarning();
+//         e1.setEarningTypeCode("002");
+//         e1.setCode("00500");
+//         e1.setConcept("Gratificación Anual (Aguinaldo)");
+//         e1.setTaxedAmount(new BigDecimal("0.00"));
+//         e1.setExemptAmount(new BigDecimal("10000.00"));
+
+//         earnings.add(e1);
+
+// // Other Payments
+//         List<PayrollEarningOtherPayment> otherPayments = new ArrayList<>();
+
+//         payrollEarnings.setEarnings(earnings);
+//         payrollEarnings.setOtherPayments(otherPayments);
+
+// // Deductions (empty list)
+//         List<PayrollDeduction> payrollDeductions = new ArrayList<>();
+
+//         payroll.setEarnings(payrollEarnings);
+//         payroll.setDeductions(payrollDeductions);
+
+//         Complement complement = new Complement();
+//         complement.setPayroll(payroll);
+
+// // Invoice
+//         Invoice invoice = new Invoice();
+//         invoice.setVersionCode("4.0");
+//         invoice.setSeries("F");
+//         invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+//         invoice.setTypeCode("N");
+//         invoice.setPaymentMethodCode("PUE");
+//         invoice.setCurrencyCode("MXN");
+//         invoice.setExpeditionZipCode("20000");
+//         invoice.setExportCode("01");
+//         invoice.setIssuer(issuer);
+//         invoice.setRecipient(recipient);
+//         invoice.setComplement(complement);
+
+//         ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+
+//         System.out.println(apiResponse);
+
+//       Nómina separación
+//  InvoiceIssuer issuer = new InvoiceIssuer();
+//         issuer.setTin("EKU9003173C9");
+//         issuer.setLegalName("ESCUELA KEMPER URGATE");
+//         issuer.setTaxRegimeCode("601");
+
+//         EmployerData employerData = new EmployerData();
+//         employerData.setEmployerRegistration("B5510768108");
+//         employerData.setOriginEmployerTin("URE180429TM6");
+//         issuer.setEmployerData(employerData);
+
+//         // Certificados del emisor
+//         // Certificados del emisor
+//         List<TaxCredential> credentials = new ArrayList<>();
+
+//         TaxCredential cer = new TaxCredential();
+//         cer.setBase64File(base64Cer);
+//         cer.setFileType(0); // 0 = Certificado (.cer)
+//         cer.setPassword(password);
+
+//         TaxCredential key = new TaxCredential();
+//         key.setBase64File(base64Key);
+//         key.setFileType(1); // 1 = Clave privada (.key)
+//         key.setPassword(password);
+
+//         credentials.add(cer);
+//         credentials.add(key);
+
+//         issuer.setTaxCredentials(credentials);
+
+//         // Receptor
+//         InvoiceRecipient recipient = new InvoiceRecipient();
+//         recipient.setTin("XOJI740919U48");
+//         recipient.setLegalName("INGRID XODAR JIMENEZ");
+//         recipient.setZipCode("76028");
+//         recipient.setTaxRegimeCode("605");
+//         recipient.setCfdiUseCode("CN01");
+
+//         EmployeeData employeeData = new EmployeeData();
+//         employeeData.setCurp("XEXX010101HNEXXXA4");
+//         employeeData.setSocialSecurityNumber("000000");
+//         employeeData.setLaborRelationStartDate("2015-01-01T00:00:00");
+//         employeeData.setSeniority("P439W");
+//         employeeData.setSatContractTypeId("01");
+//         employeeData.setSatWorkdayTypeId("01");
+//         employeeData.setSatTaxRegimeTypeId("03");
+//         employeeData.setEmployeeNumber("120");
+//         employeeData.setDepartment("Desarrollo");
+//         employeeData.setPosition("Ingeniero de Software");
+//         employeeData.setSatJobRiskId("1");
+//         employeeData.setSatPaymentPeriodicityId("99");
+//         employeeData.setSatBankId("002");
+//         employeeData.setBankAccount("1111111111");
+//         employeeData.setIntegratedDailySalary("146.47");
+//         employeeData.setSatPayrollStateId("JAL");
+//         recipient.setEmployeeData(employeeData);
+
+//         Payroll payroll = new Payroll();
+//         payroll.setVersion("1.2");
+//         payroll.setPayrollTypeCode("E");
+//         payroll.setPaymentDate("2023-06-04T00:00:00");
+//         payroll.setInitialPaymentDate("2023-06-04T00:00:00");
+//         payroll.setFinalPaymentDate("2023-06-04T00:00:00");
+//         payroll.setDaysPaid(30);
+//         PayrollEarnings payrollEarnings = new PayrollEarnings();
+//         List<PayrollEarning> earnings = new ArrayList<>();
+
+//         PayrollEarning e1 = new PayrollEarning();
+//         e1.setEarningTypeCode("023");
+//         e1.setCode("00500");
+//         e1.setConcept("Pagos por separación");
+//         e1.setTaxedAmount(new BigDecimal("0"));
+//         e1.setExemptAmount(new BigDecimal("10000.0"));
+
+//         PayrollEarning e2 = new PayrollEarning();
+//         e2.setEarningTypeCode("025");
+//         e2.setCode("00900");
+//         e2.setConcept("Indemnizaciones");
+//         e2.setTaxedAmount(new BigDecimal("0"));
+//         e2.setExemptAmount(new BigDecimal("500.0"));
+
+//         earnings.add(e1);
+//         earnings.add(e2);
+
+//         List<PayrollEarningOtherPayment> otherPayments = new ArrayList<>();
+//         PayrollSeverance severance = new PayrollSeverance();
+//         severance.setTotalPaid(new BigDecimal("10500.00"));
+//         severance.setYearsOfService(1);
+//         severance.setLastMonthlySalary(new BigDecimal("10000.00"));
+//         severance.setAccumulableIncome(new BigDecimal("10000.00"));
+//         severance.setNonAccumulableIncome(new BigDecimal("0"));
+
+//         payrollEarnings.setEarnings(earnings);
+//         payrollEarnings.setOtherPayments(otherPayments);
+//         payrollEarnings.setSeverance(severance);
+//         payroll.setEarnings(payrollEarnings);
+
+//         List<PayrollDeduction> payrollDeductions = new ArrayList<>();
+
+//         payroll.setDeductions(payrollDeductions);
+//         Complement complement = new Complement();
+//         complement.setPayroll(payroll);
+
+//         Invoice invoice = new Invoice();
+//         invoice.setVersionCode("4.0");
+//         invoice.setSeries("F");
+//         invoice.setDate(LocalDateTime.now());
+//         invoice.setTypeCode("N");
+//         invoice.setExpeditionZipCode("20000");
+//         invoice.setIssuer(issuer);
+//         invoice.setRecipient(recipient);
+//         invoice.setDate(LocalDateTime.now());
+//         invoice.setPaymentMethodCode("PUE");
+//         invoice.setComplement(complement);
+
+//         ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+//         System.out.println(apiResponse);
+
+//       Nómina jubilación
+// Emisor
+//         InvoiceIssuer issuer = new InvoiceIssuer();
+//         issuer.setTin("EKU9003173C9");
+//         issuer.setLegalName("ESCUELA KEMPER URGATE");
+//         issuer.setTaxRegimeCode("601");
+
+//         EmployerData employerData = new EmployerData();
+//         employerData.setEmployerRegistration("B5510768108");
+//         employerData.setOriginEmployerTin("URE180429TM6");
+//         issuer.setEmployerData(employerData);
+
+//         // Certificados del emisor
+//         // Certificados del emisor
+//         List<TaxCredential> credentials = new ArrayList<>();
+
+//         TaxCredential cer = new TaxCredential();
+//         cer.setBase64File(base64Cer);
+//         cer.setFileType(0); // 0 = Certificado (.cer)
+//         cer.setPassword(password);
+
+//         TaxCredential key = new TaxCredential();
+//         key.setBase64File(base64Key);
+//         key.setFileType(1); // 1 = Clave privada (.key)
+//         key.setPassword(password);
+
+//         credentials.add(cer);
+//         credentials.add(key);
+
+//         issuer.setTaxCredentials(credentials);
+
+// // Receptor
+//         InvoiceRecipient recipient = new InvoiceRecipient();
+//         recipient.setTin("XOJI740919U48");
+//         recipient.setLegalName("INGRID XODAR JIMENEZ");
+//         recipient.setZipCode("76028");
+//         recipient.setTaxRegimeCode("605");
+//         recipient.setCfdiUseCode("CN01");
+
+//         EmployeeData employeeData = new EmployeeData();
+//         employeeData.setCurp("XEXX010101HNEXXXA4");
+//         employeeData.setSocialSecurityNumber("000000");
+//         employeeData.setLaborRelationStartDate("2015-01-01T00:00:00");
+//         employeeData.setSeniority("P439W");
+//         employeeData.setSatContractTypeId("01");
+//         employeeData.setSatWorkdayTypeId("01");
+//         employeeData.setSatTaxRegimeTypeId("03");
+//         employeeData.setEmployeeNumber("120");
+//         employeeData.setDepartment("Desarrollo");
+//         employeeData.setPosition("Ingeniero de Software");
+//         employeeData.setSatJobRiskId("1");
+//         employeeData.setSatPaymentPeriodicityId("99");
+//         employeeData.setSatBankId("002");
+//         employeeData.setBankAccount("1111111111");
+//         employeeData.setIntegratedDailySalary("146.47");
+//         employeeData.setSatPayrollStateId("JAL");
+//         recipient.setEmployeeData(employeeData);
+
+// // Payroll
+//         Payroll payroll = new Payroll();
+//         payroll.setVersion("1.2");
+//         payroll.setPayrollTypeCode("E");
+//         payroll.setPaymentDate("2023-05-05T00:00:00");
+//         payroll.setInitialPaymentDate("2023-06-04T00:00:00");
+//         payroll.setFinalPaymentDate("2023-06-04T00:00:00");
+//         payroll.setDaysPaid(30);
+
+// // Earnings
+//         PayrollEarnings payrollEarnings = new PayrollEarnings();
+//         List<PayrollEarning> earnings = new ArrayList<>();
+
+//         PayrollEarning e1 = new PayrollEarning();
+//         e1.setEarningTypeCode("039");
+//         e1.setCode("00500");
+//         e1.setConcept("Jubilaciones, pensiones o haberes de retiro");
+//         e1.setTaxedAmount(new BigDecimal("0.00"));
+//         e1.setExemptAmount(new BigDecimal("10000.00"));
+
+//         earnings.add(e1);
+
+// // Other Payments
+//         List<PayrollEarningOtherPayment> otherPayments = new ArrayList<>();
+
+// // Retirement
+//         PayrollRetirement retirement = new PayrollRetirement();
+//         retirement.setTotalOneTime(new BigDecimal("10000.00"));
+//         retirement.setAccumulableIncome(new BigDecimal("10000.00"));
+//         retirement.setNonAccumulableIncome(new BigDecimal("0.00"));
+
+//         payrollEarnings.setEarnings(earnings);
+//         payrollEarnings.setOtherPayments(otherPayments);
+//         payrollEarnings.setRetirement(retirement);
+
+// // Deductions (empty list)
+//         List<PayrollDeduction> payrollDeductions = new ArrayList<>();
+
+//         payroll.setEarnings(payrollEarnings);
+//         payroll.setDeductions(payrollDeductions);
+
+//         Complement complement = new Complement();
+//         complement.setPayroll(payroll);
+
+// // Invoice
+//         Invoice invoice = new Invoice();
+//         invoice.setVersionCode("4.0");
+//         invoice.setSeries("F");
+//         invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+//         invoice.setTypeCode("N");
+//         invoice.setPaymentMethodCode("PUE");
+//         invoice.setCurrencyCode("MXN");
+//         invoice.setExpeditionZipCode("20000");
+//         invoice.setExportCode("01");
+//         invoice.setIssuer(issuer);
+//         invoice.setRecipient(recipient);
+//         invoice.setComplement(complement);
+
+//         ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+
+//         System.out.println(apiResponse);
+
+//       Nómina sin deducciones
+// Emisor
+//         InvoiceIssuer issuer = new InvoiceIssuer();
+//         issuer.setTin("EKU9003173C9");
+//         issuer.setLegalName("ESCUELA KEMPER URGATE");
+//         issuer.setTaxRegimeCode("601");
+
+//         EmployerData employerData = new EmployerData();
+//         employerData.setEmployerRegistration("B5510768108");
+//         employerData.setOriginEmployerTin("URE180429TM6");
+//         issuer.setEmployerData(employerData);
+
+//         // Certificados del emisor
+//         // Certificados del emisor
+//         List<TaxCredential> credentials = new ArrayList<>();
+
+//         TaxCredential cer = new TaxCredential();
+//         cer.setBase64File(base64Cer);
+//         cer.setFileType(0); // 0 = Certificado (.cer)
+//         cer.setPassword(password);
+
+//         TaxCredential key = new TaxCredential();
+//         key.setBase64File(base64Key);
+//         key.setFileType(1); // 1 = Clave privada (.key)
+//         key.setPassword(password);
+
+//         credentials.add(cer);
+//         credentials.add(key);
+
+//         issuer.setTaxCredentials(credentials);
+
+// // Receptor
+//         InvoiceRecipient recipient = new InvoiceRecipient();
+//         recipient.setTin("XOJI740919U48");
+//         recipient.setLegalName("INGRID XODAR JIMENEZ");
+//         recipient.setZipCode("76028");
+//         recipient.setTaxRegimeCode("605");
+//         recipient.setCfdiUseCode("CN01");
+
+//         EmployeeData employeeData = new EmployeeData();
+//         employeeData.setCurp("XEXX010101HNEXXXA4");
+//         employeeData.setSocialSecurityNumber("000000");
+//         employeeData.setLaborRelationStartDate("2015-01-01T00:00:00");
+//         employeeData.setSeniority("P437W");
+//         employeeData.setSatContractTypeId("01");
+//         employeeData.setSatWorkdayTypeId("01");
+//         employeeData.setSatTaxRegimeTypeId("03");
+//         employeeData.setEmployeeNumber("120");
+//         employeeData.setDepartment("Desarrollo");
+//         employeeData.setPosition("Ingeniero de Software");
+//         employeeData.setSatJobRiskId("1");
+//         employeeData.setSatPaymentPeriodicityId("04");
+//         employeeData.setSatBankId("002");
+//         employeeData.setBankAccount("1111111111");
+//         employeeData.setBaseSalaryForContributions("490.22");
+//         employeeData.setIntegratedDailySalary("146.47");
+//         employeeData.setSatPayrollStateId("JAL");
+//         recipient.setEmployeeData(employeeData);
+
+// // Payroll
+//         Payroll payroll = new Payroll();
+//         payroll.setVersion("1.2");
+//         payroll.setPayrollTypeCode("O");
+//         payroll.setPaymentDate("2023-05-24T00:00:00");
+//         payroll.setInitialPaymentDate("2023-05-09T00:00:00");
+//         payroll.setFinalPaymentDate("2023-05-24T00:00:00");
+//         payroll.setDaysPaid(15);
+
+// // Earnings
+//         PayrollEarnings payrollEarnings = new PayrollEarnings();
+//         List<PayrollEarning> earnings = new ArrayList<>();
+
+//         PayrollEarning e1 = new PayrollEarning();
+//         e1.setEarningTypeCode("001");
+//         e1.setCode("00500");
+//         e1.setConcept("Sueldos, Salarios Rayas y Jornales");
+//         e1.setTaxedAmount(new BigDecimal("2808.8"));
+//         e1.setExemptAmount(new BigDecimal("2191.2"));
+
+//         earnings.add(e1);
+
+// // Other Payments
+//         List<PayrollEarningOtherPayment> otherPayments = new ArrayList<>();
+
+//         payrollEarnings.setEarnings(earnings);
+//         payrollEarnings.setOtherPayments(otherPayments);
+
+// // Deductions (empty list)
+//         List<PayrollDeduction> payrollDeductions = new ArrayList<>();
+
+//         payroll.setEarnings(payrollEarnings);
+//         payroll.setDeductions(payrollDeductions);
+
+//         Complement complement = new Complement();
+//         complement.setPayroll(payroll);
+// // Invoice
+//         Invoice invoice = new Invoice();
+//         invoice.setVersionCode("4.0");
+//         invoice.setSeries("F");
+//         invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+//         invoice.setTypeCode("N");
+//         invoice.setPaymentMethodCode("PUE");
+//         invoice.setCurrencyCode("MXN");
+//         invoice.setExpeditionZipCode("20000");
+//         invoice.setExportCode("01");
+//         invoice.setIssuer(issuer);
+//         invoice.setRecipient(recipient);
+//         invoice.setComplement(complement);
+
+//         ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+
+//         System.out.println(apiResponse);
+
+//       Nómina viáticos
+// Emisor
+//         InvoiceIssuer issuer = new InvoiceIssuer();
+//         issuer.setTin("EKU9003173C9");
+//         issuer.setLegalName("ESCUELA KEMPER URGATE");
+//         issuer.setTaxRegimeCode("601");
+
+//         EmployerData employerData = new EmployerData();
+//         employerData.setEmployerRegistration("B5510768108");
+//         employerData.setOriginEmployerTin("URE180429TM6");
+//         issuer.setEmployerData(employerData);
+
+//         // Certificados del emisor
+//         // Certificados del emisor
+//         List<TaxCredential> credentials = new ArrayList<>();
+
+//         TaxCredential cer = new TaxCredential();
+//         cer.setBase64File(base64Cer);
+//         cer.setFileType(0); // 0 = Certificado (.cer)
+//         cer.setPassword(password);
+
+//         TaxCredential key = new TaxCredential();
+//         key.setBase64File(base64Key);
+//         key.setFileType(1); // 1 = Clave privada (.key)
+//         key.setPassword(password);
+
+//         credentials.add(cer);
+//         credentials.add(key);
+
+//         issuer.setTaxCredentials(credentials);
+
+// // Receptor
+//         InvoiceRecipient recipient = new InvoiceRecipient();
+//         recipient.setTin("XOJI740919U48");
+//         recipient.setLegalName("INGRID XODAR JIMENEZ");
+//         recipient.setZipCode("76028");
+//         recipient.setTaxRegimeCode("605");
+//         recipient.setCfdiUseCode("CN01");
+
+//         EmployeeData employeeData = new EmployeeData();
+//         employeeData.setCurp("XEXX010101HNEXXXA4");
+//         employeeData.setSocialSecurityNumber("000000");
+//         employeeData.setLaborRelationStartDate("2015-01-01T00:00:00");
+//         employeeData.setSeniority("P438W");
+//         employeeData.setSatContractTypeId("01");
+//         employeeData.setSatWorkdayTypeId("01");
+//         employeeData.setSatTaxRegimeTypeId("03");
+//         employeeData.setEmployeeNumber("120");
+//         employeeData.setDepartment("Desarrollo");
+//         employeeData.setPosition("Ingeniero de Software");
+//         employeeData.setSatJobRiskId("1");
+//         employeeData.setSatPaymentPeriodicityId("04");
+//         employeeData.setSatBankId("002");
+//         employeeData.setBankAccount("1111111111");
+//         employeeData.setBaseSalaryForContributions("490.22");
+//         employeeData.setIntegratedDailySalary("146.47");
+//         employeeData.setSatPayrollStateId("JAL");
+//         recipient.setEmployeeData(employeeData);
+
+// // Payroll
+//         Payroll payroll = new Payroll();
+//         payroll.setVersion("1.2");
+//         payroll.setPayrollTypeCode("O");
+//         payroll.setPaymentDate("2023-09-26T00:00:00");
+//         payroll.setInitialPaymentDate("2023-09-11T00:00:00");
+//         payroll.setFinalPaymentDate("2023-09-26T00:00:00");
+//         payroll.setDaysPaid(15);
+
+// // Earnings
+//         PayrollEarnings payrollEarnings = new PayrollEarnings();
+//         List<PayrollEarning> earnings = new ArrayList<>();
+
+//         PayrollEarning e1 = new PayrollEarning();
+//         e1.setEarningTypeCode("050");
+//         e1.setCode("050");
+//         e1.setConcept("Viaticos");
+//         e1.setTaxedAmount(new BigDecimal("0"));
+//         e1.setExemptAmount(new BigDecimal("3000"));
+
+//         earnings.add(e1);
+
+// // Other Payments
+//         List<PayrollEarningOtherPayment> otherPayments = new ArrayList<>();
+
+//         payrollEarnings.setEarnings(earnings);
+//         payrollEarnings.setOtherPayments(otherPayments);
+
+// // Deductions
+//         List<PayrollDeduction> payrollDeductions = new ArrayList<>();
+
+//         PayrollDeduction d1 = new PayrollDeduction();
+//         d1.setDeductionTypeCode("081");
+//         d1.setCode("081");
+//         d1.setConcept("Ajuste en viaticos entregados al trabajador");
+//         d1.setAmount("3000.00");
+
+//         payrollDeductions.add(d1);
+
+//         payroll.setEarnings(payrollEarnings);
+//         payroll.setDeductions(payrollDeductions);
+
+//         Complement complement = new Complement();
+//         complement.setPayroll(payroll);
+
+// // Invoice
+//         Invoice invoice = new Invoice();
+//         invoice.setVersionCode("4.0");
+//         invoice.setSeries("F");
+//         invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+//         invoice.setTypeCode("N");
+//         invoice.setPaymentMethodCode("PUE");
+//         invoice.setCurrencyCode("MXN");
+//         invoice.setExpeditionZipCode("20000");
+//         invoice.setExportCode("01");
+//         invoice.setIssuer(issuer);
+//         invoice.setRecipient(recipient);
+//         invoice.setComplement(complement);
+
+//         ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+
+//         System.out.println(apiResponse);
+
+// Nómina subsidio causado al empleo
+// Emisor
+//         InvoiceIssuer issuer = new InvoiceIssuer();
+//         issuer.setTin("EKU9003173C9");
+//         issuer.setLegalName("ESCUELA KEMPER URGATE");
+//         issuer.setTaxRegimeCode("601");
+
+//         EmployerData employerData = new EmployerData();
+//         employerData.setEmployerRegistration("B5510768108");
+//         employerData.setOriginEmployerTin("URE180429TM6");
+//         issuer.setEmployerData(employerData);
+
+//         // Certificados del emisor
+//         // Certificados del emisor
+//         List<TaxCredential> credentials = new ArrayList<>();
+
+//         TaxCredential cer = new TaxCredential();
+//         cer.setBase64File(base64Cer);
+//         cer.setFileType(0); // 0 = Certificado (.cer)
+//         cer.setPassword(password);
+
+//         TaxCredential key = new TaxCredential();
+//         key.setBase64File(base64Key);
+//         key.setFileType(1); // 1 = Clave privada (.key)
+//         key.setPassword(password);
+
+//         credentials.add(cer);
+//         credentials.add(key);
+
+//         issuer.setTaxCredentials(credentials);
+
+// // Receptor
+//         InvoiceRecipient recipient = new InvoiceRecipient();
+//         recipient.setTin("XOJI740919U48");
+//         recipient.setLegalName("INGRID XODAR JIMENEZ");
+//         recipient.setZipCode("76028");
+//         recipient.setTaxRegimeCode("605");
+//         recipient.setCfdiUseCode("CN01");
+
+//         EmployeeData employeeData = new EmployeeData();
+//         employeeData.setCurp("XEXX010101HNEXXXA4");
+//         employeeData.setSocialSecurityNumber("000000");
+//         employeeData.setLaborRelationStartDate("2015-01-01T00:00:00");
+//         employeeData.setSeniority("P437W");
+//         employeeData.setSatContractTypeId("01");
+//         employeeData.setSatWorkdayTypeId("01");
+//         employeeData.setSatTaxRegimeTypeId("0aa2ad8c3-6ec5-4601-91be-d827d9a865bc2");
+//         employeeData.setEmployeeNumber("120");
+//         employeeData.setDepartment("Desarrollo");
+//         employeeData.setPosition("Ingeniero de Software");
+//         employeeData.setSatJobRiskId("1");
+//         employeeData.setSatPaymentPeriodicityId("04");
+//         employeeData.setSatBankId("002");
+//         employeeData.setBankAccount("1111111111");
+//         employeeData.setBaseSalaryForContributions("490.22");
+//         employeeData.setIntegratedDailySalary("146.47");
+//         employeeData.setSatPayrollStateId("JAL");
+//         recipient.setEmployeeData(employeeData);
+
+// // Payroll
+//         Payroll payroll = new Payroll();
+//         payroll.setVersion("1.2");
+//         payroll.setPayrollTypeCode("O");
+//         payroll.setPaymentDate("2023-05-24T00:00:00");
+//         payroll.setInitialPaymentDate("2023-05-09T00:00:00");
+//         payroll.setFinalPaymentDate("2023-05-24T00:00:00");
+//         payroll.setDaysPaid(15);
+
+// // Earnings
+//         PayrollEarnings payrollEarnings = new PayrollEarnings();
+//         List<PayrollEarning> earnings = new ArrayList<>();
+
+//         PayrollEarning e1 = new PayrollEarning();
+//         e1.setEarningTypeCode("001");
+//         e1.setCode("00500");
+//         e1.setConcept("Sueldos, Salarios Rayas y Jornales");
+//         e1.setTaxedAmount(new BigDecimal("2808.8"));
+//         e1.setExemptAmount(new BigDecimal("2191.2"));
+
+//         earnings.add(e1);
+
+// // Other Payments
+//         List<PayrollEarningOtherPayment> otherPayments = new ArrayList<>();
+
+//         PayrollEarningOtherPayment op1 = new PayrollEarningOtherPayment();
+//         op1.setOtherPaymentTypeCode("007");
+//         op1.setCode("0002");
+//         op1.setConcept("ISR ajustado por subsidio");
+//         op1.setAmount(new BigDecimal("145.80"));
+//         op1.setSubsidyCaused(new BigDecimal("0.0"));
+
+//         otherPayments.add(op1);
+
+//         payrollEarnings.setEarnings(earnings);
+//         payrollEarnings.setOtherPayments(otherPayments);
+
+// // Deductions
+//         List<PayrollDeduction> payrollDeductions = new ArrayList<>();
+
+//         PayrollDeduction d1 = new PayrollDeduction();
+//         d1.setDeductionTypeCode("107");
+//         d1.setCode("D002");
+//         d1.setConcept("Ajuste al Subsidio Causado");
+//         d1.setAmount("160.35");
+
+//         PayrollDeduction d2 = new PayrollDeduction();
+//         d2.setDeductionTypeCode("002");
+//         d2.setCode("D002");
+//         d2.setConcept("ISR");
+//         d2.setAmount("145.80");
+
+//         payrollDeductions.add(d1);
+//         payrollDeductions.add(d2);
+
+//         payroll.setEarnings(payrollEarnings);
+//         payroll.setDeductions(payrollDeductions);
+
+//         Complement complement = new Complement();
+//         complement.setPayroll(payroll);
+
+// // Invoice
+//         Invoice invoice = new Invoice();
+//         invoice.setVersionCode("4.0");
+//         invoice.setSeries("F");
+//         invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+//         invoice.setTypeCode("N");
+//         invoice.setPaymentMethodCode("PUE");
+//         invoice.setCurrencyCode("MXN");
+//         invoice.setExpeditionZipCode("20000");
+//         invoice.setExportCode("01");
+//         invoice.setIssuer(issuer);
+//         invoice.setRecipient(recipient);
+//         invoice.setComplement(complement);
+
+//         ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+
+//         System.out.println(apiResponse);
+
+//      Nómina 
+// Emisor
+//         InvoiceIssuer issuer = new InvoiceIssuer();
+//         issuer.setTin("EKU9003173C9");
+//         issuer.setLegalName("ESCUELA KEMPER URGATE");
+//         issuer.setTaxRegimeCode("601");
+
+//         EmployerData employerData = new EmployerData();
+//         employerData.setEmployerRegistration("B5510768108");
+//         employerData.setOriginEmployerTin("URE180429TM6");
+//         issuer.setEmployerData(employerData);
+
+//         // Certificados del emisor
+//         // Certificados del emisor
+//         List<TaxCredential> credentials = new ArrayList<>();
+
+//         TaxCredential cer = new TaxCredential();
+//         cer.setBase64File(base64Cer);
+//         cer.setFileType(0); // 0 = Certificado (.cer)
+//         cer.setPassword(password);
+
+//         TaxCredential key = new TaxCredential();
+//         key.setBase64File(base64Key);
+//         key.setFileType(1); // 1 = Clave privada (.key)
+//         key.setPassword(password);
+
+//         credentials.add(cer);
+//         credentials.add(key);
+
+//         issuer.setTaxCredentials(credentials);
+
+// // Receptor
+//         InvoiceRecipient recipient = new InvoiceRecipient();
+//         recipient.setTin("XOJI740919U48");
+//         recipient.setLegalName("INGRID XODAR JIMENEZ");
+//         recipient.setZipCode("76028");
+//         recipient.setTaxRegimeCode("605");
+//         recipient.setCfdiUseCode("CN01");
+
+//         EmployeeData employeeData = new EmployeeData();
+//         employeeData.setCurp("XEXX010101HNEXXXA4");
+//         employeeData.setSocialSecurityNumber("000000");
+//         employeeData.setLaborRelationStartDate("2015-01-01T00:00:00");
+//         employeeData.setSeniority("P437W");
+//         employeeData.setSatContractTypeId("01");
+//         employeeData.setSatWorkdayTypeId("01");
+//         employeeData.setSatTaxRegimeTypeId("03");
+//         employeeData.setEmployeeNumber("120");
+//         employeeData.setDepartment("Desarrollo");
+//         employeeData.setPosition("Ingeniero de Software");
+//         employeeData.setSatJobRiskId("1");
+//         employeeData.setSatPaymentPeriodicityId("04");
+//         employeeData.setSatBankId("002");
+//         employeeData.setBankAccount("1111111111");
+//         employeeData.setBaseSalaryForContributions("490.22");
+//         employeeData.setIntegratedDailySalary("146.47");
+//         employeeData.setSatPayrollStateId("JAL");
+//         recipient.setEmployeeData(employeeData);
+
+// // Payroll
+//         Payroll payroll = new Payroll();
+//         payroll.setVersion("1.2");
+//         payroll.setPayrollTypeCode("O");
+//         payroll.setPaymentDate("2023-05-24T00:00:00");
+//         payroll.setInitialPaymentDate("2023-05-09T00:00:00");
+//         payroll.setFinalPaymentDate("2023-05-24T00:00:00");
+//         payroll.setDaysPaid(15);
+
+// // Earnings
+//         PayrollEarnings payrollEarnings = new PayrollEarnings();
+//         List<PayrollEarning> earnings = new ArrayList<>();
+
+//         PayrollEarning e1 = new PayrollEarning();
+//         e1.setEarningTypeCode("001");
+//         e1.setCode("00500");
+//         e1.setConcept("Sueldos, Salarios Rayas y Jornales");
+//         e1.setTaxedAmount(new BigDecimal("2808.8"));
+//         e1.setExemptAmount(new BigDecimal("2191.2"));
+
+//         earnings.add(e1);
+
+// // Other Payments
+//         List<PayrollEarningOtherPayment> otherPayments = new ArrayList<>();
+
+//         payrollEarnings.setEarnings(earnings);
+//         payrollEarnings.setOtherPayments(otherPayments);
+
+// // Deductions
+//         List<PayrollDeduction> payrollDeductions = new ArrayList<>();
+
+//         PayrollDeduction d1 = new PayrollDeduction();
+//         d1.setDeductionTypeCode("001");
+//         d1.setCode("00301");
+//         d1.setConcept("Seguridad Social");
+//         d1.setAmount("200.00");
+
+//         PayrollDeduction d2 = new PayrollDeduction();
+//         d2.setDeductionTypeCode("002");
+//         d2.setCode("00302");
+//         d2.setConcept("ISR");
+//         d2.setAmount("100.00");
+
+//         payrollDeductions.add(d1);
+//         payrollDeductions.add(d2);
+
+//         payroll.setEarnings(payrollEarnings);
+//         payroll.setDeductions(payrollDeductions);
+
+//         Complement complement = new Complement();
+//         complement.setPayroll(payroll);
+
+// // Invoice
+//         Invoice invoice = new Invoice();
+//         invoice.setVersionCode("4.0");
+//         invoice.setSeries("F");
+//         invoice.setDate(LocalDateTime.now()); // Or use {{currentDate}} placeholder
+//         invoice.setTypeCode("N");
+//         invoice.setPaymentMethodCode("PUE");
+//         invoice.setCurrencyCode("MXN");
+//         invoice.setExpeditionZipCode("20000");
+//         invoice.setExportCode("01");
+//         invoice.setIssuer(issuer);
+//         invoice.setRecipient(recipient);
+//         invoice.setComplement(complement);
+
+//         ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+
+//         System.out.println(apiResponse);
+//         endregion
+//region timbres
+//       Listar movimientos
+//         ApiResponse<PagedList<StampTransaction>> apiResponse = client.getStampService().getList(1, 10);
+//         System.out.println(apiResponse);
+
+//      Obtener movimiento por ID
+//                ApiResponse<StampTransaction> transactionResponse = client.getStampService().getById("77678d6d-94b1-4635-aa91-15cdd7423aab", false);
+//                System.out.println(transactionResponse);        
+//      Transferir timbres 
+        //  StampTransactionParams transParams = new StampTransactionParams();
+        //  transParams.setFromPersonId("1");
+        //  transParams.setToPersonId("bef56254-0892-4558-95c3-f9c8729e4b0e");
+        //  transParams.setAmount(1);
+        //  transParams.setComments("venta de timbres");
+        //  ApiResponse<Boolean> apiResponse = client.getStampService().TransferStamps(transParams);
+        //  System.out.println(apiResponse);
+
+        //  //Retirar timbres
+        //  StampTransactionParams transParams = new StampTransactionParams();
+        //  transParams.setFromPersonId("bef56254-0892-4558-95c3-f9c8729e4b0e");
+        //  transParams.setToPersonId("1");
+        //  transParams.setAmount(1);
+        //  transParams.setComments("prestamo");
+        //  ApiResponse<Boolean> apiResponse = client.getStampService().TransferStamps(transParams);
+        //  System.out.println(apiResponse); 
+//end region
         System.out.printf("%s\n", "End Fiscalapi!");
     }
 }
