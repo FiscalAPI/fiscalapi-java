@@ -71,6 +71,7 @@ public class InvoicePayment {
         this.paymentDate = com.fiscalapi.OptUtil.formatInputDateToSATFormat(satDate);
     }
 
+    @JsonIgnore
     /**
      * @param date Fecha y hora de expedición como String en formato SAT
      */

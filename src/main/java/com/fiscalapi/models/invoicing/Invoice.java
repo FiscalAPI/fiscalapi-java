@@ -218,6 +218,7 @@ public class Invoice extends BaseDto{
         this.date = com.fiscalapi.OptUtil.formatInputDateToSATFormat(satDate);
     }
 
+    @JsonIgnore
     /**
      * @param dateString Fecha y hora de expedición como String en formato SAT
      */
