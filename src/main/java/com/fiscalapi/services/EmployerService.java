@@ -1,10 +1,11 @@
 package com.fiscalapi.services;
 
+import com.fiscalapi.abstractions.IEmployerService;
 import com.fiscalapi.abstractions.IFiscalApiHttpClient;
 import com.fiscalapi.common.ApiResponse;
 import com.fiscalapi.models.invoicing.payroll.EmployerData;
 
-public class EmployerService {
+public class EmployerService implements IEmployerService {
     public IFiscalApiHttpClient getHttpClient() {
         return httpClient;
     }
@@ -21,19 +22,19 @@ public class EmployerService {
         return String.format("%s/%s/employer", baseEndpoint, personId);
     }
 
-    public ApiResponse<EmployerData> GetById(String id) {
+    public ApiResponse<EmployerData> getById(String id) {
         return httpClient.get(buildEndpoint(id), EmployerData.class);
     }
 
-    public ApiResponse<EmployerData>Create(EmployerData requestModel) {
+    public ApiResponse<EmployerData> create(EmployerData requestModel) {
         return httpClient.post(buildEndpoint(requestModel.getPersonId()), requestModel, EmployerData.class);
     }
 
-    public ApiResponse<EmployerData> Update(EmployerData requestModel) {
+    public ApiResponse<EmployerData> update(EmployerData requestModel) {
         return httpClient.put(buildEndpoint(requestModel.getPersonId()), requestModel, EmployerData.class);
     }
 
-    public ApiResponse<Boolean> Delete(String id) {
+    public ApiResponse<Boolean> delete(String id) {
         return httpClient.delete(buildEndpoint(id));
     }
 }
