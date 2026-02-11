@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fiscalapi.OptUtil;
-import com.fiscalapi.serialization.MoneySerializer;
+import com.fiscalapi.serialization.BigDecimalSerializer;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -19,9 +19,9 @@ public class InvoicePayment {
     private LocalDateTime paymentDate;
     private String paymentFormCode;
     private String currencyCode;
-    @JsonSerialize(using = MoneySerializer.class)
+    @JsonSerialize(using = BigDecimalSerializer.class)
     private BigDecimal exchangeRate;
-    @JsonSerialize(using = MoneySerializer.class)
+    @JsonSerialize(using = BigDecimalSerializer.class)
     private BigDecimal amount;
     private String sourceBankTin;
     private String sourceBankAccount;

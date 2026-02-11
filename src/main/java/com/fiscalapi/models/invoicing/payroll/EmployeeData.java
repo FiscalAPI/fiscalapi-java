@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fiscalapi.common.CatalogDto;
-import com.fiscalapi.serialization.MoneySerializer;
+import com.fiscalapi.serialization.BigDecimalSerializer;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -41,12 +41,12 @@ public class EmployeeData {
     private String satBankId;
     private String satPayrollStateId;
     private String bankAccount;
-    @JsonSerialize(using = MoneySerializer.class)
+    @JsonSerialize(using = BigDecimalSerializer.class)
     private BigDecimal baseSalaryForContributions;
-    @JsonSerialize(using = MoneySerializer.class)
+    @JsonSerialize(using = BigDecimalSerializer.class)
     private BigDecimal integratedDailySalary;
     private String subcontractorRfc;
-    @JsonSerialize(using = MoneySerializer.class)
+    @JsonSerialize(using = BigDecimalSerializer.class)
     private BigDecimal timePercentage;
 
     public String getCurp() {

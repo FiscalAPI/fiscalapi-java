@@ -2,7 +2,7 @@ package com.fiscalapi.models.invoicing;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fiscalapi.OptUtil;
-import com.fiscalapi.serialization.MoneySerializer;
+import com.fiscalapi.serialization.BigDecimalSerializer;
 
 import java.math.BigDecimal;
 
@@ -13,7 +13,7 @@ public class InvoiceStatusRequest {
     private String id;
     private String issuerTin;
     private String recipientTin;
-    @JsonSerialize(using = MoneySerializer.class)
+    @JsonSerialize(using = BigDecimalSerializer.class)
     private BigDecimal invoiceTotal;
     private String invoiceUuid;
     private String last8DigitsIssuerSignature;

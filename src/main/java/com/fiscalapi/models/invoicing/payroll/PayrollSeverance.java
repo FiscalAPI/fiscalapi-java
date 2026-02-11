@@ -1,18 +1,18 @@
 package com.fiscalapi.models.invoicing.payroll;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fiscalapi.serialization.MoneySerializer;
+import com.fiscalapi.serialization.BigDecimalSerializer;
 import java.math.BigDecimal;
 
 public class PayrollSeverance {
-    @JsonSerialize(using = MoneySerializer.class)
+    @JsonSerialize(using = BigDecimalSerializer.class)
     private BigDecimal totalPaid;
     private int yearsOfService;
-    @JsonSerialize(using = MoneySerializer.class)
+    @JsonSerialize(using = BigDecimalSerializer.class)
     private BigDecimal lastMonthlySalary;
-    @JsonSerialize(using = MoneySerializer.class)
+    @JsonSerialize(using = BigDecimalSerializer.class)
     private BigDecimal accumulableIncome;
-    @JsonSerialize(using = MoneySerializer.class)
+    @JsonSerialize(using = BigDecimalSerializer.class)
     private BigDecimal nonAccumulableIncome;
 
     public BigDecimal getTotalPaid() {

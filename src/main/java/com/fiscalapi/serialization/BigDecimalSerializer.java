@@ -7,7 +7,7 @@ import java.util.Locale;
 
 import com.fasterxml.jackson.databind.JsonSerializer;
 
-public class MoneySerializer extends JsonSerializer<BigDecimal> {
+public class BigDecimalSerializer extends JsonSerializer<BigDecimal> {
     @Override
     public void serialize(BigDecimal value, com.fasterxml.jackson.core.JsonGenerator gen,
             com.fasterxml.jackson.databind.SerializerProvider serializers) throws java.io.IOException {

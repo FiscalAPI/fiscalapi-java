@@ -1,16 +1,16 @@
 package com.fiscalapi.models.invoicing.payroll;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fiscalapi.serialization.MoneySerializer;
+import com.fiscalapi.serialization.BigDecimalSerializer;
 import java.math.BigDecimal;
 
 public class PayrollEarningOtherPayment {
     private String otherPaymentTypeCode;
     private String code;
     private String concept;
-    @JsonSerialize(using = MoneySerializer.class)
+    @JsonSerialize(using = BigDecimalSerializer.class)
     private BigDecimal amount;
-    @JsonSerialize(using = MoneySerializer.class)
+    @JsonSerialize(using = BigDecimalSerializer.class)
     private BigDecimal subsidyCaused;
 
     public String getOtherPaymentTypeCode() {

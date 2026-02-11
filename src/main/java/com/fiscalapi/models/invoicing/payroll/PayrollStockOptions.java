@@ -2,14 +2,14 @@ package com.fiscalapi.models.invoicing.payroll;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fiscalapi.OptUtil;
-import com.fiscalapi.serialization.MoneySerializer;
+import com.fiscalapi.serialization.BigDecimalSerializer;
 
 import java.math.BigDecimal;
 
 public class PayrollStockOptions {
-    @JsonSerialize(using = MoneySerializer.class)
+    @JsonSerialize(using = BigDecimalSerializer.class)
     private BigDecimal marketPrice;
-    @JsonSerialize(using = MoneySerializer.class)
+    @JsonSerialize(using = BigDecimalSerializer.class)
     private BigDecimal grantPrice;
 
     public BigDecimal getMarketPrice() {

@@ -2,7 +2,7 @@ package com.fiscalapi.models;
 import com.fiscalapi.common.BaseDto;
 import com.fiscalapi.common.CatalogDto;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fiscalapi.serialization.MoneySerializer;
+import com.fiscalapi.serialization.BigDecimalSerializer;
 
 import java.math.BigDecimal;
 
@@ -33,7 +33,7 @@ public class ProductTax extends BaseDto {
     /**
      * Tasa del impuesto. El valor debe estar entre 0.00000 y 1.000000 (ej: 0.160000).
      */
-    @JsonSerialize(using = MoneySerializer.class)
+    @JsonSerialize(using = BigDecimalSerializer.class)
     private BigDecimal rate;
 
     /**

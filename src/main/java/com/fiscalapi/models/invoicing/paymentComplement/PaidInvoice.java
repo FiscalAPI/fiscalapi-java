@@ -1,7 +1,7 @@
 package com.fiscalapi.models.invoicing.paymentComplement;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fiscalapi.serialization.MoneySerializer;
+import com.fiscalapi.serialization.BigDecimalSerializer;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -10,19 +10,19 @@ import java.util.List;
 public class PaidInvoice {
     private String uuid;
     private String series;
-    @JsonSerialize(using = MoneySerializer.class)
+    @JsonSerialize(using = BigDecimalSerializer.class)
     private BigDecimal paymentAmount;
     private String number;
     private String currencyCode;
     private Integer partialityNumber;
-    @JsonSerialize(using = MoneySerializer.class)
+    @JsonSerialize(using = BigDecimalSerializer.class)
     private BigDecimal subTotal;
-    @JsonSerialize(using = MoneySerializer.class)
+    @JsonSerialize(using = BigDecimalSerializer.class)
     private BigDecimal previousBalance;
-    @JsonSerialize(using = MoneySerializer.class)
+    @JsonSerialize(using = BigDecimalSerializer.class)
     private BigDecimal remainingBalance;
     private String taxObjectCode;
-    @JsonSerialize(using = MoneySerializer.class)
+    @JsonSerialize(using = BigDecimalSerializer.class)
     private BigDecimal equivalence;
     private List<PaidInvoiceTax> paidInvoiceTaxes;
 

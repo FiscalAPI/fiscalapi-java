@@ -1,17 +1,17 @@
 package com.fiscalapi.models.invoicing.paymentComplement;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fiscalapi.serialization.MoneySerializer;
+import com.fiscalapi.serialization.BigDecimalSerializer;
 
 import java.math.BigDecimal;
 
 // Impuestos aplicables a la factura pagada
 public class PaidInvoiceTax {
-    @JsonSerialize(using = MoneySerializer.class)
+    @JsonSerialize(using = BigDecimalSerializer.class)
     private BigDecimal base;
     private String taxCode;
     private String taxTypeCode;
-    @JsonSerialize(using = MoneySerializer.class)
+    @JsonSerialize(using = BigDecimalSerializer.class)
     private BigDecimal taxRate;
     private String taxFlagCode;
 
