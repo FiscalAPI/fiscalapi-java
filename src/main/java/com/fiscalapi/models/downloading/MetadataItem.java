@@ -151,7 +151,7 @@ public class MetadataItem extends BaseDto {
 
     @JsonProperty("invoiceDate")
     public void setSatInvoiceDate(String satDate) {
-        this.invoiceDate = OptUtil.formatInputDateToSATFormat(satDate);
+        this.invoiceDate = OptUtil.parseLocalDateTime(satDate);
     }
 
     @JsonIgnore
@@ -174,7 +174,7 @@ public class MetadataItem extends BaseDto {
 
     @JsonProperty("satCertificationDate")
     public void setSatCertificationDateFormatted(String satDate) {
-        this.satCertificationDate = OptUtil.formatInputDateToSATFormat(satDate);
+        this.satCertificationDate = OptUtil.parseLocalDateTime(satDate);
     }
 
     public BigDecimal getAmount() {
@@ -221,7 +221,7 @@ public class MetadataItem extends BaseDto {
 
     @JsonProperty("cancellationDate")
     public void setSatCancellationDate(String satDate) {
-        this.cancellationDate = OptUtil.formatInputDateToSATFormat(satDate);
+        this.cancellationDate = OptUtil.parseLocalDateTime(satDate);
     }
 
     public String getDownloadPackageId() {

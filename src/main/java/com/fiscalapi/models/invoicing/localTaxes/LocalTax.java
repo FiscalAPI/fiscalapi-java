@@ -22,8 +22,8 @@ public class LocalTax {
         return taxRate;
     }
 
-    public void setTaxRate(String taxRate) {
-        this.taxRate = OptUtil.parseBigDecimal(taxRate);
+    public void setTaxRate(BigDecimal taxRate) {
+        this.taxRate = taxRate;
     }
 
     public String getTaxFlagCode() {
@@ -38,7 +38,7 @@ public class LocalTax {
         return taxAmount;
     }
 
-    public void setTaxAmount(String taxAmount) {
-        this.taxAmount = OptUtil.parseBigDecimal(taxAmount);
+    public void setTaxAmount(BigDecimal taxAmount) {
+        this.taxAmount = taxAmount;
     }
 }

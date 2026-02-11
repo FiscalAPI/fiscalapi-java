@@ -8,10 +8,10 @@ import java.time.format.DateTimeParseException;
 import static com.fiscalapi.models.invoicing.InvoiceConstants.SAT_DATE_FORMAT_IN;
 
 public class OptUtil {
-    public static LocalDateTime formatInputDateToSATFormat(String stringDate) {
+    public static LocalDateTime parseLocalDateTime(String stringDate) {
         LocalDateTime parsedDate = null;
         if (stringDate == null || stringDate.isEmpty()) {
-            return parsedDate;
+            throw new IllegalArgumentException("Fecha no puede ser nula o vacía");
         }
 
         try {
@@ -23,8 +23,7 @@ public class OptUtil {
                 ZonedDateTime zdt = ZonedDateTime.parse(stringDate);
                 parsedDate = zdt.toLocalDateTime();
             } catch (DateTimeParseException e2) {
-                throw new IllegalArgumentException("Formato de fecha inválido: " + stringDate +
-                        " (debe ser compatible con el formato yyyy-MM-ddTHH:mm:ss)", e);
+                throw new DateTimeParseException("Fecha en formato no reconocido: " + stringDate, stringDate, 0, null);
             }
         }
         return parsedDate;

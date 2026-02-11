@@ -1,6 +1,11 @@
 package com.fiscalapi.models.invoicing.payroll;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fiscalapi.OptUtil;
 import com.fiscalapi.common.CatalogDto;
 
@@ -15,6 +20,9 @@ public class EmployeeData {
     private String employeePersonId;
     private String employeeNumber;
     private String socialSecurityNumber;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime laborRelationStartDate;
     private CatalogDto satContractType;
     private CatalogDto satTaxRegimeType;
@@ -81,17 +89,12 @@ public class EmployeeData {
         this.socialSecurityNumber = socialSecurityNumber;
     }
 
-    @JsonProperty("laborRelationStartDate")
-    public String getLaborRelationStartDate() {
-        if (laborRelationStartDate == null) {
-            return null;
-        }
-        return laborRelationStartDate.format(SAT_DATE_FORMAT_OUT);
+    public LocalDateTime getLaborRelationStartDate() {
+        return laborRelationStartDate;
     }
 
-    @JsonProperty("laborRelationStartDate")
-    public void setLaborRelationStartDate(String laborRelationStartDate) {
-        this.laborRelationStartDate = OptUtil.formatInputDateToSATFormat(laborRelationStartDate);
+    public void setLaborRelationStartDate(LocalDateTime laborRelationStartDate) {
+        this.laborRelationStartDate = laborRelationStartDate;
     }
 
     public CatalogDto getSatContractType() {
@@ -258,16 +261,16 @@ public class EmployeeData {
         return baseSalaryForContributions;
     }
 
-    public void setBaseSalaryForContributions(String baseSalaryForContributions) {
-        this.baseSalaryForContributions = OptUtil.parseBigDecimal(baseSalaryForContributions);
+    public void setBaseSalaryForContributions(BigDecimal baseSalaryForContributions) {
+        this.baseSalaryForContributions = baseSalaryForContributions;
     }
 
     public BigDecimal getIntegratedDailySalary() {
         return integratedDailySalary;
     }
 
-    public void setIntegratedDailySalary(String integratedDailySalary) {
-        this.integratedDailySalary = OptUtil.parseBigDecimal(integratedDailySalary);
+    public void setIntegratedDailySalary(BigDecimal integratedDailySalary) {
+        this.integratedDailySalary = integratedDailySalary;
     }
 
     public String getSubcontractorRfc() {

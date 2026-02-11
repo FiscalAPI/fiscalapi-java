@@ -1,6 +1,9 @@
 package com.fiscalapi.models.invoicing.payroll;
 
-import com.fiscalapi.OptUtil;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fiscalapi.serialization.MoneySerializer;
 
 import java.math.BigDecimal;
 
@@ -8,6 +11,7 @@ public class PayrollDeduction {
     private String deductionTypeCode;
     private String code;
     private String concept;
+    @JsonSerialize(using = MoneySerializer.class)
     private BigDecimal amount;
 
     public String getDeductionTypeCode() {
@@ -38,7 +42,7 @@ public class PayrollDeduction {
         return amount;
     }
 
-    public void setAmount(String amount) {
-        this.amount = OptUtil.parseBigDecimal(amount);
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
     }
 }

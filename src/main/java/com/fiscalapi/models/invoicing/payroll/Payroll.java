@@ -1,6 +1,11 @@
 package com.fiscalapi.models.invoicing.payroll;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fiscalapi.OptUtil;
 
 import java.time.LocalDateTime;
@@ -11,9 +16,24 @@ import static com.fiscalapi.models.invoicing.InvoiceConstants.SAT_DATE_FORMAT_OU
 public class Payroll {
     private String version;
     private String payrollTypeCode;
+    private List<PayrollDeduction> deductions;
+    private List<PayrollDisability> disabilities;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime paymentDate;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime initialPaymentDate;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime finalPaymentDate;
+
     private int daysPaid;
     private PayrollEarnings earnings;
 
@@ -32,40 +52,31 @@ public class Payroll {
     public void setPayrollTypeCode(String payrollTypeCode) {
         this.payrollTypeCode = payrollTypeCode;
     }
-
-    @JsonProperty("paymentDate")
-    public String getPaymentDate() {
-        if (paymentDate == null) {
-            return null;
-        }
-        return paymentDate.format(SAT_DATE_FORMAT_OUT);
+    public LocalDateTime getPaymentDate() {
+            if (paymentDate == null) {
+                return null;
+            }
+        return paymentDate;
     }
 
-    @JsonProperty("paymentDate")
-    public void setPaymentDate(String paymentDate) {
-        this.paymentDate = OptUtil.formatInputDateToSATFormat(paymentDate);
+    public void setPaymentDate(LocalDateTime paymentDate) {
+        this.paymentDate = paymentDate;
     }
 
-    public String getInitialPaymentDate() {
-        if (initialPaymentDate == null) {
-            return null;
-        }
-        return initialPaymentDate.format(SAT_DATE_FORMAT_OUT);
+    public LocalDateTime getInitialPaymentDate() {
+        return initialPaymentDate;
     }
 
-    public void setInitialPaymentDate(String initialPaymentDate) {
-        this.initialPaymentDate = OptUtil.formatInputDateToSATFormat(initialPaymentDate);
+    public void setInitialPaymentDate(LocalDateTime initialPaymentDate) {
+        this.initialPaymentDate = initialPaymentDate;
     }
 
-    public String getFinalPaymentDate() {
-        if (finalPaymentDate == null) {
-            return null;
-        }
-        return finalPaymentDate.format(SAT_DATE_FORMAT_OUT);
+    public LocalDateTime getFinalPaymentDate() {
+        return finalPaymentDate;
     }
 
-    public void setFinalPaymentDate(String finalPaymentDate) {
-        this.finalPaymentDate = OptUtil.formatInputDateToSATFormat(finalPaymentDate);
+    public void setFinalPaymentDate(LocalDateTime finalPaymentDate) {
+        this.finalPaymentDate = finalPaymentDate;
     }
 
     public int getDaysPaid() {
@@ -99,7 +110,4 @@ public class Payroll {
     public void setDisabilities(List<PayrollDisability> disabilities) {
         this.disabilities = disabilities;
     }
-
-    private List<PayrollDeduction> deductions;
-    private List<PayrollDisability> disabilities;
 }

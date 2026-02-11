@@ -35,8 +35,8 @@ public class PaidInvoice {
     public BigDecimal getPaymentAmount() {
         return paymentAmount;
     }
-    public void setPaymentAmount(String amount) {
-        this.paymentAmount = OptUtil.parseBigDecimal(amount);
+    public void setPaymentAmount(BigDecimal amount) {
+        this.paymentAmount = amount;
     }
     public String getNumber() {
         return number;
@@ -59,20 +59,20 @@ public class PaidInvoice {
     public BigDecimal getSubTotal() {
         return subTotal;
     }
-    public void setSubTotal(String subTotal) {
-        this.subTotal = OptUtil.parseBigDecimal(subTotal);
+    public void setSubTotal(BigDecimal subTotal) {
+        this.subTotal = subTotal;
     }
     public BigDecimal getPreviousBalance() {
         return previousBalance;
     }
-    public void setPreviousBalance(String previousBalance) {
-        this.previousBalance = OptUtil.parseBigDecimal(previousBalance);
+    public void setPreviousBalance(BigDecimal previousBalance) {
+        this.previousBalance = previousBalance;
     }
     public BigDecimal getRemainingBalance() {
         return remainingBalance;
     }
-    public void setRemainingBalance(String remainingBalance) {
-        this.remainingBalance = OptUtil.parseBigDecimal(remainingBalance);
+    public void setRemainingBalance(BigDecimal remainingBalance) {
+        this.remainingBalance = remainingBalance;
     }
     public String getTaxObjectCode() {
         return taxObjectCode;
@@ -83,8 +83,8 @@ public class PaidInvoice {
     public BigDecimal getEquivalence() {
         return equivalence;
     }
-    public void setEquivalence(String equivalence) {
-        this.equivalence = OptUtil.parseBigDecimal(equivalence);
+    public void setEquivalence(BigDecimal equivalence) {
+        this.equivalence = equivalence;
     }
     public List<PaidInvoiceTax> getPaidInvoiceTaxes() {
         return paidInvoiceTaxes;

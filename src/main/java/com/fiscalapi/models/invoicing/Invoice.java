@@ -111,8 +111,8 @@ public class Invoice extends BaseDto{
     /**
      * @param subtotal Suma de los importes de los conceptos antes de descuentos e impuestos
      */
-    public void setSubtotal(String subtotal) {
-        this.subtotal = OptUtil.parseBigDecimal(subtotal);
+    public void setSubtotal(BigDecimal subtotal) {
+        this.subtotal = subtotal;
     }
 
     /**
@@ -125,8 +125,8 @@ public class Invoice extends BaseDto{
     /**
      * @param discount Monto total de los descuentos aplicables
      */
-    public void setDiscount(String discount) {
-        this.discount = OptUtil.parseBigDecimal(discount);
+    public void setDiscount(BigDecimal discount) {
+        this.discount = discount;
     }
 
     /**
@@ -139,8 +139,8 @@ public class Invoice extends BaseDto{
     /**
      * @param total Monto total de la factura incluyendo impuestos
      */
-    public void setTotal(String total) {
-        this.total = OptUtil.parseBigDecimal(total);
+    public void setTotal(BigDecimal total) {
+        this.total = total;
     }
 
 
@@ -213,15 +213,7 @@ public class Invoice extends BaseDto{
      */
     @JsonProperty("date")
     public void setSatDate(String satDate) {
-        this.date = OptUtil.formatInputDateToSATFormat(satDate);
-    }
-
-    @JsonIgnore
-    /**
-     * @param dateString Fecha y hora de expedición como String en formato SAT
-     */
-    public void setDate(String dateString) {
-        this.date = OptUtil.formatInputDateToSATFormat(dateString);
+        this.date = OptUtil.parseLocalDateTime(satDate);
     }
 
     /**
@@ -318,8 +310,8 @@ public class Invoice extends BaseDto{
     /**
      * @param exchangeRate Tipo de cambio FIX (Si la moneda es MXN, el valor debe ser 1)
      */
-    public void setExchangeRate(String exchangeRate) {
-        this.exchangeRate = OptUtil.parseBigDecimal(exchangeRate);
+    public void setExchangeRate(BigDecimal exchangeRate) {
+        this.exchangeRate = exchangeRate;
     }
 
     /**

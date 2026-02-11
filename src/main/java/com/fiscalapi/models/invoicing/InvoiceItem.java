@@ -35,14 +35,14 @@ public class InvoiceItem {
     public BigDecimal getQuantity() {
         return quantity;
     }
-    public void setQuantity(String quantity) {
-        this.quantity = OptUtil.parseBigDecimal(quantity);
+    public void setQuantity(BigDecimal quantity) {
+        this.quantity = quantity;
     }
     public BigDecimal getDiscount() {
         return discount;
     }
-    public void setDiscount(String discount) {
-        this.discount = OptUtil.parseBigDecimal(discount);
+    public void setDiscount(BigDecimal discount) {
+        this.discount = discount;
     }
     public String getUnitOfMeasurementCode() {
         return unitOfMeasurementCode;
@@ -59,8 +59,8 @@ public class InvoiceItem {
     public BigDecimal getUnitPrice() {
         return unitPrice;
     }
-    public void setUnitPrice(String unitPrice) {
-        this.unitPrice = OptUtil.parseBigDecimal(unitPrice);
+    public void setUnitPrice(BigDecimal unitPrice) {
+        this.unitPrice = unitPrice;
     }
     public String getTaxObjectCode() {
         return taxObjectCode;

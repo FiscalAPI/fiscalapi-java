@@ -66,18 +66,8 @@ public class InvoicePayment {
      */
     @JsonProperty("paymentDate")
     public void setSatDate(String satDate) {
-        this.paymentDate = OptUtil.formatInputDateToSATFormat(satDate);
+        this.paymentDate = OptUtil.parseLocalDateTime(satDate);
     }
-
-    @JsonIgnore
-    /**
-     * @param date Fecha y hora de expedición como String en formato SAT
-     */
-    public void setPaymentDate(String date) {
-        this.paymentDate = OptUtil.formatInputDateToSATFormat(date);
-    }
-
-
 
     public String getPaymentFormCode() {
         return paymentFormCode;
@@ -94,14 +84,14 @@ public class InvoicePayment {
     public BigDecimal getExchangeRate() {
         return exchangeRate;
     }
-    public void setExchangeRate(String exchangeRate) {
-        this.exchangeRate = OptUtil.parseBigDecimal(exchangeRate);
+    public void setExchangeRate(BigDecimal exchangeRate) {
+        this.exchangeRate = exchangeRate;
     }
     public BigDecimal getAmount() {
         return amount;
     }
-    public void setAmount(String amount) {
-        this.amount = OptUtil.parseBigDecimal(amount);
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
     }
     public String getSourceBankTin() {
         return sourceBankTin;

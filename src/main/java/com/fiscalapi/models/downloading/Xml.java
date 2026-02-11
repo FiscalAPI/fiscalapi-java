@@ -174,15 +174,7 @@ public class Xml extends BaseDto {
      */
     @JsonProperty("date")
     public void setSatDate(String satDate) {
-        this.date = OptUtil.formatInputDateToSATFormat(satDate);
-    }
-
-    @JsonIgnore
-    /**
-     * @param dateString Fecha y hora de expedición como String en formato SAT
-     */
-    public void setDate(String dateString) {
-        this.date = OptUtil.formatInputDateToSATFormat(dateString);
+        this.date = OptUtil.parseLocalDateTime(satDate);
     }
 
     public String getPaymentForm() {

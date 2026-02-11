@@ -15,8 +15,8 @@ public class PaidInvoiceTax {
     public BigDecimal getBase() {
         return base;
     }
-    public void setBase(String base) {
-        this.base = OptUtil.parseBigDecimal(base);
+    public void setBase(BigDecimal base) {
+        this.base = base;
     }
     public String getTaxCode() {
         return taxCode;
@@ -33,8 +33,8 @@ public class PaidInvoiceTax {
     public BigDecimal getTaxRate() {
         return taxRate;
     }
-    public void setTaxRate(String taxRate) {
-        this.taxRate = OptUtil.parseBigDecimal(taxRate);
+    public void setTaxRate(BigDecimal taxRate) {
+        this.taxRate = taxRate;
     }
     public String getTaxFlagCode() {
         return taxFlagCode;

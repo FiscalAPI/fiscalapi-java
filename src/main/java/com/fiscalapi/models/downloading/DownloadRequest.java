@@ -223,16 +223,9 @@ public class DownloadRequest extends BaseDto {
     }
 
     /**
-     * @param startDate Fecha inicial - Fecha de inicio para la solicitud asociada como String
+     * @param startDate Fecha inicial - Fecha de inicio para la solicitud asociada
      */
-    public void setStartDate(String startDate) {
-        this.startDate = OptUtil.formatInputDateToSATFormat(startDate);
-    }
-
-    /**
-     * @param startDate Fecha inicial - Fecha de inicio para la solicitud asociada como LocalDateTime
-     */
-    public void setStartDateFromLocalDateTime(LocalDateTime startDate) {
+    public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
 
@@ -246,14 +239,7 @@ public class DownloadRequest extends BaseDto {
     /**
      * @param endDate Fecha final - Fecha de fin para la solicitud asociada como String
      */
-    public void setEndDate(String endDate) {
-        this.endDate = OptUtil.formatInputDateToSATFormat(endDate);
-    }
-
-    /**
-     * @param endDate Fecha final - Fecha de fin para la solicitud asociada como LocalDateTime
-     */
-    public void setEndDateFromLocalDateTime(LocalDateTime endDate) {
+    public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
     }
 
@@ -435,11 +421,7 @@ public class DownloadRequest extends BaseDto {
     /**
      * @param lastAttemptDate Fecha del último intento para la solicitud asociada
      */
-    public void setLastAttemptDate(String lastAttemptDate) {
-        this.lastAttemptDate = OptUtil.formatInputDateToSATFormat(lastAttemptDate);
-    }
-
-    public void setLastAttemptDateFromLocalDateTime(LocalDateTime lastAttemptDate) {
+    public void setLastAttemptDate(LocalDateTime lastAttemptDate) {
         this.lastAttemptDate = lastAttemptDate;
     }
 
@@ -453,11 +435,7 @@ public class DownloadRequest extends BaseDto {
     /**
      * @param nextAttemptDate Fecha del siguiente intento para la solicitud asociada
      */
-    public void setNextAttemptDate(String nextAttemptDate) {
-        this.nextAttemptDate = OptUtil.formatInputDateToSATFormat(nextAttemptDate);
-    }
-
-    public void setNextAttemptDateFromLocalDateTime(LocalDateTime nextAttemptDate) {
+    public void setNextAttemptDate(LocalDateTime nextAttemptDate) {
         this.nextAttemptDate = nextAttemptDate;
     }
 

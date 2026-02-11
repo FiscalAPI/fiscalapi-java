@@ -6,6 +6,11 @@ import java.util.List;
 public class PayrollEarning {
     private String earningTypeCode;
     private String code;
+    private String concept;
+    private BigDecimal taxedAmount;
+    private BigDecimal exemptAmount;
+    private List<PayrollEarningOvertime> overtime;
+    private PayrollStockOptions stockOptions;
 
     public String getEarningTypeCode() {
         return earningTypeCode;
@@ -62,10 +67,4 @@ public class PayrollEarning {
     public void setStockOptions(PayrollStockOptions stockOptions) {
         this.stockOptions = stockOptions;
     }
-
-    private String concept;
-    private BigDecimal taxedAmount;
-    private BigDecimal exemptAmount;
-    private List<PayrollEarningOvertime> overtime;
-    private PayrollStockOptions stockOptions;
 }
