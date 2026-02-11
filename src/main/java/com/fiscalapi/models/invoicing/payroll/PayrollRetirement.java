@@ -1,12 +1,19 @@
 package com.fiscalapi.models.invoicing.payroll;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fiscalapi.serialization.MoneySerializer;
 import java.math.BigDecimal;
 
 public class PayrollRetirement {
+    @JsonSerialize(using = MoneySerializer.class)
     private BigDecimal totalOneTime;
+    @JsonSerialize(using = MoneySerializer.class)
     private BigDecimal totalInstallments;
+    @JsonSerialize(using = MoneySerializer.class)
     private BigDecimal dailyAmount;
+    @JsonSerialize(using = MoneySerializer.class)
     private BigDecimal accumulableIncome;
+    @JsonSerialize(using = MoneySerializer.class)
     private BigDecimal nonAccumulableIncome;
 
     public BigDecimal getTotalOneTime() {

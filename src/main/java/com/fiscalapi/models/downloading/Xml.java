@@ -3,8 +3,10 @@ package com.fiscalapi.models.downloading;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fiscalapi.OptUtil;
 import com.fiscalapi.common.BaseDto;
+import com.fiscalapi.serialization.MoneySerializer;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -47,18 +49,22 @@ public class Xml extends BaseDto {
     private String paymentConditions;
 
     // Subtotal del CFDI
+    @JsonSerialize(using = MoneySerializer.class)
     private BigDecimal subTotal;
 
     // Descuento aplicado al CFDI
+    @JsonSerialize(using = MoneySerializer.class)
     private BigDecimal discount;
 
     // Código de la moneda del CFDI
     private String currency;
 
     // Tipo de cambio del CFDI (si aplica)
+    @JsonSerialize(using = MoneySerializer.class)
     private BigDecimal exchangeRate;
 
     // Total del CFDI
+    @JsonSerialize(using = MoneySerializer.class)
     private BigDecimal total;
 
     // Tipo de comprobante (I = Ingreso, E = Egreso, T = Traslado, N = Nómina, P = Pago)
@@ -74,9 +80,11 @@ public class Xml extends BaseDto {
     private String confirmation;
 
     // Total impuestos retenidos
+    @JsonSerialize(using = MoneySerializer.class)
     private BigDecimal totalWithheldTaxes;
 
     // Total impuestos trasladados
+    @JsonSerialize(using = MoneySerializer.class)
     private BigDecimal totalTransferredTaxes;
 
     // Información global del CFDI (para CFDI globales)
@@ -510,11 +518,15 @@ class XmlItem extends BaseDto {
     private String xmlId;
     private String itemCode;
     private String sku;
+    @JsonSerialize(using = MoneySerializer.class)
     private BigDecimal quantity;
     private String unitMeasurement;
     private String description;
+    @JsonSerialize(using = MoneySerializer.class)
     private BigDecimal unitPrice;
+    @JsonSerialize(using = MoneySerializer.class)
     private BigDecimal amount;
+    @JsonSerialize(using = MoneySerializer.class)
     private BigDecimal discount;
     private String taxObject;
     private String thirdPartyAccount;
@@ -694,10 +706,13 @@ class XmlItemPropertyAccount extends BaseDto {
  * Información de impuestos de los conceptos.
  */
 class XmlItemTax extends BaseDto {
+    @JsonSerialize(using = MoneySerializer.class)
     private BigDecimal base;
     private String tax;
     private String taxType;
+    @JsonSerialize(using = MoneySerializer.class)
     private BigDecimal rate;
+    @JsonSerialize(using = MoneySerializer.class)
     private BigDecimal amount;
     private String taxFlag;
     private String xmlItemId;
@@ -800,10 +815,13 @@ class XmlRelated extends BaseDto {
  * Información de impuestos del CFDI.
  */
 class XmlTax extends BaseDto {
+    @JsonSerialize(using = MoneySerializer.class)
     private BigDecimal base;
     private String tax;
     private String taxType;
+    @JsonSerialize(using = MoneySerializer.class)
     private BigDecimal rate;
+    @JsonSerialize(using = MoneySerializer.class)
     private BigDecimal amount;
     private String taxFlag;
     private String xmlId;

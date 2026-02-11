@@ -1,10 +1,12 @@
 package com.fiscalapi.models.invoicing;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fiscalapi.OptUtil;
 import com.fiscalapi.common.BaseDto;
 import com.fiscalapi.common.CatalogDto;
 import com.fiscalapi.models.invoicing.paymentComplement.InvoicePayment;
+import com.fiscalapi.serialization.MoneySerializer;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -24,8 +26,11 @@ public class Invoice extends BaseDto{
     private String number;
     private String uuid;
     private Integer consecutive;
+    @JsonSerialize(using = MoneySerializer.class)
     private BigDecimal subtotal;
+    @JsonSerialize(using = MoneySerializer.class)
     private BigDecimal discount;
+    @JsonSerialize(using = MoneySerializer.class)
     private BigDecimal total;
     @JsonIgnore
     private LocalDateTime date;
@@ -36,6 +41,7 @@ public class Invoice extends BaseDto{
     private String expeditionZipCode;
     private String exportCode;
     private String paymentMethodCode;
+    @JsonSerialize(using = MoneySerializer.class)
     private BigDecimal exchangeRate;
     private InvoiceIssuer issuer;
     private InvoiceRecipient recipient;

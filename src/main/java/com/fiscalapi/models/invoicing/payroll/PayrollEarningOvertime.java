@@ -1,5 +1,7 @@
 package com.fiscalapi.models.invoicing.payroll;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fiscalapi.serialization.MoneySerializer;
 import java.math.BigDecimal;
 
 public class PayrollEarningOvertime {
@@ -39,5 +41,6 @@ public class PayrollEarningOvertime {
         this.amountPaid = amountPaid;
     }
 
+    @JsonSerialize(using = MoneySerializer.class)
     private BigDecimal amountPaid;
 }

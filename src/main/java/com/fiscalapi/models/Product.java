@@ -5,6 +5,8 @@ import com.fiscalapi.common.BaseDto;
 import com.fiscalapi.common.CatalogDto;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fiscalapi.serialization.MoneySerializer;
 import java.math.BigDecimal;
 
 /**
@@ -30,6 +32,7 @@ public class Product extends BaseDto {
     /**
      * Precio unitario del producto sin impuestos (requerido).
      */
+    @JsonSerialize(using = MoneySerializer.class)
     private BigDecimal unitPrice;
 
     /**

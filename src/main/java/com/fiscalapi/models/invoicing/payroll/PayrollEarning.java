@@ -1,5 +1,7 @@
 package com.fiscalapi.models.invoicing.payroll;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fiscalapi.serialization.MoneySerializer;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -7,7 +9,9 @@ public class PayrollEarning {
     private String earningTypeCode;
     private String code;
     private String concept;
+    @JsonSerialize(using = MoneySerializer.class)
     private BigDecimal taxedAmount;
+    @JsonSerialize(using = MoneySerializer.class)
     private BigDecimal exemptAmount;
     private List<PayrollEarningOvertime> overtime;
     private PayrollStockOptions stockOptions;

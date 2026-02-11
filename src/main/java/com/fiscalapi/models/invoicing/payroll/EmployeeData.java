@@ -1,18 +1,15 @@
 package com.fiscalapi.models.invoicing.payroll;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import com.fiscalapi.OptUtil;
 import com.fiscalapi.common.CatalogDto;
+import com.fiscalapi.serialization.MoneySerializer;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-
-import static com.fiscalapi.models.invoicing.InvoiceConstants.SAT_DATE_FORMAT_OUT;
 
 public class EmployeeData {
     private String curp;
@@ -44,9 +41,12 @@ public class EmployeeData {
     private String satBankId;
     private String satPayrollStateId;
     private String bankAccount;
+    @JsonSerialize(using = MoneySerializer.class)
     private BigDecimal baseSalaryForContributions;
+    @JsonSerialize(using = MoneySerializer.class)
     private BigDecimal integratedDailySalary;
     private String subcontractorRfc;
+    @JsonSerialize(using = MoneySerializer.class)
     private BigDecimal timePercentage;
 
     public String getCurp() {

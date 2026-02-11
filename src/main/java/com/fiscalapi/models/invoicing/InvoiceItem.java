@@ -1,6 +1,7 @@
 package com.fiscalapi.models.invoicing;
 
-import com.fiscalapi.OptUtil;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fiscalapi.serialization.MoneySerializer;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -9,11 +10,14 @@ import java.util.List;
 public class InvoiceItem {
     private String id;
     private String itemCode;
+    @JsonSerialize(using = MoneySerializer.class)
     private BigDecimal quantity;
+    @JsonSerialize(using = MoneySerializer.class)
     private BigDecimal discount;
     private String unitOfMeasurementCode;
     private String unitOfMeasurement;
     private String description;
+    @JsonSerialize(using = MoneySerializer.class)
     private BigDecimal unitPrice;
     private String taxObjectCode;
     private String itemSku;

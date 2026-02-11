@@ -1,12 +1,11 @@
 package com.fiscalapi.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fiscalapi.common.BaseDto;
 import com.fiscalapi.common.CatalogDto;
-import com.fiscalapi.common.StripePaymentMethodDto;
+import com.fiscalapi.serialization.MoneySerializer;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 
 public class Person extends BaseDto {
@@ -24,7 +23,9 @@ public class Person extends BaseDto {
     private String zipCode;
     private String base64Photo;
     private String taxPassword;
+    @JsonSerialize(using = MoneySerializer.class)
     private BigDecimal availableBalance;
+    @JsonSerialize(using = MoneySerializer.class)
     private BigDecimal committedBalance;
     private String tenantId;
 //    private String phoneNumber;

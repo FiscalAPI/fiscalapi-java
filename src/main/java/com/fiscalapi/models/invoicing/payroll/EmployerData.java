@@ -1,6 +1,8 @@
 package com.fiscalapi.models.invoicing.payroll;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fiscalapi.common.CatalogDto;
+import com.fiscalapi.serialization.MoneySerializer;
 import java.math.BigDecimal;
 
 public class EmployerData {
@@ -8,6 +10,7 @@ public class EmployerData {
     private String employerRegistration;
     private CatalogDto satFundSource;
     private String satFundSourceId;
+    @JsonSerialize(using = MoneySerializer.class)
     private BigDecimal ownResourceAmount;
     private String originEmployerTin;
 

@@ -1,6 +1,7 @@
 package com.fiscalapi.models.invoicing;
 
-import com.fiscalapi.OptUtil;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fiscalapi.serialization.MoneySerializer;
 
 import java.math.BigDecimal;
 
@@ -8,6 +9,7 @@ import java.math.BigDecimal;
 public class ItemTax {
     private String taxCode;
     private String taxTypeCode;
+    @JsonSerialize(using = MoneySerializer.class)
     private BigDecimal taxRate;
     private String taxFlagCode;
 

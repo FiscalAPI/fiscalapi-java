@@ -1,13 +1,16 @@
 package com.fiscalapi.models.invoicing.localTaxes;
 
-import com.fiscalapi.OptUtil;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fiscalapi.serialization.MoneySerializer;
 
 import java.math.BigDecimal;
 
 public class LocalTax {
     private String taxName;
+    @JsonSerialize(using = MoneySerializer.class)
     private BigDecimal taxRate;
     private String taxFlagCode;
+    @JsonSerialize(using = MoneySerializer.class)
     private BigDecimal taxAmount;
 
     public String getTaxName() {
