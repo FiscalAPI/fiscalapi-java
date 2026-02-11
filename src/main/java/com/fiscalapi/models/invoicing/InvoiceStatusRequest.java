@@ -46,8 +46,8 @@ public class InvoiceStatusRequest {
         return invoiceTotal;
     }
 
-    public void setInvoiceTotal(String invoiceTotal) {
-        this.invoiceTotal = OptUtil.parseBigDecimal(invoiceTotal);
+    public void setInvoiceTotal(BigDecimal invoiceTotal) {
+        this.invoiceTotal = invoiceTotal;
     }
 
     public String getInvoiceUuid() {
