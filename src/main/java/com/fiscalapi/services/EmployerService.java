@@ -60,19 +60,19 @@ public class EmployerService implements IEmployerService {
 
     public ApiResponse<Boolean> delete(String id) {
         if (id == null || id.trim().isEmpty()) {
-            throw new IllegalArgumentException("Person ID is required to build endpoint");
+            throw new IllegalArgumentException("El ID de la persona requerido");
         }
         return httpClient.delete(buildEndpoint(id));
     }
 
     private void validateRequestModel(EmployerData requestModel) {
         if (requestModel == null) {
-            throw new IllegalArgumentException("Request model cannot be null");
+            throw new IllegalArgumentException("El modelo de solicitud no puede ser nulo");
         }
 
         String personId = requestModel.getPersonId();
         if (personId == null || personId.trim().isEmpty()) {
-            throw new IllegalArgumentException("Person ID is required to create or update employer data");
+            throw new IllegalArgumentException("Se requiere el ID de la persona para crear o actualizar los datos del empleador");
         }
     }
 }
