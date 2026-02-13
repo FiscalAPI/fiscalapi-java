@@ -1,7 +1,6 @@
 package com.fiscalapi.models.invoicing;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fiscalapi.OptUtil;
 import com.fiscalapi.serialization.BigDecimalSerializer;
 
 import java.math.BigDecimal;

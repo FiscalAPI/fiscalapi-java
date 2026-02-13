@@ -73,8 +73,8 @@
 //     //     employeeData.setSatJobRiskId("1");
 //     //     employeeData.setSatPaymentPeriodicityId("05");
 //     //     employeeData.setSatBankId("012");
-//     //     employeeData.setBaseSalaryForContributions(OptUtil.parseBigDecimal("282.50"));
-//     //     employeeData.setIntegratedDailySalary(OptUtil.parseBigDecimal("2626.23"));
+//     //     employeeData.setBaseSalaryForContributions(new BigDecimal("282.50"));
+//     //     employeeData.setIntegratedDailySalary(new BigDecimal("2626.23"));
 //     //     employeeData.setSatPayrollStateId("JAL");
 
 //     //     Payroll payroll = new Payroll();
@@ -91,43 +91,43 @@
 //     //     e1.setEarningTypeCode("001");
 //     //     e1.setCode("1003");
 //     //     e1.setConcept("Sueldo nominal");
-//     //     e1.setTaxedAmount(OptUtil.parseBigDecimal("95030.00"));
-//     //     e1.setExemptAmount(OptUtil.parseBigDecimal("0"));
+//     //     e1.setTaxedAmount(new BigDecimal("95030.00"));
+//     //     e1.setExemptAmount(new BigDecimal("0"));
 
 //     //     PayrollEarning e2 = new PayrollEarning();
 //     //     e2.setEarningTypeCode("005");
 //     //     e2.setCode("5913");
 //     //     e2.setConcept("Fondo de Ahorro Aportación Patrón");
-//     //     e2.setTaxedAmount(OptUtil.parseBigDecimal("0"));
-//     //     e2.setExemptAmount(OptUtil.parseBigDecimal("0"));
+//     //     e2.setTaxedAmount(new BigDecimal("0"));
+//     //     e2.setExemptAmount(new BigDecimal("0"));
 
 //     //     PayrollEarning e3 = new PayrollEarning();
 //     //     e3.setEarningTypeCode("038");
 //     //     e3.setCode("1885");
 //     //     e3.setConcept("Bono Ingles");
-//     //     e3.setTaxedAmount(OptUtil.parseBigDecimal("14254.50"));
-//     //     e3.setExemptAmount(OptUtil.parseBigDecimal("0"));
+//     //     e3.setTaxedAmount(new BigDecimal("14254.50"));
+//     //     e3.setExemptAmount(new BigDecimal("0"));
 
 //     //     PayrollEarning e4 = new PayrollEarning();
 //     //     e4.setEarningTypeCode("029");
 //     //     e4.setCode("1941");
 //     //     e4.setConcept("Vales Despensa");
-//     //     e4.setTaxedAmount(OptUtil.parseBigDecimal("0"));
-//     //     e4.setExemptAmount(OptUtil.parseBigDecimal("3439"));
+//     //     e4.setTaxedAmount(new BigDecimal("0"));
+//     //     e4.setExemptAmount(new BigDecimal("3439"));
 
 //     //     PayrollEarning e5 = new PayrollEarning();
 //     //     e5.setEarningTypeCode("038");
 //     //     e5.setCode("1824");
 //     //     e5.setConcept("Herramientas Teletrabajo (telecom y prop. electri)");
-//     //     e5.setTaxedAmount(OptUtil.parseBigDecimal("273"));
-//     //     e5.setExemptAmount(OptUtil.parseBigDecimal("0"));
+//     //     e5.setTaxedAmount(new BigDecimal("273"));
+//     //     e5.setExemptAmount(new BigDecimal("0"));
 
 //     //     PayrollEarning e6 = new PayrollEarning();
 //     //     e6.setEarningTypeCode("002");
 //     //     e6.setCode("5050");
 //     //     e6.setConcept("Exceso de subsidio al empleo");
-//     //     e6.setTaxedAmount(OptUtil.parseBigDecimal("0"));
-//     //     e6.setExemptAmount(OptUtil.parseBigDecimal("0"));
+//     //     e6.setTaxedAmount(new BigDecimal("0"));
+//     //     e6.setExemptAmount(new BigDecimal("0"));
 
 //     //     earnings.add(e1);
 //     //     earnings.add(e2);
@@ -141,8 +141,8 @@
 //     //     op1.setOtherPaymentTypeCode("002");
 //     //     op1.setCode("5050");
 //     //     op1.setConcept("exceso de subsidio al empleo");
-//     //     op1.setAmount(OptUtil.parseBigDecimal("0"));
-//     //     op1.setSubsidyCaused(OptUtil.parseBigDecimal("0"));
+//     //     op1.setAmount(new BigDecimal("0"));
+//     //     op1.setSubsidyCaused(new BigDecimal("0"));
 
 //     //     payrollEarnings.setEarnings(earnings);
 //     //     payrollEarnings.setOtherPayments(otherPayments);
@@ -153,43 +153,43 @@
 //     //     d1.setDeductionTypeCode("002");
 //     //     d1.setCode("5003");
 //     //     d1.setConcept("ISR Causado");
-//     //     d1.setAmount(OptUtil.parseBigDecimal("27645"));
+//     //     d1.setAmount(new BigDecimal("27645"));
 
 //     //     PayrollDeduction d2 = new PayrollDeduction();
 //     //     d2.setDeductionTypeCode("004");
 //     //     d2.setCode("5910");
 //     //     d2.setConcept("Fondo de ahorro Empleado Inversión");
-//     //     d2.setAmount(OptUtil.parseBigDecimal("4412.46"));
+//     //     d2.setAmount(new BigDecimal("4412.46"));
 
 //     //     PayrollDeduction d3 = new PayrollDeduction();
 //     //     d3.setDeductionTypeCode("004");
 //     //     d3.setCode("5914");
 //     //     d3.setConcept("Fondo de Ahorro Patrón Inversión");
-//     //     d3.setAmount(OptUtil.parseBigDecimal("4412.46"));
+//     //     d3.setAmount(new BigDecimal("4412.46"));
 
 //     //     PayrollDeduction d4 = new PayrollDeduction();
 //     //     d4.setDeductionTypeCode("004");
 //     //     d4.setCode("1966");
 //     //     d4.setConcept("Contribución póliza exceso GMM");
-//     //     d4.setAmount(OptUtil.parseBigDecimal("519.91"));
+//     //     d4.setAmount(new BigDecimal("519.91"));
 
 //     //     PayrollDeduction d5 = new PayrollDeduction();
 //     //     d5.setDeductionTypeCode("004");
 //     //     d5.setCode("1934");
 //     //     d5.setConcept("Descuento Vales Despensa");
-//     //     d5.setAmount(OptUtil.parseBigDecimal("1"));
+//     //     d5.setAmount(new BigDecimal("1"));
 
 //     //     PayrollDeduction d6 = new PayrollDeduction();
 //     //     d6.setDeductionTypeCode("004");
 //     //     d6.setCode("1942");
 //     //     d6.setConcept("Vales Despensa Electrónico");
-//     //     d6.setAmount(OptUtil.parseBigDecimal("3439"));
+//     //     d6.setAmount(new BigDecimal("3439"));
 
 //     //     PayrollDeduction d7 = new PayrollDeduction();
 //     //     d7.setDeductionTypeCode("001");
 //     //     d7.setCode("1895");
 //     //     d7.setConcept("IMSS");
-//     //     d7.setAmount(OptUtil.parseBigDecimal("2391.13"));
+//     //     d7.setAmount(new BigDecimal("2391.13"));
 
 //     //     payrollDeductions.add(d1);
 //     //     payrollDeductions.add(d2);
@@ -380,7 +380,7 @@
 //     //     employeeData.setEmployeeNumber("111111");
 //     //     employeeData.setSatJobRiskId("4");
 //     //     employeeData.setSatPaymentPeriodicityId("02");
-//     //     employeeData.setIntegratedDailySalary(OptUtil.parseBigDecimal("180.96"));
+//     //     employeeData.setIntegratedDailySalary(new BigDecimal("180.96"));
 //     //     employeeData.setSatPayrollStateId("GUA");
 //     //     recipient.setEmployeeData(employeeData);
 
@@ -393,8 +393,8 @@
 //     //     item1.setQuantity(new BigDecimal("1"));
 //     //     item1.setUnitOfMeasurementCode("ACT");
 //     //     item1.setDescription("Pago de nómina");
-//     //     item1.setUnitPrice(OptUtil.parseBigDecimal("1842.82"));
-//     //     item1.setDiscount(OptUtil.parseBigDecimal("608.71"));
+//     //     item1.setUnitPrice(new BigDecimal("1842.82"));
+//     //     item1.setDiscount(new BigDecimal("608.71"));
 //     //     item1.setTaxObjectCode("01");
 
 //     //     items.add(item1);
@@ -416,8 +416,8 @@
 //     //     e1.setEarningTypeCode("001");
 //     //     e1.setCode("SP01");
 //     //     e1.setConcept("SUELDO");
-//     //     e1.setTaxedAmount(OptUtil.parseBigDecimal("1210.30"));
-//     //     e1.setExemptAmount(OptUtil.parseBigDecimal("0.00"));
+//     //     e1.setTaxedAmount(new BigDecimal("1210.30"));
+//     //     e1.setExemptAmount(new BigDecimal("0.00"));
 
 //     //     PayrollEarning e2 = new PayrollEarning();
 //     //     e2.setEarningTypeCode("010");

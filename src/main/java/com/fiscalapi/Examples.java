@@ -119,8 +119,8 @@ public class Examples {
         // employeeData.setPosition("Analista de Nóminas");
         // employeeData.setSeniority("P54W");
         // employeeData.setBankAccount("12345678901234567890");
-        // employeeData.setBaseSalaryForContributions(OptUtil.parseBigDecimal("490.22"));
-        // employeeData.setIntegratedDailySalary(OptUtil.parseBigDecimal("146.47"));
+        // employeeData.setBaseSalaryForContributions(new BigDecimal("490.22"));
+        // employeeData.setIntegratedDailySalary(new BigDecimal("146.47"));
 
         // ApiResponse<EmployeeData> apiResponse = client.getPersonService().getEmployeeService().create(employeeData);
         // System.out.println(apiResponse);
@@ -145,8 +145,8 @@ public class Examples {
         // employeeData.setPosition("Desarrollador");
         // employeeData.setSeniority("P12W");
         // employeeData.setBankAccount("78957868");
-        // employeeData.setBaseSalaryForContributions(OptUtil.parseBigDecimal("490.22"));
-        // employeeData.setIntegratedDailySalary(OptUtil.parseBigDecimal("146.47"));
+        // employeeData.setBaseSalaryForContributions(new BigDecimal("490.22"));
+        // employeeData.setIntegratedDailySalary(new BigDecimal("146.47"));
 
         // ApiResponse<EmployeeData> apiResponse = client.getPersonService().getEmployeeService().update(employeeData);
         // System.out.println(apiResponse);
@@ -401,13 +401,13 @@ public class Examples {
     //    InvoiceItem item = new InvoiceItem();
 
     //    item.setItemCode("01010101");
-    //    item.setQuantity(OptUtil.parseBigDecimal("9.5"));
+    //    item.setQuantity(new BigDecimal("9.5"));
     //    item.setUnitOfMeasurementCode("E48");
     //    item.setDescription("Invoicing software as a service.");
-    //    item.setUnitPrice(OptUtil.parseBigDecimal("3587.75"));
+    //    item.setUnitPrice(new BigDecimal("3587.75"));
     //    item.setTaxObjectCode("02");
     //    item.setItemSku("7506022301697");
-    //    item.setDiscount(OptUtil.parseBigDecimal("255.85"));
+    //    item.setDiscount(new BigDecimal("255.85"));
 
     //    // impuestos del producto
 
@@ -415,7 +415,7 @@ public class Examples {
     //    ItemTax iva = new ItemTax();
     //    iva.setTaxCode("002"); // iva
     //    iva.setTaxTypeCode("Tasa"); // Tasa
-    //    iva.setTaxRate(OptUtil.parseBigDecimal("0.160000")); // 16%
+    //    iva.setTaxRate(new BigDecimal("0.160000")); // 16%
     //    iva.setTaxFlagCode("T"); // T = Traslado | R = Retención
 
     //    //Agrega iva a los impuestos
@@ -499,20 +499,20 @@ public class Examples {
     //    InvoiceItem item = new InvoiceItem();
 
     //    item.setItemCode("01010101");
-    //    item.setQuantity(OptUtil.parseBigDecimal("1.0"));
+    //    item.setQuantity(new BigDecimal("1.0"));
     //    item.setUnitOfMeasurementCode("ACT");
     //    item.setDescription("Venta");
-    //    item.setUnitPrice(OptUtil.parseBigDecimal("1230.00"));
+    //    item.setUnitPrice(new BigDecimal("1230.00"));
     //    item.setTaxObjectCode("02");
     //    item.setItemSku("venta0001");
-    //    item.setDiscount(OptUtil.parseBigDecimal("255.85"));
+    //    item.setDiscount(new BigDecimal("255.85"));
 
     //    // impuestos del producto
     //    List<ItemTax> taxes = new ArrayList<>();
     //    ItemTax iva = new ItemTax();
     //    iva.setTaxCode("002"); // IVA
     //    iva.setTaxTypeCode("Tasa"); // Tasa
-    //    iva.setTaxRate(OptUtil.parseBigDecimal("0.160000")); // 16%
+    //    iva.setTaxRate(new BigDecimal("0.160000")); // 16%
     //    iva.setTaxFlagCode("T"); // T = Traslado | R = Retención
 
     //    // Agrega iva a los impuestos
@@ -566,20 +566,20 @@ public class Examples {
     //    InvoiceItem item = new InvoiceItem();
 
     //    item.setItemCode("01010101");
-    //    item.setQuantity(OptUtil.parseBigDecimal("1.0"));
+    //    item.setQuantity(new BigDecimal("1.0"));
     //    item.setUnitOfMeasurementCode("ACT");
     //    item.setDescription("Venta");
-    //    item.setUnitPrice(OptUtil.parseBigDecimal("1230.00"));
+    //    item.setUnitPrice(new BigDecimal("1230.00"));
     //    item.setTaxObjectCode("02");
     //    item.setItemSku("venta0001");
-    //    item.setDiscount(OptUtil.parseBigDecimal("255.85"));
+    //    item.setDiscount(new BigDecimal("255.85"));
 
     //    // impuestos del producto
     //    List<ItemTax> taxes = new ArrayList<>();
     //    ItemTax iva = new ItemTax();
     //    iva.setTaxCode("002"); // IVA
     //    iva.setTaxTypeCode("Tasa"); // Tasa
-    //    iva.setTaxRate(OptUtil.parseBigDecimal("0.160000")); // 16%
+    //    iva.setTaxRate(new BigDecimal("0.160000")); // 16%
     //    iva.setTaxFlagCode("T"); // T = Traslado | R = Retención
 
     //    // Agrega iva a los impuestos
@@ -649,13 +649,13 @@ public class Examples {
     //    List<InvoiceItem> items = new ArrayList<>();
     //    InvoiceItem item = new InvoiceItem();
     //    item.setItemCode("01010101");
-    //    item.setQuantity(OptUtil.parseBigDecimal("9.5"));
+    //    item.setQuantity(new BigDecimal("9.5"));
     //    item.setUnitOfMeasurementCode("E48");
     //    item.setDescription("Invoicing software as a service");
-    //    item.setUnitPrice(OptUtil.parseBigDecimal("3587.75"));
+    //    item.setUnitPrice(new BigDecimal("3587.75"));
     //    item.setTaxObjectCode("02");
     //    item.setItemSku("7506022301697");
-    //    item.setDiscount(OptUtil.parseBigDecimal("255.85"));
+    //    item.setDiscount(new BigDecimal("255.85"));
 
     //    // Impuestos del producto (IVA exento)
     //    List<ItemTax> taxes = new ArrayList<>();
@@ -722,20 +722,20 @@ public class Examples {
     //    List<InvoiceItem> items = new ArrayList<>();
     //    InvoiceItem item = new InvoiceItem();
     //    item.setItemCode("01010101");
-    //    item.setQuantity(OptUtil.parseBigDecimal("9.5"));
+    //    item.setQuantity(new BigDecimal("9.5"));
     //    item.setUnitOfMeasurementCode("E48");
     //    item.setDescription("Invoicing software as a service");
-    //    item.setUnitPrice(OptUtil.parseBigDecimal("3587.75"));
+    //    item.setUnitPrice(new BigDecimal("3587.75"));
     //    item.setTaxObjectCode("02");
     //    item.setItemSku("7506022301697");
-    //    item.setDiscount(OptUtil.parseBigDecimal("255.85"));
+    //    item.setDiscount(new BigDecimal("255.85"));
 
     //    // Impuestos del producto (IVA tasa cero)
     //    List<ItemTax> taxes = new ArrayList<>();
     //    ItemTax tax = new ItemTax();
     //    tax.setTaxCode("002");
     //    tax.setTaxTypeCode("Tasa");
-    //    tax.setTaxRate(OptUtil.parseBigDecimal("0.000000"));
+    //    tax.setTaxRate(new BigDecimal("0.000000"));
     //    tax.setTaxFlagCode("T"); // T = Traslado | R = Retención
     //    taxes.add(tax);
     //    item.setItemTaxes(taxes);
@@ -773,8 +773,8 @@ public class Examples {
     //    List<InvoiceItem> items = new ArrayList<>();
     //    InvoiceItem item = new InvoiceItem();
     //    item.setId("114a4be5-fb65-40b2-a762-ff0c55c6ebfa");
-    //    item.setQuantity(OptUtil.parseBigDecimal("2.0"));
-    //    item.setDiscount(OptUtil.parseBigDecimal("255.85"));
+    //    item.setQuantity(new BigDecimal("2.0"));
+    //    item.setDiscount(new BigDecimal("255.85"));
     //    items.add(item);
     //    invoice.setItems(items);
 
@@ -807,8 +807,8 @@ public class Examples {
     //    List<InvoiceItem> items = new ArrayList<>();
     //    InvoiceItem item = new InvoiceItem();
     //    item.setId("114a4be5-fb65-40b2-a762-ff0c55c6ebfa");
-    //    item.setQuantity(OptUtil.parseBigDecimal("1.0"));
-    //    item.setUnitPrice(OptUtil.parseBigDecimal("200.00"));
+    //    item.setQuantity(new BigDecimal("1.0"));
+    //    item.setUnitPrice(new BigDecimal("200.00"));
     //    items.add(item);
     //    invoice.setItems(items);
 
@@ -876,10 +876,10 @@ public class Examples {
     //    List<InvoiceItem> items = new ArrayList<>();
     //    InvoiceItem item = new InvoiceItem();
     //    item.setItemCode("01010101");
-    //    item.setQuantity(OptUtil.parseBigDecimal("0.5"));
+    //    item.setQuantity(new BigDecimal("0.5"));
     //    item.setUnitOfMeasurementCode("E48");
     //    item.setDescription("Invoicing software as a service");
-    //    item.setUnitPrice(OptUtil.parseBigDecimal("3587.75"));
+    //    item.setUnitPrice(new BigDecimal("3587.75"));
     //    item.setTaxObjectCode("02");
     //    item.setItemSku("7506022301697");
 
@@ -888,7 +888,7 @@ public class Examples {
     //    ItemTax tax = new ItemTax();
     //    tax.setTaxCode("002");
     //    tax.setTaxTypeCode("Tasa");
-    //    tax.setTaxRate(OptUtil.parseBigDecimal("0.160000"));
+    //    tax.setTaxRate(new BigDecimal("0.160000"));
     //    tax.setTaxFlagCode("T"); // T = Traslado | R = Retención
     //    taxes.add(tax);
     //    item.setItemTaxes(taxes);
@@ -933,7 +933,7 @@ public class Examples {
     //    List<InvoiceItem> items = new ArrayList<>();
     //    InvoiceItem item = new InvoiceItem();
     //    item.setId("114a4be5-fb65-40b2-a762-ff0c55c6ebfa");
-    //    item.setQuantity(OptUtil.parseBigDecimal("0.5"));
+    //    item.setQuantity(new BigDecimal("0.5"));
     //    items.add(item);
     //    invoice.setItems(items);
 
@@ -973,8 +973,8 @@ public class Examples {
     //    List<InvoiceItem> items = new ArrayList<>();
     //    InvoiceItem item = new InvoiceItem();
     //    item.setId("114a4be5-fb65-40b2-a762-ff0c55c6ebfa");
-    //    item.setQuantity(OptUtil.parseBigDecimal("0.5"));
-    //    item.setUnitPrice(OptUtil.parseBigDecimal("150.0"));
+    //    item.setQuantity(new BigDecimal("0.5"));
+    //    item.setUnitPrice(new BigDecimal("150.0"));
     //    items.add(item);
     //    invoice.setItems(items);
 

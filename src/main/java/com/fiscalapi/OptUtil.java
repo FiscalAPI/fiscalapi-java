@@ -29,20 +29,9 @@ public class OptUtil {
                 ZonedDateTime zdt = ZonedDateTime.parse(stringDate);
                 parsedDate = zdt.toLocalDateTime();
             } catch (DateTimeParseException e2) {
-                throw new DateTimeParseException("Fecha en formato no reconocido: " + stringDate, stringDate, 0, null);
+                throw new DateTimeParseException("Fecha en formato no reconocido: " + stringDate, stringDate, 0, e2);
             }
         }
         return parsedDate;
-    }
-
-    public static BigDecimal parseBigDecimal(String value) {
-        if (value == null || value.isEmpty()) {
-            throw new IllegalArgumentException("Valor numérico inválido: " + value);
-        }
-        try {
-            return new BigDecimal(value);
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("Valor numérico inválido: " + value, e);
-        }
     }
 }

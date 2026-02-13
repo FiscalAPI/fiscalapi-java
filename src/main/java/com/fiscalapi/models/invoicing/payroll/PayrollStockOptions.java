@@ -1,7 +1,6 @@
 package com.fiscalapi.models.invoicing.payroll;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fiscalapi.OptUtil;
 import com.fiscalapi.serialization.BigDecimalSerializer;
 
 import java.math.BigDecimal;
@@ -17,7 +16,7 @@ public class PayrollStockOptions {
     }
 
     public void setMarketPrice(String marketPrice) {
-        this.marketPrice = OptUtil.parseBigDecimal(marketPrice);
+        this.marketPrice = new BigDecimal(marketPrice);
     }
 
     public BigDecimal getGrantPrice() {
@@ -25,6 +24,6 @@ public class PayrollStockOptions {
     }
     
     public void setGrantPrice(String grantPrice) {
-        this.grantPrice = OptUtil.parseBigDecimal(grantPrice);
+        this.grantPrice = new BigDecimal(grantPrice);
     }
 }
