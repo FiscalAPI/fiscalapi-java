@@ -1,12 +1,13 @@
 // package com.fiscalapi.examples;
 
+
 // public class EjemplosNominaValores {
 //     public static void main(String[] args) {
 //         // FiscalApiSettings settings = new FiscalApiSettings();
 //         // settings.setDebugMode(true);
 //         // settings.setApiUrl("https://test.fiscalapi.com");
-//         // settings.setApiKey("");
-//         // settings.setTenant("");
+//         // settings.setApiKey("sk_test_b4f8cc00_d02a_4ecc_a68a_f87ae970958c");
+//         // settings.setTenant("275510ee-f64d-435a-9e92-1553d8f10a7e");
 
 //         // // Sellos de KARLA FUENTE NOLASCO. Ver https://docs.fiscalapi.com/tax-files-info#codificacion-de-fiel-o-csd-en-base64
 //         // final String base64Cer = "MIIFgDCCA2igAwIBAgIUMzAwMDEwMDAwMDA1MDAwMDM0NDYwDQYJKoZIhvcNAQELBQAwggErMQ8wDQYDVQQDDAZBQyBVQVQxLjAsBgNVBAoMJVNFUlZJQ0lPIERFIEFETUlOSVNUUkFDSU9OIFRSSUJVVEFSSUExGjAYBgNVBAsMEVNBVC1JRVMgQXV0aG9yaXR5MSgwJgYJKoZIhvcNAQkBFhlvc2Nhci5tYXJ0aW5lekBzYXQuZ29iLm14MR0wGwYDVQQJDBQzcmEgY2VycmFkYSBkZSBjYWxpejEOMAwGA1UEEQwFMDYzNzAxCzAJBgNVBAYTAk1YMRkwFwYDVQQIDBBDSVVEQUQgREUgTUVYSUNPMREwDwYDVQQHDAhDT1lPQUNBTjERMA8GA1UELRMIMi41LjQuNDUxJTAjBgkqhkiG9w0BCQITFnJlc3BvbnNhYmxlOiBBQ0RNQS1TQVQwHhcNMjMwNTE4MTQzNTM3WhcNMjcwNTE4MTQzNTM3WjCBpzEdMBsGA1UEAxMUS0FSTEEgRlVFTlRFIE5PTEFTQ08xHTAbBgNVBCkTFEtBUkxBIEZVRU5URSBOT0xBU0NPMR0wGwYDVQQKExRLQVJMQSBGVUVOVEUgTk9MQVNDTzEWMBQGA1UELRMNRlVOSzY3MTIyOFBINjEbMBkGA1UEBRMSRlVOSzY3MTIyOE1DTE5MUjA1MRMwEQYDVQQLEwpTdWN1cnNhbCAxMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhNXbTSqGX6+/3Urpemyy5vVG2IdP2v7v001+c4BoMxEDFDQ32cOFdDiRxy0Fq9aR+Ojrofq8VeftvN586iyA1A6a0QnA68i7JnQKI4uJy+u0qiixuHu6u3b3BhSpoaVHcUtqFWLLlzr0yBxfVLOqVna/1/tHbQJg9hx57mp97P0JmXO1WeIqi+Zqob/mVZh2lsPGdJ8iqgjYFaFn9QVOQ1Pq74o1PTqwfzqgJSfV0zOOlESDPWggaDAYE4VNyTBisOUjlNd0x7ppcTxSi3yenrJHqkq/pqJsRLKf6VJ/s9p6bsd2bj07hSDpjlDC2lB25eEfkEkeMkXoE7ErXQ5QCwIDAQABox0wGzAMBgNVHRMBAf8EAjAAMAsGA1UdDwQEAwIGwDANBgkqhkiG9w0BAQsFAAOCAgEAHwYpgbClHULXYhK4GNTgonvXh81oqfXwCSWAyDPiTYFDWVfWM9C4ApxMLyc0XvJte75Rla+bPC08oYN3OlhbbvP3twBL/w9SsfxvkbpFn2ZfGSTXZhyiq4vjmQHW1pnFvGelwgU4v3eeRE/MjoCnE7M/Q5thpuog6WGf7CbKERnWZn8QsUaJsZSEkg6Bv2jm69ye57ab5rrOUaeMlstTfdlaHAEkUgLX/NXq7RbGwv82hkHY5b2vYcXeh34tUMBL6os3OdRlooN9ZQGkVIISvxVZpSHkYC20DFNh1Bb0ovjfujlTcka81GnbUhFGZtRuoVQ1RVpMO8xtx3YKBLp4do3hPmnRCV5hCm43OIjYx9Ov2dqICV3AaNXSLV1dW39Bak/RBiIDGHzOIW2+VMPjvvypBjmPv/tmbqNHWPSAWOxTyMx6E1gFCZvi+5F+BgkdC3Lm7U0BU0NfvsXajZd8sXnIllvEMrikCLoI/yurvexNDcF1RW/FhMsoua0eerwczcNm66pGjHm05p9DR6lFeJZrtqeqZuojdxBWy4vH6ghyJaupergoX+nmdG3JYeRttCFF/ITI68TeCES5V3Y0C3psYAg1XxcGRLGd4chPo/4xwiLkijWtgt0/to5ljGBwfK7r62PHZfL1Dp+i7V3w7hmOlhbXzP+zhMZn1GCk7KY=";
@@ -24,200 +25,196 @@
 //         // LocalDateTime currentDate = OptUtil.parseLocalDateTime(LocalDateTime.now().toString());
 
 //         // // Crear nómina ordinaria por valores
-//     //     // Emisor
-//     //     InvoiceIssuer issuer = new InvoiceIssuer();
-//     //     issuer.setTin("FUNK671228PH6");
-//     //     issuer.setLegalName("KARLA FUENTE NOLASCO");
-//     //     issuer.setTaxRegimeCode("621");
+//         // // Emisor
+//         //     InvoiceIssuer issuer = new InvoiceIssuer();
+//         // issuer.setTin("EKU9003173C9");
+//         // issuer.setLegalName("ESCUELA KEMPER URGATE");
+//         // issuer.setTaxRegimeCode("601");
 
-//     //     EmployerData employerData = new EmployerData();
-//     //     employerData.setEmployerRegistration("B5510768108");
+//         // EmployerData employerData = new EmployerData();
+//         // employerData.setEmployerRegistration("B5510768108");
+//         // issuer.setEmployerData(employerData);
 
-//     //     // Certificados del emisor
-//     //     List<TaxCredential> credentials = new ArrayList<>();
+//         // // Certificados del emisor
+//         // List<TaxCredential> credentials = new ArrayList<>();
 
-//     //     TaxCredential cer = new TaxCredential();
-//     //     cer.setBase64File(base64Cer);
-//     //     cer.setFileType(0); // 0 = Certificado (.cer)
-//     //     cer.setPassword(password);
+//         // TaxCredential cer = new TaxCredential();
+//         // cer.setBase64File(escuelaKemperUrgateBase64Cer);
+//         // cer.setFileType(0); // 0 = Certificado (.cer)
+//         // cer.setPassword(password);
 
-//     //     TaxCredential key = new TaxCredential();
-//     //     key.setBase64File(base64Key);
-//     //     key.setFileType(1); // 1 = Clave privada (.key)
-//     //     key.setPassword(password);
+//         // TaxCredential key = new TaxCredential();
+//         // key.setBase64File(escuelaKemperUrgateBase64Key);
+//         // key.setFileType(1); // 1 = Clave privada (.key)
+//         // key.setPassword(password);
 
-//     //     credentials.add(cer);
-//     //     credentials.add(key);
+//         // credentials.add(cer);
+//         // credentials.add(key);
 
-//     //     issuer.setTaxCredentials(credentials);
+//         // issuer.setTaxCredentials(credentials);
 
-//     //     // Receptor
-//     //     InvoiceRecipient recipient = new InvoiceRecipient();
-//     //     recipient.setTin("EKU9003173C9");
-//     //     recipient.setLegalName("ESCUELA KEMPER URGATE");
-//     //     recipient.setZipCode("42501");
-//     //     recipient.setTaxRegimeCode("601");
-//     //     recipient.setCfdiUseCode("CP01");
-//     //     recipient.setEmail("someone@somewhere.com");
+//         // // Receptor
+//         // InvoiceRecipient recipient = new InvoiceRecipient();
+//         // recipient.setTin("FUNK671228PH6");
+//         // recipient.setLegalName("KARLA FUENTE NOLASCO");
+//         // recipient.setZipCode("01160");
+//         // recipient.setTaxRegimeCode("605");
+//         // recipient.setCfdiUseCode("CN01");
+//         // recipient.setEmail("someone@somewhere.com");
 
-//     //     EmployeeData employeeData = new EmployeeData();
-//     //     employeeData.setCurp("XEXX010101MNEXXXA8");
-//     //     employeeData.setSocialSecurityNumber("04078873454");
-//     //     employeeData.setLaborRelationStartDate(OptUtil.parseLocalDateTime("2024-08-18T00:00:00"));
-//     //     employeeData.setSeniority("P54W");
-//     //     employeeData.setSatContractTypeId("01");
-//     //     employeeData.setSatTaxRegimeTypeId("02");
-//     //     employeeData.setEmployeeNumber("123456789");
-//     //     employeeData.setDepartment("GenAI");
-//     //     employeeData.setPosition("Sr Software Engineer");
-//     //     employeeData.setSatJobRiskId("1");
-//     //     employeeData.setSatPaymentPeriodicityId("05");
-//     //     employeeData.setSatBankId("012");
-//     //     employeeData.setBaseSalaryForContributions(new BigDecimal("282.50"));
-//     //     employeeData.setIntegratedDailySalary(new BigDecimal("2626.23"));
-//     //     employeeData.setSatPayrollStateId("JAL");
+//         // EmployeeData employeeData = new EmployeeData();
+//         // employeeData.setCurp("XEXX010101MNEXXXA8");
+//         // employeeData.setSocialSecurityNumber("04078873454");
+//         // employeeData.setLaborRelationStartDate(OptUtil.parseLocalDateTime("2024-08-18T00:00:00"));
+//         // employeeData.setSeniority("P54W");
+//         // employeeData.setSatContractTypeId("01");
+//         // employeeData.setSatTaxRegimeTypeId("02");
+//         // employeeData.setEmployeeNumber("123456789");
+//         // employeeData.setDepartment("GenAI");
+//         // employeeData.setPosition("Sr Software Engineer");
+//         // employeeData.setSatJobRiskId("1");
+//         // employeeData.setSatPaymentPeriodicityId("05");
+//         // employeeData.setSatBankId("012");
+//         // employeeData.setBaseSalaryForContributions(new BigDecimal("282.50"));
+//         // employeeData.setIntegratedDailySalary(new BigDecimal("2626.23"));
+//         // employeeData.setSatPayrollStateId("JAL");
+//         // recipient.setEmployeeData(employeeData);
 
-//     //     Payroll payroll = new Payroll();
-//     //     payroll.setVersion("1.2");
-//     //     payroll.setPayrollTypeCode("O");
-//     //     payroll.setPaymentDate(OptUtil.parseLocalDateTime("2025-08-30T00:00:00"));
-//     //     payroll.setInitialPaymentDate(OptUtil.parseLocalDateTime("2025-07-31T00:00:00"));
-//     //     payroll.setFinalPaymentDate(OptUtil.parseLocalDateTime("2025-08-30T00:00:00"));
-//     //     payroll.setDaysPaid(30);
-//     //     PayrollEarnings payrollEarnings = new PayrollEarnings();
-//     //     List<PayrollEarning> earnings = new ArrayList<>();
+//         // Payroll payroll = new Payroll();
+//         // payroll.setVersion("1.2");
+//         // payroll.setPayrollTypeCode("O");
+//         // payroll.setPaymentDate(OptUtil.parseLocalDateTime("2025-08-30T00:00:00"));
+//         // payroll.setInitialPaymentDate(OptUtil.parseLocalDateTime("2025-07-31T00:00:00"));
+//         // payroll.setFinalPaymentDate(OptUtil.parseLocalDateTime("2025-08-30T00:00:00"));
+//         // payroll.setDaysPaid(30);
+//         // PayrollEarnings payrollEarnings = new PayrollEarnings();
+//         // List<PayrollEarning> earnings = new ArrayList<>();
 
-//     //     PayrollEarning e1 = new PayrollEarning();
-//     //     e1.setEarningTypeCode("001");
-//     //     e1.setCode("1003");
-//     //     e1.setConcept("Sueldo nominal");
-//     //     e1.setTaxedAmount(new BigDecimal("95030.00"));
-//     //     e1.setExemptAmount(new BigDecimal("0"));
+//         // PayrollEarning e1 = new PayrollEarning();
+//         // e1.setEarningTypeCode("001");
+//         // e1.setCode("1003");
+//         // e1.setConcept("Sueldo nominal");
+//         // e1.setTaxedAmount(new BigDecimal("95030.00"));
+//         // e1.setExemptAmount(new BigDecimal("0"));
 
-//     //     PayrollEarning e2 = new PayrollEarning();
-//     //     e2.setEarningTypeCode("005");
-//     //     e2.setCode("5913");
-//     //     e2.setConcept("Fondo de Ahorro Aportación Patrón");
-//     //     e2.setTaxedAmount(new BigDecimal("0"));
-//     //     e2.setExemptAmount(new BigDecimal("0"));
+//         // PayrollEarning e2 = new PayrollEarning();
+//         // e2.setEarningTypeCode("005");
+//         // e2.setCode("5913");
+//         // e2.setConcept("Fondo de Ahorro Aportación Patrón");
+//         // e2.setTaxedAmount(new BigDecimal("0"));
+//         // e2.setExemptAmount(new BigDecimal("4412.46"));
 
-//     //     PayrollEarning e3 = new PayrollEarning();
-//     //     e3.setEarningTypeCode("038");
-//     //     e3.setCode("1885");
-//     //     e3.setConcept("Bono Ingles");
-//     //     e3.setTaxedAmount(new BigDecimal("14254.50"));
-//     //     e3.setExemptAmount(new BigDecimal("0"));
+//         // PayrollEarning e3 = new PayrollEarning();
+//         // e3.setEarningTypeCode("038");
+//         // e3.setCode("1885");
+//         // e3.setConcept("Bono Ingles");
+//         // e3.setTaxedAmount(new BigDecimal("14254.50"));
+//         // e3.setExemptAmount(new BigDecimal("0"));
 
-//     //     PayrollEarning e4 = new PayrollEarning();
-//     //     e4.setEarningTypeCode("029");
-//     //     e4.setCode("1941");
-//     //     e4.setConcept("Vales Despensa");
-//     //     e4.setTaxedAmount(new BigDecimal("0"));
-//     //     e4.setExemptAmount(new BigDecimal("3439"));
+//         // PayrollEarning e4 = new PayrollEarning();
+//         // e4.setEarningTypeCode("029");
+//         // e4.setCode("1941");
+//         // e4.setConcept("Vales Despensa");
+//         // e4.setTaxedAmount(new BigDecimal("0"));
+//         // e4.setExemptAmount(new BigDecimal("3439"));
 
-//     //     PayrollEarning e5 = new PayrollEarning();
-//     //     e5.setEarningTypeCode("038");
-//     //     e5.setCode("1824");
-//     //     e5.setConcept("Herramientas Teletrabajo (telecom y prop. electri)");
-//     //     e5.setTaxedAmount(new BigDecimal("273"));
-//     //     e5.setExemptAmount(new BigDecimal("0"));
+//         // PayrollEarning e5 = new PayrollEarning();
+//         // e5.setEarningTypeCode("038");
+//         // e5.setCode("1824");
+//         // e5.setConcept("Herramientas Teletrabajo (telecom y prop. electri)");
+//         // e5.setTaxedAmount(new BigDecimal("273"));
+//         // e5.setExemptAmount(new BigDecimal("0"));
 
-//     //     PayrollEarning e6 = new PayrollEarning();
-//     //     e6.setEarningTypeCode("002");
-//     //     e6.setCode("5050");
-//     //     e6.setConcept("Exceso de subsidio al empleo");
-//     //     e6.setTaxedAmount(new BigDecimal("0"));
-//     //     e6.setExemptAmount(new BigDecimal("0"));
+//         // earnings.add(e1);
+//         // earnings.add(e2);
+//         // earnings.add(e3);
+//         // earnings.add(e4);
+//         // earnings.add(e5);
+        
+//         // List<PayrollEarningOtherPayment> otherPayments = new ArrayList<>();
+//         // PayrollEarningOtherPayment op1 = new PayrollEarningOtherPayment();
+//         // op1.setOtherPaymentTypeCode("002");
+//         // op1.setCode("5050");
+//         // op1.setConcept("exceso de subsidio al empleo");
+//         // op1.setAmount(new BigDecimal("0"));
+//         // op1.setSubsidyCaused(new BigDecimal("0"));
 
-//     //     earnings.add(e1);
-//     //     earnings.add(e2);
-//     //     earnings.add(e3);
-//     //     earnings.add(e4);
-//     //     earnings.add(e5);
-//     //     earnings.add(e6);
+//         // otherPayments.add(op1);
 
-//     //     List<PayrollEarningOtherPayment> otherPayments = new ArrayList<>();
-//     //     PayrollEarningOtherPayment op1 = new PayrollEarningOtherPayment();
-//     //     op1.setOtherPaymentTypeCode("002");
-//     //     op1.setCode("5050");
-//     //     op1.setConcept("exceso de subsidio al empleo");
-//     //     op1.setAmount(new BigDecimal("0"));
-//     //     op1.setSubsidyCaused(new BigDecimal("0"));
+//         // payrollEarnings.setEarnings(earnings);
+//         // payrollEarnings.setOtherPayments(otherPayments);
 
-//     //     payrollEarnings.setEarnings(earnings);
-//     //     payrollEarnings.setOtherPayments(otherPayments);
+//         // List<PayrollDeduction> payrollDeductions = new ArrayList<>();
 
-//     //     List<PayrollDeduction> payrollDeductions = new ArrayList<>();
+//         // PayrollDeduction d1 = new PayrollDeduction();
+//         // d1.setDeductionTypeCode("002");
+//         // d1.setCode("5003");
+//         // d1.setConcept("ISR Causado");
+//         // d1.setAmount(new BigDecimal("27645"));
 
-//     //     PayrollDeduction d1 = new PayrollDeduction();
-//     //     d1.setDeductionTypeCode("002");
-//     //     d1.setCode("5003");
-//     //     d1.setConcept("ISR Causado");
-//     //     d1.setAmount(new BigDecimal("27645"));
+//         // PayrollDeduction d2 = new PayrollDeduction();
+//         // d2.setDeductionTypeCode("004");
+//         // d2.setCode("5910");
+//         // d2.setConcept("Fondo de ahorro Empleado Inversión");
+//         // d2.setAmount(new BigDecimal("4412.46"));
 
-//     //     PayrollDeduction d2 = new PayrollDeduction();
-//     //     d2.setDeductionTypeCode("004");
-//     //     d2.setCode("5910");
-//     //     d2.setConcept("Fondo de ahorro Empleado Inversión");
-//     //     d2.setAmount(new BigDecimal("4412.46"));
+//         // PayrollDeduction d3 = new PayrollDeduction();
+//         // d3.setDeductionTypeCode("004");
+//         // d3.setCode("5914");
+//         // d3.setConcept("Fondo de Ahorro Patrón Inversión");
+//         // d3.setAmount(new BigDecimal("4412.46"));
 
-//     //     PayrollDeduction d3 = new PayrollDeduction();
-//     //     d3.setDeductionTypeCode("004");
-//     //     d3.setCode("5914");
-//     //     d3.setConcept("Fondo de Ahorro Patrón Inversión");
-//     //     d3.setAmount(new BigDecimal("4412.46"));
+//         // PayrollDeduction d4 = new PayrollDeduction();
+//         // d4.setDeductionTypeCode("004");
+//         // d4.setCode("1966");
+//         // d4.setConcept("Contribución póliza exceso GMM");
+//         // d4.setAmount(new BigDecimal("519.91"));
 
-//     //     PayrollDeduction d4 = new PayrollDeduction();
-//     //     d4.setDeductionTypeCode("004");
-//     //     d4.setCode("1966");
-//     //     d4.setConcept("Contribución póliza exceso GMM");
-//     //     d4.setAmount(new BigDecimal("519.91"));
+//         // PayrollDeduction d5 = new PayrollDeduction();
+//         // d5.setDeductionTypeCode("004");
+//         // d5.setCode("1934");
+//         // d5.setConcept("Descuento Vales Despensa");
+//         // d5.setAmount(new BigDecimal("1"));
 
-//     //     PayrollDeduction d5 = new PayrollDeduction();
-//     //     d5.setDeductionTypeCode("004");
-//     //     d5.setCode("1934");
-//     //     d5.setConcept("Descuento Vales Despensa");
-//     //     d5.setAmount(new BigDecimal("1"));
+//         // PayrollDeduction d6 = new PayrollDeduction();
+//         // d6.setDeductionTypeCode("004");
+//         // d6.setCode("1942");
+//         // d6.setConcept("Vales Despensa Electrónico");
+//         // d6.setAmount(new BigDecimal("3439"));
 
-//     //     PayrollDeduction d6 = new PayrollDeduction();
-//     //     d6.setDeductionTypeCode("004");
-//     //     d6.setCode("1942");
-//     //     d6.setConcept("Vales Despensa Electrónico");
-//     //     d6.setAmount(new BigDecimal("3439"));
+//         // PayrollDeduction d7 = new PayrollDeduction();
+//         // d7.setDeductionTypeCode("001");
+//         // d7.setCode("1895");
+//         // d7.setConcept("IMSS");
+//         // d7.setAmount(new BigDecimal("2391.13"));
 
-//     //     PayrollDeduction d7 = new PayrollDeduction();
-//     //     d7.setDeductionTypeCode("001");
-//     //     d7.setCode("1895");
-//     //     d7.setConcept("IMSS");
-//     //     d7.setAmount(new BigDecimal("2391.13"));
+//         // payrollDeductions.add(d1);
+//         // payrollDeductions.add(d2);
+//         // payrollDeductions.add(d3);
+//         // payrollDeductions.add(d4);
+//         // payrollDeductions.add(d5);
+//         // payrollDeductions.add(d6);
+//         // payrollDeductions.add(d7);
 
-//     //     payrollDeductions.add(d1);
-//     //     payrollDeductions.add(d2);
-//     //     payrollDeductions.add(d3);
-//     //     payrollDeductions.add(d4);
-//     //     payrollDeductions.add(d5);
-//     //     payrollDeductions.add(d6);
-//     //     payrollDeductions.add(d7);
+//         // payroll.setDeductions(payrollDeductions);
+//         // payroll.setEarnings(payrollEarnings);
 
-//     //     payroll.setDeductions(payrollDeductions);
+//         // Complement complement = new Complement();
+//         // complement.setPayroll(payroll);
 
-//     //     Complement complement = new Complement();
-//     //     complement.setPayroll(payroll);
+//         // Invoice invoice = new Invoice();
+//         // invoice.setVersionCode("4.0");
+//         // invoice.setSeries("F");
+//         // invoice.setDate(currentDate);
+//         // invoice.setTypeCode("N");
+//         // invoice.setExpeditionZipCode("42501");
+//         // invoice.setIssuer(issuer);
+//         // invoice.setRecipient(recipient);
+//         // invoice.setPaymentMethodCode("PUE");
+//         // invoice.setComplement(complement);
 
-//     //     Invoice invoice = new Invoice();
-//     //     invoice.setVersionCode("4.0");
-//     //     invoice.setSeries("F");
-//     //     invoice.setDate(OptUtil.parseLocalDateTime("2026-02-09T10:00:00"));
-//     //     invoice.setTypeCode("N");
-//     //     invoice.setExpeditionZipCode("42501");
-//     //     invoice.setIssuer(issuer);
-//     //     invoice.setRecipient(recipient);
-//     //     invoice.setDate(OptUtil.parseLocalDateTime("2026-02-09T10:00:00"));
-//     //     invoice.setPaymentMethodCode("PUE");
-//     //     invoice.setComplement(complement);
-
-//     //     ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
-//     //     System.out.println(apiResponse);
+//         // ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+//         // System.out.println(apiResponse);
 
 //     // // Nómina asimilados por valores
 //     //     // Emisor
