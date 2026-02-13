@@ -7,7 +7,6 @@ import java.math.BigDecimal;
 
 public class LocalTax {
     private String taxName;
-    @JsonSerialize(using = BigDecimalSerializer.class)
     private BigDecimal taxRate;
     private String taxFlagCode;
     @JsonSerialize(using = BigDecimalSerializer.class)

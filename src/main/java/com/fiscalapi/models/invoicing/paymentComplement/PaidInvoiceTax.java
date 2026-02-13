@@ -11,7 +11,6 @@ public class PaidInvoiceTax {
     private BigDecimal base;
     private String taxCode;
     private String taxTypeCode;
-    @JsonSerialize(using = BigDecimalSerializer.class)
     private BigDecimal taxRate;
     private String taxFlagCode;
 

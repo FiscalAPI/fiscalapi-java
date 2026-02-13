@@ -3,6 +3,7 @@ package com.fiscalapi.services;
 import com.fiscalapi.abstractions.IEmployerService;
 import com.fiscalapi.abstractions.IFiscalApiHttpClient;
 import com.fiscalapi.common.ApiResponse;
+import com.fiscalapi.common.FiscalApiSettings;
 import com.fiscalapi.models.invoicing.payroll.EmployerData;
 
 public class EmployerService implements IEmployerService {
@@ -12,18 +13,32 @@ public class EmployerService implements IEmployerService {
 
     private IFiscalApiHttpClient httpClient;
     private String apiVersion;
+    private FiscalApiSettings settings;
+    private String resourcePath = "employer";
     
-    public EmployerService(IFiscalApiHttpClient httpClient, String apiVersion)
+    public EmployerService(IFiscalApiHttpClient httpClient, FiscalApiSettings settings)
     {
         this.httpClient = httpClient;
-        this.apiVersion = apiVersion;
+        this.settings = settings;
+        this.apiVersion = settings.getApiVersion();
     }
 
     private String buildEndpoint(String personId) {
-        if (personId == null || personId.trim().isEmpty()) {
-            throw new IllegalArgumentException("Person ID is required to build endpoint");
+        String baseUrl = settings.getApiUrl();
+        if (baseUrl.endsWith("/")) {
+            baseUrl = baseUrl.substring(0, baseUrl.length() - 1);
         }
-        return String.format("api/%s/people/%s/employer", apiVersion, personId);
+
+        StringBuilder fullUrl = new StringBuilder(baseUrl)
+            .append("/api/")
+            .append(apiVersion)
+            .append("/")
+            .append("people/")
+            .append(personId)
+            .append("/")
+            .append(resourcePath);
+
+        return fullUrl.toString();
     }
 
     public ApiResponse<EmployerData> getById(String id) {

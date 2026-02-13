@@ -20,8 +20,8 @@ public class PersonService extends BaseFiscalApiService<Person> implements IPers
      */
     public PersonService(IFiscalApiHttpClient httpClient, FiscalApiSettings settings) {
         super(httpClient, settings, "people", settings.getApiVersion());
-        employerService = new EmployerService(httpClient, settings.getApiVersion());
-        employeeService = new EmployeeService(httpClient, settings.getApiVersion());
+        employerService = new EmployerService(httpClient, settings);
+        employeeService = new EmployeeService(httpClient, settings);
     }
 
     @Override

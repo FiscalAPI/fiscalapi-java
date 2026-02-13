@@ -3,6 +3,7 @@ package com.fiscalapi.services;
 import com.fiscalapi.abstractions.IEmployeeService;
 import com.fiscalapi.abstractions.IFiscalApiHttpClient;
 import com.fiscalapi.common.ApiResponse;
+import com.fiscalapi.common.FiscalApiSettings;
 import com.fiscalapi.models.invoicing.payroll.EmployeeData;
 
 public class EmployeeService implements IEmployeeService {
@@ -10,20 +11,34 @@ public class EmployeeService implements IEmployeeService {
         return httpClient;
     }
 
-    IFiscalApiHttpClient httpClient;
+    private IFiscalApiHttpClient httpClient;
     private String apiVersion;
+    private FiscalApiSettings settings;
+    private String resourcePath = "employee";
     
-    public EmployeeService(IFiscalApiHttpClient httpClient, String apiVersion)
+    public EmployeeService(IFiscalApiHttpClient httpClient, FiscalApiSettings settings)
     {
         this.httpClient = httpClient;
-        this.apiVersion = apiVersion;
+        this.settings = settings;
+        this.apiVersion = settings.getApiVersion();
     }
 
     private String buildEndpoint(String personId) {
-        if (personId == null || personId.trim().isEmpty()) {
-            throw new IllegalArgumentException("Employee person ID is required to build endpoint");
+        String baseUrl = settings.getApiUrl();
+        if (baseUrl.endsWith("/")) {
+            baseUrl = baseUrl.substring(0, baseUrl.length() - 1);
         }
-        return String.format("api/%s/people/%s/employee", apiVersion, personId);
+
+        StringBuilder fullUrl = new StringBuilder(baseUrl)
+            .append("/api/")
+            .append(apiVersion)
+            .append("/")
+            .append("people/")
+            .append(personId)
+            .append("/")
+            .append(resourcePath);
+
+        return fullUrl.toString();
     }
 
     public ApiResponse<EmployeeData> getById(String id) {
@@ -51,19 +66,19 @@ public class EmployeeService implements IEmployeeService {
 
     public ApiResponse<Boolean> delete(String id) {
         if (id == null || id.trim().isEmpty()) {
-            throw new IllegalArgumentException("Employee person ID is required to build endpoint");
+            throw new IllegalArgumentException("El ID de la persona requerido");
         }
         return httpClient.delete(buildEndpoint(id));
     }
 
     private void validateRequestModel(EmployeeData requestModel) {
         if (requestModel == null) {
-            throw new IllegalArgumentException("Request model cannot be null");
+            throw new IllegalArgumentException("El modelo de solicitud no puede ser nulo");
         }
 
         String personId = requestModel.getEmployeePersonId();
         if (personId == null || personId.trim().isEmpty()) {
-            throw new IllegalArgumentException("Employee person ID is required");
+            throw new IllegalArgumentException("Se requiere el ID de la persona para crear o actualizar los datos del empleado");
         }
     }
 }

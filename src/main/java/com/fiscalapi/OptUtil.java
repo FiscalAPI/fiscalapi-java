@@ -1,6 +1,7 @@
 package com.fiscalapi;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeParseException;
@@ -15,8 +16,13 @@ public class OptUtil {
         }
 
         try {
-            // Intenta primero parsearlo como LocalDateTime
-            parsedDate = LocalDateTime.parse(stringDate, SAT_DATE_FORMAT_IN);
+            if (stringDate.contains("T")) {
+                // Intenta primero parsearlo como LocalDateTime
+                parsedDate = LocalDateTime.parse(stringDate, SAT_DATE_FORMAT_IN);
+            }
+            else {
+                parsedDate = LocalDate.parse(stringDate).atStartOfDay();
+            }
         } catch (DateTimeParseException e) {
             try {
                 // Si falla, intenta parsearlo como ZonedDateTime y convertirlo a LocalDateTime
