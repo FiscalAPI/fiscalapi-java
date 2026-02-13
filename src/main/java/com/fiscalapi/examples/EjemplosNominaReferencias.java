@@ -5,8 +5,8 @@
 //         // FiscalApiSettings settings = new FiscalApiSettings();
 //         // settings.setDebugMode(true);
 //         // settings.setApiUrl("https://test.fiscalapi.com");
-//         // settings.setApiKey("sk_test_b4f8cc00_d02a_4ecc_a68a_f87ae970958c");
-//         // settings.setTenant("275510ee-f64d-435a-9e92-1553d8f10a7e");
+//         // settings.setApiKey("");
+//         // settings.setTenant("");
 
 //         //final String escuelaKemperUrgateId = "0e82a655-5f0c-4e07-abab-8f322e4123ef";
 //         //final String karlaFuenteNolascoId = "da71df0c-f328-45ee-9bd9-3096ed02c164";

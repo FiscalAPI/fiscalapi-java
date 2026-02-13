@@ -8,8 +8,8 @@
 //         FiscalApiSettings settings = new FiscalApiSettings();
 //         settings.setDebugMode(true);
 //         settings.setApiUrl("https://test.fiscalapi.com");
-//         settings.setApiKey("sk_test_b4f8cc00_d02a_4ecc_a68a_f87ae970958c");
-//         settings.setTenant("275510ee-f64d-435a-9e92-1553d8f10a7e");
+//         settings.setApiKey("");
+//         settings.setTenant("");
 //         FiscalApiClient client = FiscalApiClient.create(settings);
 
 //         // //Listar movimientos
