@@ -8,6 +8,8 @@ public class PayrollEarningOvertime {
     private int days;
     private String hoursTypeCode;
     private int extraHours;
+    @JsonSerialize(using = BigDecimalSerializer.class)
+    private BigDecimal amountPaid;
 
     public int getDays() {
         return days;
@@ -40,7 +42,4 @@ public class PayrollEarningOvertime {
     public void setAmountPaid(BigDecimal amountPaid) {
         this.amountPaid = amountPaid;
     }
-
-    @JsonSerialize(using = BigDecimalSerializer.class)
-    private BigDecimal amountPaid;
 }

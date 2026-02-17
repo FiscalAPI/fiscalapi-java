@@ -5,8 +5,8 @@
 //         // FiscalApiSettings settings = new FiscalApiSettings();
 //         // settings.setDebugMode(true);
 //         // settings.setApiUrl("https://test.fiscalapi.com");
-//         // settings.setApiKey("");
-//         // settings.setTenant("");
+//         // settings.setApiKey("api_+key");
+//         // settings.setTenant("tenant_id");
 
 //         //final String escuelaKemperUrgateId = "0e82a655-5f0c-4e07-abab-8f322e4123ef";
 //         //final String karlaFuenteNolascoId = "da71df0c-f328-45ee-9bd9-3096ed02c164";

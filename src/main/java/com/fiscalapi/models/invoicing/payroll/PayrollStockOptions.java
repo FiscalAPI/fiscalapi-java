@@ -15,15 +15,15 @@ public class PayrollStockOptions {
         return marketPrice;
     }
 
-    public void setMarketPrice(String marketPrice) {
-        this.marketPrice = new BigDecimal(marketPrice);
+    public void setMarketPrice(BigDecimal marketPrice) {
+        this.marketPrice = marketPrice;
     }
 
     public BigDecimal getGrantPrice() {
         return grantPrice;
     }
     
-    public void setGrantPrice(String grantPrice) {
-        this.grantPrice = new BigDecimal(grantPrice);
+    public void setGrantPrice(BigDecimal grantPrice) {
+        this.grantPrice = grantPrice;
     }
 }

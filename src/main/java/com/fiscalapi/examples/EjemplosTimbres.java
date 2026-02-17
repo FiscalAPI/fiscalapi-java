@@ -8,8 +8,8 @@
 //         FiscalApiSettings settings = new FiscalApiSettings();
 //         settings.setDebugMode(true);
 //         settings.setApiUrl("https://test.fiscalapi.com");
-//         settings.setApiKey("");
-//         settings.setTenant("");
+//         settings.setApiKey("api_key");
+//         settings.setTenant("tenant_id");
 //         FiscalApiClient client = FiscalApiClient.create(settings);
 
 //         // //Listar movimientos

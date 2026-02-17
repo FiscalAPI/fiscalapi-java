@@ -5,32 +5,32 @@ import com.fiscalapi.serialization.BigDecimalSerializer;
 import java.math.BigDecimal;
 
 public class PayrollDisability {
-    private int DisabilityDays;
-    private String DisabilityTypeCode;
+    private int disabilityDays;
+    private String disabilityTypeCode;
     @JsonSerialize(using = BigDecimalSerializer.class)
-    private BigDecimal MonetaryAmount;
+    private BigDecimal monetaryAmount;
 
     public int getDisabilityDays() {
-        return DisabilityDays;
+        return disabilityDays;
     }
 
     public void setDisabilityDays(int disabilityDays) {
-        DisabilityDays = disabilityDays;
+        this.disabilityDays = disabilityDays;
     }
 
     public String getDisabilityTypeCode() {
-        return DisabilityTypeCode;
+        return disabilityTypeCode;
     }
 
     public void setDisabilityTypeCode(String disabilityTypeCode) {
-        DisabilityTypeCode = disabilityTypeCode;
+        this.disabilityTypeCode = disabilityTypeCode;
     }
 
     public BigDecimal getMonetaryAmount() {
-        return MonetaryAmount;
+        return monetaryAmount;
     }
 
     public void setMonetaryAmount(BigDecimal monetaryAmount) {
-        MonetaryAmount = monetaryAmount;
+        this.monetaryAmount = monetaryAmount;
     }
 }

@@ -49,9 +49,6 @@ public class Payroll {
         this.payrollTypeCode = payrollTypeCode;
     }
     public LocalDateTime getPaymentDate() {
-            if (paymentDate == null) {
-                return null;
-            }
         return paymentDate;
     }
 

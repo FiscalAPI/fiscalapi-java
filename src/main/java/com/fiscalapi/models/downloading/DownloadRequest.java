@@ -236,7 +236,7 @@ public class DownloadRequest extends BaseDto {
     }
 
     /**
-     * @param endDate Fecha final - Fecha de fin para la solicitud asociada como String
+     * @param endDate Fecha final - Fecha de fin para la solicitud asociada
      */
     public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
