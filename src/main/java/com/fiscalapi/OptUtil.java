@@ -12,7 +12,7 @@ public class OptUtil {
     public static LocalDateTime parseLocalDateTime(String stringDate) {
         LocalDateTime parsedDate = null;
         if (stringDate == null || stringDate.isEmpty()) {
-            throw new IllegalArgumentException("Fecha no puede ser nula o vacía");
+            return null;
         }
 
         try {
