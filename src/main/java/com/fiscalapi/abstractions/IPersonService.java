@@ -7,6 +7,9 @@ import com.fiscalapi.models.Person;
  * Hereda las operaciones básicas (CRUD) de IFiscalApiService&lt;Person&gt;.
  */
 public interface IPersonService extends IFiscalApiService<Person> {
+    IEmployerService employerService = null;
+    IEmployeeService employeeService = null;
 
-    // other specific methods
+    IEmployeeService getEmployeeService();
+    IEmployerService getEmployerService();
 }

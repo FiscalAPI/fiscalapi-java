@@ -1,6 +1,8 @@
 package com.fiscalapi.models;
 import com.fiscalapi.common.BaseDto;
 import com.fiscalapi.common.CatalogDto;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fiscalapi.serialization.BigDecimalSerializer;
 
 import java.math.BigDecimal;
 
@@ -31,7 +33,8 @@ public class ProductTax extends BaseDto {
     /**
      * Tasa del impuesto. El valor debe estar entre 0.00000 y 1.000000 (ej: 0.160000).
      */
-    private double rate;
+    @JsonSerialize(using = BigDecimalSerializer.class)
+    private BigDecimal rate;
 
     /**
      * Código del impuesto según el catálogo del SAT (valores: "001", "002", "003").
@@ -93,7 +96,7 @@ public class ProductTax extends BaseDto {
      *
      * @return la tasa del impuesto.
      */
-    public double getRate() {
+    public BigDecimal getRate() {
         return rate;
     }
 
@@ -102,7 +105,7 @@ public class ProductTax extends BaseDto {
      *
      * @param rate la tasa a establecer.
      */
-    public void setRate(double rate) {
+    public void setRate(BigDecimal rate) {
         this.rate = rate;
     }
 

@@ -1,19 +1,28 @@
 package com.fiscalapi.models.invoicing;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fiscalapi.serialization.BigDecimalSerializer;
+
+import java.math.BigDecimal;
 import java.util.List;
 
 // Concepto de la factura (producto o servicio)
 public class InvoiceItem {
     private String id;
     private String itemCode;
-    private Double quantity;
-    private Double discount;
+    @JsonSerialize(using = BigDecimalSerializer.class)
+    private BigDecimal quantity;
+    @JsonSerialize(using = BigDecimalSerializer.class)
+    private BigDecimal discount;
     private String unitOfMeasurementCode;
+    private String unitOfMeasurement;
     private String description;
-    private Double unitPrice;
+    @JsonSerialize(using = BigDecimalSerializer.class)
+    private BigDecimal unitPrice;
     private String taxObjectCode;
     private String itemSku;
     private List<ItemTax> itemTaxes;
+    private OnBehalfOf onBehalfOf;
 
     public String getId() {
         return id;
@@ -27,16 +36,16 @@ public class InvoiceItem {
     public void setItemCode(String itemCode) {
         this.itemCode = itemCode;
     }
-    public Double getQuantity() {
+    public BigDecimal getQuantity() {
         return quantity;
     }
-    public void setQuantity(Double quantity) {
+    public void setQuantity(BigDecimal quantity) {
         this.quantity = quantity;
     }
-    public Double getDiscount() {
+    public BigDecimal getDiscount() {
         return discount;
     }
-    public void setDiscount(Double discount) {
+    public void setDiscount(BigDecimal discount) {
         this.discount = discount;
     }
     public String getUnitOfMeasurementCode() {
@@ -51,10 +60,10 @@ public class InvoiceItem {
     public void setDescription(String description) {
         this.description = description;
     }
-    public Double getUnitPrice() {
+    public BigDecimal getUnitPrice() {
         return unitPrice;
     }
-    public void setUnitPrice(Double unitPrice) {
+    public void setUnitPrice(BigDecimal unitPrice) {
         this.unitPrice = unitPrice;
     }
     public String getTaxObjectCode() {
@@ -74,5 +83,21 @@ public class InvoiceItem {
     }
     public void setItemTaxes(List<ItemTax> itemTaxes) {
         this.itemTaxes = itemTaxes;
+    }
+
+    public String getUnitOfMeasurement() {
+        return unitOfMeasurement;
+    }
+
+    public void setUnitOfMeasurement(String unitOfMeasurement) {
+        this.unitOfMeasurement = unitOfMeasurement;
+    }
+
+    public OnBehalfOf getOnBehalfOf() {
+        return onBehalfOf;
+    }
+
+    public void setOnBehalfOf(OnBehalfOf onBehalfOf) {
+        this.onBehalfOf = onBehalfOf;
     }
 }

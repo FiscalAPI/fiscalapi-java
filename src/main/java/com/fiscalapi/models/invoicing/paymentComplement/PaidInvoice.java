@@ -1,20 +1,29 @@
-package com.fiscalapi.models.invoicing;
+package com.fiscalapi.models.invoicing.paymentComplement;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fiscalapi.serialization.BigDecimalSerializer;
+
+import java.math.BigDecimal;
 import java.util.List;
 
 // Factura pagada parcial o totalmente
 public class PaidInvoice {
     private String uuid;
     private String series;
-    private Double paymentAmount;
+    @JsonSerialize(using = BigDecimalSerializer.class)
+    private BigDecimal paymentAmount;
     private String number;
     private String currencyCode;
     private Integer partialityNumber;
-    private Double subTotal;
-    private Double previousBalance;
-    private Double remainingBalance;
+    @JsonSerialize(using = BigDecimalSerializer.class)
+    private BigDecimal subTotal;
+    @JsonSerialize(using = BigDecimalSerializer.class)
+    private BigDecimal previousBalance;
+    @JsonSerialize(using = BigDecimalSerializer.class)
+    private BigDecimal remainingBalance;
     private String taxObjectCode;
-    private Double equivalence;
+    @JsonSerialize(using = BigDecimalSerializer.class)
+    private BigDecimal equivalence;
     private List<PaidInvoiceTax> paidInvoiceTaxes;
 
     public String getUuid() {
@@ -29,10 +38,10 @@ public class PaidInvoice {
     public void setSeries(String series) {
         this.series = series;
     }
-    public Double getPaymentAmount() {
+    public BigDecimal getPaymentAmount() {
         return paymentAmount;
     }
-    public void setPaymentAmount(Double amount) {
+    public void setPaymentAmount(BigDecimal amount) {
         this.paymentAmount = amount;
     }
     public String getNumber() {
@@ -53,22 +62,22 @@ public class PaidInvoice {
     public void setPartialityNumber(Integer partialityNumber) {
         this.partialityNumber = partialityNumber;
     }
-    public Double getSubTotal() {
+    public BigDecimal getSubTotal() {
         return subTotal;
     }
-    public void setSubTotal(Double subTotal) {
+    public void setSubTotal(BigDecimal subTotal) {
         this.subTotal = subTotal;
     }
-    public Double getPreviousBalance() {
+    public BigDecimal getPreviousBalance() {
         return previousBalance;
     }
-    public void setPreviousBalance(Double previousBalance) {
+    public void setPreviousBalance(BigDecimal previousBalance) {
         this.previousBalance = previousBalance;
     }
-    public Double getRemainingBalance() {
+    public BigDecimal getRemainingBalance() {
         return remainingBalance;
     }
-    public void setRemainingBalance(Double remainingBalance) {
+    public void setRemainingBalance(BigDecimal remainingBalance) {
         this.remainingBalance = remainingBalance;
     }
     public String getTaxObjectCode() {
@@ -77,10 +86,10 @@ public class PaidInvoice {
     public void setTaxObjectCode(String taxObjectCode) {
         this.taxObjectCode = taxObjectCode;
     }
-    public Double getEquivalence() {
+    public BigDecimal getEquivalence() {
         return equivalence;
     }
-    public void setEquivalence(Double equivalence) {
+    public void setEquivalence(BigDecimal equivalence) {
         this.equivalence = equivalence;
     }
     public List<PaidInvoiceTax> getPaidInvoiceTaxes() {

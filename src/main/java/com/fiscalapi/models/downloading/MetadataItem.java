@@ -2,13 +2,10 @@ package com.fiscalapi.models.downloading;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fiscalapi.OptUtil;
 import com.fiscalapi.common.BaseDto;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeParseException;
-
-import static com.fiscalapi.models.invoicing.InvoiceConstants.SAT_DATE_FORMAT_IN;
 import static com.fiscalapi.models.invoicing.InvoiceConstants.SAT_DATE_FORMAT_OUT;
 
 /**
@@ -154,20 +151,7 @@ public class MetadataItem extends BaseDto {
 
     @JsonProperty("invoiceDate")
     public void setSatInvoiceDate(String satDate) {
-        if (satDate == null || satDate.isEmpty()) {
-            this.invoiceDate = null;
-            return;
-        }
-        try {
-            this.invoiceDate = LocalDateTime.parse(satDate, SAT_DATE_FORMAT_IN);
-        } catch (DateTimeParseException e) {
-            try {
-                ZonedDateTime zdt = ZonedDateTime.parse(satDate);
-                this.invoiceDate = zdt.toLocalDateTime();
-            } catch (DateTimeParseException e2) {
-                throw new IllegalArgumentException("Formato de fecha inválido: " + satDate, e);
-            }
-        }
+        this.invoiceDate = OptUtil.parseLocalDateTime(satDate);
     }
 
     @JsonIgnore
@@ -190,20 +174,7 @@ public class MetadataItem extends BaseDto {
 
     @JsonProperty("satCertificationDate")
     public void setSatCertificationDateFormatted(String satDate) {
-        if (satDate == null || satDate.isEmpty()) {
-            this.satCertificationDate = null;
-            return;
-        }
-        try {
-            this.satCertificationDate = LocalDateTime.parse(satDate, SAT_DATE_FORMAT_IN);
-        } catch (DateTimeParseException e) {
-            try {
-                ZonedDateTime zdt = ZonedDateTime.parse(satDate);
-                this.satCertificationDate = zdt.toLocalDateTime();
-            } catch (DateTimeParseException e2) {
-                throw new IllegalArgumentException("Formato de fecha inválido: " + satDate, e);
-            }
-        }
+        this.satCertificationDate = OptUtil.parseLocalDateTime(satDate);
     }
 
     public BigDecimal getAmount() {
@@ -250,20 +221,7 @@ public class MetadataItem extends BaseDto {
 
     @JsonProperty("cancellationDate")
     public void setSatCancellationDate(String satDate) {
-        if (satDate == null || satDate.isEmpty()) {
-            this.cancellationDate = null;
-            return;
-        }
-        try {
-            this.cancellationDate = LocalDateTime.parse(satDate, SAT_DATE_FORMAT_IN);
-        } catch (DateTimeParseException e) {
-            try {
-                ZonedDateTime zdt = ZonedDateTime.parse(satDate);
-                this.cancellationDate = zdt.toLocalDateTime();
-            } catch (DateTimeParseException e2) {
-                throw new IllegalArgumentException("Formato de fecha inválido: " + satDate, e);
-            }
-        }
+        this.cancellationDate = OptUtil.parseLocalDateTime(satDate);
     }
 
     public String getDownloadPackageId() {

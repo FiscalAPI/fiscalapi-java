@@ -7,7 +7,7 @@
     <!-- Coordenadas del proyecto -->
     <groupId>com.fiscalapi</groupId>
     <artifactId>fiscalapi</artifactId>
-    <version>4.0.273</version>
+    <version>4.0.360</version>
     <name>${project.groupId}:${project.artifactId}</name>
     <description>Genera facturas CFDI válidas ante el SAT consumiendo la API de https://www.fiscalapi.com</description>
     <url>https://www.fiscalapi.com</url>

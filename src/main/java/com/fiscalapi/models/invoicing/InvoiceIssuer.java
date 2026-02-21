@@ -2,12 +2,15 @@ package com.fiscalapi.models.invoicing;
 
 import java.util.List;
 
+import com.fiscalapi.models.invoicing.payroll.EmployerData;
+
 // Emisor de la factura
 public class InvoiceIssuer {
     private String id;
     private String tin;
     private String legalName;
     private String taxRegimeCode;
+    private EmployerData employerData;
     private List<TaxCredential> taxCredentials;
 
     public String getId() {
@@ -39,5 +42,13 @@ public class InvoiceIssuer {
     }
     public void setTaxCredentials(List<TaxCredential> taxCredentials) {
         this.taxCredentials = taxCredentials;
+    }
+
+    public EmployerData getEmployerData() {
+        return employerData;
+    }
+
+    public void setEmployerData(EmployerData employerData) {
+        this.employerData = employerData;
     }
 }

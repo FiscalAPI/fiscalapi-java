@@ -59,25 +59,6 @@ public class InvoiceService extends BaseFiscalApiService<Invoice> implements IIn
 
     @Override
     public ApiResponse<Invoice> create(Invoice model) {
-
-        String path ="";
-
-        switch (model.getTypeCode()) {
-            case "I":
-                path = "income";
-                break;
-            case "E":
-                path = "credit-note";
-                break;
-            case "P":
-                path = "payment";
-                break;
-                default:
-                    throw  new IllegalArgumentException("Invalid invoice type");
-        }
-
-        String endpoint = buildEndpoint(path, null);
-        return httpClient.post(endpoint, model, Invoice.class);
-
+        return httpClient.post(buildEndpoint("", null), model, Invoice.class);
     }
 }

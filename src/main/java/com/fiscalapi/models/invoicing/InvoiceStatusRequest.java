@@ -1,5 +1,8 @@
 package com.fiscalapi.models.invoicing;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fiscalapi.serialization.BigDecimalSerializer;
+
 import java.math.BigDecimal;
 
 /**
@@ -9,6 +12,7 @@ public class InvoiceStatusRequest {
     private String id;
     private String issuerTin;
     private String recipientTin;
+    @JsonSerialize(using = BigDecimalSerializer.class)
     private BigDecimal invoiceTotal;
     private String invoiceUuid;
     private String last8DigitsIssuerSignature;
@@ -41,8 +45,8 @@ public class InvoiceStatusRequest {
         return invoiceTotal;
     }
 
-    public void setInvoiceTotal(String invoiceTotal) {
-        this.invoiceTotal = new BigDecimal(invoiceTotal);
+    public void setInvoiceTotal(BigDecimal invoiceTotal) {
+        this.invoiceTotal = invoiceTotal;
     }
 
     public String getInvoiceUuid() {

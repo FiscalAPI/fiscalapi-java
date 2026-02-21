@@ -3,16 +3,16 @@ package com.fiscalapi.models.downloading;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fiscalapi.OptUtil;
 import com.fiscalapi.common.BaseDto;
+import com.fiscalapi.serialization.BigDecimalSerializer;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.fiscalapi.models.invoicing.InvoiceConstants.SAT_DATE_FORMAT_IN;
 import static com.fiscalapi.models.invoicing.InvoiceConstants.SAT_DATE_FORMAT_OUT;
 
 /**
@@ -49,18 +49,22 @@ public class Xml extends BaseDto {
     private String paymentConditions;
 
     // Subtotal del CFDI
+    @JsonSerialize(using = BigDecimalSerializer.class)
     private BigDecimal subTotal;
 
     // Descuento aplicado al CFDI
+    @JsonSerialize(using = BigDecimalSerializer.class)
     private BigDecimal discount;
 
     // Código de la moneda del CFDI
     private String currency;
 
     // Tipo de cambio del CFDI (si aplica)
+    @JsonSerialize(using = BigDecimalSerializer.class)
     private BigDecimal exchangeRate;
 
     // Total del CFDI
+    @JsonSerialize(using = BigDecimalSerializer.class)
     private BigDecimal total;
 
     // Tipo de comprobante (I = Ingreso, E = Egreso, T = Traslado, N = Nómina, P = Pago)
@@ -76,9 +80,11 @@ public class Xml extends BaseDto {
     private String confirmation;
 
     // Total impuestos retenidos
+    @JsonSerialize(using = BigDecimalSerializer.class)
     private BigDecimal totalWithheldTaxes;
 
     // Total impuestos trasladados
+    @JsonSerialize(using = BigDecimalSerializer.class)
     private BigDecimal totalTransferredTaxes;
 
     // Información global del CFDI (para CFDI globales)
@@ -176,25 +182,7 @@ public class Xml extends BaseDto {
      */
     @JsonProperty("date")
     public void setSatDate(String satDate) {
-        if (satDate == null || satDate.isEmpty()) {
-            this.date = null;
-            return;
-        }
-
-        try {
-            // Intenta primero parsearlo como LocalDateTime
-            this.date = LocalDateTime.parse(satDate, SAT_DATE_FORMAT_IN);
-        } catch (DateTimeParseException e) {
-            try {
-                // Si falla, intenta parsearlo como ZonedDateTime y convertirlo a LocalDateTime
-                ZonedDateTime zdt = ZonedDateTime.parse(satDate);
-                this.date = zdt.toLocalDateTime();
-            } catch (DateTimeParseException e2) {
-
-                throw new IllegalArgumentException("Formato de fecha inválido: " + satDate +
-                        " (debe ser compatible con el formato yyyy-MM-ddTHH:mm:ss)", e);
-            }
-        }
+        this.date = OptUtil.parseLocalDateTime(satDate);
     }
 
     public String getPaymentForm() {
@@ -530,11 +518,15 @@ class XmlItem extends BaseDto {
     private String xmlId;
     private String itemCode;
     private String sku;
+    @JsonSerialize(using = BigDecimalSerializer.class)
     private BigDecimal quantity;
     private String unitMeasurement;
     private String description;
+    @JsonSerialize(using = BigDecimalSerializer.class)
     private BigDecimal unitPrice;
+    @JsonSerialize(using = BigDecimalSerializer.class)
     private BigDecimal amount;
+    @JsonSerialize(using = BigDecimalSerializer.class)
     private BigDecimal discount;
     private String taxObject;
     private String thirdPartyAccount;
@@ -714,10 +706,13 @@ class XmlItemPropertyAccount extends BaseDto {
  * Información de impuestos de los conceptos.
  */
 class XmlItemTax extends BaseDto {
+    @JsonSerialize(using = BigDecimalSerializer.class)
     private BigDecimal base;
     private String tax;
     private String taxType;
+    @JsonSerialize(using = BigDecimalSerializer.class)
     private BigDecimal rate;
+    @JsonSerialize(using = BigDecimalSerializer.class)
     private BigDecimal amount;
     private String taxFlag;
     private String xmlItemId;
@@ -820,10 +815,13 @@ class XmlRelated extends BaseDto {
  * Información de impuestos del CFDI.
  */
 class XmlTax extends BaseDto {
+    @JsonSerialize(using = BigDecimalSerializer.class)
     private BigDecimal base;
     private String tax;
     private String taxType;
+    @JsonSerialize(using = BigDecimalSerializer.class)
     private BigDecimal rate;
+    @JsonSerialize(using = BigDecimalSerializer.class)
     private BigDecimal amount;
     private String taxFlag;
     private String xmlId;

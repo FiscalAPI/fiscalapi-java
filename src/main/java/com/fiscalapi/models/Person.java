@@ -1,11 +1,11 @@
 package com.fiscalapi.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fiscalapi.common.BaseDto;
 import com.fiscalapi.common.CatalogDto;
-import com.fiscalapi.common.StripePaymentMethodDto;
+import com.fiscalapi.serialization.BigDecimalSerializer;
 
-import java.time.LocalDateTime;
+import java.math.BigDecimal;
 
 
 public class Person extends BaseDto {
@@ -23,8 +23,10 @@ public class Person extends BaseDto {
     private String zipCode;
     private String base64Photo;
     private String taxPassword;
-    private Double availableBalance;
-    private Double committedBalance;
+    @JsonSerialize(using = BigDecimalSerializer.class)
+    private BigDecimal availableBalance;
+    @JsonSerialize(using = BigDecimalSerializer.class)
+    private BigDecimal committedBalance;
     private String tenantId;
 //    private String phoneNumber;
 //    private LocalDateTime validTo;
@@ -146,19 +148,19 @@ public class Person extends BaseDto {
         this.taxPassword = taxPassword;
     }
 
-    public Double getAvailableBalance() {
+    public BigDecimal getAvailableBalance() {
         return availableBalance;
     }
 
-    public void setAvailableBalance(Double availableBalance) {
+    public void setAvailableBalance(BigDecimal availableBalance) {
         this.availableBalance = availableBalance;
     }
 
-    public Double getCommittedBalance() {
+    public BigDecimal getCommittedBalance() {
         return committedBalance;
     }
 
-    public void setCommittedBalance(Double committedBalance) {
+    public void setCommittedBalance(BigDecimal committedBalance) {
         this.committedBalance = committedBalance;
     }
 

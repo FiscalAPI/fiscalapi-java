@@ -5,6 +5,9 @@ import com.fiscalapi.common.BaseDto;
 import com.fiscalapi.common.CatalogDto;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fiscalapi.serialization.BigDecimalSerializer;
+import java.math.BigDecimal;
 
 /**
  * Representa un producto o servicio con toda su información, incluyendo precios,
@@ -29,7 +32,8 @@ public class Product extends BaseDto {
     /**
      * Precio unitario del producto sin impuestos (requerido).
      */
-    private double unitPrice;
+    @JsonSerialize(using = BigDecimalSerializer.class)
+    private BigDecimal unitPrice;
 
     /**
      * Código de la unidad de medida. Catálogo del SAT c_ClaveUnidad.
@@ -101,7 +105,7 @@ public class Product extends BaseDto {
      *
      * @return el precio unitario.
      */
-    public double getUnitPrice() {
+    public BigDecimal getUnitPrice() {
         return unitPrice;
     }
 
@@ -110,7 +114,7 @@ public class Product extends BaseDto {
      *
      * @param unitPrice el precio unitario a establecer.
      */
-    public void setUnitPrice(double unitPrice) {
+    public void setUnitPrice(BigDecimal unitPrice) {
         this.unitPrice = unitPrice;
     }
 

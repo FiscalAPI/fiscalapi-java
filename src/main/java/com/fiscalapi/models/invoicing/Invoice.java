@@ -1,14 +1,16 @@
 package com.fiscalapi.models.invoicing;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fiscalapi.OptUtil;
 import com.fiscalapi.common.BaseDto;
 import com.fiscalapi.common.CatalogDto;
+import com.fiscalapi.models.invoicing.paymentComplement.InvoicePayment;
+import com.fiscalapi.serialization.BigDecimalSerializer;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeParseException;
 import java.util.List;
-import static com.fiscalapi.models.invoicing.InvoiceConstants.SAT_DATE_FORMAT_IN;
 import static com.fiscalapi.models.invoicing.InvoiceConstants.SAT_DATE_FORMAT_OUT;
 
 
@@ -24,24 +26,30 @@ public class Invoice extends BaseDto{
     private String number;
     private String uuid;
     private Integer consecutive;
-    private Double subtotal;
-    private Double discount;
-    private Double total;
+    @JsonSerialize(using = BigDecimalSerializer.class)
+    private BigDecimal subtotal;
+    @JsonSerialize(using = BigDecimalSerializer.class)
+    private BigDecimal discount;
+    @JsonSerialize(using = BigDecimalSerializer.class)
+    private BigDecimal total;
     @JsonIgnore
     private LocalDateTime date;
     private String paymentFormCode;
+    private String paymentConditions;
     private String currencyCode;
     private String typeCode;
     private String expeditionZipCode;
     private String exportCode;
     private String paymentMethodCode;
-    private Double exchangeRate;
+    @JsonSerialize(using = BigDecimalSerializer.class)
+    private BigDecimal exchangeRate;
     private InvoiceIssuer issuer;
     private InvoiceRecipient recipient;
     private List<InvoiceItem> items;
     private GlobalInformation globalInformation;
     private List<RelatedInvoice> relatedInvoices;
     private List<InvoicePayment> payments;
+    private Complement complement;
     private List<InvoiceResponse> responses;
 
 
@@ -102,42 +110,42 @@ public class Invoice extends BaseDto{
     /**
      * @return Subtotal de la factura antes de impuestos y descuentos
      */
-    public Double getSubtotal() {
+    public BigDecimal getSubtotal() {
         return subtotal;
     }
 
     /**
      * @param subtotal Suma de los importes de los conceptos antes de descuentos e impuestos
      */
-    public void setSubtotal(Double subtotal) {
+    public void setSubtotal(BigDecimal subtotal) {
         this.subtotal = subtotal;
     }
 
     /**
      * @return Monto total de descuentos aplicados a la factura
      */
-    public Double getDiscount() {
+    public BigDecimal getDiscount() {
         return discount;
     }
 
     /**
      * @param discount Monto total de los descuentos aplicables
      */
-    public void setDiscount(Double discount) {
+    public void setDiscount(BigDecimal discount) {
         this.discount = discount;
     }
 
     /**
      * @return Monto total de la factura incluyendo impuestos
      */
-    public Double getTotal() {
+    public BigDecimal getTotal() {
         return total;
     }
 
     /**
      * @param total Monto total de la factura incluyendo impuestos
      */
-    public void setTotal(Double total) {
+    public void setTotal(BigDecimal total) {
         this.total = total;
     }
 
@@ -211,26 +219,8 @@ public class Invoice extends BaseDto{
      */
     @JsonProperty("date")
     public void setSatDate(String satDate) {
-        if (satDate == null || satDate.isEmpty()) {
-            this.date = null;
-            return;
-        }
-
-        try {
-            // Intenta primero parsearlo como LocalDateTime
-            this.date = LocalDateTime.parse(satDate, SAT_DATE_FORMAT_IN);
-        } catch (DateTimeParseException e) {
-            try {
-                // Si falla, intenta parsearlo como ZonedDateTime y convertirlo a LocalDateTime
-                ZonedDateTime zdt = ZonedDateTime.parse(satDate);
-                this.date = zdt.toLocalDateTime();
-            } catch (DateTimeParseException e2) {
-                throw new IllegalArgumentException("Formato de fecha inválido: " + satDate +
-                        " (debe ser compatible con el formato yyyy-MM-ddTHH:mm:ss)", e);
-            }
-        }
+        this.date = OptUtil.parseLocalDateTime(satDate);
     }
-
 
     /**
      * @return Código de la forma de pago para la factura
@@ -319,14 +309,14 @@ public class Invoice extends BaseDto{
     /**
      * @return Tipo de cambio conforme a la moneda registrada
      */
-    public Double getExchangeRate() {
+    public BigDecimal getExchangeRate() {
         return exchangeRate;
     }
 
     /**
      * @param exchangeRate Tipo de cambio FIX (Si la moneda es MXN, el valor debe ser 1)
      */
-    public void setExchangeRate(Double exchangeRate) {
+    public void setExchangeRate(BigDecimal exchangeRate) {
         this.exchangeRate = exchangeRate;
     }
 
@@ -435,5 +425,27 @@ public class Invoice extends BaseDto{
         this.responses = responses;
     }
 
+    /**
+     *
+     * @return Complemento de la factura
+     */
+    public Complement getComplement() {
+        return complement;
+    }
 
+    /**
+     *
+     * @param complement Complemento asociado a la factura
+     */
+    public void setComplement(Complement complement) {
+        this.complement = complement;
+    }
+
+    public String getPaymentConditions() {
+        return paymentConditions;
+    }
+
+    public void setPaymentConditions(String paymentConditions) {
+        this.paymentConditions = paymentConditions;
+    }
 }

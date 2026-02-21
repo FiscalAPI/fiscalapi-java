@@ -10,6 +10,8 @@ import com.fiscalapi.models.Person;
  * Implementa el servicio de "Person", usando la lógica base de BaseFiscalApiService.
  */
 public class PersonService extends BaseFiscalApiService<Person> implements IPersonService {
+    private final EmployerService employerService;
+    private final EmployeeService employeeService;
 
     /**
      * Crea un PersonService con el path "people" y la versión de API dada.
@@ -18,6 +20,8 @@ public class PersonService extends BaseFiscalApiService<Person> implements IPers
      */
     public PersonService(IFiscalApiHttpClient httpClient, FiscalApiSettings settings) {
         super(httpClient, settings, "people", settings.getApiVersion());
+        employerService = new EmployerService(httpClient, settings);
+        employeeService = new EmployeeService(httpClient, settings);
     }
 
     @Override
@@ -25,4 +29,14 @@ public class PersonService extends BaseFiscalApiService<Person> implements IPers
         return Person.class;
     }
 
+    @Override
+    public EmployerService getEmployerService() {
+        return employerService;
+    }
+
+    @Override
+    public EmployeeService getEmployeeService() {
+        return employeeService;
+    }
 }
+
