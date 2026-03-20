@@ -1,4 +1,4 @@
-package com.fiscalapi;
+package com.fiscalapi.examples;
 
 //package com.fiscalapi;
 //
