@@ -1,15 +1,19 @@
 package com.fiscalapi.models.invoicing.billOfLading;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fiscalapi.serialization.BigDecimalSerializer;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class TransporteMaritimo {
     private String permSCTId;
     private String numPermisoSCT;
-    private String configMaritimaId;
     private String nombreAseg;
     private String numPolizaSeguro;
     private String tipoEmbarcacionId;
@@ -38,9 +42,6 @@ public class TransporteMaritimo {
 
     private String lineaNaviera;
     private String nombreAgenteNaviero;
-    private String numCertITC;
-    private String nombreEmbarCargador;
-    private String nombreAgente;
     private String numAutorizacionNavieroId;
     private String numViaje;
     private String numConocEmbarc;
@@ -61,14 +62,6 @@ public class TransporteMaritimo {
 
     public void setNumPermisoSCT(String numPermisoSCT) {
         this.numPermisoSCT = numPermisoSCT;
-    }
-
-    public String getConfigMaritimaId() {
-        return configMaritimaId;
-    }
-
-    public void setConfigMaritimaId(String configMaritimaId) {
-        this.configMaritimaId = configMaritimaId;
     }
 
     public String getNombreAseg() {
@@ -199,30 +192,6 @@ public class TransporteMaritimo {
         this.nombreAgenteNaviero = nombreAgenteNaviero;
     }
 
-    public String getNumCertITC() {
-        return numCertITC;
-    }
-
-    public void setNumCertITC(String numCertITC) {
-        this.numCertITC = numCertITC;
-    }
-
-    public String getNombreEmbarCargador() {
-        return nombreEmbarCargador;
-    }
-
-    public void setNombreEmbarCargador(String nombreEmbarCargador) {
-        this.nombreEmbarCargador = nombreEmbarCargador;
-    }
-
-    public String getNombreAgente() {
-        return nombreAgente;
-    }
-
-    public void setNombreAgente(String nombreAgente) {
-        this.nombreAgente = nombreAgente;
-    }
-
     public String getNumAutorizacionNavieroId() {
         return numAutorizacionNavieroId;
     }
@@ -264,28 +233,18 @@ public class TransporteMaritimo {
     }
 
     public static class ContenedorMaritimo {
-        private String matriculaContenedor;
         private String tipoContenedorId;
+        private String matriculaContenedor;
         private String numPrecinto;
-
-        @JsonSerialize(using = BigDecimalSerializer.class)
-        private BigDecimal pesoContenedorVacio;
-
-        @JsonSerialize(using = BigDecimalSerializer.class)
-        private BigDecimal pesoNetoMercancia;
-
         private String idCCPRelacionado;
         private String placaVMCCP;
-        private String fechaCertificacionCCP;
+
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
+        @JsonSerialize(using = LocalDateTimeSerializer.class)
+        @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+        private LocalDateTime fechaCertificacionCCP;
+
         private List<RemolqueCCP> remolquesCCP;
-
-        public String getMatriculaContenedor() {
-            return matriculaContenedor;
-        }
-
-        public void setMatriculaContenedor(String matriculaContenedor) {
-            this.matriculaContenedor = matriculaContenedor;
-        }
 
         public String getTipoContenedorId() {
             return tipoContenedorId;
@@ -295,28 +254,20 @@ public class TransporteMaritimo {
             this.tipoContenedorId = tipoContenedorId;
         }
 
+        public String getMatriculaContenedor() {
+            return matriculaContenedor;
+        }
+
+        public void setMatriculaContenedor(String matriculaContenedor) {
+            this.matriculaContenedor = matriculaContenedor;
+        }
+
         public String getNumPrecinto() {
             return numPrecinto;
         }
 
         public void setNumPrecinto(String numPrecinto) {
             this.numPrecinto = numPrecinto;
-        }
-
-        public BigDecimal getPesoContenedorVacio() {
-            return pesoContenedorVacio;
-        }
-
-        public void setPesoContenedorVacio(BigDecimal pesoContenedorVacio) {
-            this.pesoContenedorVacio = pesoContenedorVacio;
-        }
-
-        public BigDecimal getPesoNetoMercancia() {
-            return pesoNetoMercancia;
-        }
-
-        public void setPesoNetoMercancia(BigDecimal pesoNetoMercancia) {
-            this.pesoNetoMercancia = pesoNetoMercancia;
         }
 
         public String getIdCCPRelacionado() {
@@ -335,11 +286,11 @@ public class TransporteMaritimo {
             this.placaVMCCP = placaVMCCP;
         }
 
-        public String getFechaCertificacionCCP() {
+        public LocalDateTime getFechaCertificacionCCP() {
             return fechaCertificacionCCP;
         }
 
-        public void setFechaCertificacionCCP(String fechaCertificacionCCP) {
+        public void setFechaCertificacionCCP(LocalDateTime fechaCertificacionCCP) {
             this.fechaCertificacionCCP = fechaCertificacionCCP;
         }
 

@@ -10,8 +10,9 @@ public class TransporteAereo {
     private String lugarContrato;
     private String codigoTransportistaId;
     private String rfcEmbarcador;
+    private String numRegIdTribEmbarc;
+    private String residenciaFiscalEmbarcId;
     private String nombreEmbarcador;
-    private String rfcTransportista;
 
     public String getPermSCTId() {
         return permSCTId;
@@ -85,19 +86,27 @@ public class TransporteAereo {
         this.rfcEmbarcador = rfcEmbarcador;
     }
 
+    public String getNumRegIdTribEmbarc() {
+        return numRegIdTribEmbarc;
+    }
+
+    public void setNumRegIdTribEmbarc(String numRegIdTribEmbarc) {
+        this.numRegIdTribEmbarc = numRegIdTribEmbarc;
+    }
+
+    public String getResidenciaFiscalEmbarcId() {
+        return residenciaFiscalEmbarcId;
+    }
+
+    public void setResidenciaFiscalEmbarcId(String residenciaFiscalEmbarcId) {
+        this.residenciaFiscalEmbarcId = residenciaFiscalEmbarcId;
+    }
+
     public String getNombreEmbarcador() {
         return nombreEmbarcador;
     }
 
     public void setNombreEmbarcador(String nombreEmbarcador) {
         this.nombreEmbarcador = nombreEmbarcador;
-    }
-
-    public String getRfcTransportista() {
-        return rfcTransportista;
-    }
-
-    public void setRfcTransportista(String rfcTransportista) {
-        this.rfcTransportista = rfcTransportista;
     }
 }

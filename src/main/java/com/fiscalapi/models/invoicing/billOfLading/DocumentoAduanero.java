@@ -3,6 +3,7 @@ package com.fiscalapi.models.invoicing.billOfLading;
 public class DocumentoAduanero {
     private String tipoDocumentoId;
     private String numPedimento;
+    private String identDocAduanero;
     private String rfcImpo;
 
     public String getTipoDocumentoId() {
@@ -19,6 +20,14 @@ public class DocumentoAduanero {
 
     public void setNumPedimento(String numPedimento) {
         this.numPedimento = numPedimento;
+    }
+
+    public String getIdentDocAduanero() {
+        return identDocAduanero;
+    }
+
+    public void setIdentDocAduanero(String identDocAduanero) {
+        this.identDocAduanero = identDocAduanero;
     }
 
     public String getRfcImpo() {

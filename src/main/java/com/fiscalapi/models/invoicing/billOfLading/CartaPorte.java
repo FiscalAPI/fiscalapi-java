@@ -22,6 +22,10 @@ public class CartaPorte {
     private String ubicacionPoloOrigenId;
     private String ubicacionPoloDestinoId;
     private String unidadPesoId;
+
+    @JsonSerialize(using = BigDecimalSerializer.class)
+    private BigDecimal cargoPorTasacion;
+
     private String logisticaInversaRecoleccionDevolucionId;
     private List<RegimenAduanero> regimenAduaneros;
     private List<Ubicacion> ubicaciones;
@@ -110,6 +114,14 @@ public class CartaPorte {
 
     public void setUnidadPesoId(String unidadPesoId) {
         this.unidadPesoId = unidadPesoId;
+    }
+
+    public BigDecimal getCargoPorTasacion() {
+        return cargoPorTasacion;
+    }
+
+    public void setCargoPorTasacion(BigDecimal cargoPorTasacion) {
+        this.cargoPorTasacion = cargoPorTasacion;
     }
 
     public String getLogisticaInversaRecoleccionDevolucionId() {

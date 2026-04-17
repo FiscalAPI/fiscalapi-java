@@ -7,6 +7,8 @@ public class TipoFigura {
     private String rfcFigura;
     private String numLicencia;
     private String nombreFigura;
+    private String numRegIdTribFigura;
+    private String residenciaFiscalFiguraId;
     private List<ParteTransporte> partesTransporte;
     private Domicilio domicilio;
 
@@ -40,6 +42,22 @@ public class TipoFigura {
 
     public void setNombreFigura(String nombreFigura) {
         this.nombreFigura = nombreFigura;
+    }
+
+    public String getNumRegIdTribFigura() {
+        return numRegIdTribFigura;
+    }
+
+    public void setNumRegIdTribFigura(String numRegIdTribFigura) {
+        this.numRegIdTribFigura = numRegIdTribFigura;
+    }
+
+    public String getResidenciaFiscalFiguraId() {
+        return residenciaFiscalFiguraId;
+    }
+
+    public void setResidenciaFiscalFiguraId(String residenciaFiscalFiguraId) {
+        this.residenciaFiscalFiguraId = residenciaFiscalFiguraId;
     }
 
     public List<ParteTransporte> getPartesTransporte() {
