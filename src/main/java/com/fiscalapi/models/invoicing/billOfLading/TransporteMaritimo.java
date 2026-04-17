@@ -24,7 +24,7 @@ public class TransporteMaritimo {
     private String nacionalidadEmbarcId;
 
     @JsonSerialize(using = BigDecimalSerializer.class)
-    private BigDecimal unidadesDeArqBruto = null;
+    private BigDecimal unidadesDeArqBruto;
 
     private String tipoCargaId;
 
