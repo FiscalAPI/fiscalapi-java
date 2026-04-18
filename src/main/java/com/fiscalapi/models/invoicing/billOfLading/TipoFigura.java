@@ -10,7 +10,7 @@ public class TipoFigura {
     private String numRegIdTribFigura;
     private String residenciaFiscalFiguraId;
     private List<ParteTransporte> partesTransporte;
-    private Domicilio domicilio;
+    private TipoFiguraDomicilio domicilio;
 
     public String getTipoFiguraId() {
         return tipoFiguraId;
@@ -68,11 +68,11 @@ public class TipoFigura {
         this.partesTransporte = partesTransporte;
     }
 
-    public Domicilio getDomicilio() {
+    public TipoFiguraDomicilio getDomicilio() {
         return domicilio;
     }
 
-    public void setDomicilio(Domicilio domicilio) {
+    public void setDomicilio(TipoFiguraDomicilio domicilio) {
         this.domicilio = domicilio;
     }
 }

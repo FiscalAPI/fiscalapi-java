@@ -17,12 +17,17 @@ import com.fiscalapi.models.invoicing.ItemTax;
 import com.fiscalapi.models.invoicing.TaxCredential;
 import com.fiscalapi.models.invoicing.billOfLading.Autotransporte;
 import com.fiscalapi.models.invoicing.billOfLading.CantidadTransporta;
+import com.fiscalapi.models.invoicing.billOfLading.Carro;
 import com.fiscalapi.models.invoicing.billOfLading.CartaPorte;
+import com.fiscalapi.models.invoicing.billOfLading.ContenedorMaritimo;
+import com.fiscalapi.models.invoicing.billOfLading.DerechoDePaso;
 import com.fiscalapi.models.invoicing.billOfLading.DocumentoAduanero;
-import com.fiscalapi.models.invoicing.billOfLading.Domicilio;
+import com.fiscalapi.models.invoicing.billOfLading.UbicacionDomicilio;
+import com.fiscalapi.models.invoicing.billOfLading.TipoFiguraDomicilio;
 import com.fiscalapi.models.invoicing.billOfLading.Mercancia;
 import com.fiscalapi.models.invoicing.billOfLading.RegimenAduanero;
 import com.fiscalapi.models.invoicing.billOfLading.Remolque;
+import com.fiscalapi.models.invoicing.billOfLading.RemolqueCCP;
 import com.fiscalapi.models.invoicing.billOfLading.TipoFigura;
 import com.fiscalapi.models.invoicing.billOfLading.ParteTransporte;
 import com.fiscalapi.models.invoicing.billOfLading.DetalleMercancia;
@@ -96,7 +101,7 @@ public class EjemplosCartaPorteValores {
         items.add(item);
 
         // Ubicacion Origen
-        Domicilio domicilioOrigen = new Domicilio();
+        UbicacionDomicilio domicilioOrigen = new UbicacionDomicilio();
         domicilioOrigen.setCalle("Calle1");
         domicilioOrigen.setNumeroExterior("211");
         domicilioOrigen.setNumeroInterior("212");
@@ -117,7 +122,7 @@ public class EjemplosCartaPorteValores {
         origen.setDomicilio(domicilioOrigen);
 
         // Ubicacion Destino
-        Domicilio domicilioDestino = new Domicilio();
+        UbicacionDomicilio domicilioDestino = new UbicacionDomicilio();
         domicilioDestino.setCalle("Calle2");
         domicilioDestino.setNumeroExterior("214");
         domicilioDestino.setNumeroInterior("215");
@@ -189,7 +194,7 @@ public class EjemplosCartaPorteValores {
         autotransporte.setRemolques(remolques);
 
         // TipoFigura
-        Domicilio domicilioFigura = new Domicilio();
+        TipoFiguraDomicilio domicilioFigura = new TipoFiguraDomicilio();
         domicilioFigura.setCalle("Calle1");
         domicilioFigura.setNumeroExterior("NumeroExterior1");
         domicilioFigura.setNumeroInterior("NumeroInterior1");
@@ -309,7 +314,7 @@ public class EjemplosCartaPorteValores {
         items.add(item);
 
         // Ubicacion Origen
-        Domicilio domicilioOrigen = new Domicilio();
+        UbicacionDomicilio domicilioOrigen = new UbicacionDomicilio();
         domicilioOrigen.setCalle("Calle1");
         domicilioOrigen.setNumeroExterior("211");
         domicilioOrigen.setNumeroInterior("212");
@@ -330,7 +335,7 @@ public class EjemplosCartaPorteValores {
         origen.setDomicilio(domicilioOrigen);
 
         // Ubicacion Destino
-        Domicilio domicilioDestino = new Domicilio();
+        UbicacionDomicilio domicilioDestino = new UbicacionDomicilio();
         domicilioDestino.setCalle("Calle2");
         domicilioDestino.setNumeroExterior("214");
         domicilioDestino.setNumeroInterior("215");
@@ -402,7 +407,7 @@ public class EjemplosCartaPorteValores {
         autotransporte.setRemolques(remolques);
 
         // TipoFigura
-        Domicilio domicilioFigura = new Domicilio();
+        TipoFiguraDomicilio domicilioFigura = new TipoFiguraDomicilio();
         domicilioFigura.setCalle("Calle1");
         domicilioFigura.setNumeroExterior("NumeroExterior1");
         domicilioFigura.setNumeroInterior("NumeroInterior1");
@@ -514,7 +519,7 @@ public class EjemplosCartaPorteValores {
         regimenAduaneros.add(regimenAduanero);
 
         // Ubicacion Origen (extranjero)
-        Domicilio domicilioOrigen = new Domicilio();
+        UbicacionDomicilio domicilioOrigen = new UbicacionDomicilio();
         domicilioOrigen.setCalle("ST");
         domicilioOrigen.setNumeroExterior("214");
         domicilioOrigen.setColoniaId("N/A");
@@ -534,7 +539,7 @@ public class EjemplosCartaPorteValores {
         origen.setDomicilio(domicilioOrigen);
 
         // Ubicacion Destino (extranjero)
-        Domicilio domicilioDestino = new Domicilio();
+        UbicacionDomicilio domicilioDestino = new UbicacionDomicilio();
         domicilioDestino.setCalle("ST");
         domicilioDestino.setNumeroExterior("214");
         domicilioDestino.setColoniaId("N/A");
@@ -607,7 +612,7 @@ public class EjemplosCartaPorteValores {
         autotransporte.setRemolques(remolques);
 
         // TipoFigura
-        Domicilio domicilioFigura = new Domicilio();
+        TipoFiguraDomicilio domicilioFigura = new TipoFiguraDomicilio();
         domicilioFigura.setCalle("ST");
         domicilioFigura.setNumeroExterior("214");
         domicilioFigura.setColoniaId("N/A");
@@ -721,7 +726,7 @@ public class EjemplosCartaPorteValores {
         regimenAduaneros.add(regimenAduanero);
 
         // Ubicacion Origen (extranjero)
-        Domicilio domicilioOrigen = new Domicilio();
+        UbicacionDomicilio domicilioOrigen = new UbicacionDomicilio();
         domicilioOrigen.setCalle("ST");
         domicilioOrigen.setNumeroExterior("214");
         domicilioOrigen.setColoniaId("N/A");
@@ -741,7 +746,7 @@ public class EjemplosCartaPorteValores {
         origen.setDomicilio(domicilioOrigen);
 
         // Ubicacion Destino (extranjero)
-        Domicilio domicilioDestino = new Domicilio();
+        UbicacionDomicilio domicilioDestino = new UbicacionDomicilio();
         domicilioDestino.setCalle("ST");
         domicilioDestino.setNumeroExterior("214");
         domicilioDestino.setColoniaId("N/A");
@@ -822,7 +827,7 @@ public class EjemplosCartaPorteValores {
         autotransporte.setRemolques(remolques);
 
         // TipoFigura
-        Domicilio domicilioFigura = new Domicilio();
+        TipoFiguraDomicilio domicilioFigura = new TipoFiguraDomicilio();
         domicilioFigura.setCalle("ST");
         domicilioFigura.setNumeroExterior("214");
         domicilioFigura.setColoniaId("N/A");
@@ -890,7 +895,7 @@ public class EjemplosCartaPorteValores {
 
         // Ubicaciones: comunes + destino 5 (JM047/HUEHUETOCA, tipoEstacion "03", COA)
         List<Ubicacion> ubicaciones = buildUbicacionesFerroviarioComunes();
-        Domicilio domDest5 = new Domicilio();
+        UbicacionDomicilio domDest5 = new UbicacionDomicilio();
         domDest5.setCalle("Calle2");
         domDest5.setNumeroExterior("214");
         domDest5.setNumeroInterior("215");
@@ -976,7 +981,7 @@ public class EjemplosCartaPorteValores {
 
         // Ubicaciones: comunes + destino 5 (XEXX010101000, USA address)
         List<Ubicacion> ubicaciones = buildUbicacionesFerroviarioComunes();
-        Domicilio domDest5 = new Domicilio();
+        UbicacionDomicilio domDest5 = new UbicacionDomicilio();
         domDest5.setCalle("ST");
         domDest5.setNumeroExterior("1234");
         domDest5.setColoniaId("1234");
@@ -1067,7 +1072,7 @@ public class EjemplosCartaPorteValores {
 
         // Ubicaciones: comunes + destino 5 (JM047/HUEHUETOCA, tipoEstacion "03", COA)
         List<Ubicacion> ubicaciones = buildUbicacionesFerroviarioComunes();
-        Domicilio domDest5 = new Domicilio();
+        UbicacionDomicilio domDest5 = new UbicacionDomicilio();
         domDest5.setCalle("Calle2");
         domDest5.setNumeroExterior("214");
         domDest5.setNumeroInterior("215");
@@ -1160,7 +1165,7 @@ public class EjemplosCartaPorteValores {
         items.add(buildStandardItem());
 
         // Origen (aeropuerto EA0417, Loreto)
-        Domicilio domOrigen = new Domicilio();
+        UbicacionDomicilio domOrigen = new UbicacionDomicilio();
         domOrigen.setCalle("Calle1");
         domOrigen.setNumeroExterior("211");
         domOrigen.setNumeroInterior("212");
@@ -1184,7 +1189,7 @@ public class EjemplosCartaPorteValores {
         origen.setDomicilio(domOrigen);
 
         // Destino (aeropuerto EA0418, Los Cabos)
-        Domicilio domDestino = new Domicilio();
+        UbicacionDomicilio domDestino = new UbicacionDomicilio();
         domDestino.setCalle("Calle2");
         domDestino.setNumeroExterior("214");
         domDestino.setNumeroInterior("215");
@@ -1291,7 +1296,7 @@ public class EjemplosCartaPorteValores {
         regimenAduaneros.add(regimenAduanero);
 
         // Ubicacion Origen (EA0417 / Loreto, COA/MEX)
-        Domicilio domOrigen = new Domicilio();
+        UbicacionDomicilio domOrigen = new UbicacionDomicilio();
         domOrigen.setCalle("Calle2");
         domOrigen.setNumeroExterior("214");
         domOrigen.setNumeroInterior("215");
@@ -1315,7 +1320,7 @@ public class EjemplosCartaPorteValores {
         origen.setDomicilio(domOrigen);
 
         // Ubicacion Destino (EA0143 / Phoenix-Mesa Gateway, USA/TX — foreign)
-        Domicilio domDestino = new Domicilio();
+        UbicacionDomicilio domDestino = new UbicacionDomicilio();
         domDestino.setCalle("ST");
         domDestino.setNumeroExterior("12344");
         domDestino.setColoniaId("N/A");
@@ -1414,7 +1419,7 @@ public class EjemplosCartaPorteValores {
         regimenAduaneros.add(regimenAduanero);
 
         // Ubicacion Origen (EA0417 / Loreto, CMX/MEX)
-        Domicilio domOrigen = new Domicilio();
+        UbicacionDomicilio domOrigen = new UbicacionDomicilio();
         domOrigen.setCalle("Calle1");
         domOrigen.setNumeroExterior("211");
         domOrigen.setNumeroInterior("212");
@@ -1438,7 +1443,7 @@ public class EjemplosCartaPorteValores {
         origen.setDomicilio(domOrigen);
 
         // Ubicacion Destino (EA0418 / Los Cabos, COA/MEX)
-        Domicilio domDestino = new Domicilio();
+        UbicacionDomicilio domDestino = new UbicacionDomicilio();
         domDestino.setCalle("Calle2");
         domDestino.setNumeroExterior("214");
         domDestino.setNumeroInterior("215");
@@ -1540,7 +1545,7 @@ public class EjemplosCartaPorteValores {
         items.add(buildStandardItem());
 
         // Ubicacion Origen (PM001 / Rosarito, CMX/MEX)
-        Domicilio domOrigen = new Domicilio();
+        UbicacionDomicilio domOrigen = new UbicacionDomicilio();
         domOrigen.setCalle("Calle1");
         domOrigen.setNumeroExterior("211");
         domOrigen.setNumeroInterior("212");
@@ -1565,7 +1570,7 @@ public class EjemplosCartaPorteValores {
         origen.setDomicilio(domOrigen);
 
         // Ubicacion Destino (PM001 / Rosarito, COA/MEX)
-        Domicilio domDestino = new Domicilio();
+        UbicacionDomicilio domDestino = new UbicacionDomicilio();
         domDestino.setCalle("Calle2");
         domDestino.setNumeroExterior("214");
         domDestino.setNumeroInterior("215");
@@ -1659,7 +1664,7 @@ public class EjemplosCartaPorteValores {
         regimenAduaneros.add(regimenAduanero);
 
         // Ubicacion Origen (PM001 / Rosarito, CMX/MEX)
-        Domicilio domOrigen = new Domicilio();
+        UbicacionDomicilio domOrigen = new UbicacionDomicilio();
         domOrigen.setCalle("Calle1");
         domOrigen.setNumeroExterior("211");
         domOrigen.setNumeroInterior("212");
@@ -1684,7 +1689,7 @@ public class EjemplosCartaPorteValores {
         origen.setDomicilio(domOrigen);
 
         // Ubicacion Destino (PM120 / NombreEstacion, USA/TX — foreign)
-        Domicilio domDestino = new Domicilio();
+        UbicacionDomicilio domDestino = new UbicacionDomicilio();
         domDestino.setCalle("ST");
         domDestino.setNumeroExterior("12345");
         domDestino.setColoniaId("N/A");
@@ -1786,7 +1791,7 @@ public class EjemplosCartaPorteValores {
         regimenAduaneros.add(regimenAduanero2);
 
         // Ubicacion Origen (EA0417 / Loreto, navegacionTrafico "Altura", CMX/MEX)
-        Domicilio domOrigen = new Domicilio();
+        UbicacionDomicilio domOrigen = new UbicacionDomicilio();
         domOrigen.setCalle("Calle1");
         domOrigen.setNumeroExterior("211");
         domOrigen.setNumeroInterior("212");
@@ -1811,7 +1816,7 @@ public class EjemplosCartaPorteValores {
         origen.setDomicilio(domOrigen);
 
         // Ubicacion Destino (PM001 / Rosarito, navegacionTrafico "Altura", COA/MEX)
-        Domicilio domDestino = new Domicilio();
+        UbicacionDomicilio domDestino = new UbicacionDomicilio();
         domDestino.setCalle("Calle2");
         domDestino.setNumeroExterior("214");
         domDestino.setNumeroInterior("215");
@@ -1888,7 +1893,7 @@ public class EjemplosCartaPorteValores {
         mercancias.add(mercancia);
 
         // TipoFigura (tipoFiguraId "01", numLicencia, AFG domicilio)
-        Domicilio domFigura = new Domicilio();
+        TipoFiguraDomicilio domFigura = new TipoFiguraDomicilio();
         domFigura.setCalle("Calle1");
         domFigura.setNumeroExterior("NumeroExterior1");
         domFigura.setNumeroInterior("NumeroInterior1");
@@ -1957,7 +1962,7 @@ public class EjemplosCartaPorteValores {
         items.add(buildStandardItem());
 
         // Ubicacion Origen (no station, CMX/MEX)
-        Domicilio domOrigen = new Domicilio();
+        UbicacionDomicilio domOrigen = new UbicacionDomicilio();
         domOrigen.setCalle("Calle1");
         domOrigen.setNumeroExterior("211");
         domOrigen.setNumeroInterior("212");
@@ -1978,7 +1983,7 @@ public class EjemplosCartaPorteValores {
         origen.setDomicilio(domOrigen);
 
         // Ubicacion Destino (no station, COA/MEX)
-        Domicilio domDestino = new Domicilio();
+        UbicacionDomicilio domDestino = new UbicacionDomicilio();
         domDestino.setCalle("Calle2");
         domDestino.setNumeroExterior("214");
         domDestino.setNumeroInterior("215");
@@ -2103,7 +2108,7 @@ public class EjemplosCartaPorteValores {
         regimenAduaneros.add(regimenAduanero);
 
         // Ubicacion Origen (foreign USA/TX)
-        Domicilio domOrigen = new Domicilio();
+        UbicacionDomicilio domOrigen = new UbicacionDomicilio();
         domOrigen.setCalle("ST");
         domOrigen.setNumeroExterior("214");
         domOrigen.setColoniaId("N/A");
@@ -2123,7 +2128,7 @@ public class EjemplosCartaPorteValores {
         origen.setDomicilio(domOrigen);
 
         // Ubicacion Destino (foreign USA/TX)
-        Domicilio domDestino = new Domicilio();
+        UbicacionDomicilio domDestino = new UbicacionDomicilio();
         domDestino.setCalle("ST");
         domDestino.setNumeroExterior("214");
         domDestino.setColoniaId("N/A");
@@ -2196,7 +2201,7 @@ public class EjemplosCartaPorteValores {
         autotransporte.setRemolques(remolques);
 
         // TipoFigura with USA domicilio
-        Domicilio domFigura = new Domicilio();
+        TipoFiguraDomicilio domFigura = new TipoFiguraDomicilio();
         domFigura.setCalle("ST");
         domFigura.setNumeroExterior("214");
         domFigura.setColoniaId("N/A");
@@ -2267,7 +2272,7 @@ public class EjemplosCartaPorteValores {
         regimenAduaneros.add(regimenAduanero);
 
         // Ubicacion Origen (foreign USA/TX)
-        Domicilio domOrigen = new Domicilio();
+        UbicacionDomicilio domOrigen = new UbicacionDomicilio();
         domOrigen.setCalle("ST");
         domOrigen.setNumeroExterior("214");
         domOrigen.setColoniaId("N/A");
@@ -2287,7 +2292,7 @@ public class EjemplosCartaPorteValores {
         origen.setDomicilio(domOrigen);
 
         // Ubicacion Destino (foreign USA/TX)
-        Domicilio domDestino = new Domicilio();
+        UbicacionDomicilio domDestino = new UbicacionDomicilio();
         domDestino.setCalle("ST");
         domDestino.setNumeroExterior("214");
         domDestino.setColoniaId("N/A");
@@ -2368,7 +2373,7 @@ public class EjemplosCartaPorteValores {
         autotransporte.setRemolques(remolques);
 
         // TipoFigura with USA domicilio
-        Domicilio domFigura = new Domicilio();
+        TipoFiguraDomicilio domFigura = new TipoFiguraDomicilio();
         domFigura.setCalle("ST");
         domFigura.setNumeroExterior("214");
         domFigura.setColoniaId("N/A");
@@ -2434,7 +2439,7 @@ public class EjemplosCartaPorteValores {
 
         // Ubicaciones: comunes + destino 5 (JM047/HUEHUETOCA, tipoEstacion "03", COA)
         List<Ubicacion> ubicaciones = buildUbicacionesFerroviarioComunes();
-        Domicilio domDest5 = new Domicilio();
+        UbicacionDomicilio domDest5 = new UbicacionDomicilio();
         domDest5.setCalle("Calle2");
         domDest5.setNumeroExterior("214");
         domDest5.setNumeroInterior("215");
@@ -2533,7 +2538,7 @@ public class EjemplosCartaPorteValores {
 
         // Ubicaciones: comunes + destino 5 (XEXX010101000, USA address)
         List<Ubicacion> ubicaciones = buildUbicacionesFerroviarioComunes();
-        Domicilio domDest5 = new Domicilio();
+        UbicacionDomicilio domDest5 = new UbicacionDomicilio();
         domDest5.setCalle("ST");
         domDest5.setNumeroExterior("1234");
         domDest5.setColoniaId("1234");
@@ -2637,7 +2642,7 @@ public class EjemplosCartaPorteValores {
 
         // Ubicaciones: comunes + destino 5 (JM047/HUEHUETOCA, tipoEstacion "03", COA)
         List<Ubicacion> ubicaciones = buildUbicacionesFerroviarioComunes();
-        Domicilio domDest5 = new Domicilio();
+        UbicacionDomicilio domDest5 = new UbicacionDomicilio();
         domDest5.setCalle("Calle2");
         domDest5.setNumeroExterior("214");
         domDest5.setNumeroInterior("215");
@@ -2743,7 +2748,7 @@ public class EjemplosCartaPorteValores {
         items.add(buildStandardItem());
 
         // Origen (aeropuerto EA0417, Loreto)
-        Domicilio domOrigen = new Domicilio();
+        UbicacionDomicilio domOrigen = new UbicacionDomicilio();
         domOrigen.setCalle("Calle1");
         domOrigen.setNumeroExterior("211");
         domOrigen.setNumeroInterior("212");
@@ -2767,7 +2772,7 @@ public class EjemplosCartaPorteValores {
         origen.setDomicilio(domOrigen);
 
         // Destino (aeropuerto EA0418, Los Cabos)
-        Domicilio domDestino = new Domicilio();
+        UbicacionDomicilio domDestino = new UbicacionDomicilio();
         domDestino.setCalle("Calle2");
         domDestino.setNumeroExterior("214");
         domDestino.setNumeroInterior("215");
@@ -2887,7 +2892,7 @@ public class EjemplosCartaPorteValores {
         regimenAduaneros.add(regimenAduanero);
 
         // Ubicacion Origen (EA0417 / Loreto, COA/MEX)
-        Domicilio domOrigen = new Domicilio();
+        UbicacionDomicilio domOrigen = new UbicacionDomicilio();
         domOrigen.setCalle("Calle2");
         domOrigen.setNumeroExterior("214");
         domOrigen.setNumeroInterior("215");
@@ -2911,7 +2916,7 @@ public class EjemplosCartaPorteValores {
         origen.setDomicilio(domOrigen);
 
         // Ubicacion Destino (EA0143 / Phoenix-Mesa Gateway, USA/TX — foreign)
-        Domicilio domDestino = new Domicilio();
+        UbicacionDomicilio domDestino = new UbicacionDomicilio();
         domDestino.setCalle("ST");
         domDestino.setNumeroExterior("12344");
         domDestino.setColoniaId("N/A");
@@ -3023,7 +3028,7 @@ public class EjemplosCartaPorteValores {
         regimenAduaneros.add(regimenAduanero);
 
         // Ubicacion Origen (EA0417 / Loreto, CMX/MEX)
-        Domicilio domOrigen = new Domicilio();
+        UbicacionDomicilio domOrigen = new UbicacionDomicilio();
         domOrigen.setCalle("Calle1");
         domOrigen.setNumeroExterior("211");
         domOrigen.setNumeroInterior("212");
@@ -3047,7 +3052,7 @@ public class EjemplosCartaPorteValores {
         origen.setDomicilio(domOrigen);
 
         // Ubicacion Destino (EA0418 / Los Cabos, COA/MEX)
-        Domicilio domDestino = new Domicilio();
+        UbicacionDomicilio domDestino = new UbicacionDomicilio();
         domDestino.setCalle("Calle2");
         domDestino.setNumeroExterior("214");
         domDestino.setNumeroInterior("215");
@@ -3162,7 +3167,7 @@ public class EjemplosCartaPorteValores {
         items.add(buildStandardItem());
 
         // Ubicacion Origen (PM001 / Rosarito, CMX/MEX)
-        Domicilio domOrigen = new Domicilio();
+        UbicacionDomicilio domOrigen = new UbicacionDomicilio();
         domOrigen.setCalle("Calle1");
         domOrigen.setNumeroExterior("211");
         domOrigen.setNumeroInterior("212");
@@ -3187,7 +3192,7 @@ public class EjemplosCartaPorteValores {
         origen.setDomicilio(domOrigen);
 
         // Ubicacion Destino (PM001 / Rosarito, COA/MEX)
-        Domicilio domDestino = new Domicilio();
+        UbicacionDomicilio domDestino = new UbicacionDomicilio();
         domDestino.setCalle("Calle2");
         domDestino.setNumeroExterior("214");
         domDestino.setNumeroInterior("215");
@@ -3294,7 +3299,7 @@ public class EjemplosCartaPorteValores {
         regimenAduaneros.add(regimenAduanero);
 
         // Ubicacion Origen (PM001 / Rosarito, CMX/MEX)
-        Domicilio domOrigen = new Domicilio();
+        UbicacionDomicilio domOrigen = new UbicacionDomicilio();
         domOrigen.setCalle("Calle1");
         domOrigen.setNumeroExterior("211");
         domOrigen.setNumeroInterior("212");
@@ -3319,7 +3324,7 @@ public class EjemplosCartaPorteValores {
         origen.setDomicilio(domOrigen);
 
         // Ubicacion Destino (PM120 / NombreEstacion, USA/TX — foreign)
-        Domicilio domDestino = new Domicilio();
+        UbicacionDomicilio domDestino = new UbicacionDomicilio();
         domDestino.setCalle("ST");
         domDestino.setNumeroExterior("12345");
         domDestino.setColoniaId("N/A");
@@ -3434,7 +3439,7 @@ public class EjemplosCartaPorteValores {
         regimenAduaneros.add(regimenAduanero2);
 
         // Ubicacion Origen (PM001 / Rosarito, CMX/MEX)
-        Domicilio domOrigen = new Domicilio();
+        UbicacionDomicilio domOrigen = new UbicacionDomicilio();
         domOrigen.setCalle("Calle1");
         domOrigen.setNumeroExterior("211");
         domOrigen.setNumeroInterior("212");
@@ -3459,7 +3464,7 @@ public class EjemplosCartaPorteValores {
         origen.setDomicilio(domOrigen);
 
         // Ubicacion Destino (PM001 / Rosarito, COA/MEX)
-        Domicilio domDestino = new Domicilio();
+        UbicacionDomicilio domDestino = new UbicacionDomicilio();
         domDestino.setCalle("Calle2");
         domDestino.setNumeroExterior("214");
         domDestino.setNumeroInterior("215");
@@ -3653,19 +3658,19 @@ public class EjemplosCartaPorteValores {
     }
 
     private TransporteMaritimo buildTransporteMaritimo() {
-        TransporteMaritimo.RemolqueCCP remolqueCCP = new TransporteMaritimo.RemolqueCCP();
+        RemolqueCCP remolqueCCP = new RemolqueCCP();
         remolqueCCP.setSubTipoRemCCPId("CTR001");
         remolqueCCP.setPlacaCCP("JNG7636");
-        List<TransporteMaritimo.RemolqueCCP> remolquesCCP = new ArrayList<>();
+        List<RemolqueCCP> remolquesCCP = new ArrayList<>();
         remolquesCCP.add(remolqueCCP);
 
-        TransporteMaritimo.ContenedorMaritimo contenedor = new TransporteMaritimo.ContenedorMaritimo();
+        ContenedorMaritimo contenedor = new ContenedorMaritimo();
         contenedor.setTipoContenedorId("CM011");
         contenedor.setIdCCPRelacionado("CCCBCD94-870A-4332-A52A-A52AA52AA52A");
         contenedor.setPlacaVMCCP("JNG7683");
         contenedor.setFechaCertificacionCCP(OptUtil.parseLocalDateTime("2024-06-20T11:11:00"));
         contenedor.setRemolquesCCP(remolquesCCP);
-        List<TransporteMaritimo.ContenedorMaritimo> contenedores = new ArrayList<>();
+        List<ContenedorMaritimo> contenedores = new ArrayList<>();
         contenedores.add(contenedor);
 
         TransporteMaritimo maritimo = new TransporteMaritimo();
@@ -3696,18 +3701,18 @@ public class EjemplosCartaPorteValores {
     }
 
     private TransporteFerroviario buildTransporteFerroviario() {
-        TransporteFerroviario.DerechoDePaso derecho = new TransporteFerroviario.DerechoDePaso();
+        DerechoDePaso derecho = new DerechoDePaso();
         derecho.setTipoDerechoDePasoId("CDP114");
         derecho.setKilometrajePagado(new BigDecimal("100"));
-        List<TransporteFerroviario.DerechoDePaso> derechos = new ArrayList<>();
+        List<DerechoDePaso> derechos = new ArrayList<>();
         derechos.add(derecho);
 
-        TransporteFerroviario.Carro carro = new TransporteFerroviario.Carro();
+        Carro carro = new Carro();
         carro.setTipoCarroId("TC08");
         carro.setMatriculaCarro("A00012");
         carro.setGuiaCarro("123ASD");
         carro.setToneladasNetasCarro(new BigDecimal("10"));
-        List<TransporteFerroviario.Carro> carros = new ArrayList<>();
+        List<Carro> carros = new ArrayList<>();
         carros.add(carro);
 
         TransporteFerroviario transporte = new TransporteFerroviario();
@@ -3724,7 +3729,7 @@ public class EjemplosCartaPorteValores {
         List<ParteTransporte> partes = new ArrayList<>();
         partes.add(parte);
 
-        Domicilio domicilio = new Domicilio();
+        TipoFiguraDomicilio domicilio = new TipoFiguraDomicilio();
         domicilio.setCalle("calle");
         domicilio.setNumeroExterior("211");
         domicilio.setColoniaId("0814");
@@ -3748,7 +3753,7 @@ public class EjemplosCartaPorteValores {
     }
 
     private List<Ubicacion> buildUbicacionesFerroviarioComunes() {
-        Domicilio domOrigen = new Domicilio();
+        UbicacionDomicilio domOrigen = new UbicacionDomicilio();
         domOrigen.setCalle("Calle1");
         domOrigen.setNumeroExterior("211");
         domOrigen.setNumeroInterior("212");

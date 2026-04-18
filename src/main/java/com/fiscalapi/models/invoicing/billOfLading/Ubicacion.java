@@ -30,7 +30,7 @@ public class Ubicacion {
     @JsonSerialize(using = BigDecimalSerializer.class)
     private BigDecimal distanciaRecorrida = null;
 
-    private Domicilio domicilio;
+    private UbicacionDomicilio domicilio;
 
     public String getTipoUbicacion() {
         return tipoUbicacion;
@@ -128,11 +128,11 @@ public class Ubicacion {
         this.distanciaRecorrida = distanciaRecorrida;
     }
 
-    public Domicilio getDomicilio() {
+    public UbicacionDomicilio getDomicilio() {
         return domicilio;
     }
 
-    public void setDomicilio(Domicilio domicilio) {
+    public void setDomicilio(UbicacionDomicilio domicilio) {
         this.domicilio = domicilio;
     }
 }

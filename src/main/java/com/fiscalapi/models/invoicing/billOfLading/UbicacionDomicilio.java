@@ -1,6 +1,6 @@
 package com.fiscalapi.models.invoicing.billOfLading;
 
-public class Domicilio {
+public class UbicacionDomicilio {
     private String calle;
     private String numeroExterior;
     private String numeroInterior;
