@@ -45,18 +45,91 @@ public class EjemplosCartaPorteValores {
 
     public void main(String[] args) {
         FiscalApiSettings settings = new FiscalApiSettings();
-        settings.setDebugMode(true);
+        settings.setDebugMode(false);
         settings.setApiUrl("https://test.fiscalapi.com");
-        settings.setApiKey("api_key");
-        settings.setTenant("tenant_id");
+        settings.setApiKey("sk_test_b7dae706_e16f_4faf_90fb_a5d1990985a2");
+        settings.setTenant("275510ee-f64d-435a-9e92-1553d8f10a7e");
 
+        System.out.println("\n===== Ejemplo 1: Factura ingreso autotransporte nacional (sin impuestos) =====");
         facturaIngresoAutoTransporteNacional(settings);
+
+        System.out.println("\n===== Ejemplo 2: Factura ingreso autotransporte nacional con impuestos =====");
+        facturaIngresoAutoTransporteNacionalConImpuestos(settings);
+
+        System.out.println("\n===== Ejemplo 3: Factura ingreso autotransporte extranjero (salida) =====");
+        facturaIngresoAutoTransporteExtranjero(settings);
+
+        System.out.println("\n===== Ejemplo 4: Factura ingreso autotransporte internacional aduanero (entrada con pedimento) =====");
+        facturaIngresoAutoTransporteInternacionalAduanero(settings);
+
+        System.out.println("\n===== Ejemplo 5: Factura ingreso transporte ferroviario nacional =====");
+        facturaIngresoTransporteFerroviarioNacional(settings);
+
+        System.out.println("\n===== Ejemplo 6: Factura ingreso transporte ferroviario extranjero =====");
+        facturaIngresoTransporteFerroviarioExtranjero(settings);
+
+        System.out.println("\n===== Ejemplo 7: Factura ingreso transporte ferroviario internacional aduanero (entrada, IMD) =====");
+        facturaIngresoTransporteFerroviarioInternacionalAduanero(settings);
+
+        System.out.println("\n===== Ejemplo 8: Factura ingreso transporte aereo nacional =====");
+        facturaIngresoTransporteAereoNacional(settings);
+
+        System.out.println("\n===== Ejemplo 9: Factura ingreso transporte aereo extranjero (salida) =====");
+        facturaIngresoTransporteAereoExtranjero(settings);
+
+        System.out.println("\n===== Ejemplo 10: Factura ingreso transporte aereo internacional aduanero (entrada, IMD) =====");
+        facturaIngresoTransporteAereoInternacionalAduanero(settings);
+
+        System.out.println("\n===== Ejemplo 11: Factura ingreso transporte maritimo nacional =====");
+        facturaIngresoTransporteMaritimoNacional(settings);
+
+        System.out.println("\n===== Ejemplo 12: Factura ingreso transporte maritimo extranjero (salida) =====");
+        facturaIngresoTransporteMaritimoExtranjero(settings);
+
+        System.out.println("\n===== Ejemplo 13: Factura ingreso transporte maritimo internacional aduanero (entrada, IMD x2) =====");
+        facturaIngresoTransporteMaritimoInternacionalAduanero(settings);
+
+        System.out.println("\n===== Ejemplo 14: Factura traslado autotransporte nacional =====");
+        facturaTrasladoAutoTransporteNacional(settings);
+
+        System.out.println("\n===== Ejemplo 15: Factura traslado autotransporte extranjero (salida, EXD) =====");
+        facturaTrasladoAutoTransporteExtranjero(settings);
+
+        System.out.println("\n===== Ejemplo 16: Factura traslado autotransporte internacional aduanero (entrada, IMD) =====");
+        facturaTrasladoAutoTransporteInternacionalAduanero(settings);
+
+        System.out.println("\n===== Ejemplo 17: Factura traslado transporte ferroviario nacional =====");
+        facturaTrasladoTransporteFerroviarioNacional(settings);
+
+        System.out.println("\n===== Ejemplo 18: Factura traslado transporte ferroviario extranjero =====");
+        facturaTrasladoTransporteFerroviarioExtranjero(settings);
+
+        System.out.println("\n===== Ejemplo 19: Factura traslado transporte ferroviario internacional aduanero (entrada, IMD) =====");
+        facturaTrasladoTransporteFerroviarioInternacionalAduanero(settings);
+
+        System.out.println("\n===== Ejemplo 20: Factura traslado transporte aereo nacional =====");
+        facturaTrasladoTransporteAereoNacional(settings);
+
+        System.out.println("\n===== Ejemplo 21: Factura traslado transporte aereo extranjero (salida, EXD) =====");
+        facturaTrasladoTransporteAereoExtranjero(settings);
+
+        System.out.println("\n===== Ejemplo 22: Factura traslado transporte aereo internacional aduanero (entrada, IMD) =====");
+        facturaTrasladoTransporteAereoInternacionalAduanero(settings);
+
+        System.out.println("\n===== Ejemplo 23: Factura traslado transporte maritimo nacional =====");
+        facturaTrasladoTransporteMaritimoNacional(settings);
+
+        System.out.println("\n===== Ejemplo 24: Factura traslado transporte maritimo extranjero (salida, EXD) =====");
+        facturaTrasladoTransporteMaritimoExtranjero(settings);
+
+        System.out.println("\n===== Ejemplo 25: Factura traslado transporte maritimo internacional aduanero (entrada, IMD x2) =====");
+        facturaTrasladoTransporteMaritimoInternacionalAduanero(settings);
     }
 
     // Factura ingreso autotransporte nacional (sin impuestos)
     private void facturaIngresoAutoTransporteNacional(FiscalApiSettings settings) {
         FiscalApiClient client = FiscalApiClient.create(settings);
-        LocalDateTime currentDate = OptUtil.parseLocalDateTime(LocalDateTime.now().toString());
+        LocalDateTime currentDate = OptUtil.parseLocalDateTime("2026-04-30T19:00:00");
 
         // Tax credentials
         List<TaxCredential> taxCredentials = new ArrayList<>();
