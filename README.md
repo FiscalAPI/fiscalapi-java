@@ -11,14 +11,16 @@
 - **Timbrado de facturas de ingreso** con validación automática
 - **Timbrado de notas de crédito** (facturas de egreso)
 - **Timbrado de complementos de pago** en MXN, USD y EUR
-- **Timbrado de facturas de nómina** - Soporte para los 13 tipos de CFDI de nómina
+- **Timbrado de facturas de nómina** 
+- **Timbrado de facturas de carta porte** 
+- **Timbrado de facturas de comercio exterior**  
 - **Consulta del estatus de facturas** en el SAT en tiempo real
 - **Cancelación de facturas** 
 - **Generación de archivos PDF** de las facturas con formato profesional
 - **Personalización de logos y colores** en los PDF generados
 - **Envío de facturas por correo electrónico** automatizado
 - **Descarga de archivos XML** con estructura completa
-- **Almacenamiento y recuperación** de facturas por 5 años
+- **Almacenamiento y recuperación** de facturas por 5 años.
 - Dos [modos de operación](https://docs.fiscalapi.com/modes-of-operation): **Por valores** o **Por referencias**
 
 ## 📥 Descarga Masiva
