@@ -11,5 +11,6 @@ public interface IFiscalApiClient {
     IDownloadRuleService getDownloadRuleService();
     IDownloadRequestService getDownloadRequestService();
     IStampService getStampService();
+    ISatValidationService getSatValidationService();
     // ... etc
 }

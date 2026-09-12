@@ -11,6 +11,7 @@ public class StampTransaction extends BaseDto {
     private StampTransactionStatus transactionStatus;
     private String referenceId;
     private String comments;
+    private CreditType creditType;
 
     public int getConsecutive() {
         return consecutive;
@@ -74,5 +75,18 @@ public class StampTransaction extends BaseDto {
 
     public void setTransactionStatus(StampTransactionStatus transactionStatus) {
         this.transactionStatus = transactionStatus;
+    }
+
+    /**
+     * Tipo de crédito que movió la transacción: timbres o créditos de validación SAT.
+     *
+     * @return El tipo de crédito de la transacción
+     */
+    public CreditType getCreditType() {
+        return creditType;
+    }
+
+    public void setCreditType(CreditType creditType) {
+        this.creditType = creditType;
     }
 }

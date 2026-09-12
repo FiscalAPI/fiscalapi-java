@@ -37,41 +37,9 @@ public class DownloadRequestService extends BaseFiscalApiService<DownloadRequest
         return DownloadRequest.class;
     }
 
-    /**
-     * Debido al type erasure, se utiliza este método para retornar la clase base de PagedList.
-     * @return La clase de PagedList&lt;Xml&gt; para manejar la deserialización
-     */
-    @SuppressWarnings("unchecked")
-    protected Class<PagedList<Xml>> getXmlPagedListTypeParameterClass() {
-        return (Class<PagedList<Xml>>) (Class) PagedList.class;
-    }
 
-    /**
-     * Debido al type erasure, se utiliza este método para retornar la clase base de PagedList.
-     * @return La clase de PagedList&lt; MetadataItem&gt; para manejar la deserialización
-     */
-    @SuppressWarnings("unchecked")
-    protected Class<PagedList<MetadataItem>> getMetadataItemPagedListTypeParameterClass() {
-        return (Class<PagedList<MetadataItem>>) (Class) PagedList.class;
-    }
 
-    /**
-     * Debido al type erasure, se utiliza este método para retornar la clase base de List.
-     * @return La clase de List&lt; FileResponse&gt; para manejar la deserialización
-     */
-    @SuppressWarnings("unchecked")
-    protected Class<List<FileResponse>> getFileResponseListTypeParameterClass() {
-        return (Class<List<FileResponse>>) (Class) List.class;
-    }
 
-    /**
-     * Debido al type erasure, se utiliza este método para retornar la clase base de List.
-     * @return La clase de List&lt; DownloadRequest&gt; para manejar la deserialización
-     */
-    @SuppressWarnings("unchecked")
-    protected Class<List<DownloadRequest>> getDownloadRequestListTypeParameterClass() {
-        return (Class<List<DownloadRequest>>) (Class) List.class;
-    }
 
     /**
      * Lista los XMLs descargados para un requestId.
@@ -83,7 +51,7 @@ public class DownloadRequestService extends BaseFiscalApiService<DownloadRequest
     public ApiResponse<PagedList<Xml>> getXmls(String requestId) {
         String path = requestId + "/xmls";
         String endpoint = buildEndpoint(path, null);
-        return httpClient.get(endpoint, getXmlPagedListTypeParameterClass());
+        return httpClient.getPagedList(endpoint, Xml.class);
     }
 
     /**
@@ -96,7 +64,7 @@ public class DownloadRequestService extends BaseFiscalApiService<DownloadRequest
     public ApiResponse<PagedList<MetadataItem>> getMetadataItems(String requestId) {
         String path = requestId + "/meta-items";
         String endpoint = buildEndpoint(path, null);
-        return httpClient.get(endpoint, getMetadataItemPagedListTypeParameterClass());
+        return httpClient.getPagedList(endpoint, MetadataItem.class);
     }
 
     /**
@@ -109,7 +77,7 @@ public class DownloadRequestService extends BaseFiscalApiService<DownloadRequest
     public ApiResponse<List<FileResponse>> downloadPackage(String requestId) {
         String path = requestId + "/package";
         String endpoint = buildEndpoint(path, null);
-        return httpClient.get(endpoint, getFileResponseListTypeParameterClass());
+        return httpClient.getList(endpoint, FileResponse.class);
     }
 
     /**
@@ -150,6 +118,6 @@ public class DownloadRequestService extends BaseFiscalApiService<DownloadRequest
         Map<String, String> queryParams = new HashMap<>();
         queryParams.put("createdAt", createdAt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         String endpoint = buildEndpoint(path, queryParams);
-        return httpClient.get(endpoint, getDownloadRequestListTypeParameterClass());
+        return httpClient.getList(endpoint, DownloadRequest.class);
     }
 }

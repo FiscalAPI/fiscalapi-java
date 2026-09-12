@@ -27,23 +27,18 @@ public class TaxFileService extends BaseFiscalApiService<TaxFile> implements ITa
     }
 
 
-    @SuppressWarnings("unchecked")
-    protected Class<List<TaxFile>> getListTypeParameterClass() {
-        // Debido a type erasure, se utiliza un cast para retornar la clase base de List
-        return (Class<List<TaxFile>>) (Class) List.class;
-    }
 
     @Override
     public ApiResponse<List<TaxFile>> getDefaultReferences(String personId) {
         String path = personId + "/default-references";
         String endpoint = buildEndpoint(path, null);
-        return httpClient.get(endpoint, getListTypeParameterClass());
+        return httpClient.getList(endpoint, TaxFile.class);
     }
 
     @Override
     public ApiResponse<List<TaxFile>> getDefaultValues(String personId) {
         String path = personId + "/default-values";
         String endpoint = buildEndpoint(path, null);
-        return httpClient.get(endpoint, getListTypeParameterClass());
+        return httpClient.getList(endpoint, TaxFile.class);
     }
 }

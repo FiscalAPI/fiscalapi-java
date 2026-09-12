@@ -27,6 +27,7 @@ public class Person extends BaseDto {
     private BigDecimal availableBalance;
     @JsonSerialize(using = BigDecimalSerializer.class)
     private BigDecimal committedBalance;
+    private Integer availableValidationBalance;
     private String tenantId;
 //    private String phoneNumber;
 //    private LocalDateTime validTo;
@@ -162,6 +163,20 @@ public class Person extends BaseDto {
 
     public void setCommittedBalance(BigDecimal committedBalance) {
         this.committedBalance = committedBalance;
+    }
+
+    /**
+     * Créditos de validación SAT disponibles. Es de solo lectura en la API y es independiente
+     * del saldo de timbres: los saldos nunca se mezclan.
+     *
+     * @return Los créditos de validación disponibles de la persona
+     */
+    public Integer getAvailableValidationBalance() {
+        return availableValidationBalance;
+    }
+
+    public void setAvailableValidationBalance(Integer availableValidationBalance) {
+        this.availableValidationBalance = availableValidationBalance;
     }
 
     public String getTenantId() {

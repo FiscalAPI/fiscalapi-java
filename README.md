@@ -38,14 +38,23 @@
 - **Datos de empleado** (agrega/actualiza/elimina datos de empleado a una persona. CFDI Nómina)
 - **Datos de empleador** (agrega/actualiza/elimina datos de empleador a una persona. CFDI Nómina)
 
-## 🎖️ Gestión de Timbres 
+## 🎖️ Gestión de Timbres
 - **Gestión de folios fiscales** Compra timbres a fiscalapi y transfiere/retira a las personas de tu organizacion segun tus reglas de negocio.
+- **Listar transacciones de timbres** con paginación
+- **Consultar transacciones** por ID
+- **Transferir timbres** entre personas
+- **Retirar timbres** de una persona
+- **Créditos de validación SAT** transfiere y retira créditos de validación con el mismo servicio, eligiendo el saldo con `creditType`
+
+## ✅ Validaciones SAT
+- **Validación de CFDI timbrados** estructura del Anexo 20, vigencia del certificado del emisor, sello del CFDI y sello del SAT en el TimbreFiscalDigital
+- **Estatus del comprobante en el SAT** vigente, cancelado o no encontrado
+- **Listas negras del SAT** artículos 69-B y 69-B Bis del CFF, por CFDI o por RFC
+- **Catálogo de validaciones** consulta los tipos disponibles y los estatus que cada uno puede tomar
 
 ## 🛍️ Gestión de Productos/Servicios
 - **Gestión de productos y servicios** con catálogo personalizable
 - **Administración de impuestos aplicables** (IVA, ISR, IEPS)
-- **Timbres**
-  Listar transacciones, transferir y retirar timbres entre personas.
 
 ## 📚 Consulta de Catálogos SAT
 - **Consulta en catálogos oficiales del SAT** actualizados
@@ -53,12 +62,6 @@
 - **Búsqueda de información** en catálogos del SAT con filtros avanzados
 - **Acceso y búsqueda** en catálogos completos
 
-## 🎫 Gestión de Timbres
-- **Listar transacciones de timbres** con paginación
-- **Consultar transacciones** por ID
-- **Transferir timbres** entre personas
-- **Retirar timbres** de una persona
-  
 ## 📖 Recursos Adicionales
 - **Cientos de ejemplos de código** disponibles en múltiples lenguajes de programación
 - Documentación completa con guías paso a paso
@@ -74,18 +77,18 @@ Compatible con múltiples versiones de Java (desde **Java 8** en adelante)
 <dependency>
     <groupId>com.fiscalapi</groupId>
     <artifactId>fiscalapi</artifactId>
-    <version>4.0.125</version>
+    <version>4.0.410</version>
 </dependency>
 ```
 
 **Gradle (Groovy)**:
 ```groovy
-implementation 'com.fiscalapi:fiscalapi:4.0.125'
+implementation 'com.fiscalapi:fiscalapi:4.0.410'
 ```
 
 **Gradle (Kotlin)**:
 ```kotlin
-implementation("com.fiscalapi:fiscalapi:4.0.125")
+implementation("com.fiscalapi:fiscalapi:4.0.410")
 ```
 
 Para más información, consulta [Snippets en Maven Central](https://central.sonatype.com/artifact/com.fiscalapi/fiscalapi).
@@ -248,6 +251,49 @@ invoice.setItems(items);
 
 ApiResponse<Invoice> apiResponseInvoice = client.getInvoiceService().create(invoice);
 System.out.println(apiResponseInvoice);
+```
+
+---
+
+### 5. Validar un CFDI ante el SAT
+
+Cada tipo de validación solicitado consume un crédito de validación. El cobro es todo o nada: si el saldo no alcanza para todos, no se ejecuta ninguno. Se envía `xml` (CFDI timbrado en base64) o `tin` (RFC), nunca ambos; con `tin` solo se pueden solicitar listas negras.
+
+```java
+// *** Validar un CFDI timbrado ***//
+SatValidationRequest request = new SatValidationRequest();
+request.setXml(Base64.getEncoder().encodeToString(Files.readAllBytes(Paths.get("C:\\facturas\\FacturaXml.xml"))));
+request.setValidationTypes(new ArrayList<>(Arrays.asList(
+        SatValidationTypeIds.XML_STRUCTURE,
+        SatValidationTypeIds.CFDI_SELLO,
+        SatValidationTypeIds.CFDI_STATUS,
+        SatValidationTypeIds.BLACKLIST_69B)));
+
+ApiResponse<List<SatValidationResult>> apiResponse = client.getSatValidationService().validate(request);
+
+for (SatValidationResult result : apiResponse.getData()) {
+    System.out.printf("%s -> %s (passed: %s)%n",
+            result.getType().getId(), result.getStatus().getId(), result.isPassed());
+}
+```
+
+---
+
+### 6. Transferir créditos de validación
+
+El mismo servicio de timbres mueve los dos saldos, que nunca se mezclan: `CreditType.STAMP` (por defecto) mueve timbres y `CreditType.VALIDATION` mueve créditos de validación SAT.
+
+```java
+// *** Transferir créditos de validación ***//
+StampTransactionParams transParams = new StampTransactionParams();
+transParams.setFromPersonId("0e82a655-5f0c-4e07-abab-8f322e4123ef");
+transParams.setToPersonId("da71df0c-f328-45ee-9bd9-3096ed02c164");
+transParams.setAmount(10);
+transParams.setComments("venta de creditos de validacion");
+transParams.setCreditType(CreditType.VALIDATION);
+
+ApiResponse<Boolean> apiResponse = client.getStampService().transferStamps(transParams);
+System.out.printf("apiResponse: %s\n", apiResponse);
 ```
 
 ---

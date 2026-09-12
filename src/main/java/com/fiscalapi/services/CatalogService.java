@@ -53,14 +53,6 @@ public class CatalogService extends BaseFiscalApiService<CatalogDto> implements 
         return CatalogDto.class;
     }
 
-    /**
-     * Debido al type erasure, se utiliza este método para retornar la clase base de List.
-     * @return La clase de List&lt;String&gt; para manejar la deserialización
-     */
-    @SuppressWarnings("unchecked")
-    protected Class<List<String>> getStringListTypeParameterClass() {
-        return (Class<List<String>>) (Class) List.class;
-    }
 
     /**
      * Recupera todos los nombres de los catálogos disponibles para búsquedas.
@@ -69,7 +61,7 @@ public class CatalogService extends BaseFiscalApiService<CatalogDto> implements 
     @Override
     public ApiResponse<List<String>> getList() {
         String endpoint = buildEndpoint("", null);
-        return httpClient.get(endpoint, getStringListTypeParameterClass());
+        return httpClient.getList(endpoint, String.class);
     }
 
     /**
@@ -94,6 +86,6 @@ public class CatalogService extends BaseFiscalApiService<CatalogDto> implements 
         queryParams.put("pageNumber", String.valueOf(pageNumber));
         queryParams.put("pageSize", String.valueOf(pageSize));
         String endpoint = buildEndpoint(path, queryParams);
-        return httpClient.get(endpoint, (Class<PagedList<CatalogDto>>)(Class) PagedList.class);
+        return httpClient.getPagedList(endpoint, CatalogDto.class);
     }
 }

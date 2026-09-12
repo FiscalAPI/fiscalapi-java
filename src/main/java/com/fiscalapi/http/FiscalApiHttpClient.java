@@ -2,6 +2,7 @@ package com.fiscalapi.http;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -9,11 +10,12 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fiscalapi.abstractions.IFiscalApiHttpClient;
 import com.fiscalapi.common.ApiResponse;
 import com.fiscalapi.common.FiscalApiSettings;
+import com.fiscalapi.common.PagedList;
 import com.fiscalapi.common.ValidationFailure;
 import okhttp3.*;
 import okio.Buffer;
 import java.io.IOException;
-import java.util.Collection;
+import java.util.List;
 
 public class FiscalApiHttpClient implements IFiscalApiHttpClient {
 
@@ -33,34 +35,22 @@ public class FiscalApiHttpClient implements IFiscalApiHttpClient {
 
     @Override
     public <T> ApiResponse<T> get(String url, Class<T> responseType) {
-        Request request = new Request.Builder()
-                .url(url)
-                .get()
-                .build();
-        return execute(request, responseType);
+        return execute(buildGet(url), simpleType(responseType));
     }
 
     @Override
     public <T> ApiResponse<T> post(String url, Object body, Class<T> responseType) {
-        RequestBody requestBody = createRequestBody(body);
-        Request request = new Request.Builder()
-                .url(url)
-                .post(requestBody)
-                .build();
-        return execute(request, responseType);
+        return execute(buildPost(url, body), simpleType(responseType));
     }
 
     @Override
     public <T> ApiResponse<T> put(String url, Object body, Class<T> responseType) {
-        RequestBody requestBody = createRequestBody(body);
         Request request = new Request.Builder()
                 .url(url)
-                .put(requestBody)
+                .put(createRequestBody(body))
                 .build();
-        return execute(request, responseType);
+        return execute(request, simpleType(responseType));
     }
-
-
 
     @Override
     public ApiResponse<Boolean> delete(String url) {
@@ -68,19 +58,60 @@ public class FiscalApiHttpClient implements IFiscalApiHttpClient {
                 .url(url)
                 .delete()
                 .build();
-        return execute(request, Boolean.class);
+        return execute(request, simpleType(Boolean.class));
     }
 
     @Override
     public <T> ApiResponse<T> delete(String url, Object body, Class<T> responseType) {
-        RequestBody requestBody = createRequestBody(body);
         Request request = new Request.Builder()
                 .url(url)
-                .delete(requestBody)
+                .delete(createRequestBody(body))
                 .build();
-        return execute(request, responseType);
+        return execute(request, simpleType(responseType));
     }
 
+    @Override
+    public <T> ApiResponse<List<T>> getList(String url, Class<T> elementType) {
+        return execute(buildGet(url), listType(elementType));
+    }
+
+    @Override
+    public <T> ApiResponse<List<T>> postList(String url, Object body, Class<T> elementType) {
+        return execute(buildPost(url, body), listType(elementType));
+    }
+
+    @Override
+    public <T> ApiResponse<PagedList<T>> getPagedList(String url, Class<T> itemType) {
+        return execute(buildGet(url), pagedListType(itemType));
+    }
+
+    private Request buildGet(String url) {
+        return new Request.Builder()
+                .url(url)
+                .get()
+                .build();
+    }
+
+    private Request buildPost(String url, Object body) {
+        return new Request.Builder()
+                .url(url)
+                .post(createRequestBody(body))
+                .build();
+    }
+
+    // La forma esperada de 'data' viaja como JavaType: objeto suelto, arreglo o pagina.
+    // Jackson la necesita explicita porque el borrado de tipos de Java pierde el parametro generico.
+    private JavaType simpleType(Class<?> responseType) {
+        return objectMapper.getTypeFactory().constructType(responseType);
+    }
+
+    private JavaType listType(Class<?> elementType) {
+        return objectMapper.getTypeFactory().constructCollectionType(List.class, elementType);
+    }
+
+    private JavaType pagedListType(Class<?> itemType) {
+        return objectMapper.getTypeFactory().constructParametricType(PagedList.class, itemType);
+    }
 
     // Método auxiliar para serializar el body de la solicitud
     private RequestBody createRequestBody(Object body) {
@@ -93,7 +124,7 @@ public class FiscalApiHttpClient implements IFiscalApiHttpClient {
     }
 
     // Método central de ejecución de la petición HTTP
-    private <T> ApiResponse<T> execute(Request request, Class<T> responseType) {
+    private <T> ApiResponse<T> execute(Request request, JavaType responseType) {
         if (settings.getDebugMode()) {
             logRequest(request);
         }
@@ -149,7 +180,7 @@ public class FiscalApiHttpClient implements IFiscalApiHttpClient {
     }
 
     // Parsea el JSON de respuesta y construye el ApiResponse<T>
-    private <T> ApiResponse<T> parseApiResponse(String responseString, int statusCode, Class<T> responseType) {
+    private <T> ApiResponse<T> parseApiResponse(String responseString, int statusCode, JavaType responseType) {
         ApiResponse<T> apiResponse = new ApiResponse<>();
         apiResponse.setHttpStatusCode(statusCode);
 
@@ -162,6 +193,12 @@ public class FiscalApiHttpClient implements IFiscalApiHttpClient {
 
             // Asigna el 'message'
             apiResponse.setMessage(root.has("message") ? root.get("message").asText() : "");
+
+            // El identificador de rastreo solo viaja en las respuestas de error, que es donde se necesita,
+            // por eso se lee antes de la rama que atiende el HTTP 400.
+            if (root.has("traceIdentifier") && !root.get("traceIdentifier").isNull()) {
+                apiResponse.setTraceIdentifier(root.get("traceIdentifier").asText());
+            }
 
             // Manejo especial de errores de validación (HTTP 400)
             if (statusCode == 400) {
@@ -215,23 +252,12 @@ public class FiscalApiHttpClient implements IFiscalApiHttpClient {
                 dataNode.get(0).has("propertyName") && dataNode.get(0).has("errorMessage");
     }
 
-    // Deserializa la propiedad 'data' considerando casos especiales como PagedList y arreglos
-    private <T> T deserializeData(JsonNode dataNode, Class<T> responseType) {
-        // Manejo especial para PagedList: ignorar propiedades desconocidas
-        if (isPagedList(responseType)) {
-            ObjectMapper tempMapper = objectMapper.copy();
-            tempMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-            return tempMapper.convertValue(dataNode, responseType);
-        }
+    // Deserializa la propiedad 'data' con la forma que espera quien hizo la llamada
+    private <T> T deserializeData(JsonNode dataNode, JavaType responseType) {
         // Si 'data' es un arreglo y se espera un objeto único (no una colección)
-        if (dataNode.isArray() && !Collection.class.isAssignableFrom(responseType)) {
+        if (dataNode.isArray() && !responseType.isCollectionLikeType()) {
             return (!dataNode.isEmpty()) ? objectMapper.convertValue(dataNode.get(0), responseType) : null;
         }
         return objectMapper.convertValue(dataNode, responseType);
-    }
-
-    // Determina si se espera un objeto de tipo PagedList
-    private boolean isPagedList(Class<?> responseType) {
-        return "PagedList".equals(responseType.getSimpleName()) || responseType.getName().contains("PagedList");
     }
 }

@@ -6,6 +6,7 @@ public class StampTransactionParams
     private String toPersonId;
     private int amount;
     private String comments;
+    private CreditType creditType = CreditType.STAMP;
 
     public String getFromPersonId() {
         return fromPersonId;
@@ -37,5 +38,19 @@ public class StampTransactionParams
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    /**
+     * Tipo de crédito a transferir: STAMP (timbres) o VALIDATION (créditos de validación SAT).
+     * Si no se asigna, se transfieren timbres.
+     *
+     * @return El tipo de crédito que se va a transferir
+     */
+    public CreditType getCreditType() {
+        return creditType;
+    }
+
+    public void setCreditType(CreditType creditType) {
+        this.creditType = creditType;
     }
 }
