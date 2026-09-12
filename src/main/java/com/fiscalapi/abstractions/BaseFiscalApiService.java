@@ -82,9 +82,7 @@ protected String buildEndpoint(String path, Map<String, String> queryParams) {
         queryParams.put("PageSize", String.valueOf(pageSize));
 
         String endpoint = buildEndpoint("", queryParams);
-        return httpClient.get(endpoint,
-                (Class<PagedList<T>>)(Class)PagedList.class // cast paramétrico
-        );
+        return httpClient.getPagedList(endpoint, getTypeParameterClass());
     }
 
     @Override

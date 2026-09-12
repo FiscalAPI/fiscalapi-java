@@ -6,6 +6,7 @@ public class ApiResponse<T> extends  SerializableDto {
     private String message;
     private String details;
     private int httpStatusCode;
+    private String traceIdentifier;
 
     // Getters / Setters
     public T getData() { return data; }
@@ -22,5 +23,15 @@ public class ApiResponse<T> extends  SerializableDto {
 
     public int getHttpStatusCode() { return httpStatusCode; }
     public void setHttpStatusCode(int httpStatusCode) { this.httpStatusCode = httpStatusCode; }
+
+    /**
+     * Identificador de rastreo de la petición. Solo viene en las respuestas de error y es el
+     * dato que soporte necesita para localizar la falla. En las validaciones SAT es además el
+     * referenceId del consumo de créditos registrado en el ledger de timbres.
+     *
+     * @return El identificador de rastreo, o null cuando la respuesta no lo trae
+     */
+    public String getTraceIdentifier() { return traceIdentifier; }
+    public void setTraceIdentifier(String traceIdentifier) { this.traceIdentifier = traceIdentifier; }
 
 }

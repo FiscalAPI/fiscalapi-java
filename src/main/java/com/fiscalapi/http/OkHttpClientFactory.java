@@ -13,11 +13,15 @@ public class OkHttpClientFactory {
     private static final Map<String, OkHttpClient> CLIENT_CACHE = new ConcurrentHashMap<>();
 
     public static OkHttpClient createClient(FiscalApiSettings settings) {
-        // Se utiliza la combinación de parámetros como clave
-        String clientKey = String.format("%s:%s:%s",
+        // Se utiliza la combinación de parámetros como clave.
+        // Incluye apiVersion y timeZone porque ambos viajan en las cabeceras del interceptor:
+        // sin ellos, dos configuraciones que solo difieran en esos valores compartirían cliente.
+        String clientKey = String.format("%s:%s:%s:%s:%s",
                 settings.getApiKey(),
                 settings.getTenant(),
-                settings.getApiUrl());
+                settings.getApiUrl(),
+                settings.getApiVersion(),
+                settings.getTimeZone());
 
         // Si ya existe un cliente con la misma config, lo retornamos.
         return CLIENT_CACHE.computeIfAbsent(clientKey, key -> buildNewClient(settings));
@@ -34,7 +38,7 @@ public class OkHttpClientFactory {
                             .addHeader("X-API-KEY", settings.getApiKey())
                             .addHeader("X-TENANT-KEY", settings.getTenant())
                             .addHeader("X-API-VERSION", settings.getApiVersion())
-                            .addHeader("X-TIMEZONE", settings.getTimeZone())
+                            .addHeader("X-TIME-ZONE", settings.getTimeZone())
                             .addHeader("Accept", "application/json");
 
                     return chain.proceed(builder.build());

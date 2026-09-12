@@ -72,23 +72,7 @@ public class DownloadCatalogService extends BaseFiscalApiService<CatalogDto> imp
         return CatalogDto.class;
     }
 
-    /**
-     * Debido al type erasure, se utiliza este método para retornar la clase base de List.
-     * @return La clase de List&lt; String&gt; para manejar la deserialización
-     */
-    @SuppressWarnings("unchecked")
-    protected Class<List<String>> getStringListTypeParameterClass() {
-        return (Class<List<String>>) (Class) List.class;
-    }
 
-    /**
-     * Debido al type erasure, se utiliza este método para retornar la clase base de List.
-     * @return La clase de List&lt; CatalogDto&gt; para manejar la deserialización
-     */
-    @SuppressWarnings("unchecked")
-    protected Class<List<CatalogDto>> getCatalogDtoListTypeParameterClass() {
-        return (Class<List<CatalogDto>>) (Class) List.class;
-    }
 
     /**
      * Recupera todos los nombres de los catálogos de descarga masiva disponibles para listarlos por nombre.
@@ -97,7 +81,7 @@ public class DownloadCatalogService extends BaseFiscalApiService<CatalogDto> imp
     @Override
     public ApiResponse<List<String>> getList() {
         String endpoint = buildEndpoint("", null);
-        return httpClient.get(endpoint, getStringListTypeParameterClass());
+        return httpClient.getList(endpoint, String.class);
     }
 
     /**
@@ -111,6 +95,6 @@ public class DownloadCatalogService extends BaseFiscalApiService<CatalogDto> imp
         // api/v4/download-catalogs/<catalogName>/
         String path = catalogName + "/";
         String endpoint = buildEndpoint(path, null);
-        return httpClient.get(endpoint, getCatalogDtoListTypeParameterClass());
+        return httpClient.getList(endpoint, CatalogDto.class);
     }
 }

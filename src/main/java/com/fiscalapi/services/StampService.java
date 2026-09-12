@@ -26,8 +26,9 @@ public class StampService extends BaseFiscalApiService<StampTransaction> impleme
 
     @Override
     public ApiResponse<Boolean> withdrawStamps(StampTransactionParams requestModel) {
-        validateRequest(requestModel);
-        return httpClient.post(buildEndpoint("", null), requestModel, Boolean.class);
+        // Retirar es transferir con origen y destino invertidos: delega para que las dos
+        // rutas no puedan divergir.
+        return transferStamps(requestModel);
     }
 
     @Override
