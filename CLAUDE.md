@@ -32,6 +32,7 @@ IFiscalApiClient (facade)
   ├── getApiKeyService()           → IApiKeyService
   ├── getStampService()            → IStampService (transfer, withdraw; creditType selects stamps or validation credits)
   ├── getSatValidationService()    → ISatValidationService (getTypes, getTypeById, getStatuses, validate)
+  ├── getManifestService()         → IManifestService (sign; firma la carta manifiesto con la FIEL)
   ├── getDownloadCatalogService()  → IDownloadCatalogService
   ├── getDownloadRuleService()     → IDownloadRuleService
   └── getDownloadRequestService()  → IDownloadRequestService (cancel, retry, delete)
@@ -47,7 +48,7 @@ Services over a CRUD resource extend `BaseFiscalApiService<T>`, which implements
 
 Subclasses must implement `getTypeParameterClass()` to return the entity type for Jackson deserialization.
 
-`SatValidationService` is the exception: `sat-validations` is not a CRUD resource, so it implements `ISatValidationService` directly and builds its own endpoint, the same way `EmployerService` and `EmployeeService` do for their nested resources.
+`SatValidationService` and `ManifestService` are the exception: `sat-validations` and `manifests` are not CRUD resources, so they implement their interfaces directly and build their own endpoint, the same way `EmployerService` and `EmployeeService` do for their nested resources. `ManifestService.sign` posts to `manifests` and reuses the existing `FileResponse` model, which already matches the API's file payload.
 
 ### DTO Hierarchy
 ```
@@ -66,6 +67,8 @@ All models extend `BaseDto`. Responses wrapped in `ApiResponse<T>`.
   - Non-null serialization inclusion
   - Custom `BigDecimalSerializer` in `serialization/` (avoids scientific notation)
 
+**Decimal scale is load-bearing.** `BigDecimalSerializer` writes `toPlainString()` as a JSON *string*, so the scale survives the wire. It is not registered globally: every new `BigDecimal` field needs `@JsonSerialize(using = BigDecimalSerializer.class)` on the field itself. Losing the trailing zeros makes the PAC reject the CFDI - `CCE122` when `TotalUSD` is not 2 decimals, `CFDI40179` when `TasaOCuota` is not 6. Callers must build values from strings (`new BigDecimal("0.160000")`), never from a `double`.
+
 ### Key Packages
 - `abstractions/` - Service interfaces (all prefixed with `I`)
 - `common/` - ApiResponse, PagedList, FiscalApiSettings, BaseDto hierarchy
@@ -75,11 +78,13 @@ All models extend `BaseDto`. Responses wrapped in `ApiResponse<T>`.
   - `models/invoicing/payroll/` - 13 payroll CFDI types (Payroll, EmployeeData, PayrollEarning, etc.)
   - `models/invoicing/paymentComplement/` - Payment complement models
   - `models/invoicing/localTaxes/` - Local tax models
+  - `models/invoicing/foreignTrade/` - Comercio Exterior complement models (all prefixed `ComercioExterior*` to avoid colliding with the `billOfLading` types). The emisor address is catalog-based (`coloniaId`, `estadoId`, `codigoPostalId`) while the receptor/destinatario addresses are free text (`colonia`, `estado`, `codigoPostal`) - that asymmetry mirrors the backend and must not be collapsed into one shared type.
+  - `models/manifests/` - `SignManifestRequest` (base64Cer, base64Key, password)
   - `models/downloading/` - Mass download models
   - `models/satValidations/` - SAT validation models and the `SatValidationTypeIds` / `SatValidationStatusIds` constants
 - `services/` - Service implementations
 - `serialization/` - Custom Jackson serializers
-- `examples/` - Usage examples (payroll, local taxes, bill of lading, stamps, SAT validations). They live in `src/main/java`, so they ship in the published jar and must compile.
+- `examples/` - Usage examples (payroll, local taxes, bill of lading, stamps, SAT validations, comercio exterior, manifests). They live in `src/main/java`, so they ship in the published jar and must compile. Credentials are placeholders (`<API_KEY>`, `<TENANT_KEY>`); never commit a real key.
 
 ### Two Modes of Operation
 The SDK supports two invoicing modes (see examples/):

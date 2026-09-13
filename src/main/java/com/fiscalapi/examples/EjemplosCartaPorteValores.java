@@ -47,8 +47,8 @@ public class EjemplosCartaPorteValores {
         FiscalApiSettings settings = new FiscalApiSettings();
         settings.setDebugMode(false);
         settings.setApiUrl("https://test.fiscalapi.com");
-        settings.setApiKey("sk_test_b7dae706_e16f_4faf_90fb_a5d1990985a2");
-        settings.setTenant("275510ee-f64d-435a-9e92-1553d8f10a7e");
+        settings.setApiKey("<API_KEY>");
+        settings.setTenant("<TENANT_KEY>");
 
         System.out.println("\n===== Ejemplo 1: Factura ingreso autotransporte nacional (sin impuestos) =====");
         facturaIngresoAutoTransporteNacional(settings);

@@ -29,6 +29,11 @@ public class Person extends BaseDto {
     private BigDecimal committedBalance;
     private Integer availableValidationBalance;
     private String tenantId;
+    private String curp;
+    private String countryId;
+    private String foreignTin;
+    private String manifestStatusId;
+    private CatalogDto manifestStatus;
 //    private String phoneNumber;
 //    private LocalDateTime validTo;
 //    private Boolean twoFactorEnabled;
@@ -185,5 +190,85 @@ public class Person extends BaseDto {
 
     public void setTenantId(String tenantId) {
         this.tenantId = tenantId;
+    }
+
+    /**
+     * CURP de la persona fisica.
+     *
+     * @return La CURP de la persona
+     */
+    public String getCurp() {
+        return curp;
+    }
+
+    /**
+     * @param curp CURP de la persona fisica
+     */
+    public void setCurp(String curp) {
+        this.curp = curp;
+    }
+
+    /**
+     * Residencia fiscal para personas extranjeras (catalogo c_Pais).
+     *
+     * @return El codigo del pais de residencia fiscal
+     */
+    public String getCountryId() {
+        return countryId;
+    }
+
+    /**
+     * @param countryId Codigo del pais de residencia fiscal (catalogo c_Pais)
+     */
+    public void setCountryId(String countryId) {
+        this.countryId = countryId;
+    }
+
+    /**
+     * Numero de identificacion fiscal de la persona extranjera (NumRegIdTrib).
+     *
+     * @return El numero de identificacion fiscal extranjero
+     */
+    public String getForeignTin() {
+        return foreignTin;
+    }
+
+    /**
+     * @param foreignTin Numero de identificacion fiscal de la persona extranjera
+     */
+    public void setForeignTin(String foreignTin) {
+        this.foreignTin = foreignTin;
+    }
+
+    /**
+     * Estatus de la carta manifiesto de la persona. Lo actualiza la API al firmar el manifiesto.
+     *
+     * @return El id del estatus de manifiesto
+     */
+    public String getManifestStatusId() {
+        return manifestStatusId;
+    }
+
+    /**
+     * @param manifestStatusId Id del estatus de la carta manifiesto
+     */
+    public void setManifestStatusId(String manifestStatusId) {
+        this.manifestStatusId = manifestStatusId;
+    }
+
+    /**
+     * Estatus de la carta manifiesto expandido.
+     *
+     * @return El estatus de manifiesto con su descripcion
+     */
+    public CatalogDto getManifestStatus() {
+        return manifestStatus;
+    }
+
+    /**
+     * @param manifestStatus Estatus de la carta manifiesto expandido
+     */
+    public void setManifestStatus(CatalogDto manifestStatus) {
+        this.manifestStatus = manifestStatus;
     }
 }

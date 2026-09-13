@@ -19,6 +19,7 @@ public class FiscalApiClient implements IFiscalApiClient {
     private final IDownloadRequestService downloadRequestService;
     private final IStampService stampService;
     private final ISatValidationService satValidationService;
+    private final IManifestService manifestService;
 
     private FiscalApiClient(FiscalApiSettings settings) {
         validateSettings(settings);
@@ -39,6 +40,7 @@ public class FiscalApiClient implements IFiscalApiClient {
         this.downloadRequestService = new DownloadRequestService(httpClient, settings);
         this.stampService = new StampService(httpClient, settings);
         this.satValidationService = new SatValidationService(httpClient, settings);
+        this.manifestService = new ManifestService(httpClient, settings);
 
         // ...
     }
@@ -100,6 +102,11 @@ public class FiscalApiClient implements IFiscalApiClient {
     @Override
     public ISatValidationService getSatValidationService() {
         return satValidationService;
+    }
+
+    @Override
+    public IManifestService getManifestService() {
+        return manifestService;
     }
     // etc...
 
