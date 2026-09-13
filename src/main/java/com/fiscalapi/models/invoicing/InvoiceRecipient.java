@@ -12,6 +12,8 @@ public class InvoiceRecipient {
     private EmployeeData employeeData;
     private String zipCode;
     private String email;
+    private String countryId;
+    private String foreignTin;
 
     public EmployeeData getEmployeeData() {
         return employeeData;
@@ -62,5 +64,19 @@ public class InvoiceRecipient {
     }
     public void setEmail(String email) {
         this.email = email;
+    }
+    // Residencia fiscal (c_Pais). La API la exige cuando se envia foreignTin.
+    public String getCountryId() {
+        return countryId;
+    }
+    public void setCountryId(String countryId) {
+        this.countryId = countryId;
+    }
+    // NumRegIdTrib: identificacion fiscal del receptor extranjero.
+    public String getForeignTin() {
+        return foreignTin;
+    }
+    public void setForeignTin(String foreignTin) {
+        this.foreignTin = foreignTin;
     }
 }

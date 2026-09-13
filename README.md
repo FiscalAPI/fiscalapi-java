@@ -37,6 +37,7 @@
 - **Configuración de datos fiscales** (RFC, domicilio fiscal, régimen fiscal)
 - **Datos de empleado** (agrega/actualiza/elimina datos de empleado a una persona. CFDI Nómina)
 - **Datos de empleador** (agrega/actualiza/elimina datos de empleador a una persona. CFDI Nómina)
+- **Firma de carta manifiesto** (firma el manifiesto con la FIEL de la persona y obtén el PDF)
 
 ## 🎖️ Gestión de Timbres
 - **Gestión de folios fiscales** Compra timbres a fiscalapi y transfiere/retira a las personas de tu organizacion segun tus reglas de negocio.
@@ -77,18 +78,18 @@ Compatible con múltiples versiones de Java (desde **Java 8** en adelante)
 <dependency>
     <groupId>com.fiscalapi</groupId>
     <artifactId>fiscalapi</artifactId>
-    <version>4.0.410</version>
+    <version>4.0.417</version>
 </dependency>
 ```
 
 **Gradle (Groovy)**:
 ```groovy
-implementation 'com.fiscalapi:fiscalapi:4.0.410'
+implementation 'com.fiscalapi:fiscalapi:4.0.417'
 ```
 
 **Gradle (Kotlin)**:
 ```kotlin
-implementation("com.fiscalapi:fiscalapi:4.0.410")
+implementation("com.fiscalapi:fiscalapi:4.0.417")
 ```
 
 Para más información, consulta [Snippets en Maven Central](https://central.sonatype.com/artifact/com.fiscalapi/fiscalapi).
@@ -295,6 +296,113 @@ transParams.setCreditType(CreditType.VALIDATION);
 ApiResponse<Boolean> apiResponse = client.getStampService().transferStamps(transParams);
 System.out.printf("apiResponse: %s\n", apiResponse);
 ```
+
+---
+
+### 7. Factura con Complemento de Comercio Exterior (Por Valores)
+
+El complemento se cuelga de `Complement.setComercioExterior(...)`. El `TotalUSD` no se envía: la API lo calcula sumando el `valorDolares` de las mercancías.
+
+> ⚠️ **La escala decimal importa.** Construye los importes con `new BigDecimal("...")` a partir de una cadena, nunca desde un `double`. El SAT valida el número de decimales: `120` en lugar de `120.00` se rechaza con **CCE122**, y `0.16` en lugar de `0.160000` con **CFDI40179**.
+
+```java
+InvoiceRecipient recipient = new InvoiceRecipient();
+recipient.setTin("XEXX010101000");
+recipient.setLegalName("Persona Fisica Extranjera");
+recipient.setZipCode("42501");
+recipient.setTaxRegimeCode("616");
+recipient.setCfdiUseCode("S01");
+recipient.setCountryId("USA");        // Residencia fiscal (c_Pais)
+recipient.setForeignTin("123456789"); // NumRegIdTrib
+
+ComercioExteriorEmisorDomicilio domicilioEmisor = new ComercioExteriorEmisorDomicilio();
+domicilioEmisor.setCalle("CALLE DEL PAPEL");
+domicilioEmisor.setColoniaId("0214");
+domicilioEmisor.setLocalidadId("01");
+domicilioEmisor.setMunicipioId("014");
+domicilioEmisor.setEstadoId("QUE");
+domicilioEmisor.setPaisId("MEX");
+domicilioEmisor.setCodigoPostalId("76199");
+
+ComercioExteriorEmisor emisor = new ComercioExteriorEmisor();
+emisor.setDomicilio(domicilioEmisor);
+
+// El domicilio del receptor es extranjero: va en texto libre, sin sufijo Id
+ComercioExteriorReceptorDomicilio domicilioReceptor = new ComercioExteriorReceptorDomicilio();
+domicilioReceptor.setCalle("ST. A");
+domicilioReceptor.setEstado("TX");
+domicilioReceptor.setPaisId("USA");
+domicilioReceptor.setCodigoPostal("00000");
+
+ComercioExteriorReceptor receptor = new ComercioExteriorReceptor();
+receptor.setNumRegIdTrib("123456789");
+receptor.setDomicilio(domicilioReceptor);
+
+ComercioExteriorMercancia mercancia = new ComercioExteriorMercancia();
+mercancia.setNoIdentificacion("131494-1055");
+mercancia.setFraccionArancelariaId("2402200100");
+mercancia.setCantidadAduana(new BigDecimal("2.00"));
+mercancia.setUnidadAduanaId("01");
+mercancia.setValorUnitarioAduana(new BigDecimal("11.74"));
+mercancia.setValorDolares(new BigDecimal("23.47"));
+
+List<ComercioExteriorMercancia> mercancias = new ArrayList<ComercioExteriorMercancia>();
+mercancias.add(mercancia);
+
+ComercioExterior comercioExterior = new ComercioExterior();
+comercioExterior.setClaveDePedimentoId("A1");
+comercioExterior.setCertificadoOrigen(0);
+comercioExterior.setIncotermId("FOB");
+comercioExterior.setTipoCambioUSD(new BigDecimal("17.4948")); // tipo de cambio DOF de la fecha
+comercioExterior.setEmisor(emisor);
+comercioExterior.setReceptor(receptor);
+comercioExterior.setMercancias(mercancias);
+
+Complement complement = new Complement();
+complement.setComercioExterior(comercioExterior);
+
+invoice.setRecipient(recipient);
+invoice.setComplement(complement);
+
+ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
+```
+
+En modo **por referencias** basta con `recipient.setId(...)`, siempre que la persona tenga capturados `countryId` y `foreignTin`.
+
+Los conceptos también pueden ir por referencia: un `InvoiceItem` con sólo `id` y `quantity` toma del producto la clave del SAT, la unidad, la descripción, el precio y los impuestos. En ese caso el `NoIdentificacion` del CFDI queda con el id del producto, así que `mercancias[].noIdentificacion` debe llevar ese mismo id:
+
+```java
+InvoiceItem item = new InvoiceItem();
+item.setId(PRODUCTO_CIGARROS_ID);
+item.setQuantity(new BigDecimal("2"));
+
+mercancia.setNoIdentificacion(PRODUCTO_CIGARROS_ID);
+```
+
+Un producto siempre tiene precio mayor que cero, así que los traslados con valor unitario 0 envían sus conceptos en línea.
+
+---
+
+### 8. Firmar Carta Manifiesto
+
+Requiere la **FIEL (e.firma)**, no el CSD de timbrado, y que el RFC del certificado corresponda a una persona del tenant.
+
+```java
+SignManifestRequest request = new SignManifestRequest();
+request.setBase64Cer("MIIGBDCCA+ygAwIBAgIUMzAwMDEwMDAwMDA1MDAwMDM0MTU..."); // .cer de la FIEL
+request.setBase64Key("MIIFDjBABgkqhkiG9w0BBQ0wMzAbBgkqhkiG9w0BBQwwDgQI..."); // .key de la FIEL
+request.setPassword("12345678a");
+
+ApiResponse<FileResponse> apiResponse = client.getManifestService().sign(request);
+
+if (apiResponse.isSucceeded()) {
+    FileResponse manifiesto = apiResponse.getData();
+    byte[] pdf = Base64.getDecoder().decode(manifiesto.getBase64File());
+    Files.write(Paths.get("C:\\facturas", manifiesto.getFileName()), pdf);
+}
+```
+
+Al firmar, la persona queda con `manifestStatusId` en `Signed`.
 
 ---
 

@@ -1,6 +1,7 @@
 package com.fiscalapi.models.invoicing;
 
 import com.fiscalapi.models.invoicing.billOfLading.CartaPorte;
+import com.fiscalapi.models.invoicing.foreignTrade.ComercioExterior;
 import com.fiscalapi.models.invoicing.localTaxes.LocalTaxes;
 import com.fiscalapi.models.invoicing.paymentComplement.InvoicePayment;
 import com.fiscalapi.models.invoicing.payroll.Payroll;
@@ -10,6 +11,7 @@ public class Complement {
     private InvoicePayment payment;
     private LocalTaxes localTaxes;
     private CartaPorte cartaPorte;
+    private ComercioExterior comercioExterior;
 
     public Payroll getPayroll() {
         return payroll;
@@ -41,5 +43,13 @@ public class Complement {
 
     public void setCartaPorte(CartaPorte cartaPorte) {
         this.cartaPorte = cartaPorte;
+    }
+
+    public ComercioExterior getComercioExterior() {
+        return comercioExterior;
+    }
+
+    public void setComercioExterior(ComercioExterior comercioExterior) {
+        this.comercioExterior = comercioExterior;
     }
 }
