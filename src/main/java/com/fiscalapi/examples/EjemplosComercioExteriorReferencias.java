@@ -13,7 +13,6 @@ import com.fiscalapi.models.invoicing.Invoice;
 import com.fiscalapi.models.invoicing.InvoiceIssuer;
 import com.fiscalapi.models.invoicing.InvoiceItem;
 import com.fiscalapi.models.invoicing.InvoiceRecipient;
-import com.fiscalapi.models.invoicing.ItemTax;
 import com.fiscalapi.models.invoicing.billOfLading.Autotransporte;
 import com.fiscalapi.models.invoicing.billOfLading.CartaPorte;
 import com.fiscalapi.models.invoicing.billOfLading.Mercancia;
@@ -32,11 +31,17 @@ import com.fiscalapi.models.invoicing.foreignTrade.ComercioExteriorReceptorDomic
 import com.fiscalapi.services.FiscalApiClient;
 
 /**
- * Ejemplos del complemento Comercio Exterior 2.0 en modo "por referencias": el emisor y el
- * receptor se envian solo con su id y la API resuelve el resto desde el catalogo de personas.
+ * Ejemplos del complemento Comercio Exterior 2.0 en modo "por referencias": el emisor, el receptor
+ * y los conceptos se envian solo con su id y la API resuelve el resto.
  *
- * <p>Para un receptor extranjero, la persona referida debe tener {@code countryId} y
- * {@code foreignTin} capturados: de ahi salen la residencia fiscal y el NumRegIdTrib del CFDI.</p>
+ * <p>Un concepto por referencia lleva unicamente {@code id} y {@code quantity}. La clave del SAT,
+ * la unidad, la descripcion, el precio y los impuestos los aporta el producto, y el
+ * {@code NoIdentificacion} del CFDI queda con el id del producto: por eso
+ * {@code comercioExterior.mercancias[].noIdentificacion} tiene que llevar ese mismo id y no un SKU
+ * propio.</p>
+ *
+ * <p>Dos traslados mandan sus conceptos en linea porque su valor unitario es cero, y un producto
+ * siempre tiene precio mayor que cero.</p>
  *
  * <p>Los importes sensibles al SAT se construyen con {@code new BigDecimal("...")} y no con
  * literales numericos: la escala forma parte del dato. Enviar {@code 120} en lugar de
@@ -45,16 +50,48 @@ import com.fiscalapi.services.FiscalApiClient;
  */
 public class EjemplosComercioExteriorReferencias {
 
-    // Ids de las personas dadas de alta en el tenant.
-    private static final String ISSUER_ID = "<ISSUER_ID>";
+    // Personas dadas de alta en el tenant.
+    // Emisor con su par de certificados CSD cargado.
+    private static final String ISSUER_ID = "<issuer-id>";
 
     // Receptor extranjero: debe tener countryId y foreignTin capturados.
-    private static final String RECIPIENT_EXTRANJERO_ID = "<RECIPIENT_EXTRANJERO_ID>";
+    private static final String RECIPIENT_EXTRANJERO_ID = "<recipient-extranjero-id>";
 
-    private static final String RECIPIENT_NACIONAL_ID = "<RECIPIENT_NACIONAL_ID>";
+    // Receptor nacional.
+    private static final String RECIPIENT_NACIONAL_ID = "<recipient-nacional-id>";
+
+    // En los traslados el receptor es el propio emisor; requiere UsoCFDI capturado.
+    private static final String RECIPIENT_TRASLADO_ID = "<recipient-traslado-id>";
+
+    // Productos dados de alta en el tenant. El producto aporta la clave del SAT, la unidad,
+    // la descripcion, el precio y los impuestos del concepto.
+    // FLETE 2300.00 HUR, IVA 16% T e IEPS 30% R
+    private static final String PRODUCTO_FLETE = "<producto-flete>";
+
+    // Gomitas 120.00 H87, IVA 16% T
+    private static final String PRODUCTO_GOMITAS = "<producto-gomitas>";
+
+    // Pulparindo 100.00 H87, IVA 16% T
+    private static final String PRODUCTO_PULPARINDO = "<producto-pulparindo>";
+
+    // Cigarros 200.00 H87, IVA 16% T, ISR 10% R e IVA 10.6666% R
+    private static final String PRODUCTO_CIGARROS = "<producto-cigarros>";
+
+    // Cigarros 200.00 H87, IVA 16% T e ISR 10% R
+    private static final String PRODUCTO_CIGARROS_IVA_ISR = "<producto-cigarros-iva-isr>";
+
+    // Cigarros 200.00 H87, objeto de impuesto 01
+    private static final String PRODUCTO_CIGARROS_SIN_IMPUESTOS = "<producto-cigarros-sin-impuestos>";
+
+    // Bebida 100.00 H87, IVA 16% T, ISR 10% R e IVA 10.6666% R
+    private static final String PRODUCTO_BEBIDA = "<producto-bebida>";
+
+    // FORMULA MAGISTRAL 200.00 H87, objeto de impuesto 01
+    private static final String PRODUCTO_FORMULA_MAGISTRAL = "<producto-formula-magistral>";
 
     // Tipo de cambio del dolar publicado en el DOF para la fecha del comprobante. El SAT lo valida
-    // (CCE121), asi que hay que actualizarlo al valor del dia en que se ejecute el ejemplo.
+    // (CCE121) y el mensaje de error indica el valor esperado, asi que hay que actualizarlo al dia
+    // en que se ejecute el ejemplo.
     private static final BigDecimal TIPO_CAMBIO_USD = new BigDecimal("16.9722");
 
     // El complemento solo admite comprobantes emitidos dentro de las ultimas 72 horas (CCE121).
@@ -107,73 +144,18 @@ public class EjemplosComercioExteriorReferencias {
 
         List<InvoiceItem> items = new ArrayList<InvoiceItem>();
         InvoiceItem item1 = new InvoiceItem();
-        item1.setItemCode("78101800");
-        item1.setItemSku("SERV02");
+        item1.setId(PRODUCTO_FLETE);
         item1.setQuantity(new BigDecimal("1.000000"));
-        item1.setUnitOfMeasurementCode("HUR");
-        item1.setDescription("FLETE");
-        item1.setUnitPrice(new BigDecimal("2300.000000"));
-        item1.setDiscount(new BigDecimal("0"));
-        item1.setTaxObjectCode("02");
-        List<ItemTax> itemTaxes = new ArrayList<ItemTax>();
-        ItemTax itemTax1 = new ItemTax();
-        itemTax1.setTaxCode("002");
-        itemTax1.setTaxTypeCode("Tasa");
-        itemTax1.setTaxRate(new BigDecimal("0.160000"));
-        itemTax1.setTaxFlagCode("T");
-        itemTaxes.add(itemTax1);
-
-        ItemTax itemTax2 = new ItemTax();
-        itemTax2.setTaxCode("003");
-        itemTax2.setTaxTypeCode("Tasa");
-        itemTax2.setTaxRate(new BigDecimal("0.300000"));
-        itemTax2.setTaxFlagCode("R");
-        itemTaxes.add(itemTax2);
-
-        item1.setItemTaxes(itemTaxes);
-
         items.add(item1);
 
         InvoiceItem item2 = new InvoiceItem();
-        item2.setItemCode("50161509");
-        item2.setItemSku("A0001");
+        item2.setId(PRODUCTO_GOMITAS);
         item2.setQuantity(new BigDecimal("1.000000"));
-        item2.setUnitOfMeasurementCode("H87");
-        item2.setDescription("Gomitas");
-        item2.setUnitPrice(new BigDecimal("120.000000"));
-        item2.setDiscount(new BigDecimal("0"));
-        item2.setTaxObjectCode("02");
-        List<ItemTax> item2ItemTaxes = new ArrayList<ItemTax>();
-        ItemTax itemTax = new ItemTax();
-        itemTax.setTaxCode("002");
-        itemTax.setTaxTypeCode("Tasa");
-        itemTax.setTaxRate(new BigDecimal("0.160000"));
-        itemTax.setTaxFlagCode("T");
-        item2ItemTaxes.add(itemTax);
-
-        item2.setItemTaxes(item2ItemTaxes);
-
         items.add(item2);
 
         InvoiceItem item3 = new InvoiceItem();
-        item3.setItemCode("50307037");
-        item3.setItemSku("A0002");
+        item3.setId(PRODUCTO_PULPARINDO);
         item3.setQuantity(new BigDecimal("1.000000"));
-        item3.setUnitOfMeasurementCode("H87");
-        item3.setDescription("Pulparindo");
-        item3.setUnitPrice(new BigDecimal("100.000000"));
-        item3.setDiscount(new BigDecimal("0"));
-        item3.setTaxObjectCode("02");
-        List<ItemTax> item3ItemTaxes = new ArrayList<ItemTax>();
-        ItemTax item3ItemTaxesItemTax = new ItemTax();
-        item3ItemTaxesItemTax.setTaxCode("002");
-        item3ItemTaxesItemTax.setTaxTypeCode("Tasa");
-        item3ItemTaxesItemTax.setTaxRate(new BigDecimal("0.160000"));
-        item3ItemTaxesItemTax.setTaxFlagCode("T");
-        item3ItemTaxes.add(item3ItemTaxesItemTax);
-
-        item3.setItemTaxes(item3ItemTaxes);
-
         items.add(item3);
 
         invoice.setItems(items);
@@ -317,7 +299,7 @@ public class EjemplosComercioExteriorReferencias {
 
         List<ComercioExteriorMercancia> comercioExteriorMercancias = new ArrayList<ComercioExteriorMercancia>();
         ComercioExteriorMercancia comercioExteriorMercanciasMercancia1 = new ComercioExteriorMercancia();
-        comercioExteriorMercanciasMercancia1.setNoIdentificacion("A0001");
+        comercioExteriorMercanciasMercancia1.setNoIdentificacion(PRODUCTO_GOMITAS);
         comercioExteriorMercanciasMercancia1.setFraccionArancelariaId("4011101099");
         comercioExteriorMercanciasMercancia1.setCantidadAduana(new BigDecimal("1.000"));
         comercioExteriorMercanciasMercancia1.setUnidadAduanaId("06");
@@ -326,7 +308,7 @@ public class EjemplosComercioExteriorReferencias {
         comercioExteriorMercancias.add(comercioExteriorMercanciasMercancia1);
 
         ComercioExteriorMercancia comercioExteriorMercanciasMercancia2 = new ComercioExteriorMercancia();
-        comercioExteriorMercanciasMercancia2.setNoIdentificacion("A0002");
+        comercioExteriorMercanciasMercancia2.setNoIdentificacion(PRODUCTO_PULPARINDO);
         comercioExteriorMercanciasMercancia2.setFraccionArancelariaId("8407210299");
         comercioExteriorMercanciasMercancia2.setCantidadAduana(new BigDecimal("1.000"));
         comercioExteriorMercanciasMercancia2.setUnidadAduanaId("06");
@@ -370,38 +352,8 @@ public class EjemplosComercioExteriorReferencias {
 
         List<InvoiceItem> items = new ArrayList<InvoiceItem>();
         InvoiceItem item = new InvoiceItem();
-        item.setItemCode("50211503");
-        item.setItemSku("131494-1055");
+        item.setId(PRODUCTO_CIGARROS);
         item.setQuantity(new BigDecimal("2"));
-        item.setUnitOfMeasurementCode("H87");
-        item.setDescription("Cigarros");
-        item.setUnitPrice(new BigDecimal("200.00"));
-        item.setDiscount(new BigDecimal("0"));
-        item.setTaxObjectCode("02");
-        List<ItemTax> itemTaxes = new ArrayList<ItemTax>();
-        ItemTax itemTax1 = new ItemTax();
-        itemTax1.setTaxCode("002");
-        itemTax1.setTaxTypeCode("Tasa");
-        itemTax1.setTaxRate(new BigDecimal("0.160000"));
-        itemTax1.setTaxFlagCode("T");
-        itemTaxes.add(itemTax1);
-
-        ItemTax itemTax2 = new ItemTax();
-        itemTax2.setTaxCode("001");
-        itemTax2.setTaxTypeCode("Tasa");
-        itemTax2.setTaxRate(new BigDecimal("0.100000"));
-        itemTax2.setTaxFlagCode("R");
-        itemTaxes.add(itemTax2);
-
-        ItemTax itemTax3 = new ItemTax();
-        itemTax3.setTaxCode("002");
-        itemTax3.setTaxTypeCode("Tasa");
-        itemTax3.setTaxRate(new BigDecimal("0.106666"));
-        itemTax3.setTaxFlagCode("R");
-        itemTaxes.add(itemTax3);
-
-        item.setItemTaxes(itemTaxes);
-
         items.add(item);
 
         invoice.setItems(items);
@@ -438,7 +390,7 @@ public class EjemplosComercioExteriorReferencias {
 
         List<ComercioExteriorMercancia> mercancias = new ArrayList<ComercioExteriorMercancia>();
         ComercioExteriorMercancia mercancia = new ComercioExteriorMercancia();
-        mercancia.setNoIdentificacion("131494-1055");
+        mercancia.setNoIdentificacion(PRODUCTO_CIGARROS);
         mercancia.setFraccionArancelariaId("2402200100");
         mercancia.setCantidadAduana(new BigDecimal("2.00"));
         mercancia.setUnidadAduanaId("01");
@@ -482,25 +434,13 @@ public class EjemplosComercioExteriorReferencias {
 
         List<InvoiceItem> items = new ArrayList<InvoiceItem>();
         InvoiceItem item1 = new InvoiceItem();
-        item1.setItemCode("51241200");
-        item1.setItemSku("131494-1055");
+        item1.setId(PRODUCTO_FORMULA_MAGISTRAL);
         item1.setQuantity(new BigDecimal("1.0"));
-        item1.setUnitOfMeasurementCode("H87");
-        item1.setDescription("FORMULA MAGISTRAL");
-        item1.setUnitPrice(new BigDecimal("200.00"));
-        item1.setDiscount(new BigDecimal("0"));
-        item1.setTaxObjectCode("01");
         items.add(item1);
 
         InvoiceItem item2 = new InvoiceItem();
-        item2.setItemCode("51241200");
-        item2.setItemSku("131494-1055");
+        item2.setId(PRODUCTO_FORMULA_MAGISTRAL);
         item2.setQuantity(new BigDecimal("1.0"));
-        item2.setUnitOfMeasurementCode("H87");
-        item2.setDescription("FORMULA MAGISTRAL");
-        item2.setUnitPrice(new BigDecimal("200.00"));
-        item2.setDiscount(new BigDecimal("0"));
-        item2.setTaxObjectCode("01");
         items.add(item2);
 
         invoice.setItems(items);
@@ -536,7 +476,7 @@ public class EjemplosComercioExteriorReferencias {
 
         List<ComercioExteriorMercancia> mercancias = new ArrayList<ComercioExteriorMercancia>();
         ComercioExteriorMercancia mercancia = new ComercioExteriorMercancia();
-        mercancia.setNoIdentificacion("131494-1055");
+        mercancia.setNoIdentificacion(PRODUCTO_FORMULA_MAGISTRAL);
         mercancia.setFraccionArancelariaId("2402200100");
         mercancia.setCantidadAduana(new BigDecimal("2"));
         mercancia.setUnidadAduanaId("01");
@@ -580,31 +520,8 @@ public class EjemplosComercioExteriorReferencias {
 
         List<InvoiceItem> items = new ArrayList<InvoiceItem>();
         InvoiceItem item = new InvoiceItem();
-        item.setItemCode("50211503");
-        item.setItemSku("131494-1055");
+        item.setId(PRODUCTO_CIGARROS_IVA_ISR);
         item.setQuantity(new BigDecimal("2"));
-        item.setUnitOfMeasurementCode("H87");
-        item.setDescription("Cigarros");
-        item.setUnitPrice(new BigDecimal("200.00"));
-        item.setDiscount(new BigDecimal("0"));
-        item.setTaxObjectCode("02");
-        List<ItemTax> itemTaxes = new ArrayList<ItemTax>();
-        ItemTax itemTax1 = new ItemTax();
-        itemTax1.setTaxCode("002");
-        itemTax1.setTaxTypeCode("Tasa");
-        itemTax1.setTaxRate(new BigDecimal("0.160000"));
-        itemTax1.setTaxFlagCode("T");
-        itemTaxes.add(itemTax1);
-
-        ItemTax itemTax2 = new ItemTax();
-        itemTax2.setTaxCode("001");
-        itemTax2.setTaxTypeCode("Tasa");
-        itemTax2.setTaxRate(new BigDecimal("0.100000"));
-        itemTax2.setTaxFlagCode("R");
-        itemTaxes.add(itemTax2);
-
-        item.setItemTaxes(itemTaxes);
-
         items.add(item);
 
         invoice.setItems(items);
@@ -641,7 +558,7 @@ public class EjemplosComercioExteriorReferencias {
 
         List<ComercioExteriorMercancia> mercancias = new ArrayList<ComercioExteriorMercancia>();
         ComercioExteriorMercancia mercancia = new ComercioExteriorMercancia();
-        mercancia.setNoIdentificacion("131494-1055");
+        mercancia.setNoIdentificacion(PRODUCTO_CIGARROS_IVA_ISR);
         mercancia.setFraccionArancelariaId("2402200100");
         mercancia.setCantidadAduana(new BigDecimal("117.64"));
         mercancia.setUnidadAduanaId("01");
@@ -685,38 +602,8 @@ public class EjemplosComercioExteriorReferencias {
 
         List<InvoiceItem> items = new ArrayList<InvoiceItem>();
         InvoiceItem item = new InvoiceItem();
-        item.setItemCode("50211503");
-        item.setItemSku("131494-1055");
+        item.setId(PRODUCTO_CIGARROS);
         item.setQuantity(new BigDecimal("2"));
-        item.setUnitOfMeasurementCode("H87");
-        item.setDescription("Cigarros");
-        item.setUnitPrice(new BigDecimal("200.00"));
-        item.setDiscount(new BigDecimal("0"));
-        item.setTaxObjectCode("02");
-        List<ItemTax> itemTaxes = new ArrayList<ItemTax>();
-        ItemTax itemTax1 = new ItemTax();
-        itemTax1.setTaxCode("002");
-        itemTax1.setTaxTypeCode("Tasa");
-        itemTax1.setTaxRate(new BigDecimal("0.160000"));
-        itemTax1.setTaxFlagCode("T");
-        itemTaxes.add(itemTax1);
-
-        ItemTax itemTax2 = new ItemTax();
-        itemTax2.setTaxCode("001");
-        itemTax2.setTaxTypeCode("Tasa");
-        itemTax2.setTaxRate(new BigDecimal("0.100000"));
-        itemTax2.setTaxFlagCode("R");
-        itemTaxes.add(itemTax2);
-
-        ItemTax itemTax3 = new ItemTax();
-        itemTax3.setTaxCode("002");
-        itemTax3.setTaxTypeCode("Tasa");
-        itemTax3.setTaxRate(new BigDecimal("0.106666"));
-        itemTax3.setTaxFlagCode("R");
-        itemTaxes.add(itemTax3);
-
-        item.setItemTaxes(itemTaxes);
-
         items.add(item);
 
         invoice.setItems(items);
@@ -755,7 +642,7 @@ public class EjemplosComercioExteriorReferencias {
 
         List<ComercioExteriorMercancia> mercancias = new ArrayList<ComercioExteriorMercancia>();
         ComercioExteriorMercancia mercancia = new ComercioExteriorMercancia();
-        mercancia.setNoIdentificacion("131494-1055");
+        mercancia.setNoIdentificacion(PRODUCTO_CIGARROS);
         mercancia.setFraccionArancelariaId("2402200100");
         mercancia.setCantidadAduana(new BigDecimal("117.64"));
         mercancia.setUnidadAduanaId("01");
@@ -791,7 +678,7 @@ public class EjemplosComercioExteriorReferencias {
         invoice.setIssuer(issuer);
 
         InvoiceRecipient recipient = new InvoiceRecipient();
-        recipient.setId(ISSUER_ID);
+        recipient.setId(RECIPIENT_TRASLADO_ID);
         invoice.setRecipient(recipient);
 
         List<InvoiceItem> items = new ArrayList<InvoiceItem>();
@@ -992,7 +879,7 @@ public class EjemplosComercioExteriorReferencias {
         invoice.setIssuer(issuer);
 
         InvoiceRecipient recipient = new InvoiceRecipient();
-        recipient.setId(ISSUER_ID);
+        recipient.setId(RECIPIENT_TRASLADO_ID);
         invoice.setRecipient(recipient);
 
         List<InvoiceItem> items = new ArrayList<InvoiceItem>();
@@ -1099,19 +986,13 @@ public class EjemplosComercioExteriorReferencias {
         invoice.setIssuer(issuer);
 
         InvoiceRecipient recipient = new InvoiceRecipient();
-        recipient.setId(ISSUER_ID);
+        recipient.setId(RECIPIENT_TRASLADO_ID);
         invoice.setRecipient(recipient);
 
         List<InvoiceItem> items = new ArrayList<InvoiceItem>();
         InvoiceItem item = new InvoiceItem();
-        item.setItemCode("50211503");
-        item.setItemSku("131494-1055");
+        item.setId(PRODUCTO_CIGARROS_SIN_IMPUESTOS);
         item.setQuantity(new BigDecimal("2"));
-        item.setUnitOfMeasurementCode("H87");
-        item.setDescription("Cigarros");
-        item.setUnitPrice(new BigDecimal("200.00"));
-        item.setDiscount(new BigDecimal("0"));
-        item.setTaxObjectCode("01");
         items.add(item);
 
         invoice.setItems(items);
@@ -1147,7 +1028,7 @@ public class EjemplosComercioExteriorReferencias {
 
         List<ComercioExteriorMercancia> mercancias = new ArrayList<ComercioExteriorMercancia>();
         ComercioExteriorMercancia mercancia = new ComercioExteriorMercancia();
-        mercancia.setNoIdentificacion("131494-1055");
+        mercancia.setNoIdentificacion(PRODUCTO_CIGARROS_SIN_IMPUESTOS);
         mercancia.setFraccionArancelariaId("2402200100");
         mercancia.setCantidadAduana(new BigDecimal("117.64"));
         mercancia.setUnidadAduanaId("01");
@@ -1191,38 +1072,8 @@ public class EjemplosComercioExteriorReferencias {
 
         List<InvoiceItem> items = new ArrayList<InvoiceItem>();
         InvoiceItem item = new InvoiceItem();
-        item.setItemCode("50201708");
-        item.setItemSku("131494-1055");
+        item.setId(PRODUCTO_BEBIDA);
         item.setQuantity(new BigDecimal("1.000"));
-        item.setUnitOfMeasurementCode("H87");
-        item.setDescription("Bebida");
-        item.setUnitPrice(new BigDecimal("100.00"));
-        item.setDiscount(new BigDecimal("0"));
-        item.setTaxObjectCode("02");
-        List<ItemTax> itemTaxes = new ArrayList<ItemTax>();
-        ItemTax itemTax1 = new ItemTax();
-        itemTax1.setTaxCode("002");
-        itemTax1.setTaxTypeCode("Tasa");
-        itemTax1.setTaxRate(new BigDecimal("0.160000"));
-        itemTax1.setTaxFlagCode("T");
-        itemTaxes.add(itemTax1);
-
-        ItemTax itemTax2 = new ItemTax();
-        itemTax2.setTaxCode("001");
-        itemTax2.setTaxTypeCode("Tasa");
-        itemTax2.setTaxRate(new BigDecimal("0.100000"));
-        itemTax2.setTaxFlagCode("R");
-        itemTaxes.add(itemTax2);
-
-        ItemTax itemTax3 = new ItemTax();
-        itemTax3.setTaxCode("002");
-        itemTax3.setTaxTypeCode("Tasa");
-        itemTax3.setTaxRate(new BigDecimal("0.106666"));
-        itemTax3.setTaxFlagCode("R");
-        itemTaxes.add(itemTax3);
-
-        item.setItemTaxes(itemTaxes);
-
         items.add(item);
 
         invoice.setItems(items);
@@ -1259,7 +1110,7 @@ public class EjemplosComercioExteriorReferencias {
 
         List<ComercioExteriorMercancia> mercancias = new ArrayList<ComercioExteriorMercancia>();
         ComercioExteriorMercancia mercancia = new ComercioExteriorMercancia();
-        mercancia.setNoIdentificacion("131494-1055");
+        mercancia.setNoIdentificacion(PRODUCTO_BEBIDA);
         mercancia.setFraccionArancelariaId("2009310201");
         mercancia.setCantidadAduana(new BigDecimal("0.500"));
         mercancia.setUnidadAduanaId("08");

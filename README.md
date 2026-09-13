@@ -369,6 +369,18 @@ ApiResponse<Invoice> apiResponse = client.getInvoiceService().create(invoice);
 
 En modo **por referencias** basta con `recipient.setId(...)`, siempre que la persona tenga capturados `countryId` y `foreignTin`.
 
+Los conceptos también pueden ir por referencia: un `InvoiceItem` con sólo `id` y `quantity` toma del producto la clave del SAT, la unidad, la descripción, el precio y los impuestos. En ese caso el `NoIdentificacion` del CFDI queda con el id del producto, así que `mercancias[].noIdentificacion` debe llevar ese mismo id:
+
+```java
+InvoiceItem item = new InvoiceItem();
+item.setId(PRODUCTO_CIGARROS_ID);
+item.setQuantity(new BigDecimal("2"));
+
+mercancia.setNoIdentificacion(PRODUCTO_CIGARROS_ID);
+```
+
+Un producto siempre tiene precio mayor que cero, así que los traslados con valor unitario 0 envían sus conceptos en línea.
+
 ---
 
 ### 8. Firmar Carta Manifiesto
