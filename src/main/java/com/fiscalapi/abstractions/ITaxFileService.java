@@ -14,6 +14,18 @@ public interface ITaxFileService extends IFiscalApiService<TaxFile> {
     // other specific methods here...
 
     /**
+     * No disponible: el API retiró {@code PUT /api/v4/tax-files/{id}}, que responde 405 (Method Not Allowed).
+     *
+     * @param model Certificado.
+     * @return La respuesta del API (405).
+     * @deprecated Un certificado no se edita: suba el nuevo con {@code create()} y elimine el anterior con
+     * {@code delete()}.
+     */
+    @Deprecated
+    @Override
+    ApiResponse<TaxFile> update(TaxFile model);
+
+    /**
      * Obtiene el último par de ids de certificados válidos y vigente de una persona.
      * Es decir, sus certificados por defecto (ids).
      *
