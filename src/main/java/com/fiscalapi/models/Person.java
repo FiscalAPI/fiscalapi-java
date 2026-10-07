@@ -14,9 +14,6 @@ public class Person extends BaseDto {
     private String email;
     private String password;
     private String phoneNumber;
-    /** @deprecated El API no tiene régimen de capital: ignora el valor y no lo devuelve. */
-    @Deprecated
-    private String capitalRegime;
     private String satTaxRegimeId;
     private CatalogDto satTaxRegime;
     private String satCfdiUseId;
@@ -73,25 +70,6 @@ public class Person extends BaseDto {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    /**
-     * @return Siempre null en las respuestas
-     * @deprecated El API no tiene régimen de capital: ignora el valor y no lo devuelve. Envíe la razón social sin
-     * régimen de capital en legalName. Se conserva para no romper a quien lo usa.
-     */
-    @Deprecated
-    public String getCapitalRegime() {
-        return capitalRegime;
-    }
-
-    /**
-     * @param capitalRegime Valor que el API ignora
-     * @deprecated El API no tiene régimen de capital: ignora el valor y no lo devuelve.
-     */
-    @Deprecated
-    public void setCapitalRegime(String capitalRegime) {
-        this.capitalRegime = capitalRegime;
     }
 
     public String getSatTaxRegimeId() {

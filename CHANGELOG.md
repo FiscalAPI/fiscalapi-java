@@ -4,9 +4,12 @@ Cambios del SDK y notas de comportamiento del API de FiscalAPI que afectan a qui
 
 ## [Sin publicar]
 
+### Cambios incompatibles (BREAKING)
+
+- Se eliminan `Person.getCapitalRegime()` y `Person.setCapitalRegime(String)` (estaban `@Deprecated`): el API no tiene régimen de capital, ignoraba el valor y nunca lo devolvía. El código que los llama deja de compilar: quite esas llamadas y envíe la razón social sin régimen de capital con `setLegalName`.
+
 ### Modelo `Person`
 
-- `capitalRegime` queda obsoleto (`@Deprecated`): el API no tiene régimen de capital, ignora el valor y no lo devuelve. Envíe la razón social sin régimen de capital en `legalName`. Se conserva para no romper a quien lo usa.
 - Nuevos miembros:
   - `phoneNumber`: lo aceptan la creación y la actualización de personas.
   - `country`: país de residencia fiscal expandido (solo lectura).
