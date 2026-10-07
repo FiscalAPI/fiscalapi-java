@@ -6,6 +6,11 @@ import java.util.Date;
 
 public class TaxFile extends BaseDto {
     private String personId;
+    /**
+     * RFC de la persona. Opcional al subir: si es null o vacío, el API usa el RFC de la persona; si se envía, debe ser el
+     * RFC de la persona (sin distinguir mayúsculas) o el API responde 400 con la falla en Tin. El API no guarda el valor
+     * enviado: siempre devuelve el RFC de la persona.
+     */
     private String tin;
     private String base64File;
     private int fileType;

@@ -24,6 +24,7 @@ Cambios del SDK y notas de comportamiento del API de FiscalAPI que afectan a qui
 - `Person.taxPassword` es la contraseña de la llave privada (.key) que la persona guarda en su perfil; el API no la usa para sellar (al timbrar usa la contraseña de los certificados registrados o la de `taxCredentials`). Solo la reciben con valor la propia persona y el owner del tenant; los demás reciben `null`. Al actualizar, `null` la conserva (el SDK no envía los `null`) y `""` la borra.
 - `ValidationFailure.attemptedValue` (y el placeholder `PropertyValue` de `formattedMessagePlaceholderValues`): en un 400 de validación, el valor de un secreto (contraseñas, códigos, tokens, archivos y contraseñas de CSD/FIEL) llega enmascarado como `"[masked: n]"` (`n` es su longitud), o `"[masked]"` si la falla es de un objeto o una lista que lo contiene.
 - `TaxCredential.password` solo se exige en la llave privada (.key); en el certificado (.cer) el API no la usa.
+- `TaxFile.tin` es opcional en `getTaxFileService().create()`: si es `null` o vacío, el API usa el RFC de la persona. Si se envía, debe ser el RFC de la persona (sin distinguir mayúsculas); si no, el API responde 400 con la falla en `Tin` (después de comprobar que puede gestionar los certificados de la persona; si no, 403). El API no guarda el valor enviado: el `tin` del archivo siempre es el RFC de la persona.
 
 ### Ejemplos
 

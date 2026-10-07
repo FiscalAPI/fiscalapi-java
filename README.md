@@ -180,7 +180,7 @@ System.out.printf("apiResponse: %s\n", apiResponse);
 // ***Subir archivo .cer (certificado)***//
 TaxFile archivoCer = new TaxFile();
 archivoCer.setPersonId("3f3478b4-60fd-459e-8bfc-f8239fc96257");
-archivoCer.setTin("FUNK671228PH6");
+archivoCer.setTin("FUNK671228PH6"); // RFC de la persona (opcional)
 archivoCer.setBase64File("MIIFgDCCA2igAwIBAgIUMzAwMDEwMDAwMDA1MDAwMDM0NDYwDQYJKoZIhvcNAQELBQAwggEr...");
 archivoCer.setFileType(0); // 0 para certificado
 archivoCer.setPassword("12345678a");
@@ -192,7 +192,7 @@ System.out.printf("apiResponse: %s\n", apiResponseCer);
 // ***Subir archivo .key (clave privada)***//
 TaxFile archivoKey = new TaxFile();
 archivoKey.setPersonId("3f3478b4-60fd-459e-8bfc-f8239fc96257");
-archivoKey.setTin("FUNK671228PH6");
+archivoKey.setTin("FUNK671228PH6"); // RFC de la persona (opcional)
 archivoKey.setBase64File("MIIFDjBABgkqhkiG9w0BBQ0...==");
 archivoKey.setFileType(1); // 1 para llave privada
 archivoKey.setPassword("12345678a");
