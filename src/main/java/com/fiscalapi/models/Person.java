@@ -1,11 +1,13 @@
 package com.fiscalapi.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fiscalapi.common.BaseDto;
 import com.fiscalapi.common.CatalogDto;
 import com.fiscalapi.serialization.BigDecimalSerializer;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -38,9 +40,7 @@ public class Person extends BaseDto {
     private CatalogDto country;
     private List<CreditBalance> balances;
     private Boolean isOwner;
-//    private LocalDateTime validTo;
-//    private String stripeCustomerId;
-//    private String subscriptionStatus;
+    private LocalDateTime validTo;
 
     public String getLegalName() {
         return legalName;
@@ -173,6 +173,12 @@ public class Person extends BaseDto {
         this.availableBalance = availableBalance;
     }
 
+    /**
+     * Campo heredado (solo lectura en el API): el API ya no lo calcula y siempre vale 0. Para el saldo
+     * use {@link #getAvailableBalance()}, {@link #getAvailableValidationBalance()} o {@link #getBalances()}.
+     *
+     * @return El saldo comprometido heredado (0)
+     */
     public BigDecimal getCommittedBalance() {
         return committedBalance;
     }
@@ -344,5 +350,25 @@ public class Person extends BaseDto {
      */
     public void setIsOwner(Boolean isOwner) {
         this.isOwner = isOwner;
+    }
+
+    /**
+     * Fin de vigencia de la persona. La asigna el API; casi siempre es null y es informativa (no limita el
+     * timbrado ni el acceso al API).
+     *
+     * @return La fecha de fin de vigencia, o null
+     */
+    public LocalDateTime getValidTo() {
+        return validTo;
+    }
+
+    /**
+     * Es de solo lectura: se puebla al deserializar la respuesta y no se envía en las peticiones.
+     *
+     * @param validTo Fecha de fin de vigencia recibida en la respuesta
+     */
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    public void setValidTo(LocalDateTime validTo) {
+        this.validTo = validTo;
     }
 }
