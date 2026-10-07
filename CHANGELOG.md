@@ -8,6 +8,7 @@ Cambios del SDK y notas de comportamiento del API de FiscalAPI que afectan a qui
 
 - Se eliminan `Person.getCapitalRegime()` y `Person.setCapitalRegime(String)` (estaban `@Deprecated`): el API no tiene régimen de capital, ignoraba el valor y nunca lo devolvía. El código que los llama deja de compilar: quite esas llamadas y envíe la razón social sin régimen de capital con `setLegalName`.
 - El API deja de devolver `stripeCustomerId` y `subscriptionStatus` en las personas (`/api/v4/people` y la persona de las reglas de descarga): eran datos internos de Stripe. Este SDK nunca los modeló en `Person` (estaban comentados y se quitan), así que el código que usa el modelo no cambia; si su integración los lee de la respuesta JSON cruda, quite esa lectura: el campo ya no llega.
+- Se elimina la clase `com.fiscalapi.common.StripePaymentMethodDto` (`stripeId`, `stripeCustomerId`, `brand`, `last4`, `expMonth`, `expYear` y demás datos de tarjeta): modelaba los métodos de pago de Stripe, que el API retiró en agosto de 2026, y ningún servicio del SDK la usaba. El código que la importa o la instancia deja de compilar: quite el `import com.fiscalapi.common.StripePaymentMethodDto;` y esos usos; el API no expone métodos de pago ni datos de Stripe que la reemplacen.
 
 ### Modelo `Person`
 
