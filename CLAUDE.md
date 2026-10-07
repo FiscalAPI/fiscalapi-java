@@ -39,12 +39,14 @@ IFiscalApiClient (facade)
 ```
 
 ### Generic CRUD Base
-Services over a CRUD resource extend `BaseFiscalApiService<T>`, which implements standard CRUD:
+Services over a CRUD resource extend `BaseFiscalApiService<T>` (implements `IFiscalApiService<T>`), which extends `BaseImmutableFiscalApiService<T>` (implements `IImmutableFiscalApiService<T>`):
 - `getList(pageNumber, pageSize)` → `ApiResponse<PagedList<T>>`
 - `getById(id, details)` → `ApiResponse<T>`
 - `create(model)` → `ApiResponse<T>`
-- `update(model)` → `ApiResponse<T>`
 - `delete(id)` → `ApiResponse<Boolean>`
+- `update(model)` → `ApiResponse<T>` (only in `BaseFiscalApiService<T>` / `IFiscalApiService<T>`)
+
+`TaxFileService` extends only `BaseImmutableFiscalApiService<TaxFile>` and `ITaxFileService` extends `IImmutableFiscalApiService<TaxFile>`: the API does not update certificates (PUT tax-files answers 405), so `update()` does not exist on the tax-file service.
 
 Subclasses must implement `getTypeParameterClass()` to return the entity type for Jackson deserialization.
 

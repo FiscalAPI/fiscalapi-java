@@ -7,23 +7,13 @@ import java.util.List;
 
 /**
  * Define el contrato específico para operaciones con "tax-file".
- * Hereda las operaciones básicas (CRUD) de IFiscalApiService&lt;TaxFile&gt;.
+ * Hereda la consulta, la creación y la baja de IImmutableFiscalApiService&lt;TaxFile&gt;. No tiene {@code update()}:
+ * el API no actualiza certificados ({@code PUT /api/v4/tax-files/{id}} responde 405). Para cambiar un certificado,
+ * suba el nuevo con {@code create()} y elimine el anterior con {@code delete()}.
  */
-public interface ITaxFileService extends IFiscalApiService<TaxFile> {
+public interface ITaxFileService extends IImmutableFiscalApiService<TaxFile> {
 
     // other specific methods here...
-
-    /**
-     * No disponible: el API retiró {@code PUT /api/v4/tax-files/{id}}, que responde 405 (Method Not Allowed).
-     *
-     * @param model Certificado.
-     * @return La respuesta del API (405).
-     * @deprecated Un certificado no se edita: suba el nuevo con {@code create()} y elimine el anterior con
-     * {@code delete()}.
-     */
-    @Deprecated
-    @Override
-    ApiResponse<TaxFile> update(TaxFile model);
 
     /**
      * Obtiene el último par de ids de certificados válidos y vigente de una persona.
