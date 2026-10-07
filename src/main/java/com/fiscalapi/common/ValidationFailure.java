@@ -28,6 +28,13 @@ public class ValidationFailure  extends SerializableDto {
         this.errorMessage = errorMessage;
     }
 
+    /**
+     * Valor recibido en la propiedad que falló. El de un secreto (contraseñas, códigos, tokens, archivos y contraseñas de
+     * CSD/FIEL) llega enmascarado como "[masked: n]" (n es su longitud), o "[masked]" si la falla es de un objeto o una
+     * lista que lo contiene. El placeholder PropertyValue de formattedMessagePlaceholderValues sigue la misma regla.
+     *
+     * @return El valor recibido o su máscara
+     */
     public Object getAttemptedValue() {
         return attemptedValue;
     }

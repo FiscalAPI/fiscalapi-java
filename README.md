@@ -165,8 +165,7 @@ public class InvoicesController {
 ```java
 // ***Crear persona ***//
 Person person = new Person();
-person.setLegalName("MI EMPRESA");
-person.setCapitalRegime("S.A De C.V");
+person.setLegalName("MI EMPRESA"); // razón social sin régimen de capital
 person.setEmail("john.doe@fiscalapi.com");
 person.setPassword("Password123!");
 ApiResponse<Person> apiResponse = client.getPersonService().create(person);

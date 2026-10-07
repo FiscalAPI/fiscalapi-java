@@ -42,11 +42,8 @@ public class Person extends BaseDto {
     private List<CreditBalance> balances;
     private Boolean isOwner;
 //    private LocalDateTime validTo;
-//    private Boolean twoFactorEnabled;
 //    private String stripeCustomerId;
-//    private String stripePaymentMethodId;
 //    private String subscriptionStatus;
-//    private StripePaymentMethodDto stripePaymentMethod;
 
     public String getLegalName() {
         return legalName;
@@ -175,6 +172,13 @@ public class Person extends BaseDto {
         this.base64Photo = base64Photo;
     }
 
+    /**
+     * Contraseña de la llave privada (.key) que la persona guarda en su perfil. El API no la usa para sellar (al timbrar
+     * usa la de los certificados registrados o la de taxCredentials). Con valor solo para la propia persona y el owner del
+     * tenant; los demás reciben null. Al actualizar, null la conserva (no se envía) y "" la borra.
+     *
+     * @return La contraseña de la .key del perfil, o null
+     */
     public String getTaxPassword() {
         return taxPassword;
     }
