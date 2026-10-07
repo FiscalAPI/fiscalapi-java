@@ -6,12 +6,16 @@ import com.fiscalapi.common.CatalogDto;
 import com.fiscalapi.serialization.BigDecimalSerializer;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 
 public class Person extends BaseDto {
     private String legalName;
     private String email;
     private String password;
+    private String phoneNumber;
+    /** @deprecated El API no tiene régimen de capital: ignora el valor y no lo devuelve. */
+    @Deprecated
     private String capitalRegime;
     private String satTaxRegimeId;
     private CatalogDto satTaxRegime;
@@ -34,7 +38,9 @@ public class Person extends BaseDto {
     private String foreignTin;
     private String manifestStatusId;
     private CatalogDto manifestStatus;
-//    private String phoneNumber;
+    private CatalogDto country;
+    private List<CreditBalance> balances;
+    private Boolean isOwner;
 //    private LocalDateTime validTo;
 //    private Boolean twoFactorEnabled;
 //    private String stripeCustomerId;
@@ -58,6 +64,12 @@ public class Person extends BaseDto {
         this.email = email;
     }
 
+    /**
+     * Contraseña de acceso al dashboard. Requerida al crear; al actualizar, null o vacía conserva la actual.
+     * El API nunca la devuelve.
+     *
+     * @return La contraseña asignada en este objeto
+     */
     public String getPassword() {
         return password;
     }
@@ -66,10 +78,21 @@ public class Person extends BaseDto {
         this.password = password;
     }
 
+    /**
+     * @return Siempre null en las respuestas
+     * @deprecated El API no tiene régimen de capital: ignora el valor y no lo devuelve. Envíe la razón social sin
+     * régimen de capital en legalName. Se conserva para no romper a quien lo usa.
+     */
+    @Deprecated
     public String getCapitalRegime() {
         return capitalRegime;
     }
 
+    /**
+     * @param capitalRegime Valor que el API ignora
+     * @deprecated El API no tiene régimen de capital: ignora el valor y no lo devuelve.
+     */
+    @Deprecated
     public void setCapitalRegime(String capitalRegime) {
         this.capitalRegime = capitalRegime;
     }
@@ -106,6 +129,12 @@ public class Person extends BaseDto {
         this.satCfdiUse = satCfdiUse;
     }
 
+    /**
+     * Tipo de persona, solo informativo: "C" (cliente, por omisión al crear) o "U" (usuario). "T" (tenant) solo llega en
+     * respuestas: el API lo rechaza al crear y al actualizar solo lo acepta si la persona ya es "T".
+     *
+     * @return El tipo de persona
+     */
     public String getUserTypeId() {
         return userTypeId;
     }
@@ -270,5 +299,68 @@ public class Person extends BaseDto {
      */
     public void setManifestStatus(CatalogDto manifestStatus) {
         this.manifestStatus = manifestStatus;
+    }
+
+    /**
+     * @return Teléfono de la persona
+     */
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    /**
+     * @param phoneNumber Teléfono de la persona
+     */
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    /**
+     * País de residencia fiscal expandido (solo lectura en el API).
+     *
+     * @return El país con su descripción
+     */
+    public CatalogDto getCountry() {
+        return country;
+    }
+
+    /**
+     * @param country País de residencia fiscal expandido
+     */
+    public void setCountry(CatalogDto country) {
+        this.country = country;
+    }
+
+    /**
+     * Saldos por tipo de crédito (solo lectura en el API). Solo aparecen los tipos que la persona ha tenido; un tipo
+     * ausente tiene saldo 0.
+     *
+     * @return Los saldos de la persona
+     */
+    public List<CreditBalance> getBalances() {
+        return balances;
+    }
+
+    /**
+     * @param balances Saldos por tipo de crédito
+     */
+    public void setBalances(List<CreditBalance> balances) {
+        this.balances = balances;
+    }
+
+    /**
+     * true si la persona es el owner de su tenant (solo lectura en el API).
+     *
+     * @return Si la persona es el owner
+     */
+    public Boolean getIsOwner() {
+        return isOwner;
+    }
+
+    /**
+     * @param isOwner Si la persona es el owner de su tenant
+     */
+    public void setIsOwner(Boolean isOwner) {
+        this.isOwner = isOwner;
     }
 }
