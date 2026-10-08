@@ -401,7 +401,7 @@ if (apiResponse.isSucceeded()) {
 }
 ```
 
-Al firmar, la persona queda con `manifestStatusId` en `Signed`.
+Al firmar, todas las personas del tenant con el RFC del certificado quedan con `manifestStatusId` en `Signed`.
 
 ---
 
