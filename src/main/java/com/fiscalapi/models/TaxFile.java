@@ -13,6 +13,10 @@ public class TaxFile extends BaseDto {
      */
     private String tin;
     private String base64File;
+    /**
+     * Tipo de archivo: 0 = certificado CSD (.cer), 1 = llave privada CSD (.key), 2 = certificado FIEL (.cer), 3 = llave
+     * privada FIEL (.key). El API valida el valor: otro (por ejemplo 4, Pfx) responde 400 con la falla en FileType.
+     */
     private int fileType;
     private String password;
     private Date validFrom;
