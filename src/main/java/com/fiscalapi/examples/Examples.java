@@ -40,7 +40,6 @@ public class Examples {
 //
 //        Person person = new Person();
 //        person.setLegalName("MI EMPRESA");
-//        person.setCapitalRegime("S.A De C.V");
 //        person.setEmail("john.doe@fiscalapi.com");
 //        person.setPassword("Password123!");
 //        ApiResponse<Person> apiResponse = client.getPersonService().create(person);

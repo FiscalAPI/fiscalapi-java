@@ -1,18 +1,21 @@
 package com.fiscalapi.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fiscalapi.common.BaseDto;
 import com.fiscalapi.common.CatalogDto;
 import com.fiscalapi.serialization.BigDecimalSerializer;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
 
 
 public class Person extends BaseDto {
     private String legalName;
     private String email;
     private String password;
-    private String capitalRegime;
+    private String phoneNumber;
     private String satTaxRegimeId;
     private CatalogDto satTaxRegime;
     private String satCfdiUseId;
@@ -34,13 +37,10 @@ public class Person extends BaseDto {
     private String foreignTin;
     private String manifestStatusId;
     private CatalogDto manifestStatus;
-//    private String phoneNumber;
-//    private LocalDateTime validTo;
-//    private Boolean twoFactorEnabled;
-//    private String stripeCustomerId;
-//    private String stripePaymentMethodId;
-//    private String subscriptionStatus;
-//    private StripePaymentMethodDto stripePaymentMethod;
+    private CatalogDto country;
+    private List<CreditBalance> balances;
+    private Boolean isOwner;
+    private LocalDateTime validTo;
 
     public String getLegalName() {
         return legalName;
@@ -58,20 +58,18 @@ public class Person extends BaseDto {
         this.email = email;
     }
 
+    /**
+     * Contraseña de acceso al dashboard. Requerida al crear; al actualizar, null o vacía conserva la actual.
+     * El API nunca la devuelve.
+     *
+     * @return La contraseña asignada en este objeto
+     */
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getCapitalRegime() {
-        return capitalRegime;
-    }
-
-    public void setCapitalRegime(String capitalRegime) {
-        this.capitalRegime = capitalRegime;
     }
 
     public String getSatTaxRegimeId() {
@@ -106,6 +104,12 @@ public class Person extends BaseDto {
         this.satCfdiUse = satCfdiUse;
     }
 
+    /**
+     * Tipo de persona, solo informativo: "C" (cliente, por omisión al crear) o "U" (usuario). "T" (tenant) solo llega en
+     * respuestas: el API lo rechaza al crear y al actualizar solo lo acepta si la persona ya es "T".
+     *
+     * @return El tipo de persona
+     */
     public String getUserTypeId() {
         return userTypeId;
     }
@@ -146,6 +150,13 @@ public class Person extends BaseDto {
         this.base64Photo = base64Photo;
     }
 
+    /**
+     * Contraseña de la llave privada (.key) que la persona guarda en su perfil. El API no la usa para sellar (al timbrar
+     * usa la de los certificados registrados o la de taxCredentials). Con valor solo para la propia persona y el owner del
+     * tenant; los demás reciben null. Al actualizar, null la conserva (no se envía) y "" la borra.
+     *
+     * @return La contraseña de la .key del perfil, o null
+     */
     public String getTaxPassword() {
         return taxPassword;
     }
@@ -162,6 +173,12 @@ public class Person extends BaseDto {
         this.availableBalance = availableBalance;
     }
 
+    /**
+     * Campo heredado (solo lectura en el API): el API ya no lo calcula y siempre vale 0. Para el saldo
+     * use {@link #getAvailableBalance()}, {@link #getAvailableValidationBalance()} o {@link #getBalances()}.
+     *
+     * @return El saldo comprometido heredado (0)
+     */
     public BigDecimal getCommittedBalance() {
         return committedBalance;
     }
@@ -270,5 +287,88 @@ public class Person extends BaseDto {
      */
     public void setManifestStatus(CatalogDto manifestStatus) {
         this.manifestStatus = manifestStatus;
+    }
+
+    /**
+     * @return Teléfono de la persona
+     */
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    /**
+     * @param phoneNumber Teléfono de la persona
+     */
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    /**
+     * País de residencia fiscal expandido (solo lectura en el API).
+     *
+     * @return El país con su descripción
+     */
+    public CatalogDto getCountry() {
+        return country;
+    }
+
+    /**
+     * @param country País de residencia fiscal expandido
+     */
+    public void setCountry(CatalogDto country) {
+        this.country = country;
+    }
+
+    /**
+     * Saldos por tipo de crédito (solo lectura en el API). Solo aparecen los tipos que la persona ha tenido; un tipo
+     * ausente tiene saldo 0.
+     *
+     * @return Los saldos de la persona
+     */
+    public List<CreditBalance> getBalances() {
+        return balances;
+    }
+
+    /**
+     * @param balances Saldos por tipo de crédito
+     */
+    public void setBalances(List<CreditBalance> balances) {
+        this.balances = balances;
+    }
+
+    /**
+     * true si la persona es el owner de su tenant (solo lectura en el API).
+     *
+     * @return Si la persona es el owner
+     */
+    public Boolean getIsOwner() {
+        return isOwner;
+    }
+
+    /**
+     * @param isOwner Si la persona es el owner de su tenant
+     */
+    public void setIsOwner(Boolean isOwner) {
+        this.isOwner = isOwner;
+    }
+
+    /**
+     * Fin de vigencia de la persona. La asigna el API; casi siempre es null y es informativa (no limita el
+     * timbrado ni el acceso al API).
+     *
+     * @return La fecha de fin de vigencia, o null
+     */
+    public LocalDateTime getValidTo() {
+        return validTo;
+    }
+
+    /**
+     * Es de solo lectura: se puebla al deserializar la respuesta y no se envía en las peticiones.
+     *
+     * @param validTo Fecha de fin de vigencia recibida en la respuesta
+     */
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    public void setValidTo(LocalDateTime validTo) {
+        this.validTo = validTo;
     }
 }

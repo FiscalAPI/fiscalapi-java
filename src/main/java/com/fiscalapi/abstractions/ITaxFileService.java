@@ -7,9 +7,11 @@ import java.util.List;
 
 /**
  * Define el contrato específico para operaciones con "tax-file".
- * Hereda las operaciones básicas (CRUD) de IFiscalApiService&lt;TaxFile&gt;.
+ * Hereda la consulta, la creación y la baja de IImmutableFiscalApiService&lt;TaxFile&gt;. No tiene {@code update()}:
+ * el API no actualiza certificados ({@code PUT /api/v4/tax-files/{id}} responde 405). Para cambiar un certificado,
+ * suba el nuevo con {@code create()} y elimine el anterior con {@code delete()}.
  */
-public interface ITaxFileService extends IFiscalApiService<TaxFile> {
+public interface ITaxFileService extends IImmutableFiscalApiService<TaxFile> {
 
     // other specific methods here...
 
