@@ -1,6 +1,6 @@
 package com.fiscalapi.services;
 
-import com.fiscalapi.abstractions.BaseFiscalApiService;
+import com.fiscalapi.abstractions.BaseImmutableFiscalApiService;
 import com.fiscalapi.abstractions.IFiscalApiHttpClient;
 import com.fiscalapi.abstractions.ITaxFileService;
 import com.fiscalapi.common.ApiResponse;
@@ -10,7 +10,7 @@ import com.fiscalapi.models.TaxFile;
 import java.util.List;
 
 
-public class TaxFileService extends BaseFiscalApiService<TaxFile> implements ITaxFileService {
+public class TaxFileService extends BaseImmutableFiscalApiService<TaxFile> implements ITaxFileService {
 
     /**
      * Crea un TaxFileService con el path "tax-files" y la versión de API dada.
