@@ -5,8 +5,11 @@ import com.fiscalapi.http.FiscalApiHttpClient;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Protocol;
+import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import okio.Buffer;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,6 +29,7 @@ final class FakeApi {
     static final String BASE_URL = "https://sdk-tests.fiscalapi.invalid";
 
     private final List<String> requestedUrls = new ArrayList<>();
+    private final List<RecordedRequest> requests = new ArrayList<>();
     private final FiscalApiSettings settings = new FiscalApiSettings();
     private final FiscalApiHttpClient httpClient;
     private String body = "";
@@ -37,6 +41,7 @@ final class FakeApi {
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(chain -> {
                     requestedUrls.add(chain.request().url().toString());
+                    requests.add(RecordedRequest.of(chain.request()));
                     return new Response.Builder()
                             .request(chain.request())
                             .protocol(Protocol.HTTP_1_1)
@@ -70,11 +75,39 @@ final class FakeApi {
         return Collections.unmodifiableList(requestedUrls);
     }
 
+    /** Peticiones recibidas: metodo, URL y cuerpo tal como lo serializo el SDK (null si no lleva). */
+    List<RecordedRequest> requests() {
+        return Collections.unmodifiableList(requests);
+    }
+
     FiscalApiSettings settings() {
         return settings;
     }
 
     FiscalApiHttpClient httpClient() {
         return httpClient;
+    }
+
+    static final class RecordedRequest {
+        final String method;
+        final String url;
+        final String body;
+
+        private RecordedRequest(String method, String url, String body) {
+            this.method = method;
+            this.url = url;
+            this.body = body;
+        }
+
+        static RecordedRequest of(Request request) throws IOException {
+            RequestBody requestBody = request.body();
+            String body = null;
+            if (requestBody != null) {
+                Buffer buffer = new Buffer();
+                requestBody.writeTo(buffer);
+                body = buffer.readUtf8();
+            }
+            return new RecordedRequest(request.method(), request.url().toString(), body);
+        }
     }
 }
