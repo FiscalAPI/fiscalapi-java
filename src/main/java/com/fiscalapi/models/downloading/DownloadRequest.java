@@ -58,6 +58,7 @@ public class DownloadRequest extends BaseDto {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @Deprecated
     private LocalDateTime nextAttemptDate;
     private Integer invoiceCount;
     private List<String> packageIds;
@@ -426,14 +427,20 @@ public class DownloadRequest extends BaseDto {
 
     /**
      * @return Fecha del siguiente intento para la solicitud asociada
+     * @deprecated El API ya no lo devuelve: siempre era null (Fiscalapi no programa un siguiente intento por
+     * solicitud). Se eliminará en una versión mayor; use {@link #getLastAttemptDate()}.
      */
+    @Deprecated
     public LocalDateTime getNextAttemptDate() {
         return nextAttemptDate;
     }
 
     /**
      * @param nextAttemptDate Fecha del siguiente intento para la solicitud asociada
+     * @deprecated El API ya no lo devuelve: siempre era null (Fiscalapi no programa un siguiente intento por
+     * solicitud). Se eliminará en una versión mayor; use {@link #getLastAttemptDate()}.
      */
+    @Deprecated
     public void setNextAttemptDate(LocalDateTime nextAttemptDate) {
         this.nextAttemptDate = nextAttemptDate;
     }
