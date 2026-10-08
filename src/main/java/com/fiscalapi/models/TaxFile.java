@@ -18,6 +18,10 @@ public class TaxFile extends BaseDto {
      * privada FIEL (.key). El API valida el valor: otro (por ejemplo 4, Pfx) responde 400 con la falla en FileType.
      */
     private int fileType;
+    /**
+     * Contraseña de la llave privada (.key). Solo se envía al subir con create() (en el .cer y en la .key). En las consultas
+     * (getList(), getById() y la respuesta de create()) el API la devuelve vacía (""); solo getDefaultValues() la devuelve.
+     */
     private String password;
     private Date validFrom;
     private Date validTo;
