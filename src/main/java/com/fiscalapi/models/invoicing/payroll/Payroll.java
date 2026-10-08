@@ -5,7 +5,9 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import com.fiscalapi.serialization.BigDecimalSerializer;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -30,7 +32,12 @@ public class Payroll {
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime finalPaymentDate;
 
-    private int daysPaid;
+    /**
+     * Dias pagados (NumDiasPagados): entero o con hasta 3 decimales. Use {@code new BigDecimal("15.5")} o
+     * {@code BigDecimal.valueOf(15.5)}, no {@code new BigDecimal(15.5)} con un double que no sea exacto.
+     */
+    @JsonSerialize(using = BigDecimalSerializer.class)
+    private BigDecimal daysPaid;
     private PayrollEarnings earnings;
 
     public String getVersion() {
@@ -72,11 +79,11 @@ public class Payroll {
         this.finalPaymentDate = finalPaymentDate;
     }
 
-    public int getDaysPaid() {
+    public BigDecimal getDaysPaid() {
         return daysPaid;
     }
 
-    public void setDaysPaid(int daysPaid) {
+    public void setDaysPaid(BigDecimal daysPaid) {
         this.daysPaid = daysPaid;
     }
 

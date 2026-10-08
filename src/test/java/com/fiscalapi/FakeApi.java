@@ -33,6 +33,7 @@ final class FakeApi {
     private final FiscalApiSettings settings = new FiscalApiSettings();
     private final FiscalApiHttpClient httpClient;
     private String body = "";
+    private int status = 200;
 
     FakeApi() {
         settings.setApiUrl(BASE_URL);
@@ -45,8 +46,8 @@ final class FakeApi {
                     return new Response.Builder()
                             .request(chain.request())
                             .protocol(Protocol.HTTP_1_1)
-                            .code(200)
-                            .message("OK")
+                            .code(status)
+                            .message(status == 200 ? "OK" : "Error")
                             .body(ResponseBody.create(body, MediaType.get("application/json")))
                             .build();
                 })
@@ -68,7 +69,12 @@ final class FakeApi {
     }
 
     void respondWith(String body) {
+        respondWith(body, 200);
+    }
+
+    void respondWith(String body, int status) {
         this.body = body;
+        this.status = status;
     }
 
     List<String> requestedUrls() {

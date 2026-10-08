@@ -7,6 +7,12 @@ import java.math.BigDecimal;
 
 public class EmployerData {
     private String personId;
+    /**
+     * CURP del empleador persona fisica (Nomina/Emisor/@Curp). Solo aplica en los datos del empleador del emisor de una
+     * factura de nomina por valores (issuer.employerData); en las facturas por referencias el API toma la CURP de la
+     * persona emisora, y los datos de empleador de una persona (getPersonService().getEmployerService()) no la guardan.
+     */
+    private String curp;
     private String employerRegistration;
     private CatalogDto satFundSource;
     private String satFundSourceId;
@@ -32,6 +38,14 @@ public class EmployerData {
 
     public String getPersonId() {
         return personId;
+    }
+
+    public String getCurp() {
+        return curp;
+    }
+
+    public void setCurp(String curp) {
+        this.curp = curp;
     }
 
     public String getEmployerRegistration() {
