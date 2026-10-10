@@ -51,13 +51,19 @@ jobs:
             exit 1
           fi
           
+      # Maven fijo por el wrapper (.mvn/wrapper/maven-wrapper.properties), no el del runner: con Maven 3.10.0
+      # (ubuntu-24.04 desde la imagen 20261004) central-publishing-maven-plugin deja maven-metadata-local.xml en el
+      # bundle y Central lo rechaza ("Bundle has content that does NOT have a .pom file").
+      - name: Versión de Maven
+        run: ./mvnw -v
+
       - name: Desplegar a Maven Central
         env:
           MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
         run: |
-          mvn clean deploy -P release --settings settings.xml -DskipTests=true
+          ./mvnw -B clean deploy -P release --settings settings.xml -DskipTests=true
           
       - name: Notificar resultado
         if: always()
