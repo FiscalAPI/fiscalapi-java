@@ -78,18 +78,18 @@ Compatible con múltiples versiones de Java (desde **Java 8** en adelante)
 <dependency>
     <groupId>com.fiscalapi</groupId>
     <artifactId>fiscalapi</artifactId>
-    <version>4.0.417</version>
+    <version>4.0.433</version>
 </dependency>
 ```
 
 **Gradle (Groovy)**:
 ```groovy
-implementation 'com.fiscalapi:fiscalapi:4.0.417'
+implementation 'com.fiscalapi:fiscalapi:4.0.433'
 ```
 
 **Gradle (Kotlin)**:
 ```kotlin
-implementation("com.fiscalapi:fiscalapi:4.0.417")
+implementation("com.fiscalapi:fiscalapi:4.0.433")
 ```
 
 Para más información, consulta [Snippets en Maven Central](https://central.sonatype.com/artifact/com.fiscalapi/fiscalapi).
