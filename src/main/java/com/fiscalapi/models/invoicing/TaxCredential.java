@@ -18,6 +18,9 @@ public class TaxCredential {
     public void setFileType(Integer fileType) {
         this.fileType = fileType;
     }
+    /**
+     * @return Contraseña de la llave privada: requerida en el objeto .key; en el .cer el API no la usa
+     */
     public String getPassword() {
         return password;
     }

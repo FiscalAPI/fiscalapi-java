@@ -78,18 +78,18 @@ Compatible con múltiples versiones de Java (desde **Java 8** en adelante)
 <dependency>
     <groupId>com.fiscalapi</groupId>
     <artifactId>fiscalapi</artifactId>
-    <version>4.0.417</version>
+    <version>4.0.433</version>
 </dependency>
 ```
 
 **Gradle (Groovy)**:
 ```groovy
-implementation 'com.fiscalapi:fiscalapi:4.0.417'
+implementation 'com.fiscalapi:fiscalapi:4.0.433'
 ```
 
 **Gradle (Kotlin)**:
 ```kotlin
-implementation("com.fiscalapi:fiscalapi:4.0.417")
+implementation("com.fiscalapi:fiscalapi:4.0.433")
 ```
 
 Para más información, consulta [Snippets en Maven Central](https://central.sonatype.com/artifact/com.fiscalapi/fiscalapi).
@@ -165,8 +165,7 @@ public class InvoicesController {
 ```java
 // ***Crear persona ***//
 Person person = new Person();
-person.setLegalName("MI EMPRESA");
-person.setCapitalRegime("S.A De C.V");
+person.setLegalName("MI EMPRESA"); // razón social sin régimen de capital
 person.setEmail("john.doe@fiscalapi.com");
 person.setPassword("Password123!");
 ApiResponse<Person> apiResponse = client.getPersonService().create(person);
@@ -181,7 +180,7 @@ System.out.printf("apiResponse: %s\n", apiResponse);
 // ***Subir archivo .cer (certificado)***//
 TaxFile archivoCer = new TaxFile();
 archivoCer.setPersonId("3f3478b4-60fd-459e-8bfc-f8239fc96257");
-archivoCer.setTin("FUNK671228PH6");
+archivoCer.setTin("FUNK671228PH6"); // RFC de la persona (opcional)
 archivoCer.setBase64File("MIIFgDCCA2igAwIBAgIUMzAwMDEwMDAwMDA1MDAwMDM0NDYwDQYJKoZIhvcNAQELBQAwggEr...");
 archivoCer.setFileType(0); // 0 para certificado
 archivoCer.setPassword("12345678a");
@@ -193,7 +192,7 @@ System.out.printf("apiResponse: %s\n", apiResponseCer);
 // ***Subir archivo .key (clave privada)***//
 TaxFile archivoKey = new TaxFile();
 archivoKey.setPersonId("3f3478b4-60fd-459e-8bfc-f8239fc96257");
-archivoKey.setTin("FUNK671228PH6");
+archivoKey.setTin("FUNK671228PH6"); // RFC de la persona (opcional)
 archivoKey.setBase64File("MIIFDjBABgkqhkiG9w0BBQ0...==");
 archivoKey.setFileType(1); // 1 para llave privada
 archivoKey.setPassword("12345678a");
@@ -402,7 +401,7 @@ if (apiResponse.isSucceeded()) {
 }
 ```
 
-Al firmar, la persona queda con `manifestStatusId` en `Signed`.
+Al firmar, todas las personas del tenant con el RFC del certificado quedan con `manifestStatusId` en `Signed`.
 
 ---
 

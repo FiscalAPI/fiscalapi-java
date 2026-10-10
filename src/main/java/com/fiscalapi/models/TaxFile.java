@@ -6,9 +6,22 @@ import java.util.Date;
 
 public class TaxFile extends BaseDto {
     private String personId;
+    /**
+     * RFC de la persona. Opcional al subir: si es null o vacío, el API usa el RFC de la persona; si se envía, debe ser el
+     * RFC de la persona (sin distinguir mayúsculas) o el API responde 400 con la falla en Tin. El API no guarda el valor
+     * enviado: siempre devuelve el RFC de la persona.
+     */
     private String tin;
     private String base64File;
+    /**
+     * Tipo de archivo: 0 = certificado CSD (.cer), 1 = llave privada CSD (.key), 2 = certificado FIEL (.cer), 3 = llave
+     * privada FIEL (.key). El API valida el valor: otro (por ejemplo 4, Pfx) responde 400 con la falla en FileType.
+     */
     private int fileType;
+    /**
+     * Contraseña de la llave privada (.key). Solo se envía al subir con create() (en el .cer y en la .key). En las consultas
+     * (getList(), getById() y la respuesta de create()) el API la devuelve vacía (""); solo getDefaultValues() la devuelve.
+     */
     private String password;
     private Date validFrom;
     private Date validTo;

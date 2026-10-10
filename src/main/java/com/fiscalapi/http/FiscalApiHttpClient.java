@@ -15,6 +15,7 @@ import com.fiscalapi.common.ValidationFailure;
 import okhttp3.*;
 import okio.Buffer;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class FiscalApiHttpClient implements IFiscalApiHttpClient {
@@ -227,14 +228,18 @@ public class FiscalApiHttpClient implements IFiscalApiHttpClient {
         return apiResponse;
     }
 
-    // Maneja el caso específico de errores de validación (HTTP 400)
+    // Maneja el caso específico de errores de validación (HTTP 400): 'details' une todas las fallas como
+    // "Campo: mensaje" separadas por "; ", igual que los SDK de .NET y Python.
     private void handleValidationErrors(JsonNode root, ApiResponse<?> apiResponse) {
         JsonNode dataNode = root.get("data");
         if (dataNode != null && dataNode.isArray() && !dataNode.isEmpty() && dataNode.get(0).has("propertyName")) {
             try {
-                ValidationFailure firstFailure = objectMapper.convertValue(dataNode.get(0), ValidationFailure.class);
-                String errorDetail = firstFailure.getPropertyName() + ": " + firstFailure.getErrorMessage();
-                apiResponse.setDetails(errorDetail);
+                List<String> failures = new ArrayList<>();
+                for (JsonNode failureNode : dataNode) {
+                    ValidationFailure failure = objectMapper.convertValue(failureNode, ValidationFailure.class);
+                    failures.add(failure.getPropertyName() + ": " + failure.getErrorMessage());
+                }
+                apiResponse.setDetails(String.join("; ", failures));
             } catch (IllegalArgumentException e) {
                 if (root.has("details")) {
                     apiResponse.setDetails(root.get("details").asText());
