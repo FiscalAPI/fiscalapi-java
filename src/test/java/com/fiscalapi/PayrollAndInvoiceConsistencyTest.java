@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
- * Consistencia entre SDK (SDK-059, DEC-136): los mismos escenarios viven en el SDK de .NET y ya los cumplian Node.js,
+ * Consistencia entre SDK: los mismos escenarios viven en el SDK de .NET y ya los cumplian Node.js,
  * Python y PHP:
  * 1. nomina: daysPaid admite dias fraccionarios (BigDecimal) y viaja sin perder precision;
  * 2. nomina por valores: issuer.employerData.curp;

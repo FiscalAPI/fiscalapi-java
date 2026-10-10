@@ -25,14 +25,15 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
- * Tolerancia del SDK a respuestas que el API devolvera en las proximas fases (SDK-001).
+ * Tolerancia del SDK a respuestas del API con valores y campos que el SDK todavia no modela.
  *
- * Son pruebas de caracterizacion: fijan el comportamiento ACTUAL. Una prueba cuyo nombre cita
- * SDK-014 documenta un defecto conocido; SDK-014 la invierte al corregirlo. Los casos son:
- * 1. una transaccion de timbres con creditType 3 (creditos de ticket, Fase 1);
- * 2. una persona con el campo nuevo availableTicketBalance (Fase 1);
+ * Son pruebas de caracterizacion: fijan el comportamiento ACTUAL. Una prueba cuyo nombre incluye fixedBy o
+ * exposedBy documenta un defecto conocido; se invierte cuando el SDK agregue el credito de ticket y
+ * availableTicketBalance. Los casos son:
+ * 1. una transaccion de timbres con creditType 3 (creditos de ticket);
+ * 2. una persona con el campo nuevo availableTicketBalance;
  * 3. propiedades desconocidas en la envoltura, en data y en objetos anidados;
- * 4. globalInformation en la respuesta de una factura (BE-008).
+ * 4. globalInformation en la respuesta de una factura.
  */
 class ResponseToleranceTest {
 
@@ -113,7 +114,7 @@ class ResponseToleranceTest {
         assertFalse(ticketTransaction.toString().contains("unknown"));
     }
 
-    // 4. globalInformation en la respuesta de una factura (BE-008)
+    // 4. globalInformation en la respuesta de una factura
 
     @Test
     void invoiceWithGlobalInformationDeserializesIt() {

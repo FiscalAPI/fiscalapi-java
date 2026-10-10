@@ -29,12 +29,12 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
- * Cambios de codigo del SDK en el ciclo de deuda tecnica 2 (Fase III, C22). Los mismos escenarios viven en los SDK de
- * .NET, Node.js, Python y PHP (DEC-136), cuando el cambio aplica a cada uno:
+ * Contrato publico que fijan estas pruebas. Los mismos escenarios viven en los SDK de .NET, Node.js, Python y PHP, con
+ * el mismo resultado observable en cada uno (lo retirado no existe ni compila), cuando el cambio le aplica:
  * 1. persona: validTo de solo lectura (no se envia) y committedBalance heredado; capitalRegime, stripeCustomerId y
- *    subscriptionStatus fuera del modelo (SDK-043, SDK-044); StripePaymentMethodDto eliminado (SDK-047);
- * 2. certificados: tin opcional al subir (SDK-045) y fileType 2 y 3 de la FIEL (SDK-058);
- * 3. certificados sin update(): el API retiro PUT tax-files (SDK-051); los servicios que si actualizan lo conservan.
+ *    subscriptionStatus fuera del modelo; StripePaymentMethodDto eliminado;
+ * 2. certificados: tin opcional al subir y fileType 2 y 3 de la FIEL;
+ * 3. certificados sin update(): el API retiro PUT tax-files; los servicios que si actualizan lo conservan.
  */
 class CycleContractTest {
 
@@ -62,7 +62,7 @@ class CycleContractTest {
         return Arrays.stream(type.getMethods()).map(Method::getName).collect(Collectors.toList());
     }
 
-    // 1. Persona (SDK-043, SDK-044, SDK-047)
+    // 1. Persona
 
     @Test
     void personFromResponseReadsValidToAndCommittedBalanceAndDropsTheRetiredFields() {
@@ -108,7 +108,7 @@ class CycleContractTest {
         assertThrows(ClassNotFoundException.class, () -> Class.forName("com.fiscalapi.common.StripePaymentMethodDto"));
     }
 
-    // 2. Certificados: tin opcional (SDK-045) y fileType de la FIEL (SDK-058)
+    // 2. Certificados: tin opcional y fileType de la FIEL
 
     @ParameterizedTest
     @ValueSource(ints = {2, 3})
@@ -135,7 +135,7 @@ class CycleContractTest {
         assertEquals(PERSON_ID, body.get("personId").asText());
     }
 
-    // 3. Certificados sin update() (SDK-051)
+    // 3. Certificados sin update()
 
     @Test
     void taxFileServiceHasNoUpdate() {
