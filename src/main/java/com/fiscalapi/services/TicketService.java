@@ -106,6 +106,10 @@ public class TicketService implements ITicketService {
             }
         }
         addPair(pairs, "personId", filters.getPersonId());
+        if (Boolean.TRUE.equals(filters.getDetails())) {
+            pairs.add("details=true");
+        }
+        addPair(pairs, "globalInvoiceId", filters.getGlobalInvoiceId());
         addPair(pairs, "from", filters.getFrom());
         addPair(pairs, "to", filters.getTo());
         addPair(pairs, "pageNumber", filters.getPageNumber());

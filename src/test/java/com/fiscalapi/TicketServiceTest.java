@@ -47,6 +47,7 @@ class TicketServiceTest {
 
     private static final String TICKETS_URL = FakeApi.BASE_URL + "/api/v4/tickets";
     private static final String ISSUER_ID = "4b1c2d3e-0000-4000-8000-000000000002";
+    private static final String GLOBAL_INVOICE_ID = "7c1d2e3f-0000-4000-8000-0000000000b2";
     private static final String TICKET_ID = "9f8e7d6c-0000-4000-8000-0000000000a1";
     private static final String IDEMPOTENCY_KEY = "pos-01-F-1001";
 
@@ -266,6 +267,31 @@ class TicketServiceTest {
         assertEquals(TicketStatus.PENDING, ticket.getStatus());
         assertNull(ticket.getItems());
         assertNull(ticket.getEvents());
+    }
+
+    @Test
+    void getListSendsDetailsAndGlobalInvoiceIdWhenAssigned() {
+        api.respondWith(ok("{'items':[],'pageNumber':1,'totalPages':0,'totalCount':0,'hasPreviousPage':false,"
+                + "'hasNextPage':false}", 200));
+        TicketListFilters filters = new TicketListFilters();
+        filters.setDetails(true);
+        filters.setGlobalInvoiceId(GLOBAL_INVOICE_ID);
+
+        tickets.getList(filters);
+
+        assertEquals(TICKETS_URL + "?details=true&globalInvoiceId=" + GLOBAL_INVOICE_ID, singleRequest().url);
+    }
+
+    @Test
+    void getListDoesNotSendDetailsWhenFalse() {
+        api.respondWith(ok("{'items':[],'pageNumber':1,'totalPages':0,'totalCount':0,'hasPreviousPage':false,"
+                + "'hasNextPage':false}", 200));
+        TicketListFilters filters = new TicketListFilters();
+        filters.setDetails(false);
+
+        tickets.getList(filters);
+
+        assertEquals(TICKETS_URL, singleRequest().url);
     }
 
     @Test

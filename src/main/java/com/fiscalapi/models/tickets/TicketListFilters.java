@@ -13,6 +13,8 @@ public class TicketListFilters extends SerializableDto {
 
     private List<TicketStatus> status;
     private String personId;
+    private Boolean details;
+    private String globalInvoiceId;
     private LocalDate from;
     private LocalDate to;
     private Integer pageNumber;
@@ -38,6 +40,28 @@ public class TicketListFilters extends SerializableDto {
 
     public void setPersonId(String personId) {
         this.personId = personId;
+    }
+
+    /**
+     * @return Con true, cada ticket trae sus conceptos con impuestos (sin la historia); null o false no se envían
+     */
+    public Boolean getDetails() {
+        return details;
+    }
+
+    public void setDetails(Boolean details) {
+        this.details = details;
+    }
+
+    /**
+     * @return Factura global que ampara los tickets
+     */
+    public String getGlobalInvoiceId() {
+        return globalInvoiceId;
+    }
+
+    public void setGlobalInvoiceId(String globalInvoiceId) {
+        this.globalInvoiceId = globalInvoiceId;
     }
 
     /**
