@@ -3,6 +3,7 @@ package com.fiscalapi.examples;
 import com.fiscalapi.common.ApiResponse;
 import com.fiscalapi.common.FiscalApiSettings;
 import com.fiscalapi.common.PagedList;
+import com.fiscalapi.models.CreditBalance;
 import com.fiscalapi.models.CreditType;
 import com.fiscalapi.models.Person;
 import com.fiscalapi.models.StampTransaction;
@@ -12,9 +13,10 @@ import com.fiscalapi.services.FiscalApiClient;
 /**
  * Ejemplos de uso del servicio de timbres.
  *
- * El ledger mueve dos saldos que nunca se mezclan y que se eligen con creditType:
+ * El ledger mueve tres saldos que nunca se mezclan y que se eligen con creditType:
  * - CreditType.STAMP (por defecto) mueve timbres, el saldo availableBalance de la persona.
  * - CreditType.VALIDATION mueve créditos de validación SAT, el saldo availableValidationBalance.
+ * - CreditType.TICKET mueve créditos de ticket, el saldo de tipo 3 en balances.
  *
  * La API expone una sola operación de movimiento: retirar es transferir invirtiendo el origen y
  * el destino, por eso withdrawStamps hace la misma petición que transferStamps.
@@ -41,6 +43,7 @@ public class EjemplosTimbres {
         transferirTimbres(client);
         transferirCreditosDeValidacion(client);
         retirarCreditosDeValidacion(client);
+        transferirCreditosDeTicket(client);
         consultarSaldos(client);
     }
 
@@ -70,7 +73,7 @@ public class EjemplosTimbres {
     }
 
     /**
-     * Consulta los dos saldos de las personas que participan en las transferencias.
+     * Consulta los saldos de las personas que participan en las transferencias.
      */
     private static void consultarSaldos(FiscalApiClient client) {
         System.out.println("\n===== Saldos =====");
@@ -130,6 +133,23 @@ public class EjemplosTimbres {
         System.out.println(apiResponse);
     }
 
+    /**
+     * Transfiere créditos de ticket. Los saldos de timbres y de validaciones no se tocan.
+     */
+    private static void transferirCreditosDeTicket(FiscalApiClient client) {
+        System.out.println("\n===== 5. Transferir créditos de ticket =====");
+
+        StampTransactionParams requestModel = new StampTransactionParams();
+        requestModel.setFromPersonId(PERSONA_ORIGEN_ID);
+        requestModel.setToPersonId(PERSONA_DESTINO_ID);
+        requestModel.setAmount(100);
+        requestModel.setComments("venta de creditos de ticket");
+        requestModel.setCreditType(CreditType.TICKET);
+
+        ApiResponse<Boolean> apiResponse = client.getStampService().transferStamps(requestModel);
+        System.out.println(apiResponse);
+    }
+
     private static void imprimirSaldo(FiscalApiClient client, String personId) {
         ApiResponse<Person> apiResponse = client.getPersonService().getById(personId, false);
 
@@ -139,8 +159,14 @@ public class EjemplosTimbres {
         }
 
         Person person = apiResponse.getData();
+        // El saldo de créditos de ticket está en balances; un tipo ausente tiene saldo 0.
+        int creditosDeTicket = person.getBalances().stream()
+                .filter(balance -> balance.getCreditType() == CreditType.TICKET.getValue())
+                .mapToInt(CreditBalance::getAvailable)
+                .sum();
         System.out.println(person.getLegalName()
                 + " | timbres " + person.getAvailableBalance()
-                + " | validaciones " + person.getAvailableValidationBalance());
+                + " | validaciones " + person.getAvailableValidationBalance()
+                + " | tickets " + creditosDeTicket);
     }
 }

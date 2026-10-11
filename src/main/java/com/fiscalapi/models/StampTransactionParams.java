@@ -41,7 +41,7 @@ public class StampTransactionParams
     }
 
     /**
-     * Tipo de crédito a transferir: STAMP (timbres) o VALIDATION (créditos de validación SAT).
+     * Tipo de crédito a transferir: STAMP (timbres), VALIDATION (créditos de validación SAT) o TICKET (créditos de ticket).
      * Si no se asigna, se transfieren timbres.
      *
      * @return El tipo de crédito que se va a transferir

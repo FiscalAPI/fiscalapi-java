@@ -2,6 +2,16 @@
 
 Cambios del SDK y notas de comportamiento del API de FiscalAPI que afectan a quien usa el SDK.
 
+## [Sin publicar]
+
+### Enum `CreditType`
+
+- Tipo de crédito `TICKET` (3) para transferir y leer créditos de ticket: `getStampService().transferStamps()` con `setCreditType(CreditType.TICKET)` los transfiere con las mismas reglas que los timbres, y las transacciones (`getStampService().getList()`, `getStampService().getById()`) los devuelven como `CreditType.TICKET`. El saldo de créditos de ticket se lee en `getBalances()` de la persona (el `CreditBalance` con `getCreditType()` igual a `CreditType.TICKET.getValue()`); un tipo ausente tiene saldo 0. Los valores existentes no cambian (`STAMP` 1, `VALIDATION` 2).
+
+### Modelo `StampTransaction`
+
+- Las transacciones con un tipo de crédito, tipo o estatus desconocido conservan su número en `get*Value()` y al serializar: los nuevos `getCreditTypeValue()`, `getTransactionTypeValue()` y `getTransactionStatusValue()` devuelven el entero que envió la API (`Integer`), y `toString()` lo vuelve a escribir tal cual. Antes el número se perdía. `getCreditType()`, `getTransactionType()` y `getTransactionStatus()` no cambian: con un número que el SDK no conoce devuelven `null`, como antes.
+
 ## [4.0.433] - 2026-10-10
 
 ### Cambios incompatibles (BREAKING)

@@ -7,11 +7,11 @@ import com.fiscalapi.models.StampTransactionParams;
 public interface IStampService extends IFiscalApiService<StampTransaction> {
 
     /**
-     * Transfiere timbres o créditos de validación SAT de una persona a otra.
+     * Transfiere timbres, créditos de validación SAT o créditos de ticket de una persona a otra.
      * POST /api/{apiVersion}/stamps
      *
-     * <p>El saldo que se mueve lo elige {@code creditType} del modelo: STAMP mueve timbres y
-     * VALIDATION mueve créditos de validación. Los dos saldos nunca se mezclan.</p>
+     * <p>El saldo que se mueve lo elige {@code creditType} del modelo: STAMP mueve timbres,
+     * VALIDATION mueve créditos de validación y TICKET mueve créditos de ticket. Los saldos nunca se mezclan.</p>
      *
      * @param requestModel Parámetros de la transferencia
      * @return ApiResponse con true cuando la transferencia se aplicó

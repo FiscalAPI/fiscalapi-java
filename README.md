@@ -46,6 +46,7 @@
 - **Transferir timbres** entre personas
 - **Retirar timbres** de una persona
 - **Créditos de validación SAT** transfiere y retira créditos de validación con el mismo servicio, eligiendo el saldo con `creditType`
+- **Créditos de ticket** transfiere y retira créditos de ticket con `CreditType.TICKET`; su saldo se lee en `balances` de la persona
 
 ## ✅ Validaciones SAT
 - **Validación de CFDI timbrados** estructura del Anexo 20, vigencia del certificado del emisor, sello del CFDI y sello del SAT en el TimbreFiscalDigital
@@ -279,9 +280,9 @@ for (SatValidationResult result : apiResponse.getData()) {
 
 ---
 
-### 6. Transferir créditos de validación
+### 6. Transferir créditos de validación o de ticket
 
-El mismo servicio de timbres mueve los dos saldos, que nunca se mezclan: `CreditType.STAMP` (por defecto) mueve timbres y `CreditType.VALIDATION` mueve créditos de validación SAT.
+El mismo servicio de timbres mueve los saldos, que nunca se mezclan: `CreditType.STAMP` (por defecto) mueve timbres, `CreditType.VALIDATION` mueve créditos de validación SAT y `CreditType.TICKET` mueve créditos de ticket.
 
 ```java
 // *** Transferir créditos de validación ***//
@@ -294,6 +295,24 @@ transParams.setCreditType(CreditType.VALIDATION);
 
 ApiResponse<Boolean> apiResponse = client.getStampService().transferStamps(transParams);
 System.out.printf("apiResponse: %s\n", apiResponse);
+
+// *** Transferir créditos de ticket ***//
+StampTransactionParams ticketParams = new StampTransactionParams();
+ticketParams.setFromPersonId("0e82a655-5f0c-4e07-abab-8f322e4123ef");
+ticketParams.setToPersonId("da71df0c-f328-45ee-9bd9-3096ed02c164");
+ticketParams.setAmount(100);
+ticketParams.setComments("venta de creditos de ticket");
+ticketParams.setCreditType(CreditType.TICKET);
+
+ApiResponse<Boolean> ticketResponse = client.getStampService().transferStamps(ticketParams);
+System.out.printf("ticketResponse: %s\n", ticketResponse);
+
+// El saldo de créditos de ticket se lee en balances de la persona (un tipo ausente tiene saldo 0)
+Person person = client.getPersonService().getById("da71df0c-f328-45ee-9bd9-3096ed02c164", false).getData();
+int creditosDeTicket = person.getBalances().stream()
+        .filter(balance -> balance.getCreditType() == CreditType.TICKET.getValue())
+        .mapToInt(CreditBalance::getAvailable)
+        .sum();
 ```
 
 ---
