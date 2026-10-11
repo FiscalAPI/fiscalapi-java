@@ -19,7 +19,7 @@ No linting or formatting tools are configured.
 
 ## Tests
 
-`src/test/java` holds offline JUnit 5 tests (Surefire 3.x, `junit-jupiter` in `test` scope, so nothing ships in the jar). `FakeApi` builds a `FiscalApiHttpClient` over an `OkHttpClient` whose interceptor answers every request with a fixed JSON from `src/test/resources/fixtures/` (shaped like the API's camelCase responses, enums as integers), so each test runs the real service → HTTP client → Jackson path. `ResponseToleranceTest` characterizes how the SDK handles responses of upcoming API phases; a test whose name cites a task (for example `_fixedBySdk014`) pins a known defect and must be inverted by that task.
+`src/test/java` holds offline JUnit 5 tests (Surefire 3.x, `junit-jupiter` in `test` scope, so nothing ships in the jar). `FakeApi` builds a `FiscalApiHttpClient` over an `OkHttpClient` whose interceptor answers every request with a fixed JSON from `src/test/resources/fixtures/` (shaped like the API's camelCase responses, enums as integers), so each test runs the real service → HTTP client → Jackson path. `ResponseToleranceTest` characterizes how the SDK handles API responses with values and fields it does not model yet; a test whose name contains `fixedBy` or `exposedBy` pins a known defect and must be inverted when the SDK models them.
 
 ## Architecture
 
