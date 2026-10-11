@@ -24,6 +24,10 @@ Cambios del SDK y notas de comportamiento del API de FiscalAPI que afectan a qui
 - `IFiscalApiHttpClient` agrega la sobrecarga `post(url, body, responseType, headers)` para headers propios de la petición (la usa `Idempotency-Key`). Quien implementa su propia versión de `IFiscalApiHttpClient` (p. ej. un doble de pruebas) debe agregar `post(url, body, responseType, headers)`; quien usa el cliente del SDK no cambia nada.
 - Ejemplo: `examples/EjemplosTickets.java`.
 
+### Modelo `InvoiceItem`
+
+- `ticketId` en el concepto de la factura para ligar la factura global a los tickets (Auto CFDI); se omite si es nulo. En Java es `InvoiceItem.getTicketId()`/`setTicketId(String)`, con `@JsonInclude(NON_NULL)` en el campo: en `null` no viaja en el JSON, aunque el `ObjectMapper` incluya los nulos. Un 409 por tickets no disponibles trae `unavailableTickets` (`ticketId`, `status`) en `getErrorData()`. Ejemplo: `examples/EjemplosFacturaGlobalTickets.java`.
+
 ### `ApiResponse`
 
 - `getErrorData()` (`JsonNode` de Jackson): nuevo miembro (aditivo) con el `data` crudo de una respuesta de error, tal como lo envía la API: por ejemplo `existingTicketId` en el 409 de la ingesta de tickets (`response.getErrorData().get("existingTicketId").asText()`) o `expectedTotal` y `computedTotal` en su 422. Es null en las respuestas exitosas y en los errores sin `data`. `getData()`, `getMessage()`, `getDetails()`, `getHttpStatusCode()` y `getTraceIdentifier()` no cambian.
