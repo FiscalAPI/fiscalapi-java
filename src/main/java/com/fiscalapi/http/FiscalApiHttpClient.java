@@ -17,6 +17,7 @@ import okio.Buffer;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class FiscalApiHttpClient implements IFiscalApiHttpClient {
 
@@ -42,6 +43,17 @@ public class FiscalApiHttpClient implements IFiscalApiHttpClient {
     @Override
     public <T> ApiResponse<T> post(String url, Object body, Class<T> responseType) {
         return execute(buildPost(url, body), simpleType(responseType));
+    }
+
+    @Override
+    public <T> ApiResponse<T> post(String url, Object body, Class<T> responseType, Map<String, String> headers) {
+        Request.Builder builder = new Request.Builder()
+                .url(url)
+                .post(createRequestBody(body));
+        if (headers != null) {
+            headers.forEach(builder::addHeader);
+        }
+        return execute(builder.build(), simpleType(responseType));
     }
 
     @Override
@@ -199,6 +211,11 @@ public class FiscalApiHttpClient implements IFiscalApiHttpClient {
             // por eso se lee antes de la rama que atiende el HTTP 400.
             if (root.has("traceIdentifier") && !root.get("traceIdentifier").isNull()) {
                 apiResponse.setTraceIdentifier(root.get("traceIdentifier").asText());
+            }
+
+            // El data crudo de un error, aparte de getData() (que no cambia): solo si la respuesta no es exitosa y lo trae.
+            if (!succeeded && root.has("data") && !root.get("data").isNull()) {
+                apiResponse.setErrorData(root.get("data"));
             }
 
             // Manejo especial de errores de validación (HTTP 400)

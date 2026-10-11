@@ -4,10 +4,22 @@ import com.fiscalapi.common.ApiResponse;
 import com.fiscalapi.common.PagedList;
 
 import java.util.List;
+import java.util.Map;
 
 public interface IFiscalApiHttpClient {
     <T> ApiResponse<T> get(String url, Class<T> responseType);
     <T> ApiResponse<T> post(String url, Object body, Class<T> responseType);
+
+    /**
+     * POST con headers propios de la petición (por ejemplo Idempotency-Key), además de los del cliente.
+     *
+     * @param url          URL completa
+     * @param body         Cuerpo a serializar como JSON
+     * @param responseType Tipo de data en la respuesta
+     * @param headers      Headers de esta petición; null o vacío no agrega ninguno
+     * @return ApiResponse con la data deserializada
+     */
+    <T> ApiResponse<T> post(String url, Object body, Class<T> responseType, Map<String, String> headers);
     <T> ApiResponse<T> put(String url, Object body, Class<T> responseType);
     <T> ApiResponse<T> delete(String url, Object body, Class<T> responseType);
     ApiResponse<Boolean> delete(String url);

@@ -54,6 +54,11 @@
 - **Listas negras del SAT** artículos 69-B y 69-B Bis del CFF, por CFDI o por RFC
 - **Catálogo de validaciones** consulta los tipos disponibles y los estatus que cada uno puede tomar
 
+## 🧾 Tickets (Auto CFDI)
+- **Ingesta de ventas pagadas** del punto de venta con `Idempotency-Key` opcional (`getTicketService().create`)
+- **Consulta con filtros** por estado, emisor, rango de fechas de pago y página; detalle con conceptos e historia
+- **Código para reimprimir** y **cancelación** de tickets pendientes (ejemplo en `examples/EjemplosTickets.java`)
+
 ## 🛍️ Gestión de Productos/Servicios
 - **Gestión de productos y servicios** con catálogo personalizable
 - **Administración de impuestos aplicables** (IVA, ISR, IEPS)
