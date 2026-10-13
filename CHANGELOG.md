@@ -2,6 +2,36 @@
 
 Cambios del SDK y notas de comportamiento del API de FiscalAPI que afectan a quien usa el SDK.
 
+## [4.0.439] - 2026-10-12
+
+### Enum `CreditType`
+
+- Tipo de crédito `TICKET` (3) para transferir y leer créditos de ticket: `getStampService().transferStamps()` con `setCreditType(CreditType.TICKET)` los transfiere con las mismas reglas que los timbres, y las transacciones (`getStampService().getList()`, `getStampService().getById()`) los devuelven como `CreditType.TICKET`. El saldo de créditos de ticket se lee en `getBalances()` de la persona (el `CreditBalance` con `getCreditType()` igual a `CreditType.TICKET.getValue()`); un tipo ausente tiene saldo 0. Los valores existentes no cambian (`STAMP` 1, `VALIDATION` 2).
+
+### Modelo `StampTransaction`
+
+- Las transacciones con un tipo de crédito, tipo o estatus desconocido conservan su número en `get*Value()` y al serializar: los nuevos `getCreditTypeValue()`, `getTransactionTypeValue()` y `getTransactionStatusValue()` devuelven el entero que envió la API (`Integer`), y `toString()` lo vuelve a escribir tal cual. Antes el número se perdía. `getCreditType()`, `getTransactionType()` y `getTransactionStatus()` no cambian: con un número que el SDK no conoce devuelven `null`, como antes.
+
+### Servicio de tickets (Auto CFDI)
+
+- Servicio de tickets (Auto CFDI): `tickets.create` (con `Idempotency-Key` opcional), `getList` con filtros, `getById`, `getCode` y `cancel`, en `getTicketService()` (`ITicketService`/`TicketService`):
+  - `create(ticket)` y `create(ticket, idempotencyKey)`: `POST /api/v4/tickets`; cobra 1 crédito de ticket y devuelve `TicketIngestionResult` (`id`, `ticketCode`, `qrUrl`, `status`, `selfInvoiceEligible`, `eligibleUntil` y los importes calculados). Con `idempotencyKey` distinto de null envía el header `Idempotency-Key` (sin ella no lo envía): repetir la key con el mismo cuerpo responde 200 con el ticket original y sin cobrar. Un folio y serie ya activos del emisor responden 409 y un total que no cuadra 422, como `ApiResponse` fallida con el texto de la API en `getDetails()` y su `data` en `getErrorData()`.
+  - `getList(TicketListFilters)`: `GET /api/v4/tickets` con `status` (`List<TicketStatus>`; se repite la llave `status`), `personId`, `details` (con `true` envía `details=true`: cada ticket trae sus conceptos con impuestos, sin la historia; `null` o `false` no se envían), `globalInvoiceId` (factura global que ampara los tickets), `from`/`to` (`LocalDate`, fecha civil de México), `pageNumber` y `pageSize`; los filtros en null no se envían.
+  - `getById(id, details)`: con `details` trae `items` (con `itemTaxes`) y `events`. `getCode(id)` devuelve `TicketCodeResult` (`ticketCode`, `qrUrl`) para reimprimir. `cancel(id)` usa `DELETE` (solo desde `pending`; el crédito no se devuelve).
+- Modelos nuevos en `com.fiscalapi.models.tickets`: `Ticket`, `TicketIssuer`, `TicketItem`, `TicketItemTax`, `TicketEvent`, `TicketIngestionResult`, `TicketCodeResult` y `TicketListFilters`. `paymentDate` es `LocalDateTime` en hora civil de México y viaja como `yyyy-MM-ddTHH:mm:ss`; los importes (`BigDecimal`) se envían como texto con su escala (constrúyalos desde un String).
+- Enums `TicketStatus`, `TicketEventType` y `TicketActorType`: los modelos guardan el texto de la API; `getStatus()`, `getType()` y `getActorType()` devuelven null con un valor que el SDK no conoce, y `getStatusValue()`, `getTypeValue()` y `getActorTypeValue()` conservan el texto.
+- `IFiscalApiClient` agrega `getTicketService()`. Quien implementa su propia versión de `IFiscalApiClient` (p. ej. un doble de pruebas) debe agregar `getTicketService()`; quien usa el cliente del SDK no cambia nada.
+- `IFiscalApiHttpClient` agrega la sobrecarga `post(url, body, responseType, headers)` para headers propios de la petición (la usa `Idempotency-Key`). Quien implementa su propia versión de `IFiscalApiHttpClient` (p. ej. un doble de pruebas) debe agregar `post(url, body, responseType, headers)`; quien usa el cliente del SDK no cambia nada.
+- Ejemplo: `examples/EjemplosTickets.java`.
+
+### Modelo `InvoiceItem`
+
+- `ticketId` en el concepto de la factura para ligar la factura global a los tickets (Auto CFDI); se omite si es nulo. En Java es `InvoiceItem.getTicketId()`/`setTicketId(String)`, con `@JsonInclude(NON_NULL)` en el campo: en `null` no viaja en el JSON, aunque el `ObjectMapper` incluya los nulos. Un 409 por tickets no disponibles trae `unavailableTickets` (`ticketId`, `status`) en `getErrorData()`. Ejemplo: `examples/EjemplosFacturaGlobalTickets.java`.
+
+### `ApiResponse`
+
+- `getErrorData()` (`JsonNode` de Jackson): nuevo miembro (aditivo) con el `data` crudo de una respuesta de error, tal como lo envía la API: por ejemplo `existingTicketId` en el 409 de la ingesta de tickets (`response.getErrorData().get("existingTicketId").asText()`) o `expectedTotal` y `computedTotal` en su 422. Es null en las respuestas exitosas y en los errores sin `data`. `getData()`, `getMessage()`, `getDetails()`, `getHttpStatusCode()` y `getTraceIdentifier()` no cambian.
+
 ## [4.0.433] - 2026-10-10
 
 ### Cambios incompatibles (BREAKING)

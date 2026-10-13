@@ -2,6 +2,7 @@ package com.fiscalapi;
 
 import com.fiscalapi.common.FiscalApiSettings;
 import com.fiscalapi.http.FiscalApiHttpClient;
+import okhttp3.Headers;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Protocol;
@@ -81,7 +82,7 @@ final class FakeApi {
         return Collections.unmodifiableList(requestedUrls);
     }
 
-    /** Peticiones recibidas: metodo, URL y cuerpo tal como lo serializo el SDK (null si no lleva). */
+    /** Peticiones recibidas: metodo, URL, cuerpo tal como lo serializo el SDK (null si no lleva) y headers propios. */
     List<RecordedRequest> requests() {
         return Collections.unmodifiableList(requests);
     }
@@ -98,11 +99,13 @@ final class FakeApi {
         final String method;
         final String url;
         final String body;
+        final Headers headers;
 
-        private RecordedRequest(String method, String url, String body) {
+        private RecordedRequest(String method, String url, String body, Headers headers) {
             this.method = method;
             this.url = url;
             this.body = body;
+            this.headers = headers;
         }
 
         static RecordedRequest of(Request request) throws IOException {
@@ -113,7 +116,7 @@ final class FakeApi {
                 requestBody.writeTo(buffer);
                 body = buffer.readUtf8();
             }
-            return new RecordedRequest(request.method(), request.url().toString(), body);
+            return new RecordedRequest(request.method(), request.url().toString(), body, request.headers());
         }
     }
 }

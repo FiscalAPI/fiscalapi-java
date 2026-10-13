@@ -3,7 +3,7 @@ package com.fiscalapi.models;
 /**
  * Saldo de una persona para un tipo de crédito (Person.balances). Un tipo ausente tiene saldo 0.
  *
- * <p>creditType es el entero del API (1 timbres, 2 créditos de validación; ver {@link CreditType}). Se modela como
+ * <p>creditType es el entero del API (1 timbres, 2 créditos de validación, 3 créditos de ticket; ver {@link CreditType}). Se modela como
  * Integer para conservar el número de un tipo que este SDK todavía no conoce.</p>
  */
 public class CreditBalance {

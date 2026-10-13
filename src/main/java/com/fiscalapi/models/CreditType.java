@@ -5,14 +5,15 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
  * Tipo de crédito que mueve una transacción del ledger de timbres. Los saldos nunca se mezclan:
- * STAMP afecta el saldo de timbres (availableBalance) y VALIDATION el de créditos de validación
- * SAT (availableValidationBalance).
+ * STAMP afecta el saldo de timbres (availableBalance), VALIDATION el de créditos de validación
+ * SAT (availableValidationBalance) y TICKET el de créditos de ticket (el de tipo 3 en Person.balances).
  *
  * <p>La API lo representa como entero, por eso cada constante lleva su valor explícito.</p>
  */
 public enum CreditType {
     STAMP(1),
-    VALIDATION(2);
+    VALIDATION(2),
+    TICKET(3);
 
     private final int value;
 

@@ -1,5 +1,6 @@
 package com.fiscalapi.models.invoicing;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fiscalapi.serialization.BigDecimalSerializer;
 
@@ -23,6 +24,14 @@ public class InvoiceItem {
     private String itemSku;
     private List<ItemTax> itemTaxes;
     private OnBehalfOf onBehalfOf;
+    /**
+     * Id del ticket de Auto CFDI que este concepto factura (opcional). Solo en una factura global de ingreso (tipo I con
+     * globalInformation) con el emisor por referencia (issuer.id). Un ticket puede ir en varios conceptos, uno por grupo
+     * de objeto de impuesto e impuestos; la suma de sus conceptos debe reflejar el ticket. En null no se envia, aunque el
+     * ObjectMapper incluya los null: sin ticketId la peticion es la de siempre.
+     */
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String ticketId;
 
     public String getId() {
         return id;
@@ -99,5 +108,13 @@ public class InvoiceItem {
 
     public void setOnBehalfOf(OnBehalfOf onBehalfOf) {
         this.onBehalfOf = onBehalfOf;
+    }
+
+    public String getTicketId() {
+        return ticketId;
+    }
+
+    public void setTicketId(String ticketId) {
+        this.ticketId = ticketId;
     }
 }

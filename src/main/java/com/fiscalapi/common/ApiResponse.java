@@ -1,5 +1,7 @@
 package com.fiscalapi.common;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 public class ApiResponse<T> extends  SerializableDto {
     private T data;
     private boolean succeeded;
@@ -7,6 +9,7 @@ public class ApiResponse<T> extends  SerializableDto {
     private String details;
     private int httpStatusCode;
     private String traceIdentifier;
+    private JsonNode errorData;
 
     // Getters / Setters
     public T getData() { return data; }
@@ -33,5 +36,14 @@ public class ApiResponse<T> extends  SerializableDto {
      */
     public String getTraceIdentifier() { return traceIdentifier; }
     public void setTraceIdentifier(String traceIdentifier) { this.traceIdentifier = traceIdentifier; }
+
+    /**
+     * El data crudo de una respuesta de error, tal como lo envió la API (por ejemplo existingTicketId en el 409 de
+     * la ingesta de tickets, o expectedTotal y computedTotal en su 422). getData() no cambia.
+     *
+     * @return El data del error, o null en las respuestas exitosas y en los errores sin data
+     */
+    public JsonNode getErrorData() { return errorData; }
+    public void setErrorData(JsonNode errorData) { this.errorData = errorData; }
 
 }
