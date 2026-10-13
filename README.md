@@ -433,7 +433,7 @@ Al firmar, todas las personas del tenant con el RFC del certificado quedan con `
 
 FiscalAPI firma cada entrega con [Standard Webhooks](https://www.standardwebhooks.com) y el secreto `whsec_…` de su endpoint. `Webhook.verify` (paquete `com.fiscalapi.webhooks`) comprueba la firma (en tiempo constante) y que `webhook-timestamp` no difiera más de 5 minutos del reloj del receptor, y devuelve el `WebhookEvent`. La firma es la única prueba de que la entrega viene de FiscalAPI.
 
-**Verifique el cuerpo crudo**: recíbalo como `byte[]` (o `String`) sin un conversor que lo reserialice, y conviértalo a texto UTF-8 antes de deserializarlo. Un cuerpo deserializado y vuelto a serializar (por ejemplo, con `@RequestBody WebhookEvent` o `@RequestBody Map`) cambia sus bytes y la firma deja de coincidir.
+**Verifique el cuerpo crudo**: páselo tal como llegó, como `byte[]` (`@RequestBody byte[]` en Spring, que no lo reserializa) o como el texto UTF-8 de esos bytes. Con `byte[]`, `Webhook.verify` lo lee como UTF-8 estricto y rechaza bytes inválidos. Un cuerpo deserializado y vuelto a serializar (por ejemplo, con `@RequestBody WebhookEvent` o `@RequestBody Map`) cambia sus bytes y la firma deja de coincidir.
 
 ```java
 import com.fiscalapi.models.webhooks.WebhookEvent;
@@ -449,7 +449,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 @RestController
@@ -467,13 +466,11 @@ public class FiscalApiWebhooksController {
 
     @PostMapping("/webhooks/fiscalapi")
     public ResponseEntity<Void> receive(@RequestHeader Map<String, String> headers, @RequestBody byte[] rawBody) {
-        String body = new String(rawBody, StandardCharsets.UTF_8); // los bytes tal como llegaron, sin reserializar
-
         WebhookEvent event;
         try {
-            event = Webhook.verify(headers, body, webhookSecret);
+            event = Webhook.verify(headers, rawBody, webhookSecret); // los bytes tal como llegaron
         } catch (WebhookVerificationException e) {
-            return ResponseEntity.badRequest().build(); // firma inválida, header faltante o timestamp fuera de tolerancia
+            return ResponseEntity.badRequest().build(); // firma, header, timestamp o cuerpo UTF-8 inválido
         }
 
         // Responda 2xx rápido y procese después: FiscalAPI corta cada intento a los 15 s y lo reintenta.
@@ -506,7 +503,7 @@ public class FiscalApiWebhooksController {
 - El botón "Enviar prueba" del endpoint (`POST webhook-endpoints/{id}/test`) envía `WebhookEventTypes.WEBHOOK_ENDPOINT_TEST`, cuyo `relatedObject` es el endpoint (`webhook_endpoint`), sin persona ni estados; no se suscribe.
 - Durante una rotación del secreto, FiscalAPI firma con el nuevo y con el anterior por 24 h: pase ambos, `Webhook.verify(headers, body, Arrays.asList(secretoNuevo, secretoAnterior))`.
 - La tolerancia es configurable (`Webhook.verify(headers, body, secreto, Duration.ofMinutes(2))`); el valor por omisión es `Webhook.DEFAULT_TOLERANCE`.
-- `WebhookVerificationException` (no verificada: extiende `RuntimeException`) indica una entrega que no es auténtica. Un secreto mal copiado (no es base64), una lista de secretos vacía, una tolerancia negativa o un argumento null lanzan `IllegalArgumentException`, con la posición del secreto en la lista (nunca su valor): es un error de configuración, no de la entrega.
+- `WebhookVerificationException` (no verificada: extiende `RuntimeException`) indica una entrega que no es auténtica. Un secreto mal copiado (no es base64 canónico, por ejemplo truncado o con espacios), una lista de secretos vacía, una tolerancia negativa o un argumento null lanzan `IllegalArgumentException`, con la posición del secreto en la lista (nunca su valor): es un error de configuración, no de la entrega.
 
 ---
 

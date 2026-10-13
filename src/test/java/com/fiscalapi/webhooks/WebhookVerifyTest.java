@@ -6,6 +6,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.nio.charset.CharacterCodingException;
+import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Arrays;
@@ -279,6 +280,71 @@ class WebhookVerifyTest {
         assertFalse(exception.getMessage().contains("no-es-base64"), exception.getMessage());
     }
 
+    @ParameterizedTest
+    @ValueSource(strings = {
+            // Truncado: sin relleno, Base64.getDecoder() lo aceptaría como otra llave y todo fallaría con "Ninguna firma".
+            "whsec_MfKQ9r8GKYqrTwjUPD8ILPZIo2LaLaS",
+            "whsec_MfKQ9r8GKYqrTwjUPD8ILPZIo2LaLaSw\n",
+            "whsec_MfKQ9r8GKYqrTwjUPD8 ILPZIo2LaLaSw"})
+    void aSecretThatIsNotCanonicalBase64IsRefusedNamingItsPositionWithoutItsValue(String secret) {
+        IllegalArgumentException single = assertThrows(IllegalArgumentException.class, () ->
+                Webhook.verify(officialHeaders(), OFFICIAL_BODY, secret));
+        assertFalse(single.getMessage().contains("MfKQ9r8G"), single.getMessage());
+
+        IllegalArgumentException inList = assertThrows(IllegalArgumentException.class, () ->
+                Webhook.verify(officialHeaders(), OFFICIAL_BODY, Arrays.asList(OFFICIAL_SECRET, secret)));
+        assertTrue(inList.getMessage().contains("posición 1"), inList.getMessage());
+        assertFalse(inList.getMessage().contains("MfKQ9r8G"), inList.getMessage());
+    }
+
+    @Test
+    void theOfficialVectorVerifiesFromTheRawBodyBytes() {
+        byte[] body = OFFICIAL_BODY.getBytes(StandardCharsets.UTF_8);
+
+        assertNotNull(Webhook.verify(officialHeaders(), body, Collections.singletonList(OFFICIAL_SECRET),
+                Webhook.DEFAULT_TOLERANCE, OFFICIAL_MOMENT));
+    }
+
+    @Test
+    void rawBodyBytesThatAreNotUtf8AreRejected() {
+        byte[] body = {'{', '"', 't', '"', ':', '"', (byte) 0xC3, '(', '"', '}'};
+
+        WebhookVerificationException exception = assertThrows(WebhookVerificationException.class, () ->
+                Webhook.verify(officialHeaders(), body, Collections.singletonList(OFFICIAL_SECRET),
+                        Webhook.DEFAULT_TOLERANCE, OFFICIAL_MOMENT));
+        assertEquals("El cuerpo o un header no es texto UTF-8 válido.", exception.getMessage());
+        assertInstanceOf(CharacterCodingException.class, exception.getCause());
+    }
+
+    @Test
+    void aMissingHeaderIsReportedBeforeTheBodyBytesAreDecoded() {
+        Map<String, String> headers = officialHeaders();
+        headers.remove("webhook-id");
+        byte[] body = {(byte) 0xC3, '('};
+
+        WebhookVerificationException exception = assertThrows(WebhookVerificationException.class, () ->
+                Webhook.verify(headers, body, Collections.singletonList(OFFICIAL_SECRET), Webhook.DEFAULT_TOLERANCE,
+                        OFFICIAL_MOMENT));
+        assertEquals("Falta el header webhook-id.", exception.getMessage());
+    }
+
+    @Test
+    void theRawBodyBytesOverloadsVerifyAgainstTheCurrentTime() {
+        long now = Instant.now().getEpochSecond();
+        Map<String, String> headers = officialHeaders();
+        headers.put("webhook-timestamp", Long.toString(now));
+        headers.put("webhook-signature", BackWebhookSigner.sign(OFFICIAL_ID, now, OFFICIAL_BODY, OFFICIAL_SECRET));
+        byte[] body = OFFICIAL_BODY.getBytes(StandardCharsets.UTF_8);
+        List<String> secrets = Collections.singletonList(OFFICIAL_SECRET);
+
+        assertNotNull(Webhook.verify(headers, body, OFFICIAL_SECRET));
+        assertNotNull(Webhook.verify(headers, body, secrets));
+        assertNotNull(Webhook.verify(headers, body, OFFICIAL_SECRET, Duration.ofMinutes(1)));
+        assertNotNull(Webhook.verify(headers, body, secrets, Duration.ofMinutes(1)));
+        assertThrows(IllegalArgumentException.class, () -> Webhook.verify(headers, (byte[]) null, OFFICIAL_SECRET));
+        assertThrows(IllegalArgumentException.class, () -> Webhook.verify(headers, (byte[]) null, secrets));
+    }
+
     @Test
     void aMalformedSecretInAListNamesItsPositionWithoutItsValue() {
         IllegalArgumentException malformed = assertThrows(IllegalArgumentException.class, () ->
@@ -295,7 +361,8 @@ class WebhookVerifyTest {
     @Test
     void missingArgumentsAndAnEmptySecretListAreRefused() {
         assertThrows(IllegalArgumentException.class, () -> Webhook.verify(null, OFFICIAL_BODY, OFFICIAL_SECRET));
-        assertThrows(IllegalArgumentException.class, () -> Webhook.verify(officialHeaders(), null, OFFICIAL_SECRET));
+        assertThrows(IllegalArgumentException.class, () ->
+                Webhook.verify(officialHeaders(), (String) null, OFFICIAL_SECRET));
         assertThrows(IllegalArgumentException.class, () ->
                 Webhook.verify(officialHeaders(), OFFICIAL_BODY, (String) null));
         assertThrows(IllegalArgumentException.class, () ->

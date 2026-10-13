@@ -23,7 +23,7 @@ import java.util.Base64;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.TimeZone;
+import java.util.function.Supplier;
 
 /**
  * Verificación de las entregas de webhooks de FiscalAPI, que se firman con Standard Webhooks
@@ -60,12 +60,11 @@ public final class Webhook {
     private static final String SINGLE_SECRET = "El secreto de firma";
 
     // Un lector propio, nunca el ObjectMapper del cliente HTTP ni uno del integrador: campos nuevos del sobre no rompen
-    // a un SDK anterior, createdAt se normaliza a UTC sin importar la zona de la JVM y un contenido después del evento
-    // se rechaza. ObjectReader es inmutable y seguro entre hilos.
+    // a un SDK anterior y un contenido después del evento se rechaza. createdAt queda en UTC con los valores por omisión
+    // de Jackson (zona de contexto UTC, no la de la JVM, y ADJUST_DATES_TO_CONTEXT_TIME_ZONE activo). ObjectReader es
+    // inmutable y seguro entre hilos.
     private static final ObjectReader ENVELOPE_READER = JsonMapper.builder()
             .addModule(new JavaTimeModule())
-            .defaultTimeZone(TimeZone.getTimeZone("UTC"))
-            .enable(DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE)
             .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
             .enable(DeserializationFeature.FAIL_ON_TRAILING_TOKENS)
             .build()
@@ -106,8 +105,7 @@ public final class Webhook {
      * @throws IllegalArgumentException     Un argumento es null, el secreto no es base64 o la tolerancia es negativa
      */
     public static WebhookEvent verify(Map<String, ?> headers, String body, String secret, Duration tolerance) {
-        List<byte[]> keys = Collections.singletonList(decodeSecret(secret, SINGLE_SECRET));
-        return verifyWithKeys(headers, body, keys, tolerance, Instant.now());
+        return verifyWithKeys(headers, text(body), singleKey(secret), tolerance, Instant.now());
     }
 
     /**
@@ -143,16 +141,91 @@ public final class Webhook {
         return verify(headers, body, secrets, tolerance, Instant.now());
     }
 
+    /**
+     * Verifica una entrega a partir de los bytes crudos del cuerpo, con el secreto del endpoint y la tolerancia por
+     * omisión ({@link #DEFAULT_TOLERANCE}), y devuelve su evento.
+     *
+     * @param headers Los headers de la petición recibida (ver {@link #verify(Map, String, String)})
+     * @param body    Los bytes del cuerpo tal como llegaron (por ejemplo, {@code @RequestBody byte[]} en Spring); se
+     *                leen como UTF-8 estricto
+     * @param secret  El secreto del endpoint ({@code whsec_…}); se acepta también sin el prefijo
+     * @return El evento del cuerpo verificado
+     * @throws WebhookVerificationException La entrega no es auténtica, el cuerpo no es UTF-8 válido o no es un evento:
+     *                                      recházela sin procesarla
+     * @throws IllegalArgumentException     Un argumento es null o el secreto no es base64
+     */
+    public static WebhookEvent verify(Map<String, ?> headers, byte[] body, String secret) {
+        return verify(headers, body, secret, DEFAULT_TOLERANCE);
+    }
+
+    /**
+     * Verifica una entrega a partir de los bytes crudos del cuerpo, con el secreto del endpoint, y devuelve su evento.
+     *
+     * @param headers   Los headers de la petición recibida (ver {@link #verify(Map, String, String)})
+     * @param body      Los bytes del cuerpo tal como llegaron; se leen como UTF-8 estricto
+     * @param secret    El secreto del endpoint ({@code whsec_…}); se acepta también sin el prefijo
+     * @param tolerance Diferencia máxima entre {@code webhook-timestamp} y el reloj del receptor
+     * @return El evento del cuerpo verificado
+     * @throws WebhookVerificationException La entrega no es auténtica, el cuerpo no es UTF-8 válido o no es un evento:
+     *                                      recházela sin procesarla
+     * @throws IllegalArgumentException     Un argumento es null, el secreto no es base64 o la tolerancia es negativa
+     */
+    public static WebhookEvent verify(Map<String, ?> headers, byte[] body, String secret, Duration tolerance) {
+        return verifyWithKeys(headers, utf8Text(body), singleKey(secret), tolerance, Instant.now());
+    }
+
+    /**
+     * Verifica una entrega a partir de los bytes crudos del cuerpo, con varios secretos y la tolerancia por omisión
+     * (ver {@link #verify(Map, String, List)}), y devuelve su evento.
+     *
+     * @param headers Los headers de la petición recibida (ver {@link #verify(Map, String, String)})
+     * @param body    Los bytes del cuerpo tal como llegaron; se leen como UTF-8 estricto
+     * @param secrets Los secretos aceptados ({@code whsec_…}, o sin el prefijo); al menos uno
+     * @return El evento del cuerpo verificado
+     * @throws WebhookVerificationException La entrega no es auténtica, el cuerpo no es UTF-8 válido o no es un evento:
+     *                                      recházela sin procesarla
+     * @throws IllegalArgumentException     Un argumento es null, no hay secretos o uno no es base64 (el mensaje indica
+     *                                      su posición, nunca su valor)
+     */
+    public static WebhookEvent verify(Map<String, ?> headers, byte[] body, List<String> secrets) {
+        return verify(headers, body, secrets, DEFAULT_TOLERANCE);
+    }
+
+    /**
+     * Verifica una entrega a partir de los bytes crudos del cuerpo, con varios secretos (ver
+     * {@link #verify(Map, String, List)}), y devuelve su evento.
+     *
+     * @param headers   Los headers de la petición recibida (ver {@link #verify(Map, String, String)})
+     * @param body      Los bytes del cuerpo tal como llegaron; se leen como UTF-8 estricto
+     * @param secrets   Los secretos aceptados ({@code whsec_…}, o sin el prefijo); al menos uno
+     * @param tolerance Diferencia máxima entre {@code webhook-timestamp} y el reloj del receptor
+     * @return El evento del cuerpo verificado
+     * @throws WebhookVerificationException La entrega no es auténtica, el cuerpo no es UTF-8 válido o no es un evento:
+     *                                      recházela sin procesarla
+     * @throws IllegalArgumentException     Un argumento es null, no hay secretos, uno no es base64 o la tolerancia es
+     *                                      negativa
+     */
+    public static WebhookEvent verify(Map<String, ?> headers, byte[] body, List<String> secrets, Duration tolerance) {
+        return verify(headers, body, secrets, tolerance, Instant.now());
+    }
+
     /** La verificación contra el momento {@code now} del receptor. */
     static WebhookEvent verify(Map<String, ?> headers, String body, List<String> secrets, Duration tolerance,
                                Instant now) {
-        return verifyWithKeys(headers, body, decodeSecrets(secrets), tolerance, now);
+        return verifyWithKeys(headers, text(body), decodeSecrets(secrets), tolerance, now);
     }
 
-    private static WebhookEvent verifyWithKeys(Map<String, ?> headers, String body, List<byte[]> keys,
+    /** La verificación de los bytes del cuerpo contra el momento {@code now} del receptor. */
+    static WebhookEvent verify(Map<String, ?> headers, byte[] body, List<String> secrets, Duration tolerance,
+                               Instant now) {
+        return verifyWithKeys(headers, utf8Text(body), decodeSecrets(secrets), tolerance, now);
+    }
+
+    // El cuerpo llega como texto o como bytes; los bytes se decodifican después de validar los headers y el timestamp,
+    // así un header faltante se informa antes que un cuerpo ilegible, igual que con el texto.
+    private static WebhookEvent verifyWithKeys(Map<String, ?> headers, Supplier<String> body, List<byte[]> keys,
                                                Duration tolerance, Instant now) {
         requireArgument(headers != null, "Los headers no pueden ser null.");
-        requireArgument(body != null, "El cuerpo no puede ser null.");
         requireArgument(tolerance != null, "La tolerancia no puede ser null.");
         requireArgument(!tolerance.isNegative(), "La tolerancia no puede ser negativa.");
 
@@ -161,8 +234,34 @@ public final class Webhook {
         String signatures = requiredHeader(headers, SIGNATURE_HEADER);
 
         ensureWithinTolerance(timestamp, tolerance, now);
-        ensureSigned(keys, signedContent(id, timestamp, body), signatures);
-        return readEvent(body);
+        String text = body.get();
+        ensureSigned(keys, signedContent(id, timestamp, text), signatures);
+        return readEvent(text);
+    }
+
+    private static Supplier<String> text(String body) {
+        requireArgument(body != null, "El cuerpo no puede ser null.");
+        return () -> body;
+    }
+
+    // UTF-8 estricto: new String(bytes, UTF_8) cambiaría los bytes inválidos por U+FFFD en silencio.
+    private static Supplier<String> utf8Text(byte[] body) {
+        requireArgument(body != null, "El cuerpo no puede ser null.");
+        return () -> {
+            try {
+                return StandardCharsets.UTF_8.newDecoder()
+                        .onMalformedInput(CodingErrorAction.REPORT)
+                        .onUnmappableCharacter(CodingErrorAction.REPORT)
+                        .decode(ByteBuffer.wrap(body))
+                        .toString();
+            } catch (CharacterCodingException invalid) {
+                throw notUtf8(invalid);
+            }
+        };
+    }
+
+    private static List<byte[]> singleKey(String secret) {
+        return Collections.singletonList(decodeSecret(secret, SINGLE_SECRET));
     }
 
     private static List<byte[]> decodeSecrets(List<String> secrets) {
@@ -181,14 +280,17 @@ public final class Webhook {
         requireArgument(secret != null, description + " es null.");
 
         String encoded = secret.startsWith(SECRET_PREFIX) ? secret.substring(SECRET_PREFIX.length()) : secret;
+        String notBase64 = description + " no es whsec_ seguido de base64: cópielo completo del endpoint de webhooks.";
         byte[] key;
         try {
             key = Base64.getDecoder().decode(encoded);
-        } catch (IllegalArgumentException notBase64) {
-            throw new IllegalArgumentException(
-                    description + " no es whsec_ seguido de base64: cópielo completo del endpoint de webhooks.");
+        } catch (IllegalArgumentException invalid) {
+            throw new IllegalArgumentException(notBase64);
         }
         requireArgument(key.length > 0, description + " está vacío.");
+        // Solo la forma canónica: getDecoder() acepta un base64 sin relleno, y un secreto truncado al copiarlo sería otra
+        // llave con la que toda entrega fallaría como "Ninguna firma", ocultando el error de configuración.
+        requireArgument(Base64.getEncoder().encodeToString(key).equals(encoded), notBase64);
         return key;
     }
 
@@ -263,8 +365,8 @@ public final class Webhook {
             byte[] content = new byte[encoded.remaining()];
             encoded.get(content);
             return content;
-        } catch (CharacterCodingException notUtf8) {
-            throw new WebhookVerificationException("El cuerpo o un header no es texto UTF-8 válido.", notUtf8);
+        } catch (CharacterCodingException invalid) {
+            throw notUtf8(invalid);
         }
     }
 
@@ -325,6 +427,10 @@ public final class Webhook {
             throw new WebhookVerificationException(notAnEvent);
         }
         return event;
+    }
+
+    private static WebhookVerificationException notUtf8(CharacterCodingException cause) {
+        return new WebhookVerificationException("El cuerpo o un header no es texto UTF-8 válido.", cause);
     }
 
     private static void requireArgument(boolean valid, String message) {

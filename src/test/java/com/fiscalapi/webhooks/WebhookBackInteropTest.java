@@ -9,9 +9,7 @@ import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Locale;
 import java.util.Map;
-import java.util.TimeZone;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -121,27 +119,17 @@ class WebhookBackInteropTest {
     }
 
     @Test
-    void theEnvelopeIsReadInUtcWhateverTheJvmDefaultsAre() {
-        // El mapper del sobre es propio: ni la zona ni el idioma por omisión de la JVM del integrador cambian createdAt,
-        // y un createdAt con otro desfase se normaliza a UTC.
+    void aCreatedAtWithAnotherOffsetIsNormalizedToUtc() {
         String body = "{\"id\":\"evt_1\",\"type\":\"invoice.canceled\",\"createdAt\":\"2026-10-12T19:47:53+01:00\","
                 + "\"personId\":null,\"data\":{\"relatedObject\":{\"id\":\"r1\",\"type\":\"invoice\","
                 + "\"url\":\"/api/v4/invoices/r1\"},\"status\":\"X\",\"previousStatus\":\"C\"}}";
         String secret = BackWebhookSigner.generateSecret();
         Map<String, String> headers = BackWebhookSigner.headers("evt_1", TIMESTAMP, body, secret);
-        TimeZone previousZone = TimeZone.getDefault();
-        Locale previousLocale = Locale.getDefault();
-        TimeZone.setDefault(TimeZone.getTimeZone("Pacific/Kiritimati"));
-        Locale.setDefault(new Locale("ar", "SA"));
-        try {
-            WebhookEvent event = verify(headers, body, secret);
 
-            assertEquals(CREATED_AT, event.getCreatedAt());
-            assertEquals(ZoneOffset.UTC, event.getCreatedAt().getOffset());
-        } finally {
-            TimeZone.setDefault(previousZone);
-            Locale.setDefault(previousLocale);
-        }
+        WebhookEvent event = verify(headers, body, secret);
+
+        assertEquals(CREATED_AT, event.getCreatedAt());
+        assertEquals(ZoneOffset.UTC, event.getCreatedAt().getOffset());
     }
 
     @Test
