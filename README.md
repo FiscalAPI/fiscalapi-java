@@ -431,7 +431,7 @@ Al firmar, todas las personas del tenant con el RFC del certificado quedan con `
 
 ### 9. Recibir webhooks
 
-FiscalAPI firma cada entrega con [Standard Webhooks](https://www.standardwebhooks.com) y el secreto `whsec_…` de su endpoint. `Webhook.verify` (paquete `com.fiscalapi.webhooks`) comprueba la firma (en tiempo constante) y que `webhook-timestamp` no difiera más de 5 minutos del reloj del receptor, y devuelve el `WebhookEvent`. La firma es la única prueba de que la entrega viene de FiscalAPI.
+FiscalAPI firma cada entrega con [Standard Webhooks](https://www.standardwebhooks.com) y el secreto `whsec_…` de su webhook. `Webhook.verify` (paquete `com.fiscalapi.webhooks`) comprueba la firma (en tiempo constante) y que `webhook-timestamp` no difiera más de 5 minutos del reloj del receptor, y devuelve el `WebhookEvent`. La firma es la única prueba de que la entrega viene de FiscalAPI.
 
 **Verifique el cuerpo crudo**: páselo tal como llegó, como `byte[]` (`@RequestBody byte[]` en Spring, que no lo reserializa) o como el texto UTF-8 de esos bytes. Con `byte[]`, `Webhook.verify` lo lee como UTF-8 estricto y rechaza bytes inválidos. Un cuerpo deserializado y vuelto a serializar (por ejemplo, con `@RequestBody WebhookEvent` o `@RequestBody Map`) cambia sus bytes y la firma deja de coincidir.
 
@@ -455,7 +455,7 @@ import java.util.Map;
 public class FiscalApiWebhooksController {
     private final TaskExecutor taskExecutor;
     private final FiscalApiClient fiscalApi;
-    private final String webhookSecret; // whsec_… del endpoint, desde su configuración segura
+    private final String webhookSecret; // whsec_… del webhook, desde su configuración segura
 
     public FiscalApiWebhooksController(TaskExecutor taskExecutor, FiscalApiClient fiscalApi,
                                        @Value("${fiscalapi.webhook-secret}") String webhookSecret) {

@@ -28,7 +28,7 @@ import java.util.function.Supplier;
 /**
  * Verificación de las entregas de webhooks de FiscalAPI, que se firman con Standard Webhooks
  * (https://www.standardwebhooks.com): HMAC-SHA256 sobre {@code webhook-id.webhook-timestamp.cuerpo} con el secreto
- * {@code whsec_…} del endpoint, en el header {@code webhook-signature} como {@code v1,<base64>}. La firma es la única
+ * {@code whsec_…} del webhook, en el header {@code webhook-signature} como {@code v1,<base64>}. La firma es la única
  * prueba de que una entrega viene de FiscalAPI.
  *
  * <p>Errores: una entrega que no se puede tratar como auténtica lanza {@link WebhookVerificationException} (rechace la
@@ -74,7 +74,7 @@ public final class Webhook {
     }
 
     /**
-     * Verifica una entrega con el secreto del endpoint y la tolerancia por omisión ({@link #DEFAULT_TOLERANCE}) y
+     * Verifica una entrega con el secreto del webhook y la tolerancia por omisión ({@link #DEFAULT_TOLERANCE}) y
      * devuelve su evento.
      *
      * @param headers Los headers de la petición recibida, como {@code Map<String, String>} o
@@ -83,7 +83,7 @@ public final class Webhook {
      * @param body    El cuerpo <b>crudo</b> tal como llegó, leído como texto UTF-8 antes de deserializarlo. Un cuerpo
      *                deserializado y vuelto a serializar cambia sus bytes (espacios, orden, escapes) y su firma deja de
      *                coincidir
-     * @param secret  El secreto del endpoint ({@code whsec_…}); se acepta también sin el prefijo
+     * @param secret  El secreto del webhook ({@code whsec_…}); se acepta también sin el prefijo
      * @return El evento del cuerpo verificado
      * @throws WebhookVerificationException Falta un header, el timestamp está fuera de la tolerancia, ninguna firma
      *                                      {@code v1} coincide, el cuerpo no es UTF-8 válido o no es un evento
@@ -94,11 +94,11 @@ public final class Webhook {
     }
 
     /**
-     * Verifica una entrega con el secreto del endpoint y devuelve su evento.
+     * Verifica una entrega con el secreto del webhook y devuelve su evento.
      *
      * @param headers   Los headers de la petición recibida (ver {@link #verify(Map, String, String)})
      * @param body      El cuerpo <b>crudo</b> tal como llegó, sin reserializar
-     * @param secret    El secreto del endpoint ({@code whsec_…}); se acepta también sin el prefijo
+     * @param secret    El secreto del webhook ({@code whsec_…}); se acepta también sin el prefijo
      * @param tolerance Diferencia máxima entre {@code webhook-timestamp} y el reloj del receptor
      * @return El evento del cuerpo verificado
      * @throws WebhookVerificationException La entrega no es auténtica o no es un evento: recházela sin procesarla
@@ -142,13 +142,13 @@ public final class Webhook {
     }
 
     /**
-     * Verifica una entrega a partir de los bytes crudos del cuerpo, con el secreto del endpoint y la tolerancia por
+     * Verifica una entrega a partir de los bytes crudos del cuerpo, con el secreto del webhook y la tolerancia por
      * omisión ({@link #DEFAULT_TOLERANCE}), y devuelve su evento.
      *
      * @param headers Los headers de la petición recibida (ver {@link #verify(Map, String, String)})
      * @param body    Los bytes del cuerpo tal como llegaron (por ejemplo, {@code @RequestBody byte[]} en Spring); se
      *                leen como UTF-8 estricto
-     * @param secret  El secreto del endpoint ({@code whsec_…}); se acepta también sin el prefijo
+     * @param secret  El secreto del webhook ({@code whsec_…}); se acepta también sin el prefijo
      * @return El evento del cuerpo verificado
      * @throws WebhookVerificationException La entrega no es auténtica, el cuerpo no es UTF-8 válido o no es un evento:
      *                                      recházela sin procesarla
@@ -159,11 +159,11 @@ public final class Webhook {
     }
 
     /**
-     * Verifica una entrega a partir de los bytes crudos del cuerpo, con el secreto del endpoint, y devuelve su evento.
+     * Verifica una entrega a partir de los bytes crudos del cuerpo, con el secreto del webhook, y devuelve su evento.
      *
      * @param headers   Los headers de la petición recibida (ver {@link #verify(Map, String, String)})
      * @param body      Los bytes del cuerpo tal como llegaron; se leen como UTF-8 estricto
-     * @param secret    El secreto del endpoint ({@code whsec_…}); se acepta también sin el prefijo
+     * @param secret    El secreto del webhook ({@code whsec_…}); se acepta también sin el prefijo
      * @param tolerance Diferencia máxima entre {@code webhook-timestamp} y el reloj del receptor
      * @return El evento del cuerpo verificado
      * @throws WebhookVerificationException La entrega no es auténtica, el cuerpo no es UTF-8 válido o no es un evento:
