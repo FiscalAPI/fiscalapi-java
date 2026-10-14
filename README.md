@@ -429,6 +429,84 @@ Al firmar, todas las personas del tenant con el RFC del certificado quedan con `
 
 ---
 
+### 9. Recibir webhooks
+
+FiscalAPI firma cada entrega con [Standard Webhooks](https://www.standardwebhooks.com) y el secreto `whsec_…` de su webhook. `Webhook.verify` (paquete `com.fiscalapi.webhooks`) comprueba la firma (en tiempo constante) y que `webhook-timestamp` no difiera más de 5 minutos del reloj del receptor, y devuelve el `WebhookEvent`. La firma es la única prueba de que la entrega viene de FiscalAPI.
+
+**Verifique el cuerpo crudo**: páselo tal como llegó, como `byte[]` (`@RequestBody byte[]` en Spring, que no lo reserializa) o como el texto UTF-8 de esos bytes. Con `byte[]`, `Webhook.verify` lo lee como UTF-8 estricto y rechaza bytes inválidos. Un cuerpo deserializado y vuelto a serializar (por ejemplo, con `@RequestBody WebhookEvent` o `@RequestBody Map`) cambia sus bytes y la firma deja de coincidir.
+
+```java
+import com.fiscalapi.models.webhooks.WebhookEvent;
+import com.fiscalapi.models.webhooks.WebhookEventTypes;
+import com.fiscalapi.services.FiscalApiClient;
+import com.fiscalapi.webhooks.Webhook;
+import com.fiscalapi.webhooks.WebhookVerificationException;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.task.TaskExecutor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
+
+@RestController
+public class FiscalApiWebhooksController {
+    private final TaskExecutor taskExecutor;
+    private final FiscalApiClient fiscalApi;
+    private final String webhookSecret; // whsec_… del webhook, desde su configuración segura
+
+    public FiscalApiWebhooksController(TaskExecutor taskExecutor, FiscalApiClient fiscalApi,
+                                       @Value("${fiscalapi.webhook-secret}") String webhookSecret) {
+        this.taskExecutor = taskExecutor;
+        this.fiscalApi = fiscalApi;
+        this.webhookSecret = webhookSecret;
+    }
+
+    @PostMapping("/webhooks/fiscalapi")
+    public ResponseEntity<Void> receive(@RequestHeader Map<String, String> headers, @RequestBody byte[] rawBody) {
+        WebhookEvent event;
+        try {
+            event = Webhook.verify(headers, rawBody, webhookSecret); // los bytes tal como llegaron
+        } catch (WebhookVerificationException e) {
+            return ResponseEntity.badRequest().build(); // firma, header, timestamp o cuerpo UTF-8 inválido
+        }
+
+        // Responda 2xx rápido y procese después: FiscalAPI corta cada intento a los 15 s y lo reintenta.
+        // El executor en memoria es ilustrativo: en producción use una cola durable.
+        taskExecutor.execute(() -> process(event));
+        return ResponseEntity.ok().build();
+    }
+
+    private void process(WebhookEvent event) {
+        // La entrega es al menos una vez: event.getId() (el header webhook-id) se repite en cada reintento; descarte
+        // los ya procesados. El orden de llegada no está garantizado: el estado autoritativo se lee del recurso.
+        String resourceId = event.getData().getRelatedObject().getId();
+        switch (event.getType()) {
+            case WebhookEventTypes.INVOICE_CANCELED:
+                fiscalApi.getInvoiceService().getById(resourceId, false);
+                break;
+            case WebhookEventTypes.DOWNLOAD_REQUEST_COMPLETED:
+                fiscalApi.getDownloadRequestService().getById(resourceId, false);
+                break;
+            default:
+                break; // un tipo que no conoce se ignora: el catálogo puede crecer
+        }
+    }
+}
+```
+
+- `headers` acepta `Map<String, String>` (como `@RequestHeader Map<String, String>` de Spring) o `Map<String, List<String>>` (un `MultiValueMap` de Spring o un mapa armado con `HttpServletRequest#getHeaders`); los nombres se comparan sin distinguir mayúsculas. Desde Spring 7, `HttpHeaders` ya no es un `Map`: pase `headers.toSingleValueMap()`.
+- `WebhookEvent` es el mismo sobre para todo evento: `getId()`, `getType()` (texto; compárelo con las constantes de `WebhookEventTypes`), `getCreatedAt()` (`OffsetDateTime` en UTC), `getPersonId()` (null si el recurso no tiene persona) y `getData()` con `getRelatedObject()` (`getId()`, `getType()`, `getUrl()`), `getStatus()` y `getPreviousStatus()`.
+- `getRelatedObject().getUrl()` es la ruta relativa del GET v4 del recurso (`/api/v4/invoices/{id}`); para leerlo, use el servicio de su tipo con `getRelatedObject().getId()`.
+- El botón "Enviar prueba" del webhook (`POST /api/v4/webhooks/{id}/test`) envía `WebhookEventTypes.WEBHOOK_TEST` (`webhook.test`), cuyo `relatedObject` es el webhook mismo (`type` `webhook`, `url` `/api/v4/webhooks/{id}`), sin persona ni estados; no se suscribe.
+- Durante una rotación del secreto, FiscalAPI firma con el nuevo y con el anterior por 24 h: pase ambos, `Webhook.verify(headers, body, Arrays.asList(secretoNuevo, secretoAnterior))`.
+- La tolerancia es configurable (`Webhook.verify(headers, body, secreto, Duration.ofMinutes(2))`); el valor por omisión es `Webhook.DEFAULT_TOLERANCE`.
+- `WebhookVerificationException` (no verificada: extiende `RuntimeException`) indica una entrega que no es auténtica. Un secreto mal copiado (no es base64 canónico, por ejemplo truncado o con espacios), una lista de secretos vacía, una tolerancia negativa o un argumento null lanzan `IllegalArgumentException`, con la posición del secreto en la lista (nunca su valor): es un error de configuración, no de la entrega.
+
+---
+
 💡 **Tip:** Para más ejemplos (facturas por valores, notas de crédito, complementos de pago, catálogos SAT, cancelaciones, etc.), revisa la documentación oficial en [docs.fiscalapi.com](https://docs.fiscalapi.com).
 
 ## 📄 Licencia
