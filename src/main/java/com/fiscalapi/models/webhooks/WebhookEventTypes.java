@@ -28,11 +28,11 @@ public final class WebhookEventTypes {
     public static final String DOWNLOAD_RULE_SUSPENDED = "download_rule.suspended";
 
     /**
-     * Prueba de un endpoint: no se suscribe; solo llega al pulsar "Enviar prueba"
-     * ({@code POST webhook-endpoints/{id}/test}), y solo a ese endpoint. Su {@link WebhookEventData#getRelatedObject()}
-     * es el endpoint mismo ({@code webhook_endpoint}), sin persona ni estados.
+     * Prueba de un webhook: no se suscribe; llega solo al pulsar "Enviar prueba"
+     * ({@code POST /api/v4/webhooks/{id}/test}), y solo a ese webhook. Su {@link WebhookEventData#getRelatedObject()}
+     * es el webhook mismo (tipo {@code webhook}, url {@code /api/v4/webhooks/{id}}), sin persona ni estados.
      */
-    public static final String WEBHOOK_ENDPOINT_TEST = "webhook_endpoint.test";
+    public static final String WEBHOOK_TEST = "webhook.test";
 
     private WebhookEventTypes() {
     }

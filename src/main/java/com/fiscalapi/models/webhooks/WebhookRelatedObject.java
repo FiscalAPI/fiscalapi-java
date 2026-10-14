@@ -24,7 +24,7 @@ public class WebhookRelatedObject extends SerializableDto {
 
     /**
      * @return Tipo de recurso: {@code invoice}, {@code download_request}, {@code download_rule} o
-     * {@code webhook_endpoint} (el de {@link WebhookEventTypes#WEBHOOK_ENDPOINT_TEST}); el conjunto puede crecer
+     * {@code webhook} (el de {@link WebhookEventTypes#WEBHOOK_TEST}); el conjunto puede crecer
      */
     public String getType() {
         return type;

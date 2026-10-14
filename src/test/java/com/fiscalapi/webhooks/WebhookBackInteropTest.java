@@ -25,7 +25,7 @@ class WebhookBackInteropTest {
     private static final String PERSON_ID = "4b1c2d3e-0000-4000-8000-000000000002";
     private static final String INVOICE_ID = "9f8e7d6c-0000-4000-8000-0000000000a1";
     private static final String DOWNLOAD_REQUEST_ID = "3c2b1a09-0000-4000-8000-0000000000b7";
-    private static final String ENDPOINT_ID = "6a5b4c3d-0000-4000-8000-0000000000c9";
+    private static final String WEBHOOK_ID = "6a5b4c3d-0000-4000-8000-0000000000c9";
     private static final long TIMESTAMP = 1791830873L; // 2026-10-12T18:47:53Z, el createdAt de los sobres
     private static final Instant DELIVERED_AT = Instant.ofEpochSecond(TIMESTAMP);
     private static final OffsetDateTime CREATED_AT = OffsetDateTime.of(2026, 10, 12, 18, 47, 53, 0, ZoneOffset.UTC);
@@ -41,10 +41,10 @@ class WebhookBackInteropTest {
             + "\"data\":{\"relatedObject\":{\"id\":\"" + DOWNLOAD_REQUEST_ID + "\",\"type\":\"download_request\","
             + "\"url\":\"/api/v4/download-requests/" + DOWNLOAD_REQUEST_ID + "\"},\"status\":null,\"previousStatus\":null}}";
 
-    // El sobre de "Enviar prueba" del back (POST webhook-endpoints/{id}/test): el recurso es el endpoint.
-    private static final String ENDPOINT_TEST_BODY = "{\"id\":\"" + EVENT_ID + "\",\"type\":\"webhook_endpoint.test\","
+    // El sobre de "Enviar prueba" del back (POST /api/v4/webhooks/{id}/test): el recurso es el webhook mismo.
+    private static final String WEBHOOK_TEST_BODY = "{\"id\":\"" + EVENT_ID + "\",\"type\":\"webhook.test\","
             + "\"createdAt\":\"2026-10-12T18:47:53Z\",\"personId\":null,\"data\":{\"relatedObject\":{\"id\":\""
-            + ENDPOINT_ID + "\",\"type\":\"webhook_endpoint\",\"url\":\"/api/v4/webhook-endpoints/" + ENDPOINT_ID
+            + WEBHOOK_ID + "\",\"type\":\"webhook\",\"url\":\"/api/v4/webhooks/" + WEBHOOK_ID
             + "\"},\"status\":null,\"previousStatus\":null}}";
 
     @Test
@@ -88,17 +88,17 @@ class WebhookBackInteropTest {
     }
 
     @Test
-    void aBackEndpointTestDeliveryPointsToTheEndpointWithoutPersonOrStatuses() {
+    void aBackWebhookTestDeliveryPointsToTheWebhookWithoutPersonOrStatuses() {
         String secret = BackWebhookSigner.generateSecret();
-        Map<String, String> headers = BackWebhookSigner.headers(EVENT_ID, TIMESTAMP, ENDPOINT_TEST_BODY, secret);
+        Map<String, String> headers = BackWebhookSigner.headers(EVENT_ID, TIMESTAMP, WEBHOOK_TEST_BODY, secret);
 
-        WebhookEvent event = verify(headers, ENDPOINT_TEST_BODY, secret);
+        WebhookEvent event = verify(headers, WEBHOOK_TEST_BODY, secret);
 
-        assertEquals(WebhookEventTypes.WEBHOOK_ENDPOINT_TEST, event.getType());
+        assertEquals(WebhookEventTypes.WEBHOOK_TEST, event.getType());
         assertNull(event.getPersonId());
-        assertEquals(ENDPOINT_ID, event.getData().getRelatedObject().getId());
-        assertEquals("webhook_endpoint", event.getData().getRelatedObject().getType());
-        assertEquals("/api/v4/webhook-endpoints/" + ENDPOINT_ID, event.getData().getRelatedObject().getUrl());
+        assertEquals(WEBHOOK_ID, event.getData().getRelatedObject().getId());
+        assertEquals("webhook", event.getData().getRelatedObject().getType());
+        assertEquals("/api/v4/webhooks/" + WEBHOOK_ID, event.getData().getRelatedObject().getUrl());
         assertNull(event.getData().getStatus());
         assertNull(event.getData().getPreviousStatus());
     }
@@ -140,7 +140,7 @@ class WebhookBackInteropTest {
         assertEquals("download_request.completed", WebhookEventTypes.DOWNLOAD_REQUEST_COMPLETED);
         assertEquals("download_request.abandoned", WebhookEventTypes.DOWNLOAD_REQUEST_ABANDONED);
         assertEquals("download_rule.suspended", WebhookEventTypes.DOWNLOAD_RULE_SUSPENDED);
-        assertEquals("webhook_endpoint.test", WebhookEventTypes.WEBHOOK_ENDPOINT_TEST);
+        assertEquals("webhook.test", WebhookEventTypes.WEBHOOK_TEST);
     }
 
     private static WebhookEvent verify(Map<String, String> headers, String body, String secret) {
