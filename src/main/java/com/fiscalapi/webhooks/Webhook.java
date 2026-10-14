@@ -280,7 +280,7 @@ public final class Webhook {
         requireArgument(secret != null, description + " es null.");
 
         String encoded = secret.startsWith(SECRET_PREFIX) ? secret.substring(SECRET_PREFIX.length()) : secret;
-        String notBase64 = description + " no es whsec_ seguido de base64: cópielo completo del endpoint de webhooks.";
+        String notBase64 = description + " no es whsec_ seguido de base64: cópielo completo del webhook.";
         byte[] key;
         try {
             key = Base64.getDecoder().decode(encoded);
