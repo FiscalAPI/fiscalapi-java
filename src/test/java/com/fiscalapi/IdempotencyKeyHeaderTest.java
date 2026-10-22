@@ -14,8 +14,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
- * Llave de idempotencia en la creación de facturas y en la transferencia de timbres: con key, la petición lleva el
- * header Idempotency-Key con ese valor; sin key (la sobrecarga original), no lo lleva, y el cuerpo es el mismo en los
+ * Llave de idempotencia en la creación de facturas y en la transferencia de timbres: con una llave de idempotencia, la petición lleva el
+ * header Idempotency-Key con ese valor; sin llave de idempotencia (la sobrecarga original), no lo lleva, y el cuerpo es el mismo en los
  * dos casos.
  */
 class IdempotencyKeyHeaderTest {

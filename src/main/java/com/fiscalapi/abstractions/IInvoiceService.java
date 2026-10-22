@@ -9,8 +9,8 @@ public interface IInvoiceService extends IFiscalApiService<Invoice> {
     /**
      * Crea una factura con la llave de idempotencia de la petición. POST /api/{apiVersion}/invoices
      * Con idempotencyKey (hasta 64 caracteres ASCII visibles, sin espacios) se envía el header Idempotency-Key: repetir
-     * la misma petición con la misma key dentro de 24 horas devuelve la respuesta original; otra petición con la misma
-     * key responde 422, y una petición original todavía en proceso responde 409. Con null, el header no se envía.
+     * la misma petición con la misma llave de idempotencia dentro de 24 horas devuelve la respuesta original; otra petición con la misma
+     * llave de idempotencia responde 422, y una petición original todavía en proceso responde 409. Con null, el header no se envía.
      *
      * @param model          Factura a crear
      * @param idempotencyKey Valor del header Idempotency-Key, o null para no enviarlo

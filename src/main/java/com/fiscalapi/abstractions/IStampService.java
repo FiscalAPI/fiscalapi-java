@@ -23,8 +23,8 @@ public interface IStampService extends IFiscalApiService<StampTransaction> {
      * idempotencia de la petición. POST /api/{apiVersion}/stamps
      *
      * <p>Con idempotencyKey (hasta 64 caracteres ASCII visibles, sin espacios) se envía el header Idempotency-Key:
-     * repetir la misma petición con la misma key dentro de 24 horas devuelve la respuesta original; otra petición con
-     * la misma key responde 422, y una petición original todavía en proceso responde 409. Con null, el header no se
+     * repetir la misma petición con la misma llave de idempotencia dentro de 24 horas devuelve la respuesta original; otra petición con
+     * la misma llave de idempotencia responde 422, y una petición original todavía en proceso responde 409. Con null, el header no se
      * envía.</p>
      *
      * @param requestModel   Parámetros de la transferencia
