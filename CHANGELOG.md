@@ -2,6 +2,15 @@
 
 Cambios del SDK y notas de comportamiento del API de FiscalAPI que afectan a quien usa el SDK.
 
+## [Sin publicar]
+
+### Agregado
+
+- Llave de idempotencia opcional con el header `Idempotency-Key` en la creación de facturas y en la transferencia de timbres:
+  - `getInvoiceService().create(invoice, idempotencyKey)` (`POST /api/v4/invoices`) y `getStampService().transferStamps(params, idempotencyKey)` (`POST /api/v4/stamps`). Con una key distinta de null envían el header; `create(invoice)` y `transferStamps(params)` no cambian y no lo envían. La key admite hasta 64 caracteres ASCII visibles, sin espacios.
+  - Repetir la misma petición con la misma key dentro de 24 horas devuelve la respuesta original. Otra petición con la misma key responde 422, y una petición original todavía en proceso responde 409. El SDK no genera keys ni reintenta por su cuenta.
+  - Quien implementa `IInvoiceService` o `IStampService` (p. ej. un doble de pruebas) debe agregar las sobrecargas nuevas; quien usa el cliente del SDK no cambia nada.
+
 ## [4.0.450] - 2026-10-14
 
 ### Webhooks

@@ -19,6 +19,21 @@ public interface IStampService extends IFiscalApiService<StampTransaction> {
     ApiResponse<Boolean> transferStamps(StampTransactionParams requestModel);
 
     /**
+     * Transfiere timbres, créditos de validación SAT o créditos de ticket de una persona a otra, con la llave de
+     * idempotencia de la petición. POST /api/{apiVersion}/stamps
+     *
+     * <p>Con idempotencyKey (hasta 64 caracteres ASCII visibles, sin espacios) se envía el header Idempotency-Key:
+     * repetir la misma petición con la misma key dentro de 24 horas devuelve la respuesta original; otra petición con
+     * la misma key responde 422, y una petición original todavía en proceso responde 409. Con null, el header no se
+     * envía.</p>
+     *
+     * @param requestModel   Parámetros de la transferencia
+     * @param idempotencyKey Valor del header Idempotency-Key, o null para no enviarlo
+     * @return ApiResponse con true cuando la transferencia se aplicó
+     */
+    ApiResponse<Boolean> transferStamps(StampTransactionParams requestModel, String idempotencyKey);
+
+    /**
      * Retira timbres o créditos de validación SAT de una persona.
      * POST /api/{apiVersion}/stamps
      *

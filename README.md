@@ -259,6 +259,14 @@ ApiResponse<Invoice> apiResponseInvoice = client.getInvoiceService().create(invo
 System.out.println(apiResponseInvoice);
 ```
 
+Para reintentos seguros, pasa tu propia `Idempotency-Key` (hasta 64 caracteres ASCII visibles, sin espacios): repetir la misma petición con la misma key dentro de 24 horas devuelve la respuesta original en lugar de crear otra factura. El SDK no genera la key ni reintenta por su cuenta, pero OkHttp reintenta por fallas de conexión (`retryOnConnectionFailure`) y la key hace seguros esos reintentos.
+
+```java
+// Con la misma key, repetir esta llamada devuelve la respuesta original
+ApiResponse<Invoice> apiResponseInvoice = client.getInvoiceService().create(invoice, "pos-01-F-1001");
+System.out.println(apiResponseInvoice);
+```
+
 ---
 
 ### 5. Validar un CFDI ante el SAT

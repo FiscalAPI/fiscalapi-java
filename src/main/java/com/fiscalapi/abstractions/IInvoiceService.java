@@ -6,6 +6,18 @@ import com.fiscalapi.models.invoicing.*;
 public interface IInvoiceService extends IFiscalApiService<Invoice> {
     // Podríamos añadir métodos específicos
 
+    /**
+     * Crea una factura con la llave de idempotencia de la petición. POST /api/{apiVersion}/invoices
+     * Con idempotencyKey (hasta 64 caracteres ASCII visibles, sin espacios) se envía el header Idempotency-Key: repetir
+     * la misma petición con la misma key dentro de 24 horas devuelve la respuesta original; otra petición con la misma
+     * key responde 422, y una petición original todavía en proceso responde 409. Con null, el header no se envía.
+     *
+     * @param model          Factura a crear
+     * @param idempotencyKey Valor del header Idempotency-Key, o null para no enviarlo
+     * @return ApiResponse con la factura creada
+     */
+    ApiResponse<Invoice> create(Invoice model, String idempotencyKey);
+
     //Cancelar una factura, por referencias o por valores.
     ApiResponse<InvoiceCancellationResponse> cancel(InvoiceCancellationRequest request);
 

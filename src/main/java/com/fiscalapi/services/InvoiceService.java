@@ -7,7 +7,12 @@ import com.fiscalapi.common.ApiResponse;
 import com.fiscalapi.common.FiscalApiSettings;
 import com.fiscalapi.models.invoicing.*;
 
+import java.util.Collections;
+import java.util.Map;
+
 public class InvoiceService extends BaseFiscalApiService<Invoice> implements IInvoiceService {
+
+    private static final String IDEMPOTENCY_KEY_HEADER = "Idempotency-Key";
 
     public InvoiceService(IFiscalApiHttpClient httpClient, FiscalApiSettings settings) {
         super(httpClient, settings, "invoices", settings.getApiVersion());
@@ -59,6 +64,14 @@ public class InvoiceService extends BaseFiscalApiService<Invoice> implements IIn
 
     @Override
     public ApiResponse<Invoice> create(Invoice model) {
-        return httpClient.post(buildEndpoint("", null), model, Invoice.class);
+        return create(model, null);
+    }
+
+    @Override
+    public ApiResponse<Invoice> create(Invoice model, String idempotencyKey) {
+        Map<String, String> headers = idempotencyKey == null
+                ? null
+                : Collections.singletonMap(IDEMPOTENCY_KEY_HEADER, idempotencyKey);
+        return httpClient.post(buildEndpoint("", null), model, Invoice.class, headers);
     }
 }
