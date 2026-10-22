@@ -10,6 +10,7 @@ Cambios del SDK y notas de comportamiento del API de FiscalAPI que afectan a qui
   - `getInvoiceService().create(invoice, idempotencyKey)` (`POST /api/v4/invoices`) y `getStampService().transferStamps(params, idempotencyKey)` (`POST /api/v4/stamps`). Con una llave de idempotencia distinta de null envían el header; `create(invoice)` y `transferStamps(params)` no cambian y no lo envían. La llave de idempotencia admite hasta 64 caracteres ASCII visibles, sin espacios.
   - Repetir la misma petición con la misma llave de idempotencia dentro de 24 horas devuelve la respuesta original. Otra petición con la misma llave de idempotencia responde 422, y una petición original todavía en proceso responde 409. El SDK no genera llaves de idempotencia ni reintenta por su cuenta.
   - Quien implementa `IInvoiceService` o `IStampService` (p. ej. un doble de pruebas) debe agregar las sobrecargas nuevas; quien usa el cliente del SDK no cambia nada.
+- Crear ticket (`getTicketService().create()`) usa el mismo mecanismo de idempotencia de la API: una repetición con la misma llave de idempotencia devuelve la respuesta original (201) con `Idempotent-Replayed: true` en lugar del 200 con el ticket actual; la llave de idempotencia vence a las 24 h y es por persona. La firma del método no cambia.
 
 ## [4.0.450] - 2026-10-14
 

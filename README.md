@@ -263,7 +263,7 @@ Para reintentos seguros, pasa tu propia `Idempotency-Key` (hasta 64 caracteres A
 
 ```java
 // Con la misma llave de idempotencia, repetir esta llamada devuelve la respuesta original
-ApiResponse<Invoice> apiResponseInvoice = client.getInvoiceService().create(invoice, "pos-01-F-1001");
+ApiResponse<Invoice> apiResponseInvoice = client.getInvoiceService().create(invoice, "550e8400-e29b-41d4-a716-446655440000");
 System.out.println(apiResponseInvoice);
 ```
 
