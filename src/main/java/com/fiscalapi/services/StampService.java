@@ -8,7 +8,12 @@ import com.fiscalapi.common.FiscalApiSettings;
 import com.fiscalapi.models.StampTransaction;
 import com.fiscalapi.models.StampTransactionParams;
 
+import java.util.Collections;
+import java.util.Map;
+
 public class StampService extends BaseFiscalApiService<StampTransaction> implements IStampService {
+
+    private static final String IDEMPOTENCY_KEY_HEADER = "Idempotency-Key";
 
     public StampService(IFiscalApiHttpClient httpClient, FiscalApiSettings settings) {
         super(httpClient, settings, "stamps", settings.getApiVersion());
@@ -20,8 +25,16 @@ public class StampService extends BaseFiscalApiService<StampTransaction> impleme
 
     @Override
     public ApiResponse<Boolean> transferStamps(StampTransactionParams requestModel) {
+        return transferStamps(requestModel, null);
+    }
+
+    @Override
+    public ApiResponse<Boolean> transferStamps(StampTransactionParams requestModel, String idempotencyKey) {
         validateRequest(requestModel);
-        return httpClient.post(buildEndpoint("", null), requestModel, Boolean.class);
+        Map<String, String> headers = idempotencyKey == null
+                ? null
+                : Collections.singletonMap(IDEMPOTENCY_KEY_HEADER, idempotencyKey);
+        return httpClient.post(buildEndpoint("", null), requestModel, Boolean.class, headers);
     }
 
     @Override

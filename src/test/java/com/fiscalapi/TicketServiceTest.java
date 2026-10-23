@@ -38,8 +38,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Servicio de tickets de Auto CFDI (POST/GET/DELETE /api/v4/tickets). Los mismos escenarios viven en los SDK de .NET,
- * Node.js, Python y PHP: el cuerpo exacto de la ingesta y el header Idempotency-Key solo si se pasa; las respuestas 201
- * y 200 de la ingesta; el 409 y el 422 con la forma de error del SDK (details con el texto de la API); la query de la
+ * Node.js, Python y PHP: el cuerpo exacto de la ingesta y el header Idempotency-Key solo si se pasa; la respuesta 201 de
+ * la ingesta; el 409 y el 422 con la forma de error del SDK (details con el texto de la API); la query de la
  * lista con status repetido; el detalle con y sin details; el código; la cancelación con DELETE, y un estado que el SDK
  * no conoce, conservado en el getter *Value con el getter del enum en null.
  */
@@ -49,7 +49,7 @@ class TicketServiceTest {
     private static final String ISSUER_ID = "4b1c2d3e-0000-4000-8000-000000000002";
     private static final String GLOBAL_INVOICE_ID = "7c1d2e3f-0000-4000-8000-0000000000b2";
     private static final String TICKET_ID = "9f8e7d6c-0000-4000-8000-0000000000a1";
-    private static final String IDEMPOTENCY_KEY = "pos-01-F-1001";
+    private static final String IDEMPOTENCY_KEY = "550e8400-e29b-41d4-a716-446655440000";
 
     private static final String INGESTED = "{'id':'" + TICKET_ID + "','ticketCode':'K7M2Q9X4TB3H',"
             + "'qrUrl':'https://portal.fiscalapi.com/t/K7M2Q9X4TB3H','status':'pending','selfInvoiceEligible':true,"
@@ -169,17 +169,16 @@ class TicketServiceTest {
         assertNull(request.headers.get("Idempotency-Key"));
     }
 
-    // b. Respuestas de la ingesta
+    // b. Respuesta de la ingesta: la repetición con la misma llave de idempotencia devuelve esta misma 201
 
-    @ParameterizedTest
-    @ValueSource(ints = {201, 200})
-    void createReadsTheNewTicketAndTheIdempotentReplayWithTheSameShape(int status) {
-        api.respondWith(ok(INGESTED, status), status);
+    @Test
+    void createReadsTheNewTicketWithItsShape() {
+        api.respondWith(ok(INGESTED, 201), 201);
 
         ApiResponse<TicketIngestionResult> response = tickets.create(newTicket(), IDEMPOTENCY_KEY);
 
         assertTrue(response.isSucceeded());
-        assertEquals(status, response.getHttpStatusCode());
+        assertEquals(201, response.getHttpStatusCode());
         assertNull(response.getErrorData());
         TicketIngestionResult ingested = response.getData();
         assertEquals(TICKET_ID, ingested.getId());

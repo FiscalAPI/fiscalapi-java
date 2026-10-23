@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.UUID;
 
 import com.fiscalapi.common.ApiResponse;
 import com.fiscalapi.common.FiscalApiSettings;
@@ -23,7 +24,8 @@ import com.fiscalapi.services.FiscalApiClient;
  *
  * Reglas del endpoint POST /api/v4/tickets:
  * - Ingerir un ticket cobra 1 crédito de ticket al emisor.
- * - Con Idempotency-Key, repetir la misma key con el mismo cuerpo responde 200 con el ticket original sin cobrar otra vez.
+ * - Con Idempotency-Key, repetir la misma llave de idempotencia con el mismo cuerpo, dentro de 24 h, devuelve la respuesta
+ *   original (201) sin cobrar otra vez.
  * - El total debe cuadrar al centavo con los conceptos e impuestos (si no, 422).
  * - Un folio y serie ya activos del emisor responden 409.
  */
@@ -78,7 +80,9 @@ public class EjemplosTickets {
         ticket.setTotal(new BigDecimal("116.00"));
         ticket.setItems(Collections.singletonList(refresco));
 
-        ApiResponse<TicketIngestionResult> response = client.getTicketService().create(ticket, "pos-01-F-1001");
+        // Una llave de idempotencia por operación: guárdala para reintentar el mismo ticket
+        String idempotencyKey = UUID.randomUUID().toString();
+        ApiResponse<TicketIngestionResult> response = client.getTicketService().create(ticket, idempotencyKey);
         if (!response.isSucceeded()) {
             // 409: folio y serie ya activos; 422: total que no cuadra, emisor sin CSD o sin créditos de ticket, etc.
             // getErrorData() trae el data del error: existingTicketId (409) o expectedTotal y computedTotal (422).

@@ -8,8 +8,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
- * Respuesta de {@code create}: la misma forma en el 201 de un ticket nuevo y en el 200 de una repetición con la
- * misma Idempotency-Key y el mismo cuerpo. status guarda el texto de la API tal cual (ver {@link #getStatusValue()}).
+ * Respuesta de {@code create}: un ticket nuevo (201) y la repetición con la misma llave de idempotencia y el mismo cuerpo
+ * devuelven la misma respuesta original. status guarda el texto de la API tal cual (ver {@link #getStatusValue()}).
  */
 public class TicketIngestionResult extends SerializableDto {
 

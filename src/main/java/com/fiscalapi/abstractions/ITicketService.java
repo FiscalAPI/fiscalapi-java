@@ -24,12 +24,15 @@ public interface ITicketService {
 
     /**
      * Ingiere un ticket y cobra 1 crédito de ticket. POST /api/{apiVersion}/tickets
-     * Con idempotencyKey (hasta 64 caracteres) se envía el header Idempotency-Key: repetir la key con el mismo cuerpo
-     * responde 200 con el ticket original sin cobrar otra vez; con otro cuerpo, 422. Con null, el header no se envía.
-     * Un folio y serie ya activos del emisor responden 409.
+     * Con idempotencyKey (de 1 a 64 caracteres ASCII visibles, sin espacios) se envía el header Idempotency-Key: repetir
+     * la misma llave de idempotencia con el mismo cuerpo, dentro de 24 h, devuelve la respuesta original (201, con el
+     * header Idempotent-Replayed: true) sin registrar otro ticket ni cobrar otra vez; con otro cuerpo, 422; con la
+     * original aún en proceso, 409 con Retry-After. Con null, el header no se envía. Un folio y serie ya activos del
+     * emisor responden 409.
      *
      * @param ticket         Ticket a ingerir
-     * @param idempotencyKey Valor del header Idempotency-Key, o null para no enviarlo
+     * @param idempotencyKey Llave de idempotencia (idempotency key), valor del header Idempotency-Key, o null para no
+     *                       enviarlo
      * @return ApiResponse con el ticket ingerido (código y URL del QR)
      */
     ApiResponse<TicketIngestionResult> create(Ticket ticket, String idempotencyKey);

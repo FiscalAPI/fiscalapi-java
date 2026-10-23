@@ -84,18 +84,18 @@ Compatible con múltiples versiones de Java (desde **Java 8** en adelante)
 <dependency>
     <groupId>com.fiscalapi</groupId>
     <artifactId>fiscalapi</artifactId>
-    <version>4.0.450</version>
+    <version>4.0.462</version>
 </dependency>
 ```
 
 **Gradle (Groovy)**:
 ```groovy
-implementation 'com.fiscalapi:fiscalapi:4.0.450'
+implementation 'com.fiscalapi:fiscalapi:4.0.462'
 ```
 
 **Gradle (Kotlin)**:
 ```kotlin
-implementation("com.fiscalapi:fiscalapi:4.0.450")
+implementation("com.fiscalapi:fiscalapi:4.0.462")
 ```
 
 Para más información, consulta [Snippets en Maven Central](https://central.sonatype.com/artifact/com.fiscalapi/fiscalapi).
@@ -256,6 +256,14 @@ items.add(item);
 invoice.setItems(items);
 
 ApiResponse<Invoice> apiResponseInvoice = client.getInvoiceService().create(invoice);
+System.out.println(apiResponseInvoice);
+```
+
+Para reintentos seguros, pasa tu propia `Idempotency-Key` (hasta 64 caracteres ASCII visibles, sin espacios): repetir la misma petición con la misma llave de idempotencia dentro de 24 horas devuelve la respuesta original en lugar de crear otra factura. El SDK no genera la llave de idempotencia ni reintenta por su cuenta, pero OkHttp reintenta por fallas de conexión (`retryOnConnectionFailure`) y la llave de idempotencia hace seguros esos reintentos.
+
+```java
+// Con la misma llave de idempotencia, repetir esta llamada devuelve la respuesta original
+ApiResponse<Invoice> apiResponseInvoice = client.getInvoiceService().create(invoice, "550e8400-e29b-41d4-a716-446655440000");
 System.out.println(apiResponseInvoice);
 ```
 
