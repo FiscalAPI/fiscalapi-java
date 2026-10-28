@@ -2,6 +2,12 @@
 
 Cambios del SDK y notas de comportamiento del API de FiscalAPI que afectan a quien usa el SDK.
 
+## [4.0.468] - 2026-10-28
+
+### `InvoicePayment`
+
+- `getForeignBankName()` y `setForeignBankName(String)` (`foreignBankName`, opcional): nombre del banco ordenante extranjero, el atributo `NomBancoOrdExt` del complemento de pago. El SAT lo exige cuando `sourceBankTin` es `XEXX010101000` (CRP20223); antes el SDK no podía enviarlo. Sin asignarlo no se envía, así que el código existente manda el mismo JSON.
+
 ## [4.0.462] - 2026-10-22
 
 ### Agregado

@@ -27,6 +27,8 @@ public class InvoicePayment {
     private String sourceBankAccount;
     private String targetBankTin;
     private String targetBankAccount;
+    // Obligatorio cuando sourceBankTin es XEXX010101000 (NomBancoOrdExt).
+    private String foreignBankName;
     private List<PaidInvoice> paidInvoices;
 
 
@@ -120,6 +122,12 @@ public class InvoicePayment {
     }
     public void setTargetBankAccount(String targetBankAccount) {
         this.targetBankAccount = targetBankAccount;
+    }
+    public String getForeignBankName() {
+        return foreignBankName;
+    }
+    public void setForeignBankName(String foreignBankName) {
+        this.foreignBankName = foreignBankName;
     }
     public List<PaidInvoice> getPaidInvoices() {
         return paidInvoices;
