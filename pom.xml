@@ -43,6 +43,19 @@
         <url>https://github.com/FiscalAPI/fiscalapi-java/tree/main</url>
     </scm>
 
+    <dependencyManagement>
+        <dependencies>
+            <!-- Jackson: versiones de jackson-databind, jsr310, core y annotations -->
+            <dependency>
+                <groupId>com.fasterxml.jackson</groupId>
+                <artifactId>jackson-bom</artifactId>
+                <version>2.18.12</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
         <!-- OkHttp -->
         <dependency>
@@ -55,13 +68,11 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.14.2</version>
         </dependency>
 
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
-            <version>2.14.2</version>
         </dependency>
 
         <!-- Pruebas (no se publican: scope test) -->

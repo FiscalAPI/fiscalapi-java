@@ -126,5 +126,5 @@ GitHub Actions workflow (`.github/workflows/deploy.yml`): manual dispatch, build
 ## Dependencies
 
 - OkHttp3 4.12.0 (HTTP)
-- Jackson 2.14.2 + JSR310 module (JSON + Java 8 time)
+- Jackson 2.18 (via jackson-bom) + JSR310 module (JSON + Java 8 time)
 - Java 8+ (source/target)
