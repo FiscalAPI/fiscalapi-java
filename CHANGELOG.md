@@ -2,6 +2,12 @@
 
 Cambios del SDK y notas de comportamiento del API de FiscalAPI que afectan a quien usa el SDK.
 
+## [4.0.469] - 2026-10-30
+
+### Seguridad
+
+- Jackson sube de 2.14.2 a 2.18.12 (vía `jackson-bom`), que corrige avisos de seguridad de `jackson-databind` y `jackson-core` (p. ej. GHSA-h46c-h94j-95f3). Sin cambios de API.
+
 ## [4.0.468] - 2026-10-28
 
 ### `InvoicePayment`
