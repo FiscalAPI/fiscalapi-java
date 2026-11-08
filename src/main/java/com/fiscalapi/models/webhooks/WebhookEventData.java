@@ -47,12 +47,7 @@ public class WebhookEventData extends SerializableDto {
         this.previousStatus = previousStatus;
     }
 
-    /**
-     * @return Motivo de la transición. Todo evento lo trae; es null salvo en
-     * {@link WebhookEventTypes#INVOICE_CANCELLATION_REJECTED}, donde dice por qué no procedió la cancelación
-     * ({@code rejectedByRecipient}, {@code expired}, {@code notRequested} o {@code notCancelable}). Es texto libre:
-     * pueden aparecer valores nuevos
-     */
+    /** @return Por qué no procedió la cancelación ({@code invoice.cancellation_rejected}); null en los demás eventos */
     public String getReason() {
         return reason;
     }

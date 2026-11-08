@@ -45,13 +45,13 @@ class WebhookBackInteropTest {
     private static final String COMPLETED_DOWNLOAD_REQUEST_BODY = "{\"id\":\"" + EVENT_ID + "\","
             + "\"type\":\"download_request.completed\",\"createdAt\":\"2026-10-12T18:47:53Z\",\"personId\":null,"
             + "\"data\":{\"relatedObject\":{\"id\":\"" + DOWNLOAD_REQUEST_ID + "\",\"type\":\"download_request\","
-            + "\"url\":\"/api/v4/download-requests/" + DOWNLOAD_REQUEST_ID + "\"},\"status\":null,\"previousStatus\":null}}";
+            + "\"url\":\"/api/v4/download-requests/" + DOWNLOAD_REQUEST_ID + "\"},\"status\":null,\"previousStatus\":null,\"reason\":null}}";
 
     // El sobre de "Enviar prueba" del back (POST /api/v4/webhooks/{id}/test): el recurso es el webhook mismo.
     private static final String WEBHOOK_TEST_BODY = "{\"id\":\"" + EVENT_ID + "\",\"type\":\"webhook.test\","
             + "\"createdAt\":\"2026-10-12T18:47:53Z\",\"personId\":null,\"data\":{\"relatedObject\":{\"id\":\""
             + WEBHOOK_ID + "\",\"type\":\"webhook\",\"url\":\"/api/v4/webhooks/" + WEBHOOK_ID
-            + "\"},\"status\":null,\"previousStatus\":null}}";
+            + "\"},\"status\":null,\"previousStatus\":null,\"reason\":null}}";
 
     @Test
     void aBackDeliverySignedDuringARotationVerifiesWithEitherSecretAndReadsEveryField() {

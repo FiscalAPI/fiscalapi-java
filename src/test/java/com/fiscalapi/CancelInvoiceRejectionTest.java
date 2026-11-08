@@ -11,12 +11,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-/**
- * Cancelar factura (DELETE /api/v4/invoices) cuando el SAT rechaza la solicitud: el API responde 422 con succeeded en
- * false, el mensaje genérico, "SAT &lt;código&gt;: &lt;descripción&gt;" en details y el acuse con el código por UUID en
- * data. El SDK no lanza: entrega esos campos y entrega el data tipado en getData() y crudo en getErrorData(). Los mismos escenarios viven en los SDK
- * de .NET, Node.js, Python y PHP.
- */
+/** Cancelar factura con rechazo del SAT: 422, isSucceeded() en false y el acuse en getErrorData(). */
 class CancelInvoiceRejectionTest {
 
     private static final String INVOICE_ID = "21c39425-9d0a-449b-a7ba-49335b85b062";
