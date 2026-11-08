@@ -10,6 +10,7 @@ public class WebhookEventData extends SerializableDto {
     private WebhookRelatedObject relatedObject;
     private String status;
     private String previousStatus;
+    private String reason;
 
     /**
      * @return El recurso que cambió de estado
@@ -44,5 +45,19 @@ public class WebhookEventData extends SerializableDto {
 
     public void setPreviousStatus(String previousStatus) {
         this.previousStatus = previousStatus;
+    }
+
+    /**
+     * @return Motivo de la transición. Todo evento lo trae; es null salvo en
+     * {@link WebhookEventTypes#INVOICE_CANCELLATION_REJECTED}, donde dice por qué no procedió la cancelación
+     * ({@code rejectedByRecipient}, {@code expired}, {@code notRequested} o {@code notCancelable}). Es texto libre:
+     * pueden aparecer valores nuevos
+     */
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
     }
 }
