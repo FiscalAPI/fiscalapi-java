@@ -34,18 +34,24 @@ class WebhookBackInteropTest {
     private static final String CANCELED_INVOICE_BODY = "{\"id\":\"" + EVENT_ID + "\",\"type\":\"invoice.canceled\","
             + "\"createdAt\":\"2026-10-12T18:47:53Z\",\"personId\":\"" + PERSON_ID + "\",\"data\":{\"relatedObject\":"
             + "{\"id\":\"" + INVOICE_ID + "\",\"type\":\"invoice\",\"url\":\"/api/v4/invoices/" + INVOICE_ID + "\"},"
-            + "\"status\":\"X\",\"previousStatus\":\"C\"}}";
+            + "\"status\":\"X\",\"previousStatus\":\"C\",\"reason\":null}}";
+
+    private static final String REJECTED_CANCELLATION_BODY = "{\"id\":\"" + EVENT_ID + "\","
+            + "\"type\":\"invoice.cancellation_rejected\",\"createdAt\":\"2026-10-12T18:47:53Z\",\"personId\":\""
+            + PERSON_ID + "\",\"data\":{\"relatedObject\":{\"id\":\"" + INVOICE_ID + "\",\"type\":\"invoice\","
+            + "\"url\":\"/api/v4/invoices/" + INVOICE_ID + "\"},\"status\":\"V\",\"previousStatus\":\"C\","
+            + "\"reason\":\"rejectedByRecipient\"}}";
 
     private static final String COMPLETED_DOWNLOAD_REQUEST_BODY = "{\"id\":\"" + EVENT_ID + "\","
             + "\"type\":\"download_request.completed\",\"createdAt\":\"2026-10-12T18:47:53Z\",\"personId\":null,"
             + "\"data\":{\"relatedObject\":{\"id\":\"" + DOWNLOAD_REQUEST_ID + "\",\"type\":\"download_request\","
-            + "\"url\":\"/api/v4/download-requests/" + DOWNLOAD_REQUEST_ID + "\"},\"status\":null,\"previousStatus\":null}}";
+            + "\"url\":\"/api/v4/download-requests/" + DOWNLOAD_REQUEST_ID + "\"},\"status\":null,\"previousStatus\":null,\"reason\":null}}";
 
     // El sobre de "Enviar prueba" del back (POST /api/v4/webhooks/{id}/test): el recurso es el webhook mismo.
     private static final String WEBHOOK_TEST_BODY = "{\"id\":\"" + EVENT_ID + "\",\"type\":\"webhook.test\","
             + "\"createdAt\":\"2026-10-12T18:47:53Z\",\"personId\":null,\"data\":{\"relatedObject\":{\"id\":\""
             + WEBHOOK_ID + "\",\"type\":\"webhook\",\"url\":\"/api/v4/webhooks/" + WEBHOOK_ID
-            + "\"},\"status\":null,\"previousStatus\":null}}";
+            + "\"},\"status\":null,\"previousStatus\":null,\"reason\":null}}";
 
     @Test
     void aBackDeliverySignedDuringARotationVerifiesWithEitherSecretAndReadsEveryField() {
@@ -67,7 +73,22 @@ class WebhookBackInteropTest {
             assertEquals("/api/v4/invoices/" + INVOICE_ID, event.getData().getRelatedObject().getUrl());
             assertEquals("X", event.getData().getStatus());
             assertEquals("C", event.getData().getPreviousStatus());
+            assertNull(event.getData().getReason());
         }
+    }
+
+    @Test
+    void aRejectedCancellationCarriesTheReason() {
+        String secret = BackWebhookSigner.generateSecret();
+        Map<String, String> headers = BackWebhookSigner.headers(EVENT_ID, TIMESTAMP, REJECTED_CANCELLATION_BODY,
+                secret);
+
+        WebhookEvent event = verify(headers, REJECTED_CANCELLATION_BODY, secret);
+
+        assertEquals(WebhookEventTypes.INVOICE_CANCELLATION_REJECTED, event.getType());
+        assertEquals("V", event.getData().getStatus());
+        assertEquals("C", event.getData().getPreviousStatus());
+        assertEquals("rejectedByRecipient", event.getData().getReason());
     }
 
     @Test

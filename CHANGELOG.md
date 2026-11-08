@@ -2,6 +2,23 @@
 
 Cambios del SDK y notas de comportamiento del API de FiscalAPI que afectan a quien usa el SDK.
 
+## [4.0.474] - 2026-11-07
+
+### Cambios incompatibles (BREAKING)
+
+- Cambio del API, no del SDK: cancelar factura (`InvoiceService.cancel`) frente a un rechazo del SAT responde **422** con `isSucceeded()` en `false`. Antes respondía 200 con `isSucceeded()` en `true` y el código 203 en `getData().getInvoiceUuids()`. El SDK no lanza excepción.
+- `getData()` sigue con el acuse (`InvoiceCancellationResponse`) y `getErrorData()` con el JSON crudo: solo cambian el status (422) y `isSucceeded()`. El código del SAT está en `getDetails()`.
+- Migración: trate el 422 como rechazo; quien filtraba por `getHttpStatusCode()` 200 o por `isSucceeded()` cambia de rama.
+- Las validaciones previas al PAC responden **400**: UUID no canónico, sustituta inválida con motivo 01, y cancelar por `id` una factura emitida por valores cuando el tenant no tiene una persona con ese RFC y CSD vigente o tiene más de una.
+- Si el PAC no trae el código del SAT, la respuesta es **502**.
+- Una factura rechazada se queda vigente; ya no queda en «Cancelando».
+- Cancelar por valores un UUID que FiscalAPI no tiene ya no responde 404: responde el resultado del PAC con su acuse y no toca ninguna factura.
+
+### Cancelación de facturas y webhooks
+
+- `WebhookEventData.getReason()` (nuevo, `String`): el motivo de la transición. Todo evento lo trae; es `null` salvo en `invoice.cancellation_rejected`, donde dice por qué no procedió la cancelación: `rejectedByRecipient`, `expired`, `notRequested` o `notCancelable`. Es texto libre: pueden aparecer valores nuevos. Cambio aditivo: nada existente cambia ni deja de compilar.
+- `InvoiceService.cancel` frente a un rechazo del SAT: el API responde 422 y el SDK no lanza. `isSucceeded()` es `false`, `getMessage()` es el mensaje genérico, `getDetails()` trae `SAT <código>: <descripción>` y el acuse llega tipado en `getData()` (`InvoiceCancellationResponse`: `getBase64CancellationAcknowledgement()` e `getInvoiceUuids()` con el código del SAT por UUID) y crudo en `getErrorData()`. El SDK no cambia de código: el cambio es del API (ver *Cambios incompatibles*).
+
 ## [4.0.469] - 2026-10-30
 
 ### Seguridad

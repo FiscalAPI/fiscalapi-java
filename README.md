@@ -84,18 +84,18 @@ Compatible con múltiples versiones de Java (desde **Java 8** en adelante)
 <dependency>
     <groupId>com.fiscalapi</groupId>
     <artifactId>fiscalapi</artifactId>
-    <version>4.0.469</version>
+    <version>4.0.474</version>
 </dependency>
 ```
 
 **Gradle (Groovy)**:
 ```groovy
-implementation 'com.fiscalapi:fiscalapi:4.0.469'
+implementation 'com.fiscalapi:fiscalapi:4.0.474'
 ```
 
 **Gradle (Kotlin)**:
 ```kotlin
-implementation("com.fiscalapi:fiscalapi:4.0.469")
+implementation("com.fiscalapi:fiscalapi:4.0.474")
 ```
 
 Para más información, consulta [Snippets en Maven Central](https://central.sonatype.com/artifact/com.fiscalapi/fiscalapi).
@@ -506,7 +506,7 @@ public class FiscalApiWebhooksController {
 ```
 
 - `headers` acepta `Map<String, String>` (como `@RequestHeader Map<String, String>` de Spring) o `Map<String, List<String>>` (un `MultiValueMap` de Spring o un mapa armado con `HttpServletRequest#getHeaders`); los nombres se comparan sin distinguir mayúsculas. Desde Spring 7, `HttpHeaders` ya no es un `Map`: pase `headers.toSingleValueMap()`.
-- `WebhookEvent` es el mismo sobre para todo evento: `getId()`, `getType()` (texto; compárelo con las constantes de `WebhookEventTypes`), `getCreatedAt()` (`OffsetDateTime` en UTC), `getPersonId()` (null si el recurso no tiene persona) y `getData()` con `getRelatedObject()` (`getId()`, `getType()`, `getUrl()`), `getStatus()` y `getPreviousStatus()`.
+- `WebhookEvent` es el mismo sobre para todo evento: `getId()`, `getType()` (texto; compárelo con las constantes de `WebhookEventTypes`), `getCreatedAt()` (`OffsetDateTime` en UTC), `getPersonId()` (null si el recurso no tiene persona) y `getData()` con `getRelatedObject()` (`getId()`, `getType()`, `getUrl()`), `getStatus()`, `getPreviousStatus()` y `getReason()` (null salvo en `invoice.cancellation_rejected`, donde dice por qué no procedió la cancelación).
 - `getRelatedObject().getUrl()` es la ruta relativa del GET v4 del recurso (`/api/v4/invoices/{id}`); para leerlo, use el servicio de su tipo con `getRelatedObject().getId()`.
 - El botón "Enviar prueba" del webhook (`POST /api/v4/webhooks/{id}/test`) envía `WebhookEventTypes.WEBHOOK_TEST` (`webhook.test`), cuyo `relatedObject` es el webhook mismo (`type` `webhook`, `url` `/api/v4/webhooks/{id}`), sin persona ni estados; no se suscribe.
 - Durante una rotación del secreto, FiscalAPI firma con el nuevo y con el anterior por 24 h: pase ambos, `Webhook.verify(headers, body, Arrays.asList(secretoNuevo, secretoAnterior))`.
