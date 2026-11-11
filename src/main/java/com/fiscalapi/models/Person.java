@@ -15,6 +15,7 @@ public class Person extends BaseDto {
     private String legalName;
     private String email;
     private String password;
+    private Boolean loginEnabled;
     private String phoneNumber;
     private String satTaxRegimeId;
     private CatalogDto satTaxRegime;
@@ -59,8 +60,9 @@ public class Person extends BaseDto {
     }
 
     /**
-     * Contraseña de acceso al dashboard. Requerida al crear; al actualizar, null o vacía conserva la actual.
-     * El API nunca la devuelve.
+     * Contraseña de acceso al dashboard. Opcional al crear (sin ella la persona no inicia sesión con contraseña) y
+     * obligatoria solo si {@link #getLoginEnabled()} es true; al actualizar, null o vacía conserva la actual. Null no se
+     * envía y el API nunca la devuelve.
      *
      * @return La contraseña asignada en este objeto
      */
@@ -70,6 +72,25 @@ public class Person extends BaseDto {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    /**
+     * Acceso al portal (inicio de sesión en el dashboard); no afecta a la API key. Al crear, null o false: la persona
+     * nace sin acceso. Al actualizar, null (sin asignar) no se envía y no cambia el acceso actual; true lo da (la
+     * persona debe tener contraseña o recibirla en {@link #setPassword(String)}) y false lo quita. Solo lo cambia el
+     * owner del tenant, y el owner siempre lo tiene. En las respuestas llega el acceso efectivo.
+     *
+     * @return El acceso al portal, o null si no se asignó
+     */
+    public Boolean getLoginEnabled() {
+        return loginEnabled;
+    }
+
+    /**
+     * @param loginEnabled true da el acceso al portal, false lo quita y null no lo envía
+     */
+    public void setLoginEnabled(Boolean loginEnabled) {
+        this.loginEnabled = loginEnabled;
     }
 
     public String getSatTaxRegimeId() {

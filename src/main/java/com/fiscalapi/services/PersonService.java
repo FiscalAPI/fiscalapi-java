@@ -5,7 +5,9 @@ import com.fiscalapi.abstractions.IFiscalApiHttpClient;
 import com.fiscalapi.abstractions.IPersonService;
 import com.fiscalapi.common.ApiResponse;
 import com.fiscalapi.common.FiscalApiSettings;
+import com.fiscalapi.common.PagedList;
 import com.fiscalapi.models.Person;
+import com.fiscalapi.models.PersonListFilters;
 import com.fiscalapi.models.TaxFile;
 
 import java.util.List;
@@ -44,12 +46,30 @@ public class PersonService extends BaseFiscalApiService<Person> implements IPers
     }
 
     @Override
+    public ApiResponse<PagedList<Person>> getList(PersonListFilters filters) {
+        return httpClient.getPagedList(toQuery(filters).appendTo(buildEndpoint("", null)), Person.class);
+    }
+
+    @Override
     public ApiResponse<List<TaxFile>> getTaxFiles(String personId) {
         if (personId == null || personId.trim().isEmpty()) {
             throw new IllegalArgumentException("El ID de la persona es requerido");
         }
         String endpoint = buildEndpoint(personId + "/tax-files", null);
         return httpClient.getList(endpoint, TaxFile.class);
+    }
+
+    // Los filtros asignados; los null no se envían.
+    private static ListQuery toQuery(PersonListFilters filters) {
+        ListQuery query = new ListQuery();
+        if (filters == null) {
+            return query;
+        }
+        return query
+                .add("search", filters.getSearch())
+                .add("userTypeId", filters.getUserTypeId())
+                .add("pageNumber", filters.getPageNumber())
+                .add("pageSize", filters.getPageSize());
     }
 }
 
