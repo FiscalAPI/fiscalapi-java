@@ -4,6 +4,10 @@ Cambios del SDK y notas de comportamiento del API de FiscalAPI que afectan a qui
 
 ## [Sin publicar]
 
+### Agregado
+
+- `IPersonService.getTaxFiles(personId)`: lista los certificados (CSD y FIEL) de una persona con `GET people/{personId}/tax-files`. Devuelve solo metadatos (`id`, `personId`, `tin`, `fileType`, `validFrom`, `validTo`, `sequence`); no trae el archivo ni la contraseña.
+
 ### Corregido
 
 - Las fechas de Carta Porte, nómina y descarga masiva aceptan valores sin milisegundos y solo fecha, como los manda la API.
