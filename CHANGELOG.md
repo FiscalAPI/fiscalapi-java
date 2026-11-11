@@ -2,6 +2,12 @@
 
 Cambios del SDK y notas de comportamiento del API de FiscalAPI que afectan a quien usa el SDK.
 
+## [Sin publicar]
+
+### Corregido
+
+- Las fechas de Carta Porte, nómina y descarga masiva aceptan valores sin milisegundos y solo fecha, como los manda la API.
+
 ## [4.0.474] - 2026-11-07
 
 ### Cambios incompatibles (BREAKING)
