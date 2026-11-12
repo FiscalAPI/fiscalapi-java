@@ -47,6 +47,8 @@ public class DownloadRequest extends BaseDto {
     private CatalogDto satInvoiceComplement;
     private String satRequestStatusId;
     private CatalogDto satRequestStatus;
+    private String satStatusCode;
+    private String satMessage;
     private String downloadRequestStatusId;
     private CatalogDto downloadRequestStatus;
 
@@ -381,6 +383,34 @@ public class DownloadRequest extends BaseDto {
      */
     public void setSatRequestStatus(CatalogDto satRequestStatus) {
         this.satRequestStatus = satRequestStatus;
+    }
+
+    /**
+     * @return Código (CodEstatus) de la última respuesta del SAT, a la solicitud o a su verificación
+     */
+    public String getSatStatusCode() {
+        return satStatusCode;
+    }
+
+    /**
+     * @param satStatusCode Código (CodEstatus) de la última respuesta del SAT, a la solicitud o a su verificación
+     */
+    public void setSatStatusCode(String satStatusCode) {
+        this.satStatusCode = satStatusCode;
+    }
+
+    /**
+     * @return Mensaje de la última respuesta del SAT, a la solicitud o a su verificación
+     */
+    public String getSatMessage() {
+        return satMessage;
+    }
+
+    /**
+     * @param satMessage Mensaje de la última respuesta del SAT, a la solicitud o a su verificación
+     */
+    public void setSatMessage(String satMessage) {
+        this.satMessage = satMessage;
     }
 
     /**
