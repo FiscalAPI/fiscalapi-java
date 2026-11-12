@@ -2,7 +2,7 @@ package com.fiscalapi.models.downloading;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fiscalapi.serialization.FlexibleLocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fiscalapi.common.BaseDto;
 import com.fiscalapi.common.CatalogDto;
@@ -28,13 +28,13 @@ public class DownloadRequest extends BaseDto {
     //  ISO  startDate
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonDeserialize(using = FlexibleLocalDateTimeDeserializer.class)
     private LocalDateTime startDate;
 
     // ISO endDate
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonDeserialize(using = FlexibleLocalDateTimeDeserializer.class)
     private LocalDateTime endDate;
 
     private String satQueryTypeId;
@@ -47,17 +47,19 @@ public class DownloadRequest extends BaseDto {
     private CatalogDto satInvoiceComplement;
     private String satRequestStatusId;
     private CatalogDto satRequestStatus;
+    private String satStatusCode;
+    private String satMessage;
     private String downloadRequestStatusId;
     private CatalogDto downloadRequestStatus;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonDeserialize(using = FlexibleLocalDateTimeDeserializer.class)
     private LocalDateTime lastAttemptDate;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonDeserialize(using = FlexibleLocalDateTimeDeserializer.class)
     @Deprecated
     private LocalDateTime nextAttemptDate;
     private Integer invoiceCount;
@@ -381,6 +383,34 @@ public class DownloadRequest extends BaseDto {
      */
     public void setSatRequestStatus(CatalogDto satRequestStatus) {
         this.satRequestStatus = satRequestStatus;
+    }
+
+    /**
+     * @return Código (CodEstatus) de la última respuesta del SAT, a la solicitud o a su verificación
+     */
+    public String getSatStatusCode() {
+        return satStatusCode;
+    }
+
+    /**
+     * @param satStatusCode Código (CodEstatus) de la última respuesta del SAT, a la solicitud o a su verificación
+     */
+    public void setSatStatusCode(String satStatusCode) {
+        this.satStatusCode = satStatusCode;
+    }
+
+    /**
+     * @return Mensaje de la última respuesta del SAT, a la solicitud o a su verificación
+     */
+    public String getSatMessage() {
+        return satMessage;
+    }
+
+    /**
+     * @param satMessage Mensaje de la última respuesta del SAT, a la solicitud o a su verificación
+     */
+    public void setSatMessage(String satMessage) {
+        this.satMessage = satMessage;
     }
 
     /**

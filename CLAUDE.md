@@ -24,14 +24,14 @@ No linting or formatting tools are configured.
 ## Architecture
 
 ### Entry Point
-`FiscalApiClient.create(FiscalApiSettings)` - Factory method creating the main client with all 11 services.
+`FiscalApiClient.create(FiscalApiSettings)` - Factory method creating the main client with all its services.
 
 ### Service Layer Pattern
 ```
 IFiscalApiClient (facade)
-  ├── getInvoiceService()          → IInvoiceService (cancel, status, getPdf, send, getXml)
-  ├── getPersonService()           → IPersonService
-  ├── getProductService()          → IProductService
+  ├── getInvoiceService()          → IInvoiceService (getList(InvoiceListFilters), cancel, status, getPdf, send, getXml)
+  ├── getPersonService()           → IPersonService (getList(PersonListFilters), getTaxFiles)
+  ├── getProductService()          → IProductService (getList(ProductListFilters))
   ├── getTaxFileService()          → ITaxFileService (getDefaultReferences, getDefaultValues)
   ├── getCatalogService()          → ICatalogService (custom search/query)
   ├── getApiKeyService()           → IApiKeyService
@@ -40,7 +40,8 @@ IFiscalApiClient (facade)
   ├── getManifestService()         → IManifestService (sign; firma la carta manifiesto con la FIEL)
   ├── getDownloadCatalogService()  → IDownloadCatalogService
   ├── getDownloadRuleService()     → IDownloadRuleService
-  └── getDownloadRequestService()  → IDownloadRequestService (cancel, retry, delete)
+  ├── getDownloadRequestService()  → IDownloadRequestService (cancel, retry, delete)
+  └── getMeService()               → IMeService (get; GET /me, la persona de la API key)
 ```
 
 ### Generic CRUD Base
@@ -55,7 +56,9 @@ Services over a CRUD resource extend `BaseFiscalApiService<T>` (implements `IFis
 
 Subclasses must implement `getTypeParameterClass()` to return the entity type for Jackson deserialization.
 
-`SatValidationService` and `ManifestService` are the exception: `sat-validations` and `manifests` are not CRUD resources, so they implement their interfaces directly and build their own endpoint, the same way `EmployerService` and `EmployeeService` do for their nested resources. `ManifestService.sign` posts to `manifests` and reuses the existing `FileResponse` model, which already matches the API's file payload.
+The filtered lists (`getList(TicketListFilters | InvoiceListFilters | PersonListFilters | ProductListFilters)`) build their query with the package-private `services/ListQuery`: only assigned values travel, URL-encoded with `URLEncoder` (space as `+`), dates as `LocalDate` (`yyyy-MM-dd`), and no `?` when nothing is assigned. `getList(int, int)` keeps its own `PageNumber`/`PageSize` query from the base class.
+
+`SatValidationService`, `ManifestService` and `MeService` are the exception: `sat-validations`, `manifests` and `me` are not CRUD resources, so they implement their interfaces directly and build their own endpoint, the same way `EmployerService` and `EmployeeService` do for their nested resources. `ManifestService.sign` posts to `manifests` and reuses the existing `FileResponse` model, which already matches the API's file payload.
 
 ### DTO Hierarchy
 ```

@@ -11,12 +11,7 @@ import com.fiscalapi.models.tickets.TicketIngestionResult;
 import com.fiscalapi.models.tickets.TicketListFilters;
 import com.fiscalapi.models.tickets.TicketStatus;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 public class TicketService implements ITicketService {
 
@@ -53,9 +48,7 @@ public class TicketService implements ITicketService {
 
     @Override
     public ApiResponse<PagedList<Ticket>> getList(TicketListFilters filters) {
-        String query = filters == null ? "" : buildQueryString(filters);
-        String endpoint = buildEndpoint(null) + (query.isEmpty() ? "" : "?" + query);
-        return httpClient.getPagedList(endpoint, Ticket.class);
+        return httpClient.getPagedList(toQuery(filters).appendTo(buildEndpoint(null)), Ticket.class);
     }
 
     @Override
@@ -96,41 +89,25 @@ public class TicketService implements ITicketService {
         return fullUrl.toString();
     }
 
-    // La query string de los filtros asignados, sin el signo '?': status se repite por cada estado y los null no se
-    // envían.
-    private static String buildQueryString(TicketListFilters filters) {
-        List<String> pairs = new ArrayList<>();
+    // Los filtros asignados: status se repite por cada estado, details solo viaja en true y los null no se envían.
+    private static ListQuery toQuery(TicketListFilters filters) {
+        ListQuery query = new ListQuery();
+        if (filters == null) {
+            return query;
+        }
         if (filters.getStatus() != null) {
             for (TicketStatus status : filters.getStatus()) {
-                addPair(pairs, "status", status.getValue());
+                query.add("status", status.getValue());
             }
         }
-        addPair(pairs, "personId", filters.getPersonId());
-        if (Boolean.TRUE.equals(filters.getDetails())) {
-            pairs.add("details=true");
-        }
-        addPair(pairs, "globalInvoiceId", filters.getGlobalInvoiceId());
-        addPair(pairs, "from", filters.getFrom());
-        addPair(pairs, "to", filters.getTo());
-        addPair(pairs, "pageNumber", filters.getPageNumber());
-        addPair(pairs, "pageSize", filters.getPageSize());
-        return String.join("&", pairs);
-    }
-
-    // LocalDate.toString() es ISO yyyy-MM-dd, el formato de from y to.
-    private static void addPair(List<String> pairs, String key, Object value) {
-        if (value != null) {
-            pairs.add(key + "=" + encode(value.toString()));
-        }
-    }
-
-    private static String encode(String value) {
-        try {
-            return URLEncoder.encode(value, StandardCharsets.UTF_8.name());
-        } catch (UnsupportedEncodingException e) {
-            // UTF-8 siempre existe en la JVM.
-            throw new IllegalStateException(e);
-        }
+        return query
+                .add("personId", filters.getPersonId())
+                .add("details", Boolean.TRUE.equals(filters.getDetails()) ? Boolean.TRUE : null)
+                .add("globalInvoiceId", filters.getGlobalInvoiceId())
+                .add("from", filters.getFrom())
+                .add("to", filters.getTo())
+                .add("pageNumber", filters.getPageNumber())
+                .add("pageSize", filters.getPageSize());
     }
 
     // Sin id, la ruta sería la de la lista (GET) o la colección (DELETE): se rechaza antes de llamar a la API.

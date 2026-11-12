@@ -5,6 +5,7 @@ import com.fiscalapi.abstractions.IFiscalApiHttpClient;
 import com.fiscalapi.abstractions.IInvoiceService;
 import com.fiscalapi.common.ApiResponse;
 import com.fiscalapi.common.FiscalApiSettings;
+import com.fiscalapi.common.PagedList;
 import com.fiscalapi.models.invoicing.*;
 
 import java.util.Collections;
@@ -21,6 +22,11 @@ public class InvoiceService extends BaseFiscalApiService<Invoice> implements IIn
     @Override
     protected Class<Invoice> getTypeParameterClass() {
         return Invoice.class;
+    }
+
+    @Override
+    public ApiResponse<PagedList<Invoice>> getList(InvoiceListFilters filters) {
+        return httpClient.getPagedList(toQuery(filters).appendTo(buildEndpoint("", null)), Invoice.class);
     }
 
     @Override
@@ -73,5 +79,26 @@ public class InvoiceService extends BaseFiscalApiService<Invoice> implements IIn
                 ? null
                 : Collections.singletonMap(IDEMPOTENCY_KEY_HEADER, idempotencyKey);
         return httpClient.post(buildEndpoint("", null), model, Invoice.class, headers);
+    }
+
+    // Los filtros asignados, en el orden del contrato; los null no se envían.
+    private static ListQuery toQuery(InvoiceListFilters filters) {
+        ListQuery query = new ListQuery();
+        if (filters == null) {
+            return query;
+        }
+        return query
+                .add("from", filters.getFrom())
+                .add("to", filters.getTo())
+                .add("issuerTin", filters.getIssuerTin())
+                .add("recipientTin", filters.getRecipientTin())
+                .add("typeCode", filters.getTypeCode())
+                .add("statusId", filters.getStatusId())
+                .add("series", filters.getSeries())
+                .add("number", filters.getNumber())
+                .add("uuid", filters.getUuid())
+                .add("order", filters.getOrder() == null ? null : filters.getOrder().getValue())
+                .add("pageNumber", filters.getPageNumber())
+                .add("pageSize", filters.getPageSize());
     }
 }

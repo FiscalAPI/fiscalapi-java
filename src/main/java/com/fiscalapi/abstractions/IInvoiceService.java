@@ -1,10 +1,20 @@
 package com.fiscalapi.abstractions;
 
 import com.fiscalapi.common.ApiResponse;
+import com.fiscalapi.common.PagedList;
 import com.fiscalapi.models.invoicing.*;
 
 public interface IInvoiceService extends IFiscalApiService<Invoice> {
     // Podríamos añadir métodos específicos
+
+    /**
+     * Lista las facturas del tenant con los filtros y el orden asignados (null o sin filtros: la lista de siempre,
+     * primera página). GET /api/{apiVersion}/invoices
+     *
+     * @param filters Filtros de la consulta
+     * @return ApiResponse con la página de facturas
+     */
+    ApiResponse<PagedList<Invoice>> getList(InvoiceListFilters filters);
 
     /**
      * Crea una factura con la llave de idempotencia de la petición. POST /api/{apiVersion}/invoices
